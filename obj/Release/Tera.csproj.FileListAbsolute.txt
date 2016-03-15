@@ -1,0 +1,5 @@
+E:\ShinraMeter\Tera\bin\Release\Tera.dll
+E:\ShinraMeter\Tera\bin\Release\Tera.pdb
+E:\ShinraMeter\Tera\obj\Release\Tera.csprojResolveAssemblyReference.cache
+E:\ShinraMeter\Tera\obj\Release\Tera.dll
+E:\ShinraMeter\Tera\obj\Release\Tera.pdb
