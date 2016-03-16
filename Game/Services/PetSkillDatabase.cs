@@ -16,7 +16,7 @@ namespace Data
             StreamReader reader;
             try
             {
-                reader = new StreamReader(File.OpenRead(folder + "pets-skills-" + language + ".tsv"));
+                reader = new StreamReader(File.OpenRead(Path.Combine(folder, $"skills\\pets-skills-{language}.tsv")));
             }
             catch
             {

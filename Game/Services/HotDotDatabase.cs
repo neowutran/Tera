@@ -23,7 +23,7 @@ namespace Data
 
         public HotDotDatabase(string folder, string language)
         {
-            var reader = new StreamReader(File.OpenRead(folder + "hotdot-" + language + ".tsv"));
+            var reader = new StreamReader(File.OpenRead(Path.Combine(folder, $"hotdot\\hotdot-{language}.tsv")));
             while (!reader.EndOfStream)
             {
                 var line = reader.ReadLine();
