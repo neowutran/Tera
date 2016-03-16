@@ -36,9 +36,8 @@ namespace Tera.Game
         }
 
         // skillIds are reused across races and class, so we need a RaceGenderClass to disambiguate them
-        public Skill Get(UserEntity user, EachSkillResultServerMessage message)
+        public Skill Get(UserEntity user, int skillId)
         {
-            var skillId = message.SkillId;
             var raceGenderClass = user.RaceGenderClass;
             var comparer = new Helpers.ProjectingEqualityComparer<Skill, int>(x => x.Id);
             foreach (var rgc2 in raceGenderClass.Fallbacks())

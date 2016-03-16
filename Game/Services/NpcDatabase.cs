@@ -88,6 +88,7 @@ namespace Tera.Game
                 return huntingZoneId.ToString();
         }
 
+       
         public NpcInfo GetOrPlaceholder(ushort huntingZoneId, uint templateId)
         {
             return GetOrNull(huntingZoneId, templateId) ?? _getPlaceholder(Tuple.Create(huntingZoneId, templateId));

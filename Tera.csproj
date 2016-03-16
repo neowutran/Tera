@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="Game\Angle.cs" />
     <Compile Include="Game\IHasOwner.cs" />
+    <Compile Include="Game\HotDot.cs" />
     <Compile Include="Game\Messages\Server\CChat.cs" />
     <Compile Include="Game\Messages\Server\SNpcOccupierInfo.cs" />
     <Compile Include="Game\Messages\Server\SNpcTargetUser.cs" />
@@ -65,8 +66,10 @@
     <Compile Include="Game\RaceGenderClass.cs" />
     <Compile Include="Game\Server.cs" />
     <Compile Include="Game\Services\Helpers.cs" />
+    <Compile Include="Game\Services\HotDotDatabase.cs" />
     <Compile Include="Game\Services\NpcDatabase.cs" />
     <Compile Include="Game\Services\OpCodeNamer.cs" />
+    <Compile Include="Game\Services\PetSkillDatabase.cs" />
     <Compile Include="Game\Services\PlayerTracker.cs" />
     <Compile Include="Game\Services\SkillDatabase.cs" />
     <Compile Include="Game\Skill.cs" />
