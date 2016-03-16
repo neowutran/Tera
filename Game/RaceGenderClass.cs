@@ -26,7 +26,6 @@ namespace Tera.Game
                 Race = (Race) ((value-100)/200%50);
                 Gender = (Gender) (value/100%2);
                 Class = (PlayerClass) (value%100);
-                Debug.Assert(Raw == value);
             }
         }
 
@@ -61,6 +60,8 @@ namespace Tera.Game
         {
             yield return this;
             yield return new RaceGenderClass(Race.Common, Gender.Common, Class);
+            yield return new RaceGenderClass(Race, Gender, PlayerClass.Common);
+            yield return new RaceGenderClass(Race, Gender.Common, PlayerClass.Common);
             yield return new RaceGenderClass(Race.Common, Gender.Common, PlayerClass.Common);
         }
 

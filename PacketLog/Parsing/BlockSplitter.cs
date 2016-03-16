@@ -1,17 +1,20 @@
-﻿using System;
+﻿// Copyright (c) Gothos
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using System;
 using System.IO;
 
 namespace Tera.PacketLog
 {
     internal class BlockSplitter
     {
-        private readonly MemoryStream _buffer = new MemoryStream();
         public event Action<byte[]> BlockFinished;
+        MemoryStream buffer = new MemoryStream();
 
         protected virtual void OnBlockFinished(byte[] block)
         {
             var handler = BlockFinished;
-            handler?.Invoke(block);
+            if (handler != null) handler(block);
         }
 
         private static void RemoveFront(MemoryStream stream, int count)
@@ -36,7 +39,7 @@ namespace Tera.PacketLog
 
         public byte[] PopBlock()
         {
-            var block = PopBlock(_buffer);
+            byte[] block = PopBlock(buffer);
             if (block != null)
             {
                 OnBlockFinished(block);
@@ -53,7 +56,7 @@ namespace Tera.PacketLog
 
         public void Data(byte[] data)
         {
-            _buffer.Write(data, 0, data.Length);
+            buffer.Write(data, 0, data.Length);
         }
     }
 }

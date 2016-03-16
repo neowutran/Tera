@@ -10,6 +10,7 @@
         }
 
         public EntityId Npc { get; }
+        public EntityId NPC { get { return Npc; } } //different case in different projects, need refactoring
         public Vector3f Position { get; private set; }
         public bool Dead { get; }
     }

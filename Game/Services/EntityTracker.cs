@@ -12,6 +12,12 @@ namespace Tera.Game
     public class EntityTracker : IEnumerable<Entity>
     {
         private readonly Dictionary<EntityId, Entity> _dictionary = new Dictionary<EntityId, Entity>();
+        private readonly NpcDatabase _npcDatabase;
+
+        public EntityTracker(NpcDatabase npcDatabase=null)
+        {
+            _npcDatabase = npcDatabase;
+        }
 
         public IEnumerator<Entity> GetEnumerator()
         {
@@ -39,7 +45,7 @@ namespace Tera.Game
             message.On<SpawnNpcServerMessage>(
                 m =>
                     newEntity =
-                        new NpcEntity(m.Id, m.OwnerId, m.CategoryId, m.NpcId, m.NpcArea, GetOrPlaceholder(m.OwnerId)));
+                        new NpcEntity(m.Id, m.OwnerId, m.CategoryId, m.NpcId, m.NpcArea, GetOrPlaceholder(m.OwnerId), _npcDatabase?.GetOrPlaceholder(m.NpcArea, m.NpcId)));
             message.On<SpawnProjectileServerMessage>(
                 m => newEntity = new ProjectileEntity(m.Id, m.OwnerId, GetOrPlaceholder(m.OwnerId)));
             message.On<StartUserProjectileServerMessage>(

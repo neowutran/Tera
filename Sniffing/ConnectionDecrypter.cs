@@ -18,7 +18,7 @@ namespace Tera.Sniffing
 
         private string _region;
 
-        public ConnectionDecrypter(string region)
+        public ConnectionDecrypter(string region="Unknown")
         {
             _region = region;
         }

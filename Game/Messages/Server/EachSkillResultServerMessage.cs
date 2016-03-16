@@ -10,6 +10,7 @@ namespace Tera.Game.Messages
             Bit0 = 1, // Usually 1 for attacks, 0 for blocks/dodges but I don't understand its exact semantics yet
             Heal = 2, // Bit0 == 1 + heal == 1 = mana
             Bit2 = 4,
+            IsDfaResolve = 4,
             Bit16 = 0x10000,
             Bit18 = 0x40000
         }
@@ -78,7 +79,7 @@ namespace Tera.Game.Messages
         public bool IsMana => ((Flags & SkillResultFlags.Bit0) != 0) && ((Flags & SkillResultFlags.Heal) != 0);
 
         public bool IsHeal => ((Flags & SkillResultFlags.Bit0) == 0) && ((Flags & SkillResultFlags.Heal) != 0);
-
+        public bool IsUseless => (Flags & SkillResultFlags.IsDfaResolve) != 0;
         public bool IsHp => !IsMana;
     }
 }
