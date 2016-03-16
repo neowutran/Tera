@@ -35,6 +35,11 @@ namespace Tera.Game
             }
         }
 
+        public Skill Get(UserEntity user, EachSkillResultServerMessage message)
+        {
+            return Get(user, message.SkillId);
+        }
+
         // skillIds are reused across races and class, so we need a RaceGenderClass to disambiguate them
         public Skill Get(UserEntity user, int skillId)
         {
