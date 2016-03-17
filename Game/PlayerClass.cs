@@ -20,12 +20,4 @@ namespace Tera.Game
 
         Common = 255
     }
-
-    public static class PlayerClassHelper
-    {
-        public static bool IsHeal(PlayerClass playerClass)
-        {
-            return playerClass == PlayerClass.Mystic || playerClass == PlayerClass.Priest;
-        }
-    }
 }

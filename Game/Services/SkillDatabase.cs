@@ -44,7 +44,6 @@ namespace Tera.Game
         public Skill Get(UserEntity user, int skillId)
         {
             var raceGenderClass = user.RaceGenderClass;
-            var comparer = new Helpers.ProjectingEqualityComparer<Skill, int>(x => x.Id);
             foreach (var rgc2 in raceGenderClass.Fallbacks())
             {
                 if (!_userSkilldata.ContainsKey(rgc2))
