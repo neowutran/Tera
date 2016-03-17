@@ -12,7 +12,25 @@
 
         public override string ToString()
         {
-            return $"{GetType().Name} {Id}";
+            var result = $"{GetType().Name} {Id}";
+            if (RootOwner != this)
+                result = $"{result} owned by {RootOwner}";
+            return result;
+        }
+
+        public Entity RootOwner
+        {
+            get
+            {
+                var entity = this;
+                var ownedEntity = entity as IHasOwner;
+                while (ownedEntity != null && ownedEntity.Owner != null)
+                {
+                    entity = ownedEntity.Owner;
+                    ownedEntity = entity as IHasOwner;
+                }
+                return entity;
+            }
         }
     }
 }
