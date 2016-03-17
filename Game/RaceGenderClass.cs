@@ -17,7 +17,7 @@ namespace Tera.Game
             {
                 if ((byte) Race >= 50 || (byte) Gender >= 2 || (byte) Class >= 100)
                     throw new InvalidOperationException();
-                return 10100 + 200*(int) Race + 100*(int) Gender + (int) Class;
+                return 10200 + 200*(int) Race - 100*(int) Gender + (int) Class;
             }
             private set
             {
@@ -26,6 +26,7 @@ namespace Tera.Game
                 Race = (Race) ((value-100)/200%50);
                 Gender = (Gender) (value/100%2);
                 Class = (PlayerClass) (value%100);
+                Debug.Assert(Raw == value);
             }
         }
 
