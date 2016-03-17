@@ -8,11 +8,11 @@ namespace Tera.Game.Messages
         {
             User = reader.ReadEntityId();
             Position = reader.ReadVector3f();
-            Status = reader.ReadByte();
+            Dead = reader.ReadByte() == 0; // 0=dead;1=alive
         }
 
         public EntityId User { get; }
         public Vector3f Position { get; private set; }
-        public byte Status { get; } //0=dead,1=alive
+        public bool Dead { get; }
     }
 }

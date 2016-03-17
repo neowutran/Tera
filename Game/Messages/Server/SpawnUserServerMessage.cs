@@ -22,9 +22,6 @@ namespace Tera.Game.Messages
         public uint PlayerId { get; private set; }
         public string Name { get; private set; }
         public string GuildName { get; private set; }
-
-        public PlayerClass Class => RaceGenderClass.Class;
-
         public RaceGenderClass RaceGenderClass { get; }
     }
 }
