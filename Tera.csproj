@@ -32,7 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.XML" />
+    <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
@@ -44,12 +44,13 @@
     <Compile Include="Game\Messages\Server\SNpcTargetUser.cs" />
     <Compile Include="Game\Messages\Server\STargetInfo.cs" />
     <Compile Include="Game\Messages\Server\StartUserProjectileServerMessage.cs" />
-    <Compile Include="Game\Messages\Server\S_ABNORMALITY_END.cs" />
     <Compile Include="Game\Messages\Server\S_ABNORMALITY_BEGIN.cs" />
+    <Compile Include="Game\Messages\Server\S_ABNORMALITY_END.cs" />
     <Compile Include="Game\Messages\Server\S_ABNORMALITY_REFRESH.cs" />
     <Compile Include="Game\Messages\Server\S_CREATURE_CHANGE_HP.cs" />
     <Compile Include="Game\Messages\Server\S_CREATURE_LIFE.cs" />
     <Compile Include="Game\Messages\Server\S_DESPAWN_NPC.cs" />
+    <Compile Include="Game\Messages\Server\S_DESPAWN_USER.cs" />
     <Compile Include="Game\Messages\Server\S_NPC_LOCATION.cs" />
     <Compile Include="Game\Messages\Server\S_NPC_STATUS.cs" />
     <Compile Include="Game\Messages\Server\S_PARTY_MEMBER_ABNORMAL_ADD.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Game\PlaceHolderEntity.cs" />
     <Compile Include="Game\Player.cs" />
     <Compile Include="Game\RaceGenderClass.cs" />
+    <Compile Include="Game\Region.cs" />
     <Compile Include="Game\Server.cs" />
     <Compile Include="Game\Services\Helpers.cs" />
     <Compile Include="Game\Services\HotDotDatabase.cs" />
@@ -90,11 +92,11 @@
     <Compile Include="Game\Race.cs" />
     <Compile Include="Game\Services\TeraMessageReader.cs" />
     <Compile Include="Game\Messages\UnknownMessage.cs" />
-    <Compile Include="Game\Messages\Server\S_DESPAWN_USER.cs" />
     <Compile Include="Game\UserEntity.cs" />
     <Compile Include="Game\Services\EntityTracker.cs" />
     <Compile Include="Game\Vector3f.cs" />
     <Compile Include="PacketLog\LogHeader.cs" />
+    <Compile Include="PacketLog\PacketLogFile.cs" />
     <Compile Include="PacketLog\Parsing\BlockHelper.cs" />
     <Compile Include="PacketLog\Parsing\BlockSplitter.cs" />
     <Compile Include="PacketLog\Parsing\BlockType.cs" />
@@ -102,12 +104,12 @@
     <Compile Include="PacketLog\Parsing\LogHelper.cs" />
     <Compile Include="PacketLog\PacketLogReader.cs" />
     <Compile Include="PacketLog\PacketLogWriter.cs" />
-    <Compile Include="Sniffing\Crypt\Sha.cs" />
     <Compile Include="Sniffing\ITeraSniffer.cs" />
     <Compile Include="Sniffing\MessageSplitter.cs" />
     <Compile Include="Sniffing\Crypt\Cryptor.cs" />
     <Compile Include="Sniffing\Crypt\CryptorKey.cs" />
     <Compile Include="Sniffing\Crypt\Session.cs" />
+    <Compile Include="Sniffing\Crypt\Sha.cs" />
     <Compile Include="Sniffing\Crypt\Utils.cs" />
     <Compile Include="MessageDirection.cs" />
     <Compile Include="Message.cs" />

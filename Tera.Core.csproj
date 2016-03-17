@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,9 +9,8 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Tera</RootNamespace>
     <AssemblyName>Tera.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,7 +20,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,7 +28,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -41,6 +38,7 @@
   <ItemGroup>
     <Compile Include="Game\Angle.cs" />
     <Compile Include="Game\IHasOwner.cs" />
+    <Compile Include="Game\HotDot.cs" />
     <Compile Include="Game\Messages\Server\CChat.cs" />
     <Compile Include="Game\Messages\Server\SNpcOccupierInfo.cs" />
     <Compile Include="Game\Messages\Server\SNpcTargetUser.cs" />
@@ -66,11 +64,16 @@
     <Compile Include="Game\NpcInfo.cs" />
     <Compile Include="Game\PlaceHolderEntity.cs" />
     <Compile Include="Game\Player.cs" />
+    <Compile Include="Game\RaceGenderClass.cs" />
     <Compile Include="Game\Region.cs" />
     <Compile Include="Game\Server.cs" />
     <Compile Include="Game\Services\Helpers.cs" />
+    <Compile Include="Game\Services\HotDotDatabase.cs" />
     <Compile Include="Game\Services\NpcDatabase.cs" />
+    <Compile Include="Game\Services\OpCodeNamer.cs" />
+    <Compile Include="Game\Services\PetSkillDatabase.cs" />
     <Compile Include="Game\Services\PlayerTracker.cs" />
+    <Compile Include="Game\Services\SkillDatabase.cs" />
     <Compile Include="Game\Skill.cs" />
     <Compile Include="Game\Gender.cs" />
     <Compile Include="Game\Messages\Server\LoginServerMessage.cs" />
@@ -85,11 +88,8 @@
     <Compile Include="Game\Messages\Server\SpawnUserServerMessage.cs" />
     <Compile Include="Game\EntityId.cs" />
     <Compile Include="Game\NpcEntity.cs" />
-    <Compile Include="Game\Services\OpCodeNamer.cs" />
     <Compile Include="Game\Messages\ParsedMessage.cs" />
     <Compile Include="Game\Race.cs" />
-    <Compile Include="Game\RaceGenderClass.cs" />
-    <Compile Include="Game\Services\SkillDatabase.cs" />
     <Compile Include="Game\Services\TeraMessageReader.cs" />
     <Compile Include="Game\Messages\UnknownMessage.cs" />
     <Compile Include="Game\UserEntity.cs" />
