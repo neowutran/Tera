@@ -13,6 +13,7 @@ namespace Tera.Game
 
 
         public uint PlayerId => User.PlayerId;
+        public uint ServerId => User.ServerId;
 
         public string Name => User.Name;
         public bool IsHealer => Class == PlayerClass.Priest || Class == PlayerClass.Mystic;

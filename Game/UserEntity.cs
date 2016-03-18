@@ -21,6 +21,7 @@ namespace Tera.Game
             GuildName = message.GuildName;
             RaceGenderClass = message.RaceGenderClass;
             PlayerId = message.PlayerId;
+            ServerId = message.ServerId;
         }
 
         internal UserEntity(LoginServerMessage message)
@@ -30,11 +31,13 @@ namespace Tera.Game
             GuildName = message.GuildName;
             RaceGenderClass = message.RaceGenderClass;
             PlayerId = message.PlayerId;
+            ServerId = message.ServerId;
         }
 
         public string Name { get; set; }
         public string GuildName { get; set; }
         public RaceGenderClass RaceGenderClass { get; set; }
+        public uint ServerId { get; set; }
         public uint PlayerId { get; set; }
 
         public override string ToString()
