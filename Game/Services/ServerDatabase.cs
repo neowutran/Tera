@@ -24,9 +24,9 @@ namespace Tera.Game
             var key = Tuple.Create(ServerId, region);
             return _servers.ContainsKey(key) ? _servers[key].Name : $"{region}: {ServerId.ToString()}";
         }
-        public IEnumerable<Server> GetServers()
+        public Dictionary<string,Server> GetServersByIp()
         {
-            return _serverlist;
+            return _serverlist.GroupBy(x => x.Ip).ToDictionary(x=>x.Key,x=>x.First());
         }
 
     }
