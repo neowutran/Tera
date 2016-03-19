@@ -35,7 +35,7 @@ namespace Tera.Game
             return (T) Enum.Parse(typeof (T), s);
         }
 
-        public string GameRace => Race==Race.Popori ? Gender==Gender.Female ? "Elin" : "Popori" : Race.ToString();
+        public string GameRace => Race==Race.Popori && Gender==Gender.Female ? "Elin" : Race.ToString();
 
         public RaceGenderClass(string race, string gender, string @class)
             : this()
