@@ -73,6 +73,7 @@
     <Compile Include="Game\Services\OpCodeNamer.cs" />
     <Compile Include="Game\Services\PetSkillDatabase.cs" />
     <Compile Include="Game\Services\PlayerTracker.cs" />
+    <Compile Include="Game\Services\ServerDatabase.cs" />
     <Compile Include="Game\Services\SkillDatabase.cs" />
     <Compile Include="Game\Skill.cs" />
     <Compile Include="Game\Gender.cs" />

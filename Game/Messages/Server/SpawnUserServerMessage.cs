@@ -16,7 +16,7 @@ namespace Tera.Game.Messages
             reader.Skip(208);
             Name = reader.ReadTeraString();
             GuildName = reader.ReadTeraString();
-            Console.WriteLine(Name + ":" + BitConverter.ToString(BitConverter.GetBytes(Id.Id))+ ":"+ ServerId.ToString()+" "+ BitConverter.ToString(BitConverter.GetBytes(PlayerId)));
+//            Console.WriteLine(Name + ":" + BitConverter.ToString(BitConverter.GetBytes(Id.Id))+ ":"+ ServerId.ToString()+" "+ BitConverter.ToString(BitConverter.GetBytes(PlayerId)));
         }
 
         public EntityId Id { get; private set; }
