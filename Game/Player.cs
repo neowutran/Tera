@@ -6,16 +6,17 @@ namespace Tera.Game
     {
         private UserEntity _user;
 
-        public Player(UserEntity user)
+        public Player(UserEntity user, ServerDatabase serverdatabase)
         {
             _user = user;
+            FullName = $"{serverdatabase?.GetServerName(user.ServerId) ?? user.ServerId.ToString()} : {user.Name}";
         }
-
 
         public uint PlayerId => User.PlayerId;
         public uint ServerId => User.ServerId;
 
         public string Name => User.Name;
+        public string FullName { get; private set; }
         public bool IsHealer => Class == PlayerClass.Priest || Class == PlayerClass.Mystic;
         public string GuildName => User.GuildName;
 

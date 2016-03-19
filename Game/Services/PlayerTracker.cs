@@ -7,9 +7,10 @@ namespace Tera.Game
     public class PlayerTracker : IEnumerable<Player>
     {
         private readonly Dictionary<uint, Player> _playerById = new Dictionary<uint, Player>();
-
-        public PlayerTracker(EntityTracker entityTracker)
+        private readonly ServerDatabase _serverDatabase;
+        public PlayerTracker(EntityTracker entityTracker,ServerDatabase serverDatabase=null)
         {
+            _serverDatabase = serverDatabase;
             entityTracker.EntityUpdated += Update;
         }
 
@@ -38,7 +39,7 @@ namespace Tera.Game
             Player player;
             if (!_playerById.TryGetValue(user.PlayerId, out player))
             {
-                player = new Player(user);
+                player = new Player(user,_serverDatabase);
                 _playerById.Add(player.PlayerId, player);
             }
             else
