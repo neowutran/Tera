@@ -20,10 +20,10 @@ namespace Tera.Game
             _servers =_serverlist.Where(x=>x.ServerId!=uint.MaxValue).ToDictionary(x=>Tuple.Create(x.ServerId,x.Region));
         }
 
-        public string GetServerName(uint ServerId) // not sure, whether Servers in different regions have unique ServerId's, if so - delete Tuple and lookup only by ServerId
+        public string GetServerName(uint serverId, Server oldServer = null) // not sure, whether Servers in different regions have unique ServerId's, if so - delete Tuple and lookup only by ServerId
         {
-            var key = Tuple.Create(ServerId, Region);
-            return _servers.ContainsKey(key) ? _servers[key].Name : $"{Region}: {ServerId.ToString()}";
+            var key = Tuple.Create(serverId, Region);
+            return _servers.ContainsKey(key) ? _servers[key].Name : oldServer?.Name ?? $"{Region}: {serverId.ToString()}";
         }
         public Dictionary<string,Server> GetServersByIp()
         {
@@ -33,6 +33,10 @@ namespace Tera.Game
         {
             _serverlist = _serverlist.Concat(newServers.Where(sl => newServers.All(os => os.Ip != sl.Ip)));
         }
-
+        public Server GetServer(uint serverId, Server oldServer = null)
+        {
+            var key = Tuple.Create(serverId, Region);
+            return _servers.ContainsKey(key) ? _servers[key] : oldServer;
+        }
     }
 }
