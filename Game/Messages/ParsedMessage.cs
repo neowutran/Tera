@@ -17,12 +17,12 @@ namespace Tera.Game.Messages
             }
             */
             //    Console.WriteLine(OpCodeName);
-            /*
-            if (OpCodeName.Contains("CHANGE_MP"))
-            {
-                PrintRaw();
-            }
-            */
+            
+            //if (OpCodeName.Contains("CHARM"))
+            //{
+            //    PrintRaw();
+            //}
+            
 
             /*
             Console.WriteLine(OpCodeName);

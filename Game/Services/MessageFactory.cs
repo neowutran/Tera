@@ -39,7 +39,13 @@ namespace Tera.Game
             {"S_USER_STATUS", typeof (SUserStatus)},
             {"S_CREATURE_LIFE", typeof (SCreatureLife)},
             {"S_NPC_STATUS", typeof (SNpcStatus)},
-            {"S_NPC_LOCATION", typeof (SNpcLocation)}
+            {"S_NPC_LOCATION", typeof (SNpcLocation)},
+            {"S_ADD_CHARM_STATUS", typeof (SAddCharmStatus)},
+            {"S_ENABLE_CHARM_STATUS", typeof (SEnableCharmStatus)},
+            {"S_REMOVE_CHARM_STATUS", typeof (SRemoveCharmStatus)},
+            {"S_PARTY_MEMBER_CHARM_ADD", typeof (SPartyMemberCharmAdd)},
+            {"S_PARTY_MEMBER_CHARM_DEL", typeof (SPartyMemberCharmDel)},
+            {"S_PARTY_MEMBER_CHARM_ENABLE", typeof (SPartyMemberCharmEnable)}
         };
 
         private readonly OpCodeNamer _opCodeNamer;
