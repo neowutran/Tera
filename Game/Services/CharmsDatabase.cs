@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Tera.Game.Messages;
 
 namespace Tera.Game
 {
-    // Contains information about skills
-    // Currently this is limited to the name of the skill
     public class CharmsDatabase
     {
         private readonly Dictionary<uint, string> _charms = new Dictionary <uint, string>();
