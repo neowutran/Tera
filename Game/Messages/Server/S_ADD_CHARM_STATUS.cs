@@ -1,4 +1,6 @@
-﻿namespace Tera.Game.Messages
+﻿using System;
+
+namespace Tera.Game.Messages
 {
     public class SAddCharmStatus : ParsedMessage
     {
@@ -8,7 +10,7 @@
             CharmId = reader.ReadUInt32();
             Status = reader.ReadByte();
             Duration = reader.ReadInt32();
-            //   Console.WriteLine("target = "+TargetId+";Charm:"+CharmId+";Duration:"+Duration+";Status:"+Status);
+//            Console.WriteLine("target = "+TargetId+";Charm:"+CharmId+";Duration:"+Duration+";Status:"+Status);
         }
 
         public EntityId TargetId { get; }

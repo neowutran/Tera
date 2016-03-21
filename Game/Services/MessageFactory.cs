@@ -43,9 +43,11 @@ namespace Tera.Game
             {"S_ADD_CHARM_STATUS", typeof (SAddCharmStatus)},
             {"S_ENABLE_CHARM_STATUS", typeof (SEnableCharmStatus)},
             {"S_REMOVE_CHARM_STATUS", typeof (SRemoveCharmStatus)},
+            {"S_RESET_CHARM_STATUS", typeof (SResetCharmStatus)},
             {"S_PARTY_MEMBER_CHARM_ADD", typeof (SPartyMemberCharmAdd)},
             {"S_PARTY_MEMBER_CHARM_DEL", typeof (SPartyMemberCharmDel)},
-            {"S_PARTY_MEMBER_CHARM_ENABLE", typeof (SPartyMemberCharmEnable)}
+            {"S_PARTY_MEMBER_CHARM_ENABLE", typeof (SPartyMemberCharmEnable)},
+            {"S_PARTY_MEMBER_CHARM_RESET", typeof (SPartyMemberCharmReset)}
         };
 
         private readonly OpCodeNamer _opCodeNamer;

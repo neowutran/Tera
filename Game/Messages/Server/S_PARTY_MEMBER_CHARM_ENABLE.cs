@@ -4,11 +4,13 @@
     {
         internal SPartyMemberCharmEnable(TeraMessageReader reader) : base(reader)
         {
-            TargetId = reader.ReadEntityId();
+            ServerId = reader.ReadUInt32();
+            PlayerId = reader.ReadUInt32();
             CharmId = reader.ReadUInt32();
         }
 
-        public EntityId TargetId { get; }
+        public uint ServerId { get; }
+        public uint PlayerId { get; }
         public uint CharmId { get; }
     }
 }

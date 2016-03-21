@@ -4,14 +4,15 @@
     {
         internal SPartyMemberCharmAdd(TeraMessageReader reader) : base(reader)
         {
-            TargetId = reader.ReadEntityId();
+            ServerId = reader.ReadUInt32();
+            PlayerId = reader.ReadUInt32();
             CharmId = reader.ReadUInt32();
             Duration = reader.ReadInt32();
             Status = reader.ReadByte();
-            //   Console.WriteLine("target = "+TargetId+";Charm:"+CharmId+";Duration:"+Duration+";Status:"+Status);
         }
 
-        public EntityId TargetId { get; }
+        public uint ServerId { get; }
+        public uint PlayerId { get; }
         public uint CharmId { get; }
         public byte Status { get; }
         public int Duration { get; }

@@ -37,6 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Game\Angle.cs" />
+    <Compile Include="Game\CharmStatus.cs" />
     <Compile Include="Game\IHasOwner.cs" />
     <Compile Include="Game\HotDot.cs" />
     <Compile Include="Game\Messages\Server\CChat.cs" />
@@ -64,8 +65,10 @@
     <Compile Include="Game\Messages\Server\S_PARTY_MEMBER_CHARM_ADD.cs" />
     <Compile Include="Game\Messages\Server\S_PARTY_MEMBER_CHARM_DEL.cs" />
     <Compile Include="Game\Messages\Server\S_PARTY_MEMBER_CHARM_ENABLE.cs" />
+    <Compile Include="Game\Messages\Server\S_PARTY_MEMBER_CHARM_RESET.cs" />
     <Compile Include="Game\Messages\Server\S_PLAYER_CHANGE_MP.cs" />
     <Compile Include="Game\Messages\Server\S_REMOVE_CHARM_STATUS.cs" />
+    <Compile Include="Game\Messages\Server\S_RESET_CHARM_STATUS.cs" />
     <Compile Include="Game\Messages\Server\S_USER_STATUS.cs" />
     <Compile Include="Game\NpcInfo.cs" />
     <Compile Include="Game\PlaceHolderEntity.cs" />
