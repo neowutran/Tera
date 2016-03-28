@@ -40,6 +40,7 @@ namespace Data
                 var name = values[8];
                 _hotdots[id] = new Data.HotDot(id, type, hp, mp, amount, method, time, tick, name);
             }
+            _hotdots[8888888] = new Data.HotDot(8888888, "Endurance", 0, 0, 0, 0, 0, 0, "Enrage");
         }
 
         public Data.HotDot Get(int skillId)

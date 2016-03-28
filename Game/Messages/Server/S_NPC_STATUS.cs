@@ -7,14 +7,14 @@ namespace Tera.Game.Messages
     {
         internal SNpcStatus(TeraMessageReader reader) : base(reader)
         {
-            NPC = reader.ReadEntityId();
+            Npc = reader.ReadEntityId();
             Enraged = (reader.ReadByte() & 1) == 1;
 	        reader.Skip(4);
             Target = reader.ReadEntityId();
-            //Console.WriteLine("NPC:" + NPC + ";Target:" + Target + (Enraged?" Enraged":""));
+            Console.WriteLine("NPC:" + Npc + ";Target:" + Target + (Enraged?" Enraged":""));
         }
 
-        public EntityId NPC { get; }
+        public EntityId Npc { get; }
         public bool Enraged { get; }
         public EntityId Target { get; }
     }
