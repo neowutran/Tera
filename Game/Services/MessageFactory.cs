@@ -47,12 +47,7 @@ namespace Tera.Game
             {"S_PARTY_MEMBER_CHARM_ADD", typeof (SPartyMemberCharmAdd)},
             {"S_PARTY_MEMBER_CHARM_DEL", typeof (SPartyMemberCharmDel)},
             {"S_PARTY_MEMBER_CHARM_ENABLE", typeof (SPartyMemberCharmEnable)},
-            {"S_PARTY_MEMBER_CHARM_RESET", typeof (SPartyMemberCharmReset)},
-            {"S_ARENA_FIGHT_ABNORMALITY_END", typeof(S_ARENA_FIGHT_ABNORMALITY_END) },
-            {"S_HOLD_ABNORMALITY_REMOVE", typeof(S_HOLD_ABNORMALITY_REMOVE) },
-            {"S_HOLD_ABNORMALITY_ADD", typeof(S_HOLD_ABNORMALITY_ADD) },
-            {"S_ARENA_FIGHT_ABNORMALITY_BEGIN", typeof(S_ARENA_FIGHT_ABNORMALITY_BEGIN) },
-            {"S_CLEAR_ALL_HOLDED_ABNORMALITY", typeof(S_CLEAR_ALL_HOLDED_ABNORMALITY) }
+            {"S_PARTY_MEMBER_CHARM_RESET", typeof (SPartyMemberCharmReset)}
         };
 
         private readonly OpCodeNamer _opCodeNamer;

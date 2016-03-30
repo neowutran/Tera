@@ -42,7 +42,7 @@ namespace Data
                 var iconName = values[12];
                 _hotdots[id] = new Data.HotDot(id, type, hp, mp, amount, method, time, tick, name, tooltip, iconName);
             }
-            _hotdots[8888888] = new Data.HotDot(8888888, "Endurance", 0, 0, 0, 0, 0, 0, "Enrage","","");
+            _hotdots[8888888] = new Data.HotDot(8888888, "Endurance", 0, 0, 0, 0, 0, 0, "Enrage","","enraged");
         }
 
         public Data.HotDot Get(int skillId)
