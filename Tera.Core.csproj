@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
@@ -79,6 +80,7 @@
     <Compile Include="Game\Services\CharmsDatabase.cs" />
     <Compile Include="Game\Services\Helpers.cs" />
     <Compile Include="Game\Services\HotDotDatabase.cs" />
+    <Compile Include="Game\Services\IconsDatabase.cs" />
     <Compile Include="Game\Services\NpcDatabase.cs" />
     <Compile Include="Game\Services\OpCodeNamer.cs" />
     <Compile Include="Game\Services\PetSkillDatabase.cs" />

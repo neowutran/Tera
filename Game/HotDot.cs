@@ -14,7 +14,7 @@ namespace Data
         }
 
         public HotDot(int id, string type, double hp, double mp, double amount, DotType method, int time, int tick,
-            string name)
+            string name, string tooltip, string iconName)
         {
             Id = id;
             Type = type;
@@ -25,6 +25,8 @@ namespace Data
             Time = time;
             Tick = tick;
             Name = name;
+            Tooltip = tooltip;
+            IconName = iconName;
         }
 
         public double Amount { get; }
@@ -37,6 +39,8 @@ namespace Data
         public int Time { get; }
         public int Tick { get; }
         public string Name { get; }
+        public string Tooltip { get; }
+        public string IconName { get; }
 
         public override bool Equals(object obj)
         {

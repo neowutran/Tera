@@ -24,10 +24,10 @@ namespace Tera.Game
         private void InitializeSkillDatabase(string filename)
         {
             var lines = File.ReadLines(filename);
-            var listOfParts = lines.Select(s => s.Split(new[] { '\t' }, 7));
+            var listOfParts = lines.Select(s => s.Split(new[] { '\t' }));
             foreach (var parts in listOfParts)
             {
-                var skill = new UserSkill(int.Parse(parts[0]), new RaceGenderClass(parts[1], parts[2], parts[3]), parts[4], parts[5] != "" && bool.Parse(parts[5]), parts[6]);
+                var skill = new UserSkill(int.Parse(parts[0]), new RaceGenderClass(parts[1], parts[2], parts[3]), parts[4], parts[5] != "" && bool.Parse(parts[5]), parts[6], parts[7]);
                 if (!_userSkilldata.ContainsKey(skill.RaceGenderClass))
                     _userSkilldata[skill.RaceGenderClass] = new Dictionary<int, UserSkill>();
                 if (!_userSkilldata[skill.RaceGenderClass].ContainsKey(skill.Id))
@@ -55,6 +55,21 @@ namespace Tera.Game
                 return skill;
             }
             return null;
+        }
+        public Skill GetSkillByPetName(string name,RaceGenderClass rgc)
+        {
+            foreach (var rgc2 in rgc.Fallbacks())
+            {
+                if (!_userSkilldata.ContainsKey(rgc2))
+                    continue;
+
+                UserSkill skill = _userSkilldata[rgc2].FirstOrDefault(x => x.Value.Name.Contains(name)).Value;
+                if (skill==null )
+                    continue;
+                return skill;
+            }
+            return null;
+
         }
     }
 }

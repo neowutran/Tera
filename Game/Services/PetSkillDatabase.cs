@@ -32,7 +32,7 @@ namespace Data
                 var skillId = int.Parse(values[1]);
                 var skillName = values[2];
 
-                var skill = new UserSkill(skillId, PlayerClass.Common, petName, skillName, null);
+                var skill = new UserSkill(skillId, PlayerClass.Common, petName, skillName, null, "");
                 if (!_petSkilldata.ContainsKey(petName))
                 {
                     _petSkilldata[petName] = new List<UserSkill>();
