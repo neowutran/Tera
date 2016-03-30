@@ -14,7 +14,7 @@ namespace Data
         }
 
         public HotDot(int id, string type, double hp, double mp, double amount, DotType method, int time, int tick,
-            string name, string tooltip, string iconName)
+            string name, string itemName, string tooltip, string iconName)
         {
             Id = id;
             Type = type;
@@ -25,6 +25,7 @@ namespace Data
             Time = time;
             Tick = tick;
             Name = name;
+            ItemName = itemName;
             Tooltip = tooltip;
             IconName = iconName;
         }
@@ -39,6 +40,7 @@ namespace Data
         public int Time { get; }
         public int Tick { get; }
         public string Name { get; }
+        public string ItemName { get; }
         public string Tooltip { get; }
         public string IconName { get; }
 

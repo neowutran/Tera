@@ -38,11 +38,12 @@ namespace Data
                 var tick = int.Parse(values[6]);
                 var amount = double.Parse(values[7], CultureInfo.InvariantCulture);
                 var name = values[8];
+                var itemName = values[10];
                 var tooltip = values[11];
                 var iconName = values[12];
-                _hotdots[id] = new Data.HotDot(id, type, hp, mp, amount, method, time, tick, name, tooltip, iconName);
+                _hotdots[id] = new Data.HotDot(id, type, hp, mp, amount, method, time, tick, name, itemName , tooltip, iconName);
             }
-            _hotdots[8888888] = new Data.HotDot(8888888, "Endurance", 0, 0, 0, 0, 0, 0, "Enrage","","enraged");
+            _hotdots[8888888] = new Data.HotDot(8888888, "Endurance", 0, 0, 0, 0, 0, 0, "Enrage","","","enraged");
         }
 
         public Data.HotDot Get(int skillId)
