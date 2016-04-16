@@ -47,7 +47,8 @@ namespace Tera.Game
             {"S_PARTY_MEMBER_CHARM_ADD", typeof (SPartyMemberCharmAdd)},
             {"S_PARTY_MEMBER_CHARM_DEL", typeof (SPartyMemberCharmDel)},
             {"S_PARTY_MEMBER_CHARM_ENABLE", typeof (SPartyMemberCharmEnable)},
-            {"S_PARTY_MEMBER_CHARM_RESET", typeof (SPartyMemberCharmReset)}
+            {"S_PARTY_MEMBER_CHARM_RESET", typeof (SPartyMemberCharmReset)},
+            {"S_WHISPER", typeof(S_WHISPER) }
         };
 
         private readonly OpCodeNamer _opCodeNamer;
