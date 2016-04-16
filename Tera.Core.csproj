@@ -42,7 +42,7 @@
     <Compile Include="Game\CharmStatus.cs" />
     <Compile Include="Game\IHasOwner.cs" />
     <Compile Include="Game\HotDot.cs" />
-    <Compile Include="Game\Messages\Server\CChat.cs" />
+    <Compile Include="Game\Messages\Server\S_CHAT.cs" />
     <Compile Include="Game\Messages\Server\SNpcOccupierInfo.cs" />
     <Compile Include="Game\Messages\Server\SNpcTargetUser.cs" />
     <Compile Include="Game\Messages\Server\STargetInfo.cs" />
