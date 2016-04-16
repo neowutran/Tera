@@ -37,13 +37,17 @@ namespace Tera.Game
 
         public Skill Get(UserEntity user, EachSkillResultServerMessage message)
         {
-            return GetOrNull(user, message.SkillId);
+            return GetOrNull(user.RaceGenderClass, message.SkillId);
+        }
+
+        public Skill GetOrNull(UserEntity user, int skillId)
+        {
+            return GetOrNull(user.RaceGenderClass, skillId);
         }
 
         // skillIds are reused across races and class, so we need a RaceGenderClass to disambiguate them
-        public Skill GetOrNull(UserEntity user, int skillId)
+        public Skill GetOrNull(RaceGenderClass raceGenderClass, int skillId)
         {
-            var raceGenderClass = user.RaceGenderClass;
             foreach (var rgc2 in raceGenderClass.Fallbacks())
             {
                 if (!_userSkilldata.ContainsKey(rgc2))
