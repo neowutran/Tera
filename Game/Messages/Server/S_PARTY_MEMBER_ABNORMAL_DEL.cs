@@ -4,13 +4,15 @@
     {
         internal SPartyMemberAbnormalDel(TeraMessageReader reader) : base(reader)
         {
-            TargetId = reader.ReadEntityId();
+            ServerId = reader.ReadUInt32();
+            PlayerId = reader.ReadUInt32();
             AbnormalityId = reader.ReadInt32();
         }
 
 
         public int AbnormalityId { get; }
 
-        public EntityId TargetId { get; }
+        public uint ServerId { get; }
+        public uint PlayerId { get; }
     }
 }

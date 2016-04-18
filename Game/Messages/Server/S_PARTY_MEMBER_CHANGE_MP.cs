@@ -4,7 +4,8 @@
     {
         internal SPartyMemberChangeMp(TeraMessageReader reader) : base(reader)
         {
-            TargetId = reader.ReadEntityId();
+            ServerId = reader.ReadUInt32();
+            PlayerId = reader.ReadUInt32();
             MpRemaining = reader.ReadInt32();
             TotalMp = reader.ReadInt32();
             Unknow3 = reader.ReadInt16();
@@ -18,6 +19,7 @@
         public int TotalMp { get; }
 
 
-        public EntityId TargetId { get; }
+        public uint ServerId { get; }
+        public uint PlayerId { get; }
     }
 }

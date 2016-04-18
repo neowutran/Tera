@@ -52,6 +52,14 @@ namespace Tera.Game
         {
             return _playerById[playerId];
         }
+
+        public Player GetOrNull(uint playerId)
+        {
+            Player result=null;
+            _playerById.TryGetValue(playerId, out result);
+            return result;
+        }
+
         public Player GetOrUpdate(UserEntity user)
         {
             Update(user);

@@ -48,6 +48,7 @@ namespace Tera.Game
             {"S_PARTY_MEMBER_CHARM_DEL", typeof (SPartyMemberCharmDel)},
             {"S_PARTY_MEMBER_CHARM_ENABLE", typeof (SPartyMemberCharmEnable)},
             {"S_PARTY_MEMBER_CHARM_RESET", typeof (SPartyMemberCharmReset)},
+            {"S_PARTY_MEMBER_STAT_UPDATE", typeof (S_PARTY_MEMBER_STAT_UPDATE)},
             {"S_WHISPER", typeof(S_WHISPER) }
         };
 

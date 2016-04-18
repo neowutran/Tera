@@ -4,7 +4,8 @@
     {
         internal SPartyMemberChangeHp(TeraMessageReader reader) : base(reader)
         {
-            TargetId = reader.ReadEntityId();
+            ServerId = reader.ReadUInt32();
+            PlayerId = reader.ReadUInt32();
             HpRemaining = reader.ReadInt32();
             TotalHp = reader.ReadInt32();
             Unknow3 = reader.ReadInt16();
@@ -17,7 +18,8 @@
 
         public int TotalHp { get; }
 
-        public EntityId TargetId { get; }
+        public uint ServerId { get; }
+        public uint PlayerId { get; }
         public bool Slaying => TotalHp > HpRemaining * 2;
 
     }

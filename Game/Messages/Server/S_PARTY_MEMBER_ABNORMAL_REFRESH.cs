@@ -5,7 +5,8 @@
         internal SPartyMemberAbnormalRefresh(TeraMessageReader reader) : base(reader)
         {
             //   PrintRaw();
-            TargetId = reader.ReadEntityId();
+            ServerId = reader.ReadUInt32();
+            PlayerId = reader.ReadUInt32();
             AbnormalityId = reader.ReadInt32();
             Duration = reader.ReadInt32();
             Unknow = reader.ReadInt32();
@@ -23,6 +24,7 @@
 
         public int AbnormalityId { get; }
 
-        public EntityId TargetId { get; }
+        public uint ServerId { get; }
+        public uint PlayerId { get; }
     }
 }

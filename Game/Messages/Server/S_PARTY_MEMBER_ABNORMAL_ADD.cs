@@ -4,7 +4,8 @@
     {
         internal SPartyMemberAbnormalAdd(TeraMessageReader reader) : base(reader)
         {
-            TargetId = reader.ReadEntityId();
+            ServerId = reader.ReadUInt32();
+            PlayerId = reader.ReadUInt32();
             AbnormalityId = reader.ReadInt32();
             Duration = reader.ReadInt32();
             Stack = reader.ReadInt32();
@@ -12,7 +13,8 @@
             //                  ";Stack:" + Stack);
         }
 
-        public EntityId TargetId { get; }
+        public uint ServerId { get; }
+        public uint PlayerId { get; }
 
         public int AbnormalityId { get; }
 
