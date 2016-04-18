@@ -17,7 +17,8 @@
 
         public int TotalHp { get; }
 
-
         public EntityId TargetId { get; }
+        public bool Slaying => TotalHp > HpRemaining * 2;
+
     }
 }

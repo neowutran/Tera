@@ -44,6 +44,7 @@ namespace Data
                 _hotdots[id] = new Data.HotDot(id, type, hp, mp, amount, method, time, tick, name, itemName , tooltip, iconName);
             }
             _hotdots[8888888] = new Data.HotDot(8888888, "Endurance", 0, 0, 0, 0, 0, 0, "Enrage","","","enraged");
+            _hotdots[8888889] = new Data.HotDot(8888889, "CritPower", 0, 0, 0, 0, 0, 0, "Slaying", "", "'Slaying' crystal is working (if equipped) when player in this state.", "slaying");
         }
 
         public Data.HotDot Get(int skillId)
