@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Data
+namespace Tera.Game
 {
     public class HotDot : IEquatable<object>
     {
