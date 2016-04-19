@@ -81,7 +81,6 @@
     <Compile Include="Game\RaceGenderClass.cs" />
     <Compile Include="Game\Region.cs" />
     <Compile Include="Game\Server.cs" />
-    <Compile Include="Game\Services\CharmsDatabase.cs" />
     <Compile Include="Game\Services\Helpers.cs" />
     <Compile Include="Game\Services\HotDotDatabase.cs" />
     <Compile Include="Game\Services\IconsDatabase.cs" />

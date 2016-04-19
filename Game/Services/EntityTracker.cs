@@ -13,6 +13,7 @@ namespace Tera.Game
     {
         private readonly Dictionary<EntityId, Entity> _dictionary = new Dictionary<EntityId, Entity>();
         private readonly NpcDatabase _npcDatabase;
+        public UserEntity MeterUser { get; private set; }
 
         public EntityTracker(NpcDatabase npcDatabase)
         {
@@ -41,7 +42,7 @@ namespace Tera.Game
         {
             Entity newEntity = null;
             message.On<SpawnUserServerMessage>(m => newEntity = new UserEntity(m));
-            message.On<LoginServerMessage>(m => newEntity = new UserEntity(m));
+            message.On<LoginServerMessage>(m => newEntity = LoginMe(m));
             message.On<SpawnNpcServerMessage>(
                 m =>
                     newEntity =
@@ -55,6 +56,12 @@ namespace Tera.Game
                 _dictionary[newEntity.Id] = newEntity;
                 OnEntityUpdated(newEntity);
             }
+        }
+
+        private Entity LoginMe(LoginServerMessage m)
+        {
+            MeterUser = new UserEntity(m);
+            return MeterUser;
         }
 
         public Entity GetOrNull(EntityId id)
