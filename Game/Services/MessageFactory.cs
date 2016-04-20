@@ -40,6 +40,7 @@ namespace Tera.Game
             {"S_CREATURE_LIFE", typeof (SCreatureLife)},
             {"S_NPC_STATUS", typeof (SNpcStatus)},
             {"S_NPC_LOCATION", typeof (SNpcLocation)},
+            {"S_INSTANT_MOVE", typeof (S_INSTANT_MOVE)},
             {"S_ADD_CHARM_STATUS", typeof (SAddCharmStatus)},
             {"S_ENABLE_CHARM_STATUS", typeof (SEnableCharmStatus)},
             {"S_REMOVE_CHARM_STATUS", typeof (SRemoveCharmStatus)},

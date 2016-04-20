@@ -43,6 +43,7 @@
     <Compile Include="Game\CharmStatus.cs" />
     <Compile Include="Game\IHasOwner.cs" />
     <Compile Include="Game\HotDot.cs" />
+    <Compile Include="Game\Messages\Server\S_INSTANT_MOVE.cs" />
     <Compile Include="Game\Messages\Server\S_PARTY_MEMBER_STAT_UPDATE.cs" />
     <Compile Include="Game\Messages\Server\S_WHISPER.cs" />
     <Compile Include="Game\Messages\Server\S_CHAT.cs" />
