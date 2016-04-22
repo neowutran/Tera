@@ -29,7 +29,7 @@ namespace Tera.PacketLog
                 return null;
             var buffer = stream.GetBuffer();
             var blockSize = buffer[0] | buffer[1] << 8;
-            if (stream.Length < blockSize)
+            if (stream.Length < blockSize || blockSize < 2)
                 return null;
             var block = new byte[blockSize];
             Array.Copy(buffer, 2, block, 0, blockSize - 2);
