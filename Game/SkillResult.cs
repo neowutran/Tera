@@ -86,7 +86,7 @@ namespace Tera.Game
         public string SkillName => Skill?.Name ?? SkillId.ToString();
         public string SkillNameDetailed
             => $"{Skill?.Name ?? SkillId.ToString()} {(IsChained != null ? (bool)IsChained ? "[C]" : null : null)} {(string.IsNullOrEmpty(Skill?.Detail) ? null : $"({Skill.Detail})")}".Replace("  ", " ");
-        public bool? IsChained => Skill.IsChained;
+        public bool? IsChained => Skill?.IsChained;
         public int Damage { get { return IsHeal||!IsHp ? 0 : Amount; } }
         public int Heal => IsHp && IsHeal ? Amount : 0;
         public int Mana => !IsHp ? Amount : 0;

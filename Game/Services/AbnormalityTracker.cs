@@ -32,21 +32,30 @@ namespace Tera.Game
                 PlayerAbnormalityTime.Add(player, new Dictionary<HotDot, AbnormalityDuration>());
             return PlayerAbnormalityTime[player];
         }
-        public Dictionary<HotDot, AbnormalityDuration> Clone(NpcEntity entity)
+        public Dictionary<HotDot, AbnormalityDuration> Get(NpcEntity entity)
         {
             if (entity==null) new Dictionary<HotDot, AbnormalityDuration>();
             if (!NpcAbnormalityTime.ContainsKey(entity))
                 return new Dictionary<HotDot, AbnormalityDuration>();
             else
-                return NpcAbnormalityTime[entity].ToDictionary(x=>x.Key,x=>(AbnormalityDuration)x.Value.Clone());
+                return NpcAbnormalityTime[entity];
         }
-        public Dictionary<HotDot, AbnormalityDuration> Clone(Player player)
+        public Dictionary<HotDot, AbnormalityDuration> Get(Player player)
         {
             if (player == null) new Dictionary<HotDot, AbnormalityDuration>();
             if (!PlayerAbnormalityTime.ContainsKey(player))
                 return new Dictionary<HotDot, AbnormalityDuration>();
             else
-                return PlayerAbnormalityTime[player].ToDictionary(x => x.Key, x => (AbnormalityDuration)x.Value.Clone());
+                return PlayerAbnormalityTime[player];
+        }
+
+        public AbnormalityStorage Clone(NpcEntity boss)
+        {
+            var npcTimes= new Dictionary<NpcEntity, Dictionary<HotDot, AbnormalityDuration>>();
+            if (boss!=null)
+                npcTimes = NpcAbnormalityTime.Where(x => x.Key == boss).ToDictionary(y => y.Key, y => y.Value.ToDictionary(x => x.Key, x => (AbnormalityDuration)x.Value.Clone()));
+            var PlayerTimes = PlayerAbnormalityTime.ToDictionary(y => y.Key, y => y.Value.ToDictionary(x => x.Key, x => (AbnormalityDuration)x.Value.Clone()));
+            return new AbnormalityStorage(npcTimes, PlayerTimes);
         }
 
         public AbnormalityStorage Clone()
