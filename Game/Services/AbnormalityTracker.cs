@@ -5,100 +5,6 @@ using Tera.Game.Messages;
 
 namespace Tera.Game
 {
-    public class AbnormalityStorage
-    {
-        internal Dictionary<NpcEntity, Dictionary<HotDot, AbnormalityDuration>> NpcAbnormalityTime;
-        internal Dictionary<Player, Dictionary<HotDot, AbnormalityDuration>> PlayerAbnormalityTime;
-
-        public AbnormalityStorage()
-        {
-            NpcAbnormalityTime = new Dictionary<NpcEntity, Dictionary<HotDot, AbnormalityDuration>>();
-            PlayerAbnormalityTime = new Dictionary<Player, Dictionary<HotDot, AbnormalityDuration>>();
-        }
-        public AbnormalityStorage(Dictionary<NpcEntity, Dictionary<HotDot, AbnormalityDuration>> npcTimes, Dictionary<Player, Dictionary<HotDot, AbnormalityDuration>> playerTimes)
-        {
-            NpcAbnormalityTime = npcTimes;
-            PlayerAbnormalityTime = playerTimes;
-        }
-        internal Dictionary<HotDot, AbnormalityDuration> AbnormalityTime(NpcEntity entity)
-        {
-            if (!NpcAbnormalityTime.ContainsKey(entity))
-                NpcAbnormalityTime.Add(entity, new Dictionary<HotDot, AbnormalityDuration>());
-            return NpcAbnormalityTime[entity];
-        }
-        internal Dictionary<HotDot, AbnormalityDuration> AbnormalityTime(Player player)
-        {
-            if (!PlayerAbnormalityTime.ContainsKey(player))
-                PlayerAbnormalityTime.Add(player, new Dictionary<HotDot, AbnormalityDuration>());
-            return PlayerAbnormalityTime[player];
-        }
-        public Dictionary<HotDot, AbnormalityDuration> Get(NpcEntity entity)
-        {
-            if (entity==null) new Dictionary<HotDot, AbnormalityDuration>();
-            if (!NpcAbnormalityTime.ContainsKey(entity))
-                return new Dictionary<HotDot, AbnormalityDuration>();
-            else
-                return NpcAbnormalityTime[entity];
-        }
-        public Dictionary<HotDot, AbnormalityDuration> Get(Player player)
-        {
-            if (player == null) new Dictionary<HotDot, AbnormalityDuration>();
-            if (!PlayerAbnormalityTime.ContainsKey(player))
-                return new Dictionary<HotDot, AbnormalityDuration>();
-            else
-                return PlayerAbnormalityTime[player];
-        }
-
-        public AbnormalityStorage Clone(NpcEntity boss)
-        {
-            var npcTimes= new Dictionary<NpcEntity, Dictionary<HotDot, AbnormalityDuration>>();
-            if (boss!=null)
-                npcTimes = NpcAbnormalityTime.Where(x => x.Key == boss).ToDictionary(y => y.Key, y => y.Value.ToDictionary(x => x.Key, x => (AbnormalityDuration)x.Value.Clone()));
-            var PlayerTimes = PlayerAbnormalityTime.ToDictionary(y => y.Key, y => y.Value.ToDictionary(x => x.Key, x => (AbnormalityDuration)x.Value.Clone()));
-            return new AbnormalityStorage(npcTimes, PlayerTimes);
-        }
-
-        public AbnormalityStorage Clone()
-        {
-            var npcTimes=NpcAbnormalityTime.ToDictionary(y => y.Key, y => y.Value.ToDictionary(x => x.Key, x => (AbnormalityDuration)x.Value.Clone()));
-            var PlayerTimes = PlayerAbnormalityTime.ToDictionary(y => y.Key, y => y.Value.ToDictionary(x => x.Key, x => (AbnormalityDuration)x.Value.Clone()));
-            return new AbnormalityStorage(npcTimes, PlayerTimes);
-        }
-        public void ClearEnded()
-        {
-            var npcTimes= new Dictionary<NpcEntity, Dictionary<HotDot, AbnormalityDuration>>();
-            foreach (var i in NpcAbnormalityTime)
-            {
-                var j = i.Value.Where(x => !x.Value.Ended()).ToDictionary(x => x.Key, x => new AbnormalityDuration(x.Value.InitialPlayerClass, x.Value.LastStart()));
-                if (j.Count() > 0)
-                    npcTimes.Add(i.Key, j);
-            }
-            var PlayerTimes = new Dictionary<Player, Dictionary<HotDot, AbnormalityDuration>>();
-            foreach (var i in PlayerAbnormalityTime)
-            {
-                var j = i.Value.Where(x => !x.Value.Ended()).ToDictionary(x => x.Key, x => new AbnormalityDuration(x.Value.InitialPlayerClass, x.Value.LastStart()));
-                if (j.Count() > 0)
-                    PlayerTimes.Add(i.Key, j);
-            }
-            NpcAbnormalityTime = npcTimes;
-            PlayerAbnormalityTime = PlayerTimes;
-        }
-        public void EndAll(long ticks)
-        {
-            foreach (var i in NpcAbnormalityTime)
-            {
-                foreach (var j in i.Value.Where(x => !x.Value.Ended()))
-                { j.Value.End(ticks / TimeSpan.TicksPerSecond); }
-            }
-            var PlayerTimes = new Dictionary<Player, Dictionary<HotDot, AbnormalityDuration>>();
-            foreach (var i in PlayerAbnormalityTime)
-            {
-                foreach (var j in i.Value.Where(x => !x.Value.Ended()))
-                { j.Value.End(ticks / TimeSpan.TicksPerSecond); }
-            }
-
-        }
-    }
     public class AbnormalityTracker
     {
         private readonly Dictionary<EntityId, List<Abnormality>> _abnormalities =
@@ -116,6 +22,73 @@ namespace Tera.Game
             HotDotDatabase = hotDotDatabase;
             UpdateDamageTracker = update;
             AbnormalityStorage = abnormalityStorage;
+        }
+
+        public void RegisterNpcStatus(SNpcStatus NpcStatus)
+        {
+            RegisterAggro(NpcStatus);
+            if (NpcStatus.Enraged)
+                AddAbnormality(NpcStatus.Npc, NpcStatus.Target,0,0,8888888,NpcStatus.Time.Ticks);
+            else
+                DeleteAbnormality(NpcStatus);
+        }
+
+        public void RegisterSlaying(UserEntity user, bool Slaying, long ticks)
+        {
+            if (user == null) return;
+            if (Slaying)
+                AddAbnormality(user.Id, user.Id, 0, 0, 8888889, ticks);
+            else
+                DeleteAbnormality(user.Id, 8888889, ticks);
+        }
+        public void RegisterDead(SCreatureLife dead)
+        {
+            var user = EntityTracker.GetOrNull(dead.User) as UserEntity;
+            if (user == null) return;
+            var player = PlayerTracker.GetOrUpdate(user);
+            var time = dead.Time.Ticks / TimeSpan.TicksPerSecond;
+            if (dead.Dead)
+                AbnormalityStorage.Death(player).Start(time);
+            else
+                AbnormalityStorage.Death(player).End(time);
+        }
+        private void RegisterAggro(SNpcStatus aggro)
+        {
+            var time = aggro.Time.Ticks / TimeSpan.TicksPerSecond;
+            var entity = EntityTracker.GetOrNull(aggro.Npc) as NpcEntity;
+            if (entity == null) return;//not sure why, but sometimes it fails
+            var user = EntityTracker.GetOrNull(aggro.Target) as UserEntity;
+            if (user != null)
+            {
+                var player = PlayerTracker.GetOrUpdate(user);
+                if (AbnormalityStorage.Last(entity) != player)
+                {
+                    if (AbnormalityStorage.Last(entity) != null)
+                        AbnormalityStorage.AggroEnd(AbnormalityStorage.Last(entity), entity, time);
+                    AbnormalityStorage.AggroStart(player, entity, time);
+                    AbnormalityStorage.LastAggro[entity] = player;
+                }
+            }
+            else
+            {
+                if (AbnormalityStorage.Last(entity) != null)
+                {
+                    AbnormalityStorage.AggroEnd(AbnormalityStorage.Last(entity), entity, time);
+                    AbnormalityStorage.LastAggro[entity] = null;
+                }
+            }
+        }
+
+        public void StopAggro(SDespawnNpc aggro)
+        {
+            var time = aggro.Time.Ticks / TimeSpan.TicksPerSecond;
+            var entity = EntityTracker.GetOrNull(aggro.Npc) as NpcEntity;
+            if (entity == null) return;// Strange, but seems there are not only NPC or something wrong with trackers
+            if (AbnormalityStorage.Last(entity) != null)
+            {
+                AbnormalityStorage.AggroEnd(AbnormalityStorage.Last(entity), entity, time);
+                AbnormalityStorage.LastAggro[entity] = null;
+            }
         }
 
         public void AddAbnormality(SAbnormalityBegin message)
@@ -287,8 +260,9 @@ namespace Tera.Game
 
         public void Update(SCreatureChangeHp message)
         {
-            Update(message.TargetId, message.SourceId, message.HpChange, message.Type, message.Critical == 1, true,
-                message.Time.Ticks);
+            Update(message.TargetId, message.SourceId, message.HpChange, message.Type, message.Critical == 1, true, message.Time.Ticks);
+            var user = EntityTracker.GetOrPlaceholder(message.TargetId) as UserEntity;
+            RegisterSlaying(user, message.Slaying, message.Time.Ticks);
         }
     }
 }
