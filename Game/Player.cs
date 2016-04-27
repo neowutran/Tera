@@ -29,7 +29,7 @@ namespace Tera.Game
             get { return _user; }
             set
             {
-                if (_user.ServerId!=_user.PlayerId || _user.PlayerId != value.PlayerId)
+                if (_user.ServerId!=_user.ServerId || _user.PlayerId != value.PlayerId)
                     throw new ArgumentException("Users must represent the same Player");
                 _user = value;
             }
