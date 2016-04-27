@@ -68,7 +68,7 @@ namespace Tera.Game
 
             if (targetUser != null)
             {
-                playerTracker.Get(targetUser.ServerId, targetUser.PlayerId);
+                TargetPlayer = playerTracker.Get(targetUser.ServerId, targetUser.PlayerId);
             }
         }
 
