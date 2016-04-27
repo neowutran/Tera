@@ -31,13 +31,13 @@ namespace Tera.Game
                     Skill = new UserSkill(message.SkillId, sourceUser.RaceGenderClass, npc.Info.Name, null, petSkillDatabase.Get(npc.Info.Name, SkillId),
                             skillDatabase.GetSkillByPetName(npc.Info.Name, sourceUser.RaceGenderClass)?.IconName ?? "");
                 }
-                SourcePlayer = playerTracker.Get(sourceUser.PlayerId);
+                SourcePlayer = playerTracker.Get(sourceUser.ServerId, sourceUser.PlayerId);
                 if (Skill == null)
                     Skill = new UserSkill(message.SkillId, sourceUser.RaceGenderClass, "Unknown");
             }
             if (targetUser != null)
             {
-                TargetPlayer = playerTracker.Get(targetUser.PlayerId);
+                TargetPlayer = playerTracker.Get(targetUser.ServerId, targetUser.PlayerId);
             }
         }
         public SkillResult(int amount, bool isCritical, bool isHp, bool isHeal, HotDot hotdot, EntityId source, EntityId target, DateTime time,
@@ -60,7 +60,7 @@ namespace Tera.Game
             PlayerClass pclass = PlayerClass.Common;
             if (sourceUser != null)
             {
-                SourcePlayer = playerTracker.Get(sourceUser.PlayerId);
+                SourcePlayer = playerTracker.Get(sourceUser.ServerId, sourceUser.PlayerId);
                 pclass = SourcePlayer.RaceGenderClass.Class;
             }
             Skill = new UserSkill(hotdot.Id, pclass,
@@ -68,7 +68,7 @@ namespace Tera.Game
 
             if (targetUser != null)
             {
-                playerTracker.Get(targetUser.PlayerId);
+                playerTracker.Get(targetUser.ServerId, targetUser.PlayerId);
             }
         }
 

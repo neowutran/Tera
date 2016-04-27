@@ -6,7 +6,7 @@ namespace Tera.Game
 {
     public class PlayerTracker : IEnumerable<Player>
     {
-        private readonly Dictionary<uint, Player> _playerById = new Dictionary<uint, Player>();
+        private readonly Dictionary<Tuple<uint,uint>, Player> _playerById = new Dictionary<Tuple<uint,uint>, Player>();
         private readonly ServerDatabase _serverDatabase;
         public PlayerTracker(EntityTracker entityTracker,ServerDatabase serverDatabase=null)
         {
@@ -37,10 +37,11 @@ namespace Tera.Game
                 throw new ArgumentNullException(nameof(user));
 
             Player player;
-            if (!_playerById.TryGetValue(user.PlayerId, out player))
+            var tup = Tuple.Create(user.ServerId, user.PlayerId);
+            if (!_playerById.TryGetValue(tup, out player))
             {
                 player = new Player(user,_serverDatabase);
-                _playerById.Add(player.PlayerId, player);
+                _playerById.Add(tup, player);
             }
             else
             {
@@ -49,22 +50,22 @@ namespace Tera.Game
             }
         }
 
-        public Player Get(uint playerId)
+        public Player Get(uint serverId,uint playerId)
         {
-            return _playerById[playerId];
+            return _playerById[Tuple.Create(serverId, playerId)];
         }
 
-        public Player GetOrNull(uint playerId)
+        public Player GetOrNull(uint serverId,uint playerId)
         {
             Player result=null;
-            _playerById.TryGetValue(playerId, out result);
+            _playerById.TryGetValue(Tuple.Create(serverId,playerId), out result);
             return result;
         }
 
         public Player GetOrUpdate(UserEntity user)
         {
             Update(user);
-            return _playerById[user.PlayerId];
+            return _playerById[Tuple.Create(user.ServerId, user.PlayerId)];
         }
     }
 }
