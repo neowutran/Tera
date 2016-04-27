@@ -45,7 +45,7 @@ namespace Tera.Game
 
         public bool Equals(Player other)
         {
-            return Name.Equals(other.Name) && PlayerId.Equals(other.PlayerId);
+            return ServerId.Equals(other.ServerId) && PlayerId.Equals(other.PlayerId);
         }
 
         public static bool operator ==(Player a, Player b)
@@ -71,7 +71,7 @@ namespace Tera.Game
 
         public override int GetHashCode()
         {
-            return Name.GetHashCode() ^ PlayerId.GetHashCode();
+            return ServerId.GetHashCode() ^ PlayerId.GetHashCode();
         }
 
         public override string ToString()

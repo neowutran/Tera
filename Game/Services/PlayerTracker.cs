@@ -44,7 +44,8 @@ namespace Tera.Game
             }
             else
             {
-                player.User = user;
+                if (player.User != user)
+                    player.User = user;
             }
         }
 

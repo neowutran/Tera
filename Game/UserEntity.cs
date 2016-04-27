@@ -1,13 +1,15 @@
 ﻿// Copyright (c) Gothos
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using Tera.Game.Messages;
 
 namespace Tera.Game
 {
     // A player character, including your own
-    public class UserEntity : Entity
+    public class UserEntity : Entity, IEquatable<object>
     {
         public UserEntity(EntityId id)
             : base(id)
@@ -65,5 +67,44 @@ namespace Tera.Game
             }
             return entities;
         }
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((UserEntity)obj);
+        }
+
+        public bool Equals(UserEntity other)
+        {
+            return Id.Equals(other.Id);
+        }
+
+        public static bool operator == (UserEntity a, UserEntity b)
+        {
+            if (ReferenceEquals(a, b))
+            {
+                return true;
+            }
+
+            // If one is null, but not both, return false.
+            if (((object)a == null) || ((object)b == null))
+            {
+                return false;
+            }
+
+            return a.Equals(b);
+        }
+
+        public static bool operator != (UserEntity a, UserEntity b)
+        {
+            return !(a == b);
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
+
     }
 }
