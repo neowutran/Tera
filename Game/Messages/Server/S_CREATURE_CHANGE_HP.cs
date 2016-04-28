@@ -32,6 +32,6 @@
 
         public EntityId TargetId { get; }
         public EntityId SourceId { get; }
-        public bool Slaying => TotalHp > HpRemaining * 2;
+        public bool Slaying => TotalHp > HpRemaining * 2 && HpRemaining > 0;
     }
 }

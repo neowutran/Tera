@@ -63,6 +63,6 @@ namespace Tera.Game
             var death=_death.Ended() ? null : new AbnormalityDuration(PlayerClass.Common,_death.LastStart());
             return new Death(death);
         }
-        public bool Dead => !_death.Ended();
+        public bool Dead => !_death?.Ended() ?? false;
     }
 }

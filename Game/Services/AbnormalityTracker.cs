@@ -37,7 +37,10 @@ namespace Tera.Game
         {
             if (user == null) return;
             if (Slaying)
-                AddAbnormality(user.Id, user.Id, 0, 0, 8888889, ticks);
+            {
+                if (!AbnormalityStorage.Death(PlayerTracker.GetOrUpdate(user)).Dead)
+                    AddAbnormality(user.Id, user.Id, 0, 0, 8888889, ticks);
+            }
             else
                 DeleteAbnormality(user.Id, 8888889, ticks);
         }
@@ -48,7 +51,10 @@ namespace Tera.Game
             var player = PlayerTracker.GetOrUpdate(user);
             var time = dead.Time.Ticks / TimeSpan.TicksPerSecond;
             if (dead.Dead)
+            {
                 AbnormalityStorage.Death(player).Start(time);
+                DeleteAbnormality(user.Id, 8888889, dead.Time.Ticks);
+            }
             else
                 AbnormalityStorage.Death(player).End(time);
         }
