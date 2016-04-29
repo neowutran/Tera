@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Tera.Game.Messages;
 
 namespace Tera.Game
 {
@@ -8,9 +9,12 @@ namespace Tera.Game
     {
         private readonly Dictionary<Tuple<uint,uint>, Player> _playerById = new Dictionary<Tuple<uint,uint>, Player>();
         private readonly ServerDatabase _serverDatabase;
+        private List<Tuple<uint, uint>> _currentParty = new List<Tuple<uint, uint>>();
+        private EntityTracker _entityTracker;
         public PlayerTracker(EntityTracker entityTracker,ServerDatabase serverDatabase=null)
         {
             _serverDatabase = serverDatabase;
+            _entityTracker = entityTracker;
             entityTracker.EntityUpdated += Update;
         }
 
@@ -66,6 +70,19 @@ namespace Tera.Game
         {
             Update(user);
             return _playerById[Tuple.Create(user.ServerId, user.PlayerId)];
+        }
+        public void UpdateParty(ParsedMessage message)
+        {
+            message.On<S_BAN_PARTY>(m => _currentParty = new List<Tuple<uint, uint>>());
+            message.On<S_LEAVE_PARTY>(m => _currentParty = new List<Tuple<uint, uint>>());
+            message.On<S_LEAVE_PARTY_MEMBER>(m => _currentParty.Remove(Tuple.Create(m.ServerId,m.PlayerId)));
+            message.On<S_BAN_PARTY_MEMBER>(m => _currentParty.Remove(Tuple.Create(m.ServerId, m.PlayerId)));
+            message.On<S_PARTY_MEMBER_LIST>(m => _currentParty = m.Party.ConvertAll(x => Tuple.Create(x.ServerId, x.PlayerId)));
+        }
+        public bool MyParty(Player player)
+        {
+            if (player == null) return false;
+            return _currentParty.Contains(Tuple.Create(player.ServerId, player.PlayerId)) || player.User==_entityTracker.MeterUser ;
         }
     }
 }

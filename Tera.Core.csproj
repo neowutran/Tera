@@ -45,7 +45,12 @@
     <Compile Include="Game\Abnormality\Death.cs" />
     <Compile Include="Game\Abnormality\Duration.cs" />
     <Compile Include="Game\Abnormality\PlayerAbnormals.cs" />
+    <Compile Include="Game\Messages\Server\S_BAN_PARTY.cs" />
+    <Compile Include="Game\Messages\Server\S_BAN_PARTY_MEMBER.cs" />
     <Compile Include="Game\Messages\Server\S_INSTANT_MOVE.cs" />
+    <Compile Include="Game\Messages\Server\S_LEAVE_PARTY.cs" />
+    <Compile Include="Game\Messages\Server\S_LEAVE_PARTY_MEMBER.cs" />
+    <Compile Include="Game\Messages\Server\S_PARTY_MEMBER_LIST.cs" />
     <Compile Include="Game\Messages\Server\S_PARTY_MEMBER_STAT_UPDATE.cs" />
     <Compile Include="Game\Messages\Server\S_WHISPER.cs" />
     <Compile Include="Game\Messages\Server\S_CHAT.cs" />

@@ -167,7 +167,7 @@ namespace Tera.Game
         public void AggroEnd(Player player, NpcEntity target, long end)
         {
             if (PlayerAggro.ContainsKey(player))
-                if (!PlayerAggro[player].ContainsKey(target))
+                if (PlayerAggro[player].ContainsKey(target))
                     PlayerAggro[player][target].End(end);
         }
     }

@@ -10,12 +10,12 @@ namespace Tera.Game.Messages
         {
             Raw = reader.Message.Payload.Array;
             OpCodeName = reader.OpCodeName;
-            /*
-            if (OpCodeName.Contains("ABNORMALITY") || OpCodeName == "S_DESPAWN_NPC")
-            {
-                PrintRaw();
-            }
-            */
+            
+            //if (OpCodeName.Contains("S_BAN_PARTY") || OpCodeName == "PARTY_INFO" || OpCodeName == "S_BAN_PARTY_MEMBER")
+            //{
+            //    PrintRaw();
+            //}
+            
             //    Console.WriteLine(OpCodeName);
             
             //if (OpCodeName.Contains("CHARM"))
