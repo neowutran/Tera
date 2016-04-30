@@ -62,6 +62,7 @@ namespace Tera.Game
         }
         public Skill GetSkillByPetName(string name,RaceGenderClass rgc)
         {
+            if (string.IsNullOrEmpty(name)) return null;
             foreach (var rgc2 in rgc.Fallbacks())
             {
                 if (!_userSkilldata.ContainsKey(rgc2))

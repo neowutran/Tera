@@ -29,7 +29,7 @@ namespace Tera.Game
                 if (Skill == null && npc != null)
                 {
                     Skill = new UserSkill(message.SkillId, sourceUser.RaceGenderClass, npc.Info.Name, null, petSkillDatabase?.Get(npc.Info.Name, SkillId) ?? "",
-                            skillDatabase.GetSkillByPetName(npc.Info.Name, sourceUser.RaceGenderClass)?.IconName ?? "");
+                            skillDatabase.GetSkillByPetName(npc.Info.Name, sourceUser.RaceGenderClass)?.IconName ?? "", npc.Info);
                 }
                 SourcePlayer = playerTracker.Get(sourceUser.ServerId, sourceUser.PlayerId);
                 if (Skill == null)
