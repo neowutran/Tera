@@ -50,6 +50,7 @@ namespace Tera.Game
             {"S_PARTY_MEMBER_CHARM_ENABLE", typeof (SPartyMemberCharmEnable)},
             {"S_PARTY_MEMBER_CHARM_RESET", typeof (SPartyMemberCharmReset)},
             {"S_PARTY_MEMBER_STAT_UPDATE", typeof (S_PARTY_MEMBER_STAT_UPDATE)},
+            {"S_PLAYER_STAT_UPDATE", typeof (S_PLAYER_STAT_UPDATE)},
             {"S_PARTY_MEMBER_LIST", typeof (S_PARTY_MEMBER_LIST)},
             {"S_LEAVE_PARTY_MEMBER", typeof (S_LEAVE_PARTY_MEMBER)},
             {"S_BAN_PARTY_MEMBER", typeof (S_BAN_PARTY_MEMBER)},

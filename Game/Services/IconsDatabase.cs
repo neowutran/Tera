@@ -12,10 +12,10 @@ namespace Tera.Game
         private readonly Dictionary<string, BitmapImage> _images = new Dictionary<string, BitmapImage>();
         private readonly Dictionary<string, Bitmap> _bitmaps = new Dictionary<string, Bitmap>();
         private readonly Package _icons;
-        public IconsDatabase(string ResourceDirectory)
+        public IconsDatabase(string resourceDirectory)
         {
-//            IconsDirectory = Path.Combine(ResourceDirectory, "icons/");
-            _icons = Package.Open(ResourceDirectory + "icons.zip", FileMode.Open, FileAccess.Read);
+//            IconsDirectory = Path.Combine(resourceDirectory, "icons/");
+            _icons = Package.Open(resourceDirectory + "icons.zip", FileMode.Open, FileAccess.Read);
         }
 
         public BitmapImage GetImage(string iconName)

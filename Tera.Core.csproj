@@ -34,6 +34,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="WindowsBase" />
@@ -52,6 +53,7 @@
     <Compile Include="Game\Messages\Server\S_LEAVE_PARTY_MEMBER.cs" />
     <Compile Include="Game\Messages\Server\S_PARTY_MEMBER_LIST.cs" />
     <Compile Include="Game\Messages\Server\S_PARTY_MEMBER_STAT_UPDATE.cs" />
+    <Compile Include="Game\Messages\Server\S_PLAYER_STAT_UPDATE.cs" />
     <Compile Include="Game\Messages\Server\S_WHISPER.cs" />
     <Compile Include="Game\Messages\Server\S_CHAT.cs" />
     <Compile Include="Game\Messages\Server\SNpcOccupierInfo.cs" />

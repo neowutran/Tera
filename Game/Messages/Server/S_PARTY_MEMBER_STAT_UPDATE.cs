@@ -1,4 +1,6 @@
-﻿namespace Tera.Game.Messages
+﻿using System;
+
+namespace Tera.Game.Messages
 {
     public class S_PARTY_MEMBER_STAT_UPDATE : ParsedMessage
     {
@@ -19,7 +21,7 @@
             TotalRe = reader.ReadInt32();
             Unknow3 = reader.ReadInt32();
 
-            // Console.WriteLine("target = " + TargetId + ";Hp left:" + HpRemaining + ";Max HP:" + TotalHp + ";Unknow3:" + Unknow3);
+            //Console.WriteLine("target = " + PlayerId + ";Hp left:" + HpRemaining + ";Max HP:" + TotalHp + ";Unknow3:" + Unknow3);
         }
 
         public int Unknow3 { get; }
@@ -41,7 +43,7 @@
 
         public uint ServerId { get; }
         public uint PlayerId { get; }
-        public bool Slaying => TotalHp > HpRemaining * 2;
+        public bool Slaying => TotalHp > HpRemaining * 2 && HpRemaining > 0;
 
     }
 }

@@ -82,5 +82,9 @@ namespace Tera.Game
         {
             return (Type+Id).GetHashCode();
         }
+        public override string ToString()
+        {
+            return $"{Name} {Id}";
+        }
     }
 }

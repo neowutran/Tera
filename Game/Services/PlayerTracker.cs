@@ -84,5 +84,11 @@ namespace Tera.Game
             if (player == null) return false;
             return _currentParty.Contains(Tuple.Create(player.ServerId, player.PlayerId)) || player.User==_entityTracker.MeterUser ;
         }
+        public Player Me()
+        {
+            var user = _entityTracker.MeterUser;
+            if (user != null) return Get(user.ServerId, user.PlayerId);
+            return null;
+        }
     }
 }
