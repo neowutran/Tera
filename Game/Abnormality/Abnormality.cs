@@ -8,7 +8,7 @@ namespace Tera.Game
         private bool _buffRegistered;
 
         private bool _enduranceDebuffRegistered;
-        private AbnormalityTracker _abnormalityTracker;
+        private readonly AbnormalityTracker _abnormalityTracker;
         public Abnormality(HotDot hotdot, EntityId source, EntityId target, int duration, int stack, long ticks, AbnormalityTracker abnormalityTracker)
         {
             HotDot = hotdot;
@@ -16,7 +16,7 @@ namespace Tera.Game
             Target = target;
             Duration = duration/1000;
             Stack = stack == 0 ? 1 : stack;
-            FirstHit = ticks/TimeSpan.TicksPerSecond;
+            FirstHit = ticks;
             if (HotDot.Name == "") return;
             _abnormalityTracker = abnormalityTracker;
             RegisterBuff();
@@ -62,7 +62,6 @@ namespace Tera.Game
         public void ApplyBuffDebuff(long tick)
         {
             if (HotDot.Name == "") return;
-            tick /= TimeSpan.TicksPerSecond;
             ApplyBuff(tick);
             ApplyEnduranceDebuff(tick);
         }
@@ -141,10 +140,6 @@ namespace Tera.Game
             _abnormalityTracker.AbnormalityStorage.AbnormalityTime(player)[HotDot].Start(FirstHit);
             _buffRegistered = true;
         }
-        private void testerr(Dictionary<HotDot, AbnormalityDuration> testerror,long lastTicks)
-        {
-            testerror[HotDot].End(lastTicks);
-        }
 
         private void ApplyBuff(long lastTicks)
         {
@@ -156,8 +151,7 @@ namespace Tera.Game
                 return;
             }
             var player = _abnormalityTracker.PlayerTracker.GetOrUpdate((UserEntity)userEntity);
-            var testerror = _abnormalityTracker.AbnormalityStorage.AbnormalityTime(player);
-            testerr(testerror,lastTicks);
+            _abnormalityTracker.AbnormalityStorage.AbnormalityTime(player)[HotDot].End(lastTicks); ;
         }
 
         public void Refresh(int stackCounter, int duration, long time)

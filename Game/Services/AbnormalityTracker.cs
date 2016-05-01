@@ -24,19 +24,19 @@ namespace Tera.Game
             AbnormalityStorage = abnormalityStorage;
         }
 
-        public void RegisterNpcStatus(SNpcStatus NpcStatus)
+        public void RegisterNpcStatus(SNpcStatus npcStatus)
         {
-            RegisterAggro(NpcStatus);
-            if (NpcStatus.Enraged)
-                AddAbnormality(NpcStatus.Npc, NpcStatus.Target,0,0,8888888,NpcStatus.Time.Ticks);
+            RegisterAggro(npcStatus);
+            if (npcStatus.Enraged)
+                AddAbnormality(npcStatus.Npc, npcStatus.Target,0,0,8888888,npcStatus.Time.Ticks);
             else
-                DeleteAbnormality(NpcStatus);
+                DeleteAbnormality(npcStatus);
         }
 
-        public void RegisterSlaying(UserEntity user, bool Slaying, long ticks)
+        public void RegisterSlaying(UserEntity user, bool slaying, long ticks)
         {
             if (user == null) return;
-            if (Slaying)
+            if (slaying)
             {
                 if (!AbnormalityStorage.Death(PlayerTracker.GetOrUpdate(user)).Dead)
                     AddAbnormality(user.Id, user.Id, 0, 0, 8888889, ticks);
@@ -49,7 +49,7 @@ namespace Tera.Game
             var user = EntityTracker.GetOrNull(dead.User) as UserEntity;
             if (user == null) return;
             var player = PlayerTracker.GetOrUpdate(user);
-            var time = dead.Time.Ticks / TimeSpan.TicksPerSecond;
+            var time = dead.Time.Ticks;
             if (dead.Dead)
             {
                 AbnormalityStorage.Death(player).Start(time);
@@ -60,7 +60,7 @@ namespace Tera.Game
         }
         private void RegisterAggro(SNpcStatus aggro)
         {
-            var time = aggro.Time.Ticks / TimeSpan.TicksPerSecond;
+            var time = aggro.Time.Ticks;
             var entity = EntityTracker.GetOrNull(aggro.Npc) as NpcEntity;
             if (entity == null) return;//not sure why, but sometimes it fails
             var user = EntityTracker.GetOrNull(aggro.Target) as UserEntity;
@@ -87,7 +87,7 @@ namespace Tera.Game
 
         public void StopAggro(SDespawnNpc aggro)
         {
-            var time = aggro.Time.Ticks / TimeSpan.TicksPerSecond;
+            var time = aggro.Time.Ticks;
             var entity = EntityTracker.GetOrNull(aggro.Npc) as NpcEntity;
             if (entity == null) return;// Strange, but seems there are not only NPC or something wrong with trackers
             if (AbnormalityStorage.Last(entity) != null)
