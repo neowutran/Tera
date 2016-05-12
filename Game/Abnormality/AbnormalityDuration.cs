@@ -32,6 +32,19 @@ namespace Tera.Game
             return abnormalityDuration;
         }
 
+        public AbnormalityDuration Clone(long begin, long end)
+        {
+            if (begin == 0 || end == 0) return (AbnormalityDuration) Clone();
+            var newListDuration =
+                _listDuration.Where(x => x.Begin < end && x.End > begin)
+                    .Select(duration => duration.Clone(begin, end))
+                    .ToList();
+            var abnormalityDuration = new AbnormalityDuration(InitialPlayerClass)
+            {
+                _listDuration = newListDuration
+            };
+            return abnormalityDuration;
+        }
         public long Duration(long begin, long end)
         {
             long totalDuration = 0;
@@ -93,16 +106,20 @@ namespace Tera.Game
             return _listDuration[_listDuration.Count - 1].End;
         }
 
-        public int Count(long begin, long end)
+        public int Count(long begin=0, long end=0)
         {
-            return _listDuration.Count(x => begin <= x.End && end >= x.Begin);
+            return begin == 0 || end == 0 ? _listDuration.Count : _listDuration.Count(x => begin <= x.End && end >= x.Begin);
         }
 
-        public List<Duration> AllDurations(long begin, long end)
+        public List<Duration> AllDurations(long begin, long end) //for use only on cloned storages
         {
             return _listDuration.Where(x => begin <= x.End && end >= x.Begin)
                 .Select(x => new Duration(begin > x.Begin ? begin : x.Begin, end < x.End ? end : x.End))
                 .ToList();
+        }
+        public List<Duration> AllDurations() //for use only on filtered cloned storages
+        {
+            return _listDuration.ToList();
         }
 
         public bool Ended()

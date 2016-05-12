@@ -22,6 +22,10 @@ namespace Tera.Game
         {
             return new Death((AbnormalityDuration)_death?.Clone());
         }
+        public Death Clone(long begin,long end)
+        {
+            return new Death(_death?.Clone(begin, end));
+        }
         public int Count(long begin, long end)
         {
             if(_death == null)

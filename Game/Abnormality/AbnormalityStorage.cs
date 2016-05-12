@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 
@@ -77,16 +78,16 @@ namespace Tera.Game
                 );
         }
 
-        public AbnormalityStorage Clone(NpcEntity boss)
+        public AbnormalityStorage Clone(NpcEntity boss, long begin = 0, long end = 0)
         {
             var npcTimes = new Dictionary<NpcEntity, Dictionary<HotDot, AbnormalityDuration>>();
             if (boss != null)
-                npcTimes = NpcAbnormalityTime.Where(x => x.Key == boss).ToDictionary(y => y.Key, y => y.Value.ToDictionary(x => x.Key, x => (AbnormalityDuration)x.Value.Clone()));
-            var playerTimes = PlayerAbnormalityTime.ToDictionary(y => y.Key, y => y.Value.ToDictionary(x => x.Key, x => (AbnormalityDuration)x.Value.Clone()));
-            var playerDeath = PlayerDeath.ToDictionary(x => x.Key, x => x.Value.Clone());
+                npcTimes = NpcAbnormalityTime.Where(x => x.Key == boss).ToDictionary(y => y.Key, y => y.Value.ToDictionary(x => x.Key, x => x.Value.Clone(begin,end)));
+            var playerTimes = PlayerAbnormalityTime.ToDictionary(y => y.Key, y => y.Value.ToDictionary(x => x.Key, x => x.Value.Clone(begin,end)));
+            var playerDeath = PlayerDeath.ToDictionary(x => x.Key, x => x.Value.Clone(begin,end));
             var playerAggro = new Dictionary<Player, Dictionary<NpcEntity, Death>>();
             if (boss != null)
-                playerAggro = PlayerAggro.Where(x => x.Value.Keys.Contains(boss)).ToDictionary(y => y.Key, y => y.Value.Where(x => x.Key == boss).ToDictionary(x => x.Key, x => x.Value.Clone()));
+                playerAggro = PlayerAggro.Where(x => x.Value.Keys.Contains(boss)).ToDictionary(y => y.Key, y => y.Value.Where(x => x.Key == boss).ToDictionary(x => x.Key, x => x.Value.Clone(begin,end)));
             return new AbnormalityStorage(npcTimes, playerTimes, playerDeath, playerAggro);
         }
 
