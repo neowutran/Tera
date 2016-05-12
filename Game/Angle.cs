@@ -13,5 +13,10 @@ namespace Tera.Game
         }
 
         public double Radians => _raw*(2*Math.PI/0x10000);
+        public int Gradus => _raw*360/0x10000;
+        public override string ToString()
+        {
+            return $"{Gradus}";
+        }
     }
 }

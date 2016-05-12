@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Tera.Game
 {
@@ -92,19 +93,17 @@ namespace Tera.Game
             return _listDuration[_listDuration.Count - 1].End;
         }
 
-        public int Count(long begin, long end) {
-            int count = 0;
-            foreach (var duration in _listDuration)
-            {
-                if (begin > duration.End || end < duration.Begin)
-                {
-                    continue;
-                }
-                count++;
-            }
-            return count;
+        public int Count(long begin, long end)
+        {
+            return _listDuration.Count(x => begin <= x.End && end >= x.Begin);
         }
 
+        public List<Duration> AllDurations(long begin, long end)
+        {
+            return _listDuration.Where(x => begin <= x.End && end >= x.Begin)
+                .Select(x => new Duration(begin > x.Begin ? begin : x.Begin, end < x.End ? end : x.End))
+                .ToList();
+        }
 
         public bool Ended()
         {

@@ -42,7 +42,7 @@ namespace Tera.Game.Messages
             Flags = (SkillResultFlags) FlagsDebug;
             IsCritical = (reader.ReadUInt16() & 1) != 0;
             Knockdown = (reader.ReadByte() & 1) != 0;
-            reader.Skip(1);//unknown
+            reader.Skip(4);//unknown
             Position = reader.ReadVector3f();
             Heading = reader.ReadAngle();
 
@@ -50,7 +50,7 @@ namespace Tera.Game.Messages
             {
                 Amount = Math.Abs(Amount);
             }
-
+//            Console.WriteLine($"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Target.Id))}");
         }
 
         //DEBUG

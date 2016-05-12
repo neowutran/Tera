@@ -10,10 +10,15 @@
             Model = reader.ReadInt32();
             Start = reader.ReadVector3f();
             Finish = reader.ReadVector3f();
-            reader.Skip(5);
+            unk1 = reader.ReadByte();
+            unk2 = reader.ReadInt32();
             OwnerId = reader.ReadEntityId();
+            Speed = reader.ReadInt16();// ???
         }
 
+        public int Speed { get; set; }
+        public int unk2 { get; private set; }
+        public byte unk1 { get; private set; }
         public EntityId Id { get; private set; }
         public int Model { get; private set; }
         public Vector3f Start { get; private set; }

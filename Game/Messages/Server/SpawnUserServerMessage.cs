@@ -11,7 +11,9 @@ namespace Tera.Game.Messages
             ServerId = reader.ReadUInt32();// not sure, whether full uint32 is serverid, or only first 2 bytes and the rest part of it is actualy a part of PlayerId, or something else, but it always come along with PlayerID as complex player id
             PlayerId = reader.ReadUInt32();
             Id = reader.ReadEntityId();
-            reader.Skip(18);
+            Position = reader.ReadVector3f();
+            Heading = reader.ReadAngle();
+            reader.Skip(4);
             RaceGenderClass = new RaceGenderClass(reader.ReadInt32());
             reader.Skip(208);
             Name = reader.ReadTeraString();
@@ -19,6 +21,8 @@ namespace Tera.Game.Messages
 //            Console.WriteLine(Name + ":" + BitConverter.ToString(BitConverter.GetBytes(Id.Id))+ ":"+ ServerId.ToString()+" "+ BitConverter.ToString(BitConverter.GetBytes(PlayerId)));
         }
 
+        public Angle Heading { get; set; }
+        public Vector3f Position { get; set; }
         public EntityId Id { get; private set; }
         public uint ServerId { get; private set; }
         public uint PlayerId { get; private set; }

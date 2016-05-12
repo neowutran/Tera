@@ -10,27 +10,19 @@ namespace Tera.Game.Messages
         {
             Raw = reader.Message.Payload.Array;
             OpCodeName = reader.OpCodeName;
-            
+
             //if (OpCodeName.Contains("S_BAN_PARTY") || OpCodeName == "PARTY_INFO" || OpCodeName == "S_BAN_PARTY_MEMBER")
             //{
             //    PrintRaw();
             //}
-            
+
             //    Console.WriteLine(OpCodeName);
-            
-            //if (OpCodeName.Contains("CHARM"))
+
+            //if (OpCodeName == "S_SKILL_TARGETING_AREA" || OpCodeName == "S_CHANGE_DESTPOS_PROJECTILE")
             //{
             //    PrintRaw();
             //}
-            
 
-            /*
-            Console.WriteLine(OpCodeName);
-            if (OpCodeName == "S_PLAYER_STAT_UPDATE")
-            {
-                PrintRaw();
-            }
-            */
         }
 
         public byte[] Raw { get; protected set; }
