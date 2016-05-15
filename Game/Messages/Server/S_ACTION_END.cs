@@ -13,7 +13,7 @@ namespace Tera.Game.Messages
             SkillId = reader.ReadUInt32();
             unk = reader.ReadInt32();
             Id = reader.ReadUInt32();
-//            Console.WriteLine($"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Entity.Id))}: {Start} {Heading} -> {Finish}, S:{Speed} ,{Ltype} {unk1} {unk2}" );
+//            Debug.WriteLine($"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Entity.Id))}: {Start} {Heading} -> {Finish}, S:{Speed} ,{Ltype} {unk1} {unk2}" );
         }
 
         public uint Id { get; set; }

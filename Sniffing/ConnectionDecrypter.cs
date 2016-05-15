@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Tera.PacketLog;
@@ -44,7 +45,7 @@ namespace Tera.Sniffing
             session.ServerKey2 = serverKey2;
             session.Init(_region);
 
-            Console.WriteLine("Success");
+            Debug.WriteLine("Success");
             return session;
         }
 

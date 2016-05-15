@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Tera.Game.Messages
 {
@@ -16,7 +17,7 @@ namespace Tera.Game.Messages
             //    PrintRaw();
             //}
 
-            //    Console.WriteLine(OpCodeName);
+            //    Debug.WriteLine(OpCodeName);
 
             //if (OpCodeName == "S_SKILL_TARGETING_AREA" || OpCodeName == "S_CHANGE_DESTPOS_PROJECTILE")
             //{
@@ -31,8 +32,8 @@ namespace Tera.Game.Messages
 
         public void PrintRaw()
         {
-            Console.WriteLine(OpCodeName + ": ");
-            Console.WriteLine(BitConverter.ToString(Raw));
+            Debug.WriteLine(OpCodeName + ": ");
+            Debug.WriteLine(BitConverter.ToString(Raw));
         }
     }
 }

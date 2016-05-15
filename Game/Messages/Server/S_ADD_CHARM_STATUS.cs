@@ -10,7 +10,7 @@ namespace Tera.Game.Messages
             CharmId = reader.ReadUInt32();
             Status = reader.ReadByte();
             Duration = reader.ReadInt32();
-//            Console.WriteLine("target = "+TargetId+";Charm:"+CharmId+";Duration:"+Duration+";Status:"+Status);
+//            Debug.WriteLine("target = "+TargetId+";Charm:"+CharmId+";Duration:"+Duration+";Status:"+Status);
         }
 
         public EntityId TargetId { get; }

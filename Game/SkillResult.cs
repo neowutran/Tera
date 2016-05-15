@@ -94,9 +94,9 @@ namespace Tera.Game
 
         public Player SourcePlayer { get; }
         public Player TargetPlayer { get; private set; }
-        public bool IsValid(DateTime? FirstAttack = null)
+        public bool IsValid(DateTime? firstAttack = null)
         {
-            return (FirstAttack != null || (!IsHeal && Amount > 0)) &&//only record first hit is it's a damage hit (heals occurring outside of fights)
+            return (firstAttack != null || (!IsHeal && Amount > 0)) &&//only record first hit is it's a damage hit (heals occurring outside of fights)
                    !(Target.Equals(Source) && !IsHeal && Amount > 0);//disregard damage dealt to self (gunner self destruct)
         }
 

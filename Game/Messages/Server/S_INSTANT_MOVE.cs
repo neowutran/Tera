@@ -9,7 +9,7 @@ namespace Tera.Game.Messages
             Entity = reader.ReadEntityId();
             Finish = reader.ReadVector3f();
             Heading = reader.ReadAngle();
-//            Console.WriteLine($"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Entity.Id))}: {Finish} {Heading}");
+//            Debug.WriteLine($"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Entity.Id))}: {Finish} {Heading}");
         }
 
         public EntityId Entity { get; }

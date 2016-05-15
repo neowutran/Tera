@@ -11,7 +11,7 @@ namespace Tera.Game.Messages
             Enraged = (reader.ReadByte() & 1) == 1;
 	        reader.Skip(4);
             Target = reader.ReadEntityId();
-            //Console.WriteLine("NPC:" + Npc + ";Target:" + Target + (Enraged?" Enraged":""));
+            //Debug.WriteLine("NPC:" + Npc + ";Target:" + Target + (Enraged?" Enraged":""));
         }
 
         public EntityId Npc { get; }

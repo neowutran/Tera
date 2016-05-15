@@ -9,7 +9,7 @@
             HpRemaining = reader.ReadInt32();
             TotalHp = reader.ReadInt32();
             Unknow3 = reader.ReadInt16();
-            // Console.WriteLine("target = " + TargetId + ";Hp left:" + HpRemaining + ";Max HP:" + TotalHp + ";Unknow3:" + Unknow3);
+            // Debug.WriteLine("target = " + TargetId + ";Hp left:" + HpRemaining + ";Max HP:" + TotalHp + ";Unknow3:" + Unknow3);
         }
 
         public int Unknow3 { get; }

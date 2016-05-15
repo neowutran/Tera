@@ -55,10 +55,10 @@ namespace Tera.Game.Messages
                     Name = Name
                 });
             };
-            //Console.WriteLine($"leader:{BitConverter.ToString(BitConverter.GetBytes(LeaderPlayerId))}, party:");
+            //Debug.WriteLine($"leader:{BitConverter.ToString(BitConverter.GetBytes(LeaderPlayerId))}, party:");
             //foreach (PartyMember member in Party)
             //{
-            //    Console.WriteLine($"{member.PlayerClass} {BitConverter.ToString(BitConverter.GetBytes(member.PlayerId))} {member.Name} :{member.Id.ToString()} caninvite: {member.CanInvite} Status: {member.Status}");
+            //    Debug.WriteLine($"{member.PlayerClass} {BitConverter.ToString(BitConverter.GetBytes(member.PlayerId))} {member.Name} :{member.Id.ToString()} caninvite: {member.CanInvite} Status: {member.Status}");
             //}
         }
 

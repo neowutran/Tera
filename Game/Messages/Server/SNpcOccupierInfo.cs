@@ -10,7 +10,7 @@
             Engager = reader.ReadEntityId();
             Target = reader.ReadEntityId();
 
-            //  Console.WriteLine("NPC:" + NPC + ";Target:" + Target);
+            //  Debug.WriteLine("NPC:" + NPC + ";Target:" + Target);
         }
 
         public EntityId NPC { get; }

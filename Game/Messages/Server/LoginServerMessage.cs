@@ -15,7 +15,7 @@ namespace Tera.Game.Messages
             PlayerId = reader.ReadUInt32();
             reader.Skip(nameOffset-34);
             Name = reader.ReadTeraString();
-//            Console.WriteLine(Name + ":" + BitConverter.ToString(BitConverter.GetBytes(Id.Id)) + ":" + ServerId.ToString() + " " + BitConverter.ToString(BitConverter.GetBytes(PlayerId)));
+//            Debug.WriteLine(Name + ":" + BitConverter.ToString(BitConverter.GetBytes(Id.Id)) + ":" + ServerId.ToString() + " " + BitConverter.ToString(BitConverter.GetBytes(PlayerId)));
         }
 
         public EntityId Id { get; private set; }

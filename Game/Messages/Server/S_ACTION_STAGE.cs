@@ -16,7 +16,7 @@ namespace Tera.Game.Messages
             Speed = reader.ReadSingle();
             Id = reader.ReadUInt32();
             unk = reader.ReadSingle();
-//            Console.WriteLine($"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Entity.Id))}: {Start} {Heading}, S:{Speed}, {SkillId} {Stage} {Model} {unk} {Id}" );
+//            Debug.WriteLine($"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Entity.Id))}: {Start} {Heading}, S:{Speed}, {SkillId} {Stage} {Model} {unk} {Id}" );
         }
 
         public float unk { get; set; }

@@ -12,7 +12,7 @@ namespace Tera.Game.Messages
             Speed = reader.ReadInt16();
             Finish = reader.ReadVector3f();
             Ltype = reader.ReadInt32(); //0 = Move, 7= Rotate standing
-//            Console.WriteLine($"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Entity.Id))}: {Start} {Heading} -> {Finish}, S:{Speed} ,{Ltype}");
+//            Debug.WriteLine($"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Entity.Id))}: {Start} {Heading} -> {Finish}, S:{Speed} ,{Ltype}");
         }
 
         public EntityId Entity { get; }

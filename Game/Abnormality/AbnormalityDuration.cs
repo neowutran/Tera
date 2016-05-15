@@ -78,7 +78,7 @@ namespace Tera.Game
             if (_listDuration.Count != 0) {
                 if (!Ended())
                 {
-                    //Console.WriteLine("Can't restart something that has not been ended yet");
+                    //Debug.WriteLine("Can't restart something that has not been ended yet");
                     return;
                 }
            }
@@ -89,7 +89,7 @@ namespace Tera.Game
         {
             if (Ended())
             {
-                //Console.WriteLine("Can't end something that has already been ended");
+                //Debug.WriteLine("Can't end something that has already been ended");
                 return;
             }
 

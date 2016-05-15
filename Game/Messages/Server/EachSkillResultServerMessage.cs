@@ -50,7 +50,7 @@ namespace Tera.Game.Messages
             {
                 Amount = Math.Abs(Amount);
             }
-//            Console.WriteLine($"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Target.Id))}");
+//            Debug.WriteLine($"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Target.Id))}");
         }
 
         //DEBUG

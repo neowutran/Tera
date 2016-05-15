@@ -19,10 +19,10 @@ namespace Tera.Game.Messages
                 var status = reader.ReadByte();
                 Charms.Add(new CharmStatus { Status=status, CharmId=charmId, Duration=duration } );
             };
-        //    Console.WriteLine($"target:{BitConverter.ToString(BitConverter.GetBytes(PlayerId))}, Charms:");
+        //    Debug.WriteLine($"target:{BitConverter.ToString(BitConverter.GetBytes(PlayerId))}, Charms:");
         //    foreach (CharmStatus charm in Charms)
         //    {
-        //        Console.WriteLine($"charmid:{charm.CharmId} duration: {charm.Duration} Status: {charm.Status}");
+        //        Debug.WriteLine($"charmid:{charm.CharmId} duration: {charm.Duration} Status: {charm.Status}");
         //    }
         }
         public uint ServerId { get; }

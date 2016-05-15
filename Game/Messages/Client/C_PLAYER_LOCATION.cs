@@ -14,7 +14,7 @@ namespace Tera.Game.Messages
             Speed = reader.ReadInt16();
             unk2 = reader.ReadByte();
             TimeStamp = reader.ReadInt32();
- //           Console.WriteLine($"{Time.Ticks} {Start} {Heading} -> {Finish}, S:{Speed} ,{Ltype} {unk1} {unk2} {TimeStamp}" );
+ //           Debug.WriteLine($"{Time.Ticks} {Start} {Heading} -> {Finish}, S:{Speed} ,{Ltype} {unk1} {unk2} {TimeStamp}" );
         }
 
         public int TimeStamp { get; set; }

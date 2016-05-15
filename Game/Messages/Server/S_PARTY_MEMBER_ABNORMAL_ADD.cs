@@ -9,7 +9,7 @@
             AbnormalityId = reader.ReadInt32();
             Duration = reader.ReadInt32();
             Stack = reader.ReadInt32();
-            //  Console.WriteLine("target = " + TargetId + ";Abnormality:" + AbnormalityId + ";Duration:" + Duration +
+            //  Debug.WriteLine("target = " + TargetId + ";Abnormality:" + AbnormalityId + ";Duration:" + Duration +
             //                  ";Stack:" + Stack);
         }
 

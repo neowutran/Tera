@@ -14,7 +14,7 @@ namespace Tera.Game.Messages
             Finish = reader.ReadVector3f();
             Ltype = reader.ReadInt32();
             unk2 = reader.ReadByte();
-//            Console.WriteLine($"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Entity.Id))}: {Start} {Heading} -> {Finish}, S:{Speed} ,{Ltype} {unk1} {unk2}" );
+//            Debug.WriteLine($"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Entity.Id))}: {Start} {Heading} -> {Finish}, S:{Speed} ,{Ltype} {unk1} {unk2}" );
         }
 
         public byte unk2 { get; set; }

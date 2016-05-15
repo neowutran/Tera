@@ -21,7 +21,7 @@ namespace Tera.Game.Messages
             TotalRe = reader.ReadInt32();
             Unknow3 = reader.ReadInt32();
 
-            //Console.WriteLine("target = " + PlayerId + ";Hp left:" + HpRemaining + ";Max HP:" + TotalHp + ";Unknow3:" + Unknow3);
+            //Debug.WriteLine("target = " + PlayerId + ";Hp left:" + HpRemaining + ";Max HP:" + TotalHp + ";Unknow3:" + Unknow3);
         }
 
         public int Unknow3 { get; }
