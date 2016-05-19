@@ -2,10 +2,26 @@ namespace Tera.Game
 {
     public class Skill
     {
+        private static readonly string[] Lvls = { " I", " II", " III", " IV", " V", " VI", " VII", " VIII", " IX", " X",
+            " XI", " XII", " XIII", " XIV", " XV", " XVI", " XVII", " XVIII", " XIX", " XX"};
+
+        public static string RemoveLvl(string name)
+        {
+            foreach (string lvl in Lvls)
+            {
+                if (name.EndsWith(lvl) || name.Contains(lvl + " "))
+                {
+                    return name.Replace(lvl, string.Empty);
+                }
+            }
+            return name;
+        }
+
         internal Skill(int id, string name, bool? isChained = null, string detail = "",string iconName="", NpcInfo npcInfo=null)
         {
             Id = id;
             Name = name;
+            ShortName = RemoveLvl(name);
             IsChained = isChained;
             Detail = detail;
             IconName = iconName;
@@ -14,12 +30,12 @@ namespace Tera.Game
 
         public int Id { get; }
         public string Name { get; private set; }
+        public string ShortName { get; private set; }
         public bool? IsChained { get; private set; }
         public string Detail { get; private set; }
         public string IconName { get; private set; }
         public readonly NpcInfo NpcInfo;
     }
-
 
     public class UserSkill : Skill
     {
