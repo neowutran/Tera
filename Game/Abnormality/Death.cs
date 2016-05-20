@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,7 +27,7 @@ namespace Tera.Game
         {
             return new Death(_death?.Clone(begin, end));
         }
-        public int Count(long begin, long end)
+        public int Count(long begin=0, long end=0)
         {
             if(_death == null)
             {
@@ -66,6 +67,11 @@ namespace Tera.Game
         {
             var death=_death.Ended() ? null : new AbnormalityDuration(PlayerClass.Common,_death.LastStart());
             return new Death(death);
+        }
+
+        public List<Duration> AllDurations(long begin = 0, long end = 0)// for use only on cloned storages
+        {
+            return _death?.AllDurations(begin, end) ?? new List<Duration>();
         }
         public bool Dead => !_death?.Ended() ?? false;
     }

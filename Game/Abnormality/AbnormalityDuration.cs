@@ -111,15 +111,13 @@ namespace Tera.Game
             return begin == 0 || end == 0 ? _listDuration.Count : _listDuration.Count(x => begin <= x.End && end >= x.Begin);
         }
 
-        public List<Duration> AllDurations(long begin, long end) //for use only on cloned storages
+        public List<Duration> AllDurations(long begin=0, long end=0) //for use only on cloned storages
         {
-            return _listDuration.Where(x => begin <= x.End && end >= x.Begin)
+            return begin == 0 || end == 0 ? 
+                _listDuration.ToList() :
+                _listDuration.Where(x => begin <= x.End && end >= x.Begin)
                 .Select(x => new Duration(begin > x.Begin ? begin : x.Begin, end < x.End ? end : x.End))
                 .ToList();
-        }
-        public List<Duration> AllDurations() //for use only on filtered cloned storages
-        {
-            return _listDuration.ToList();
         }
 
         public bool Ended()
