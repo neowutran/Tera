@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Tera.Game.Messages
 {
@@ -15,12 +16,15 @@ namespace Tera.Game.Messages
             Heading = reader.ReadAngle();
             reader.Skip(4);
             RaceGenderClass = new RaceGenderClass(reader.ReadInt32());
-            reader.Skip(208);
+            reader.Skip(11);
+            Dead = (reader.ReadByte() & 1) == 0;
+            reader.Skip(196);
             Name = reader.ReadTeraString();
             GuildName = reader.ReadTeraString();
-//            Debug.WriteLine(Name + ":" + BitConverter.ToString(BitConverter.GetBytes(Id.Id))+ ":"+ ServerId.ToString()+" "+ BitConverter.ToString(BitConverter.GetBytes(PlayerId)));
+            //Debug.WriteLine(Name + ":" + BitConverter.ToString(BitConverter.GetBytes(Id.Id))+ ":"+ ServerId.ToString()+" "+ BitConverter.ToString(BitConverter.GetBytes(PlayerId))+" "+Dead);
         }
 
+        public bool Dead { get; set; }
         public Angle Heading { get; set; }
         public Vector3f Position { get; set; }
         public EntityId Id { get; private set; }

@@ -44,20 +44,25 @@ namespace Tera.Game
             else
                 DeleteAbnormality(user.Id, 8888889, ticks);
         }
-        public void RegisterDead(SCreatureLife dead)
+        public void RegisterDead(EntityId id, long ticks, bool dead)
         {
-            var user = EntityTracker.GetOrNull(dead.User) as UserEntity;
+            var user = EntityTracker.GetOrNull(id) as UserEntity;
             if (user == null) return;
             var player = PlayerTracker.GetOrUpdate(user);
-            var time = dead.Time.Ticks;
-            if (dead.Dead)
+            if (dead)
             {
-                AbnormalityStorage.Death(player).Start(time);
-                DeleteAbnormality(user.Id, 8888889, dead.Time.Ticks);
+                AbnormalityStorage.Death(player).Start(ticks);
+                DeleteAbnormality(user.Id, 8888889, ticks);
             }
             else
-                AbnormalityStorage.Death(player).End(time);
+                AbnormalityStorage.Death(player).End(ticks);
         }
+
+        public void RegisterDead(SCreatureLife message)
+        {
+            RegisterDead(message.User, message.Time.Ticks, message.Dead);
+        }
+
         private void RegisterAggro(SNpcStatus aggro)
         {
             var time = aggro.Time.Ticks;
@@ -202,6 +207,7 @@ namespace Tera.Game
         public void DeleteAbnormality(SDespawnUser message)
         {
             DeleteAbnormality(message.User, message.Time.Ticks);
+            RegisterDead(message.User, message.Time.Ticks, false);
         }
 
         private void DeleteAbnormality(EntityId entity, long ticks)
