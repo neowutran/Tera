@@ -1,4 +1,7 @@
-﻿namespace Tera.Game.Messages
+﻿using System;
+using System.Diagnostics;
+
+namespace Tera.Game.Messages
 {
     public class StartUserProjectileServerMessage : ParsedMessage
     {
@@ -10,11 +13,12 @@
             Id = reader.ReadEntityId();
             SkillId = reader.ReadUInt32();
             Start = reader.ReadVector3f();
-            SAngle = reader.ReadAngle();
             Finish = reader.ReadVector3f();
-            FAngle = reader.ReadAngle();
+            Speed = reader.ReadSingle();
+            //Debug.WriteLine($"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Id.Id))} {Start} - > {Finish} {Speed} {SkillId}");
         }
 
+        public float Speed { get; set; }
         public Angle FAngle { get; set; }
         public Vector3f Finish { get; set; }
         public Angle SAngle { get; set; }

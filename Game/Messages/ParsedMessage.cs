@@ -19,7 +19,7 @@ namespace Tera.Game.Messages
 
             //    Debug.WriteLine(OpCodeName);
 
-            //if (OpCodeName == "S_SKILL_TARGETING_AREA" || OpCodeName == "S_CHANGE_DESTPOS_PROJECTILE")
+            //if (OpCodeName == "S_SKILL_TARGETING_AREA" )
             //{
             //    PrintRaw();
             //}
