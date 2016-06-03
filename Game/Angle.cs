@@ -18,5 +18,22 @@ namespace Tera.Game
         {
             return $"{Gradus}";
         }
+
+        public HitDirection HitDirection(Angle target)
+        {
+            var diff = Math.Abs(target.Gradus - Gradus) % 360;
+            if (diff > 180) diff = 360 - diff;
+            if (diff <= 45) return Game.HitDirection.Back;
+            if (diff >= 135) return Game.HitDirection.Front;
+            return Game.HitDirection.Side;
+        }
+    }
+
+    public enum HitDirection
+    {
+        Back,
+        Side,
+        Front,
+        Dot
     }
 }

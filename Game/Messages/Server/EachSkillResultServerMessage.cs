@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Tera.Game.Messages
 {
@@ -50,7 +51,8 @@ namespace Tera.Game.Messages
             {
                 Amount = Math.Abs(Amount);
             }
-//            Debug.WriteLine($"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Target.Id))}");
+            if (Position.X!=0)
+                Debug.WriteLine($"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Target.Id))} {Position} {Heading}");
         }
 
         //DEBUG

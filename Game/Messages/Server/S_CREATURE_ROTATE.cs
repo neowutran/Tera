@@ -8,12 +8,12 @@ namespace Tera.Game.Messages
         {
             Entity = reader.ReadEntityId();
             Heading = reader.ReadAngle();
-            Time = reader.ReadInt16();
+            NeedTime = reader.ReadInt16();
 //            Debug.WriteLine($"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Entity.Id))}: {Heading} {Time}");
         }
 
         public EntityId Entity { get; }
         public Angle Heading { get; private set; }
-        public int Time { get; private set; }
+        public int NeedTime { get; private set; }
     }
 }

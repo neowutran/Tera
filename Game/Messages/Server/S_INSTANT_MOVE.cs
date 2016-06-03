@@ -7,13 +7,13 @@ namespace Tera.Game.Messages
         internal S_INSTANT_MOVE(TeraMessageReader reader) : base(reader)
         {
             Entity = reader.ReadEntityId();
-            Finish = reader.ReadVector3f();
+            Position = reader.ReadVector3f();
             Heading = reader.ReadAngle();
 //            Debug.WriteLine($"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Entity.Id))}: {Finish} {Heading}");
         }
 
         public EntityId Entity { get; }
-        public Vector3f Finish { get; private set; }
+        public Vector3f Position { get; private set; }
         public Angle Heading { get; private set; }
     }
 }

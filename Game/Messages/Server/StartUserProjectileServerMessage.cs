@@ -19,9 +19,7 @@ namespace Tera.Game.Messages
         }
 
         public float Speed { get; set; }
-        public Angle FAngle { get; set; }
         public Vector3f Finish { get; set; }
-        public Angle SAngle { get; set; }
         public Vector3f Start { get; set; }
         public uint SkillId { get; set; }
         public EntityId Id { get; private set; }
