@@ -68,7 +68,7 @@ namespace Tera.Game
 
         private void ApplyEnduranceDebuff(long lastTicks)
         {
-            if (HotDot.Type != "Endurance" || HotDot.Amount > 1) return;
+            if (!HotDot.Debuff || HotDot.Amount > 1) return;
             if (_enduranceDebuffRegistered == false) return;
             var entity = _abnormalityTracker.EntityTracker.GetOrPlaceholder(Target);
             var game = entity as NpcEntity;
@@ -83,7 +83,7 @@ namespace Tera.Game
 
         private void RegisterEnduranceDebuff()
         {
-            if (HotDot.Type != "Endurance" || HotDot.Amount > 1) return;
+            if (!HotDot.Debuff || HotDot.Amount > 1) return;
             var entityGame = _abnormalityTracker.EntityTracker.GetOrPlaceholder(Target);
             var game = entityGame as NpcEntity;
             if (game == null)
@@ -111,7 +111,7 @@ namespace Tera.Game
 
         private void RegisterBuff()
         {
-            if (HotDot.Type == "HPChange" || HotDot.Type == "MPChange") return;
+            if (HotDot.HPMPChange) return;
             var userEntity = _abnormalityTracker.EntityTracker.GetOrNull(Target);
             var user = userEntity as UserEntity;
             if (user == null)
@@ -143,7 +143,7 @@ namespace Tera.Game
 
         private void ApplyBuff(long lastTicks)
         {
-            if (HotDot.Type == "HPChange" || HotDot.Type == "MPChange") return;
+            if (HotDot.HPMPChange) return;
             if (_buffRegistered == false) return;
             var userEntity = _abnormalityTracker.EntityTracker.GetOrNull(Target);
             if (!(userEntity is UserEntity))
