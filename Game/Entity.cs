@@ -54,7 +54,7 @@ namespace Tera.Game
 
         public bool Equals(Entity other)
         {
-            return Id.Equals(other.Id);
+            return Id.Equals(other?.Id);
         }
 
         public static bool operator ==(Entity a, Entity b)
