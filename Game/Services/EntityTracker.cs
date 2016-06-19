@@ -174,6 +174,12 @@ namespace Tera.Game
                 entity.EndTime = 0;
                 //Debug.WriteLine($"{entity.Position} {entity.Heading} {entity.Finish} {entity.Speed}");
             });
+            message.On<S_BOSS_GAGE_INFO>(m =>
+            {
+                var entity = GetOrNull(m.EntityId) as NpcEntity;
+                if (entity == null) return;
+                entity.Info.Boss = true;
+            });
         }
 
         private Entity LoginMe(LoginServerMessage m)

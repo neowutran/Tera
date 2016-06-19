@@ -8,7 +8,7 @@ namespace Tera.Game
         public uint TemplateId { get;private set; }
         public string Name { get; private set; }
         public string Area { get; private set; }
-        public bool Boss { get; private set; }
+        public bool Boss { get; internal set; }
         public int HP { get; private set; }
 
         public NpcInfo(ushort huntingZoneId, uint templateId,bool boss, int hp, string name, string area)
