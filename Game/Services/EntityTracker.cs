@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Tera.Game.Messages;
 
 namespace Tera.Game
@@ -46,16 +47,139 @@ namespace Tera.Game
             message.On<SpawnNpcServerMessage>(
                 m =>
                     newEntity =
-                        new NpcEntity(m.Id, m.OwnerId, GetOrPlaceholder(m.OwnerId), _npcDatabase.GetOrPlaceholder(m.NpcArea, m.NpcId)));
+                        new NpcEntity(m.Id, m.OwnerId, GetOrPlaceholder(m.OwnerId), _npcDatabase.GetOrPlaceholder(m.NpcArea, m.NpcId),m.Position,m.Heading));
             message.On<SpawnProjectileServerMessage>(
-                m => newEntity = new ProjectileEntity(m.Id, m.OwnerId, GetOrPlaceholder(m.OwnerId)));
+                m => newEntity = new ProjectileEntity(m.Id, m.OwnerId, GetOrPlaceholder(m.OwnerId), m.Start, m.Start.GetHeading(m.Finish), m.Finish, (int)m.Speed, m.Time.Ticks));
             message.On<StartUserProjectileServerMessage>(
-                m => newEntity = new ProjectileEntity(m.Id, m.OwnerId, GetOrPlaceholder(m.OwnerId)));
+                m => newEntity = new ProjectileEntity(m.Id, m.OwnerId, GetOrPlaceholder(m.OwnerId), m.Start, m.Start.GetHeading(m.Finish), m.Finish, (int)m.Speed, m.Time.Ticks));
             if (newEntity != null)
             {
                 _dictionary[newEntity.Id] = newEntity;
                 OnEntityUpdated(newEntity);
             }
+            message.On<C_PLAYER_LOCATION>(m =>
+            {
+                MeterUser.Position = m.Position;
+                MeterUser.Heading = m.Heading;
+                MeterUser.Finish = m.Position;
+                MeterUser.Speed = 0;
+                MeterUser.StartTime = m.Time.Ticks;
+                MeterUser.EndAngle = m.Heading;
+                MeterUser.EndTime = 0;
+                //Debug.WriteLine($"{MeterUser.Position} {MeterUser.Heading}");
+            });
+            message.On<S_CHANGE_DESTPOS_PROJECTILE>(m =>
+            {
+                var entity = GetOrNull(m.Id);
+                if (entity==null) return;
+                entity.Position = entity.Position.MoveForvard(entity.Finish,entity.Speed,m.Time.Ticks-entity.StartTime);
+                entity.Finish = m.Finish;
+                entity.Heading = entity.Position.GetHeading(entity.Finish);
+                entity.StartTime = m.Time.Ticks;
+                entity.EndAngle = entity.Heading;
+                entity.EndTime = 0;
+                //Debug.WriteLine($"{entity.Position} {entity.Heading}");
+            });
+            message.On<S_ACTION_STAGE>(m =>
+            {
+                var entity = GetOrNull(m.Entity);
+                if (entity == null) return;
+                entity.Position = m.Position;
+                entity.Finish = entity.Position;
+                entity.Heading = m.Heading;
+                entity.Speed = 0;
+                entity.StartTime = 0;
+                entity.EndAngle = entity.Heading;
+                entity.EndTime = 0;
+                //Debug.WriteLine($"{entity.Position} {entity.Heading}");
+            });
+            message.On<S_ACTION_END>(m =>
+            {
+                var entity = GetOrNull(m.Entity);
+                if (entity == null) return;
+                entity.Position = m.Position;
+                entity.Finish = entity.Position;
+                entity.Heading = m.Heading;
+                entity.Speed = 0;
+                entity.StartTime = 0;
+                entity.EndAngle = entity.Heading;
+                entity.EndTime = 0;
+                //Debug.WriteLine($"{entity.Position} {entity.Heading}");
+            });
+            message.On<SCreatureLife>(m =>
+            {
+                var entity = GetOrNull(m.User);
+                if (entity == null) return;
+                entity.Position = m.Position;
+                entity.Finish = entity.Position;
+                entity.Speed = 0;
+                entity.StartTime = 0;
+                entity.EndAngle = entity.Heading;
+                entity.EndTime = 0;
+                //Debug.WriteLine($"{entity.Position} {entity.Heading}");
+            });
+            message.On<S_INSTANT_MOVE>(m =>
+            {
+                var entity = GetOrNull(m.Entity);
+                if (entity == null) return;
+                entity.Position = m.Position;
+                entity.Finish = m.Position;
+                entity.Heading = m.Heading;
+                entity.Speed = 0;
+                entity.StartTime = 0;
+                entity.EndAngle = entity.Heading;
+                entity.EndTime = 0;
+                //Debug.WriteLine($"{entity.Position} {entity.Heading}");
+            });
+            message.On<S_CREATURE_ROTATE>(m =>
+            {
+                var entity = GetOrNull(m.Entity);
+                if (entity == null) return;
+                entity.Position = entity.Position.MoveForvard(entity.Finish, entity.Speed, m.Time.Ticks - entity.StartTime);
+                entity.Finish = entity.Position;
+                entity.Speed = 0;
+                entity.StartTime = m.Time.Ticks;
+                if (entity.EndTime > 0 && entity.EndTime <= entity.StartTime)
+                {
+                    entity.Heading = entity.EndAngle;
+                }
+                else if (entity.EndTime > 0) { Debug.WriteLine("New rotate started before old ended!");}
+                entity.EndAngle = m.Heading;
+                entity.EndTime = entity.StartTime + (m.NeedTime == 0 ? 0 : TimeSpan.TicksPerMillisecond * m.NeedTime);
+                //Debug.WriteLine($"{entity.Position} {entity.Heading} {entity.EndAngle} {m.NeedTime}");
+            });
+            message.On<SNpcLocation>(m =>
+            {
+                var entity = GetOrNull(m.Entity);
+                if (entity == null) return;
+                entity.Position = m.Start;
+                entity.Finish = m.Finish;
+                entity.Speed = m.Speed;
+                entity.StartTime = m.Time.Ticks;
+                entity.Heading = m.Heading;
+                entity.EndAngle = m.Heading;
+                entity.EndTime = 0;
+                //Debug.WriteLine($"{entity.Position} {entity.Heading} {entity.Finish} {entity.Speed}");
+            });
+            message.On<S_USER_LOCATION>(m =>
+            {
+                var entity = GetOrNull(m.Entity);
+                if (entity == null) return;
+                entity.Position = m.Start;
+                entity.Finish = m.Finish;
+                entity.Speed = m.Speed;
+                entity.StartTime = m.Time.Ticks;
+                entity.Heading = m.Heading;
+                entity.EndAngle = m.Heading;
+                entity.EndTime = 0;
+                //Debug.WriteLine($"{entity.Position} {entity.Heading} {entity.Finish} {entity.Speed}");
+            });
+            message.On<S_BOSS_GAGE_INFO>(m =>
+            {
+                var entity = GetOrNull(m.EntityId) as NpcEntity;
+                if (entity == null) return;
+                entity.Info.Boss = true;
+            });
         }
 
         private Entity LoginMe(LoginServerMessage m)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Tera.Game.Messages
 {
@@ -6,7 +7,7 @@ namespace Tera.Game.Messages
     {
         internal C_PLAYER_LOCATION(TeraMessageReader reader) : base(reader)
         {
-            Start = reader.ReadVector3f();
+            Position = reader.ReadVector3f();
             Heading = reader.ReadAngle();
             unk1 = reader.ReadInt16();
             Finish = reader.ReadVector3f();
@@ -14,14 +15,14 @@ namespace Tera.Game.Messages
             Speed = reader.ReadInt16();
             unk2 = reader.ReadByte();
             TimeStamp = reader.ReadInt32();
- //           Debug.WriteLine($"{Time.Ticks} {Start} {Heading} -> {Finish}, S:{Speed} ,{Ltype} {unk1} {unk2} {TimeStamp}" );
+            //Debug.WriteLine($"{Time.Ticks} {Start} {Heading} -> {Finish}, S:{Speed} ,{Ltype} {unk1} {unk2} {TimeStamp}" );
         }
 
         public int TimeStamp { get; set; }
         public byte unk2 { get; set; }
         public short unk1 { get; set; }
         public EntityId Entity { get; }
-        public Vector3f Start { get; private set; }
+        public Vector3f Position { get; private set; }
         public Angle Heading { get; private set; }
         public short Speed { get; private set; }
         public Vector3f Finish { get; private set; }

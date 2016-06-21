@@ -21,6 +21,7 @@ namespace Tera.Game
             {"S_TARGET_INFO", typeof (STargetInfo)},
             {"S_START_USER_PROJECTILE", typeof (StartUserProjectileServerMessage)},
             {"S_CREATURE_CHANGE_HP", typeof (SCreatureChangeHp)},
+            {"S_BOSS_GAGE_INFO", typeof (S_BOSS_GAGE_INFO)},
             {"S_NPC_TARGET_USER", typeof (SNpcTargetUser)},
             {"S_NPC_OCCUPIER_INFO", typeof (SNpcOccupierInfo)},
             {"S_CHAT", typeof (S_CHAT)},
@@ -38,6 +39,7 @@ namespace Tera.Game
             {"S_DESPAWN_USER", typeof (SDespawnUser)},
             {"S_USER_STATUS", typeof (SUserStatus)},
             {"S_CREATURE_LIFE", typeof (SCreatureLife)},
+            {"S_CREATURE_ROTATE", typeof (S_CREATURE_ROTATE)},
             {"S_NPC_STATUS", typeof (SNpcStatus)},
             {"S_NPC_LOCATION", typeof (SNpcLocation)},
             {"S_USER_LOCATION", typeof (S_USER_LOCATION)},
@@ -45,6 +47,7 @@ namespace Tera.Game
             {"S_INSTANT_MOVE", typeof (S_INSTANT_MOVE)},
             {"S_ACTION_STAGE", typeof (S_ACTION_STAGE)},
             {"S_ACTION_END", typeof (S_ACTION_END)},
+            {"S_CHANGE_DESTPOS_PROJECTILE", typeof (S_CHANGE_DESTPOS_PROJECTILE)},
             {"S_ADD_CHARM_STATUS", typeof (SAddCharmStatus)},
             {"S_ENABLE_CHARM_STATUS", typeof (SEnableCharmStatus)},
             {"S_REMOVE_CHARM_STATUS", typeof (SRemoveCharmStatus)},
@@ -60,6 +63,7 @@ namespace Tera.Game
             {"S_BAN_PARTY_MEMBER", typeof (S_BAN_PARTY_MEMBER)},
             {"S_LEAVE_PARTY", typeof (S_LEAVE_PARTY)},
             {"S_BAN_PARTY", typeof (S_BAN_PARTY)},
+            {"S_GET_USER_GUILD_LOGO", typeof (S_GET_USER_GUILD_LOGO)},
             {"S_WHISPER", typeof(S_WHISPER) }
         };
 

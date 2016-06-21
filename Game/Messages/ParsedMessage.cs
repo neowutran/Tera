@@ -12,14 +12,14 @@ namespace Tera.Game.Messages
             Raw = reader.Message.Payload.Array;
             OpCodeName = reader.OpCodeName;
 
-            //if (OpCodeName.Contains("S_BAN_PARTY") || OpCodeName == "PARTY_INFO" || OpCodeName == "S_BAN_PARTY_MEMBER")
+            //if (OpCodeName.Contains("S_GUILD_EMBLEM"))
             //{
             //    PrintRaw();
             //}
 
             //    Debug.WriteLine(OpCodeName);
 
-            //if (OpCodeName == "S_SKILL_TARGETING_AREA" || OpCodeName == "S_CHANGE_DESTPOS_PROJECTILE")
+            //if (OpCodeName == "S_SKILL_TARGETING_AREA" )
             //{
             //    PrintRaw();
             //}

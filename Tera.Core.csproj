@@ -51,6 +51,10 @@
     <Compile Include="Game\Messages\Server\S_ACTION_STAGE.cs" />
     <Compile Include="Game\Messages\Server\S_BAN_PARTY.cs" />
     <Compile Include="Game\Messages\Server\S_BAN_PARTY_MEMBER.cs" />
+    <Compile Include="Game\Messages\Server\S_BOSS_GAGE_INFO.cs" />
+    <Compile Include="Game\Messages\Server\S_CHANGE_DESTPOS_PROJECTILE.cs" />
+    <Compile Include="Game\Messages\Server\S_CREATURE_ROTATE.cs" />
+    <Compile Include="Game\Messages\Server\S_GET_USER_GUILD_LOGO.cs" />
     <Compile Include="Game\Messages\Server\S_INSTANT_MOVE.cs" />
     <Compile Include="Game\Messages\Server\S_LEAVE_PARTY.cs" />
     <Compile Include="Game\Messages\Server\S_LEAVE_PARTY_MEMBER.cs" />

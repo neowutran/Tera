@@ -12,6 +12,7 @@ namespace Tera.Game
         private readonly Dictionary<Tuple<ushort, uint>, NpcInfo> _dictionary;
         private readonly Dictionary<ushort, string> _zoneNames = new Dictionary<ushort, string>();
         private readonly Func<Tuple<ushort, uint>, NpcInfo> _getPlaceholder;
+        public bool DetectBosses;
 
         public NpcDatabase(Dictionary<Tuple<ushort, uint>, NpcInfo> npcInfo)
         {
@@ -66,10 +67,10 @@ namespace Tera.Game
             return NPCs;
         }
 
-        public NpcDatabase(string directory, string reg_lang)
+        public NpcDatabase(string directory, string reg_lang, bool detectBosses = false)
             : this(LoadNpcInfos(directory, reg_lang))
         {
-
+            DetectBosses = detectBosses;
         }
 
         public NpcInfo GetOrNull(ushort huntingZoneId, uint templateId)
@@ -91,7 +92,9 @@ namespace Tera.Game
        
         public NpcInfo GetOrPlaceholder(ushort huntingZoneId, uint templateId)
         {
-            return GetOrNull(huntingZoneId, templateId) ?? _getPlaceholder(Tuple.Create(huntingZoneId, templateId));
+            var result = GetOrNull(huntingZoneId, templateId) ?? _getPlaceholder(Tuple.Create(huntingZoneId, templateId));
+            if (DetectBosses) result.Boss = false;
+            return result;
         }
     }
 }

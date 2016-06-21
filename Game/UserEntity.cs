@@ -17,7 +17,7 @@ namespace Tera.Game
         }
 
         internal UserEntity(SpawnUserServerMessage message)
-            : this(message.Id)
+            : base(message.Id, message.Position, message.Heading)
         {
             Name = message.Name;
             GuildName = message.GuildName;

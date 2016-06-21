@@ -6,8 +6,8 @@ namespace Tera.Game
     // NPCs and Mosters - Tera doesn't distinguish these
     public class NpcEntity : Entity, IHasOwner
     {
-        public NpcEntity(EntityId id, EntityId ownerId, Entity owner,NpcInfo info)
-            : base(id)
+        public NpcEntity(EntityId id, EntityId ownerId, Entity owner, NpcInfo info, Vector3f position, Angle heading)
+            : base(id, position, heading)
         {
             OwnerId = ownerId;
             Owner = owner;

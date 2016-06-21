@@ -39,6 +39,21 @@ namespace Tera.Game
             {
                 TargetPlayer = playerTracker.Get(targetUser.ServerId, targetUser.PlayerId);
             }
+
+            Source.Position = Source.Position.MoveForvard(Source.Finish, Source.Speed, message.Time.Ticks - Source.StartTime);
+            if (Source.EndTime > 0 && Source.EndTime <= Source.StartTime)
+            {
+                Source.Heading = Source.EndAngle;
+                Source.EndTime = 0;
+            }
+            Target.Position = Target.Position.MoveForvard(Target.Finish, Target.Speed, message.Time.Ticks - Target.StartTime);
+            if (Target.EndTime > 0 && Target.EndTime <= Target.StartTime)
+            {
+                Target.Heading = Target.EndAngle;
+                Target.EndTime = 0;
+            }
+            HitDirection = Source.Position.GetHeading(Target.Position).HitDirection(Target.Heading);
+            //Debug.WriteLine($"{Source} {Source.Position} {Target} {Target.Position} {Target.Heading} {HitDirection}");
         }
         public SkillResult(int amount, bool isCritical, bool isHp, bool isHeal, HotDot hotdot, EntityId source, EntityId target, DateTime time,
             EntityTracker entityRegistry, PlayerTracker playerTracker)
@@ -70,8 +85,10 @@ namespace Tera.Game
             {
                 TargetPlayer = playerTracker.Get(targetUser.ServerId, targetUser.PlayerId);
             }
+            HitDirection = HitDirection.Dot;
         }
 
+        public HitDirection HitDirection { get; private set; }
         public DateTime Time { get; private set; }
         public bool Abnormality { get; }
         public int Amount { get; }

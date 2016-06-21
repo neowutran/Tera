@@ -8,7 +8,7 @@ namespace Tera.Game.Messages
         {
             reader.Skip(4);//Effects array count and offset
             Entity = reader.ReadEntityId();
-            Start = reader.ReadVector3f();
+            Position = reader.ReadVector3f();
             Heading = reader.ReadAngle();
             Model = reader.ReadUInt32();
             SkillId = reader.ReadUInt32();
@@ -25,7 +25,7 @@ namespace Tera.Game.Messages
         public uint SkillId { get; set; }
         public uint Model { get; set; }
         public EntityId Entity { get; }
-        public Vector3f Start { get; private set; }
+        public Vector3f Position { get; private set; }
         public Angle Heading { get; private set; }
         public float Speed { get; private set; }
     }

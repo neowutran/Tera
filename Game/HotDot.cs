@@ -12,12 +12,64 @@ namespace Tera.Game
             perc = 3, // each tick  HP += MaxHP*HPChange; MP += MaxMP*MPChange
             setp = 4 // ?set % stat value
         }
+        public enum Types
+        {
+            Unknown = 0,
+            MaxHP = 1,
+            Power = 3,
+            Endurance = 4,
+            MovSpd = 5,
+            Crit = 6,
+            CritResist = 7,
+            ImpactEffective = 8,
+            Ballance = 9,
+            WeakResist = 14,
+            DotResist = 15,
+            StunResist = 16, //something strange, internal itemname sleep_protect, but user string is stun resist, russian user string is "control effect resist"
+            AllResist = 18,
+            CritPower = 19,
+            Aggro = 20,
+            NoMPDecay = 21, //slayer
+            Attack = 22, //total damage modificator
+            XPBoost = 23,
+            ASpd = 24,
+            MovSpdInCombat = 25,
+            CraftTime = 26,
+            OutOfCombatMovSpd = 27,
+            HPDrain = 28, //drain hp on attack
+                          //28 = Something comming with MovSpd debuff skills, fxp 32% MovSpd debuff from Lockdown Blow IV, give also 12% of this kind
+                          //29 = something strange when using Lethal Strike
+            Stamina = 30,
+            Gathering = 31,
+            HPChange = 51,
+            MPChange = 52,
+            RageChange = 53,
+            KnockDownChance = 103,
+            DefPotion = 104, //or glyph: - incoming damage %
+            IncreasedHeal = 105,
+            PVPDef = 108,
+            AtkPotion = 162, //or glyph: + outgoing damage %
+            CritChance = 167,
+            PVPAtk = 168,
+            Noctenium = 203, //different values for different kinds of Noctenium, not sure what for =)
+            StaminaDecay = 207,
+            CDR = 208,
+            Block = 210, //frontal block ? Not sure, the ability to use block, or blocking stance
+            HPLoss = 221, //loss hp at the and of debuff
+            CastSpeed = 236,
+            Range = 259, //increase melee range? method 0 value 0.1= +10%
+                         //264 = redirect abnormality, value= new abnormality, bugged due to wrong float format in xml.
+            Rage = 280, //tick - RageChange, notick (one change) - Rage 
+            SuperArmor = 283,
+            Charm = 65535
+        }
 
         public HotDot(int id, string type, double hp, double mp, double amount, DotType method, int time, int tick,
             string name, string itemName, string tooltip, string iconName)
         {
             Id = id;
-            Type = type;
+            Types rType;
+            Type = Enum.TryParse(type, out rType) ? rType : Types.Unknown;
             Hp = hp;
             Mp = mp;
             Amount = amount;
@@ -28,12 +80,14 @@ namespace Tera.Game
             ItemName = itemName;
             Tooltip = tooltip;
             IconName = iconName;
+            Debuff = Type == Types.Endurance || Type == Types.CritResist;
+            HPMPChange = Type == Types.HPChange || Type == Types.MPChange;
         }
 
         public double Amount { get; }
 
         public int Id { get; }
-        public string Type { get; }
+        public Types Type { get; }
         public double Hp { get; }
         public double Mp { get; }
         public DotType Method { get; }
@@ -43,6 +97,8 @@ namespace Tera.Game
         public string ItemName { get; }
         public string Tooltip { get; }
         public string IconName { get; }
+        public bool Debuff { get; }
+        public bool HPMPChange { get; }
 
         public override bool Equals(object obj)
         {
@@ -80,7 +136,7 @@ namespace Tera.Game
 
         public override int GetHashCode()
         {
-            return (Type+Id).GetHashCode();
+            return Type.GetHashCode() ^ Id.GetHashCode();
         }
         public override string ToString()
         {
