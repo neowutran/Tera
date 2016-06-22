@@ -59,6 +59,7 @@ namespace Tera.Game
             }
             message.On<C_PLAYER_LOCATION>(m =>
             {
+                if (MeterUser == null) return; //Don't know how, but sometimes this happens.
                 MeterUser.Position = m.Position;
                 MeterUser.Heading = m.Heading;
                 MeterUser.Finish = m.Position;
