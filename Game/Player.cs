@@ -29,7 +29,7 @@ namespace Tera.Game
             get { return _user; }
             set
             {
-                if (_user.ServerId!=value.ServerId || _user.PlayerId != value.PlayerId)
+                if (_user.ServerId != value.ServerId || _user.PlayerId != value.PlayerId)
                     throw new ArgumentException("Users must represent the same Player");
                 _user = value;
             }
@@ -39,8 +39,7 @@ namespace Tera.Game
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
-            return Equals((Player) obj);
+            return obj.GetType() == GetType() && Equals((Player) obj);
         }
 
         public bool Equals(Player other)

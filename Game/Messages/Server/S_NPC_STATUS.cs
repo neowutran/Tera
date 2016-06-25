@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Tera.Game.Messages
+﻿namespace Tera.Game.Messages
 {
     public class SNpcStatus : ParsedMessage
 
@@ -9,7 +7,7 @@ namespace Tera.Game.Messages
         {
             Npc = reader.ReadEntityId();
             Enraged = (reader.ReadByte() & 1) == 1;
-	        reader.Skip(4);
+            reader.Skip(4);
             Target = reader.ReadEntityId();
             //Debug.WriteLine("NPC:" + Npc + ";Target:" + Target + (Enraged?" Enraged":""));
         }

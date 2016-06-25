@@ -62,7 +62,7 @@
             // Something else unknown later
         }
 
-        public bool Slaying => TotalHp > HpRemaining * 2 && HpRemaining > 0;
+        public bool Slaying => TotalHp > HpRemaining*2 && HpRemaining > 0;
         public int BaseAttack { get; private set; }
         public int BaseAttack2 { get; private set; }
         public short BaseAttackSpeed { get; private set; }
@@ -99,7 +99,7 @@
         public float BonusResistPeriodic { get; private set; }
         public float BonusResistStun { get; private set; }
         public float BonusResistWeakening { get; private set; }
-        public int HpRemaining { get; private set; }
+        public int HpRemaining { get; }
         public int ItemLevel { get; private set; }
         public int ItemLevelInventory { get; private set; }
         public int Level { get; private set; }
@@ -107,7 +107,7 @@
         public int ReRemaining { get; private set; }
         public int Stamina { get; private set; }
         public byte Status { get; private set; }
-        public int TotalHp { get; private set; }
+        public int TotalHp { get; }
         public int TotalMp { get; private set; }
         public int TotalRe { get; private set; }
         public int TotalStamina { get; private set; }

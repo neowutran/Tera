@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Tera.Game.Messages
 {
@@ -16,25 +15,26 @@ namespace Tera.Game.Messages
         public uint unk1;
         public string Name;
     }
+
     public class S_PARTY_MEMBER_LIST : ParsedMessage
     {
         internal S_PARTY_MEMBER_LIST(TeraMessageReader reader) : base(reader)
         {
             var count = reader.ReadUInt16();
             var offset = reader.ReadUInt16();
-            reader.Skip(2);//ims raid bytes
+            reader.Skip(2); //ims raid bytes
             reader.Skip(12);
             LeaderServerId = reader.ReadUInt32();
             LeaderPlayerId = reader.ReadUInt32();
             reader.Skip(19);
             for (var i = 1; i <= count; i++)
             {
-                reader.Skip(4);//pointer and next member offset
+                reader.Skip(4); //pointer and next member offset
                 var nameoffset = reader.ReadUInt16();
                 var ServerId = reader.ReadUInt32();
                 var PlayerId = reader.ReadUInt32();
                 var Level = reader.ReadUInt32();
-                var PlayerClass = (PlayerClass) (reader.ReadInt32()+1);
+                var PlayerClass = (PlayerClass) (reader.ReadInt32() + 1);
                 var Status = reader.ReadByte();
                 var Id = reader.ReadEntityId();
                 var Order = reader.ReadUInt32();
@@ -54,7 +54,8 @@ namespace Tera.Game.Messages
                     unk1 = unk1,
                     Name = Name
                 });
-            };
+            }
+            ;
             //Debug.WriteLine($"leader:{BitConverter.ToString(BitConverter.GetBytes(LeaderPlayerId))}, party:");
             //foreach (PartyMember member in Party)
             //{

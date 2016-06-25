@@ -9,20 +9,20 @@ namespace Tera.Sniffing
 {
     public class ConnectionDecrypter
     {
+        private readonly string _region;
         private MemoryStream _client = new MemoryStream();
         private MemoryStream _server = new MemoryStream();
         private Session _session;
+
+        public ConnectionDecrypter(string region = "Unknown")
+        {
+            _region = region;
+        }
+
         private bool Initialized => _session != null;
 
         public event Action<byte[]> ClientToServerDecrypted;
         public event Action<byte[]> ServerToClientDecrypted;
-
-        private string _region;
-
-        public ConnectionDecrypter(string region="Unknown")
-        {
-            _region = region;
-        }
 
         protected void OnClientToServerDecrypted(byte[] data)
         {

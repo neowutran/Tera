@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Tera.Game;
 
 namespace Tera.Game
 {
@@ -9,8 +8,8 @@ namespace Tera.Game
     // Currently this is limited to the name of the skill
     public class PetSkillDatabase
     {
+        private readonly Dictionary<string, List<UserSkill>> _petSkilldata = new Dictionary<string, List<UserSkill>>();
 
-      private readonly Dictionary<string, List<UserSkill>> _petSkilldata = new Dictionary<string, List<UserSkill>>();
         public PetSkillDatabase(string folder, string language)
         {
             StreamReader reader;

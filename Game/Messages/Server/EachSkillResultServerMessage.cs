@@ -43,7 +43,7 @@ namespace Tera.Game.Messages
             Flags = (SkillResultFlags) FlagsDebug;
             IsCritical = (reader.ReadUInt16() & 1) != 0;
             Knockdown = (reader.ReadByte() & 1) != 0;
-            reader.Skip(4);//unknown
+            reader.Skip(4); //unknown
             Position = reader.ReadVector3f();
             Heading = reader.ReadAngle();
 
@@ -51,8 +51,9 @@ namespace Tera.Game.Messages
             {
                 Amount = Math.Abs(Amount);
             }
-            if (Position.X!=0)
-                Debug.WriteLine($"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Target.Id))} {Position} {Heading}");
+            if (Position.X != 0)
+                Debug.WriteLine(
+                    $"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Target.Id))} {Position} {Heading}");
         }
 
         //DEBUG
@@ -69,14 +70,14 @@ namespace Tera.Game.Messages
 
 
         public EntityId Source { get; private set; }
-        public EntityId Target { get; private set; }
+        public EntityId Target { get; }
         public int Amount { get; }
         public int SkillId { get; private set; }
         public SkillResultFlags Flags { get; }
         public bool IsCritical { get; private set; }
         public bool Knockdown { get; private set; }
-        public Vector3f Position { get; private set; }
-        public Angle Heading { get; private set; }
+        public Vector3f Position { get; }
+        public Angle Heading { get; }
 
         public bool IsMana => ((Flags & SkillResultFlags.Bit0) != 0) && ((Flags & SkillResultFlags.Heal) != 0);
 

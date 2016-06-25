@@ -2,10 +2,8 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace Tera.PacketLog
 {
@@ -14,7 +12,6 @@ namespace Tera.PacketLog
         private readonly Stream _stream;
 
         private DateTime _time;
-        public LogHeader Header { get; private set; }
 
         internal PacketLogReader(Stream stream)
         {
@@ -22,6 +19,8 @@ namespace Tera.PacketLog
             Header = new LogHeader();
             ReadHeader();
         }
+
+        public LogHeader Header { get; }
 
         private void ReadHeader()
         {
@@ -51,7 +50,7 @@ namespace Tera.PacketLog
                     case BlockType.Timestamp:
                     case BlockType.Server:
                     case BlockType.Client:
-                        throw new FormatException(string.Format("Unexpected block type in header '{0}'", blockType));
+                        throw new FormatException($"Unexpected block type in header '{blockType}'");
                 }
             } while (blockType != BlockType.Start);
         }
@@ -76,7 +75,7 @@ namespace Tera.PacketLog
                         direction = MessageDirection.ServerToClient;
                         return new Message(_time, direction, new ArraySegment<byte>(data));
                     default:
-                        throw new FormatException(string.Format("Unexpected blocktype {0}", blockType));
+                        throw new FormatException($"Unexpected blocktype {blockType}");
                 }
             }
             return null;

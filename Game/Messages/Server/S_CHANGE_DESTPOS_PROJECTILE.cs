@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-
-namespace Tera.Game.Messages
+﻿namespace Tera.Game.Messages
 {
     public class S_CHANGE_DESTPOS_PROJECTILE : ParsedMessage
     {

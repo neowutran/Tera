@@ -1,21 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Tera.Game.Abnormality;
 using Tera.Game.Messages;
 
 namespace Tera.Game
 {
     public class AbnormalityTracker
     {
-        private readonly Dictionary<EntityId, List<Abnormality>> _abnormalities =
-            new Dictionary<EntityId, List<Abnormality>>();
-        public Action<SkillResult> UpdateDamageTracker;
-        internal EntityTracker EntityTracker;
-        internal PlayerTracker PlayerTracker;
-        internal HotDotDatabase HotDotDatabase;
-        internal AbnormalityStorage AbnormalityStorage;
+        private readonly Dictionary<EntityId, List<Abnormality.Abnormality>> _abnormalities =
+            new Dictionary<EntityId, List<Abnormality.Abnormality>>();
 
-        public AbnormalityTracker(EntityTracker entityTracker, PlayerTracker playerTracker, HotDotDatabase hotDotDatabase, AbnormalityStorage abnormalityStorage, Action<SkillResult> update=null)
+        internal AbnormalityStorage AbnormalityStorage;
+        internal EntityTracker EntityTracker;
+        internal HotDotDatabase HotDotDatabase;
+        internal PlayerTracker PlayerTracker;
+        public Action<SkillResult> UpdateDamageTracker;
+
+        public AbnormalityTracker(EntityTracker entityTracker, PlayerTracker playerTracker,
+            HotDotDatabase hotDotDatabase, AbnormalityStorage abnormalityStorage, Action<SkillResult> update = null)
         {
             EntityTracker = entityTracker;
             PlayerTracker = playerTracker;
@@ -28,7 +31,7 @@ namespace Tera.Game
         {
             RegisterAggro(npcStatus);
             if (npcStatus.Enraged)
-                AddAbnormality(npcStatus.Npc, npcStatus.Target,0,0,8888888,npcStatus.Time.Ticks);
+                AddAbnormality(npcStatus.Npc, npcStatus.Target, 0, 0, 8888888, npcStatus.Time.Ticks);
             else
                 DeleteAbnormality(npcStatus);
         }
@@ -44,6 +47,7 @@ namespace Tera.Game
             else
                 DeleteAbnormality(user.Id, 8888889, ticks);
         }
+
         public void RegisterDead(EntityId id, long ticks, bool dead)
         {
             var user = EntityTracker.GetOrNull(id) as UserEntity;
@@ -67,7 +71,7 @@ namespace Tera.Game
         {
             var time = aggro.Time.Ticks;
             var entity = EntityTracker.GetOrNull(aggro.Npc) as NpcEntity;
-            if (entity == null) return;//not sure why, but sometimes it fails
+            if (entity == null) return; //not sure why, but sometimes it fails
             var user = EntityTracker.GetOrNull(aggro.Target) as UserEntity;
             if (user != null)
             {
@@ -94,7 +98,7 @@ namespace Tera.Game
         {
             var time = aggro.Time.Ticks;
             var entity = EntityTracker.GetOrNull(aggro.Npc) as NpcEntity;
-            if (entity == null) return;// Strange, but seems there are not only NPC or something wrong with trackers
+            if (entity == null) return; // Strange, but seems there are not only NPC or something wrong with trackers
             if (AbnormalityStorage.Last(entity) != null)
             {
                 AbnormalityStorage.AggroEnd(AbnormalityStorage.Last(entity), entity, time);
@@ -113,7 +117,7 @@ namespace Tera.Game
         {
             if (!_abnormalities.ContainsKey(target))
             {
-                _abnormalities.Add(target, new List<Abnormality>());
+                _abnormalities.Add(target, new List<Abnormality.Abnormality>());
             }
             var hotdot = HotDotDatabase.Get(abnormalityId);
             if (hotdot == null)
@@ -121,9 +125,10 @@ namespace Tera.Game
                 return;
             }
 
-            if (_abnormalities[target].Where(x => x.HotDot.Id == abnormalityId).Count() == 0) //dont add existing abnormalities since we don't delete them all, that may cause many untrackable issues.
-                _abnormalities[target].Add(new Abnormality(hotdot, source, target, duration, stack, ticks, this));
-
+            if (_abnormalities[target].Count(x => x.HotDot.Id == abnormalityId) == 0)
+                //dont add existing abnormalities since we don't delete them all, that may cause many untrackable issues.
+                _abnormalities[target].Add(new Abnormality.Abnormality(hotdot, source, target, duration, stack, ticks,
+                    this));
         }
 
         public void RefreshAbnormality(SAbnormalityRefresh message)
@@ -148,14 +153,7 @@ namespace Tera.Game
                 return false;
             }
             var abnormalityTarget = _abnormalities[target];
-            for(var i = 0; i < abnormalityTarget.Count; i++)
-            {
-                if(abnormalityTarget[i].HotDot == dot)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return abnormalityTarget.Any(t => t.HotDot == dot);
         }
 
         public void DeleteAbnormality(EntityId target, int abnormalityId, long ticks)
@@ -169,12 +167,10 @@ namespace Tera.Game
 
             for (var i = 0; i < abnormalityUser.Count; i++)
             {
-                if (abnormalityUser[i].HotDot.Id == abnormalityId)
-                {
-                    abnormalityUser[i].ApplyBuffDebuff(ticks);
-                    abnormalityUser.Remove(abnormalityUser[i]);
-                    break;
-                }
+                if (abnormalityUser[i].HotDot.Id != abnormalityId) continue;
+                abnormalityUser[i].ApplyBuffDebuff(ticks);
+                abnormalityUser.Remove(abnormalityUser[i]);
+                break;
             }
 
             if (abnormalityUser.Count == 0)
@@ -189,6 +185,7 @@ namespace Tera.Game
         {
             DeleteAbnormality(message.TargetId, message.AbnormalityId, message.Time.Ticks);
         }
+
         public void DeleteAbnormality(SDespawnNpc message)
         {
             DeleteAbnormality(message.Npc, message.Time.Ticks);
@@ -272,7 +269,8 @@ namespace Tera.Game
 
         public void Update(SCreatureChangeHp message)
         {
-            Update(message.TargetId, message.SourceId, message.HpChange, message.Type, message.Critical == 1, true, message.Time.Ticks);
+            Update(message.TargetId, message.SourceId, message.HpChange, message.Type, message.Critical == 1, true,
+                message.Time.Ticks);
             var user = EntityTracker.GetOrPlaceholder(message.TargetId) as UserEntity;
             RegisterSlaying(user, message.Slaying, message.Time.Ticks);
         }

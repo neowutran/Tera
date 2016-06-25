@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-
-namespace Tera.Game.Messages
+﻿namespace Tera.Game.Messages
 {
     public class SpawnUserServerMessage : ParsedMessage
     {
@@ -9,7 +6,8 @@ namespace Tera.Game.Messages
             : base(reader)
         {
             reader.Skip(26);
-            ServerId = reader.ReadUInt32();// not sure, whether full uint32 is serverid, or only first 2 bytes and the rest part of it is actualy a part of PlayerId, or something else, but it always come along with PlayerID as complex player id
+            ServerId = reader.ReadUInt32();
+            // not sure, whether full uint32 is serverid, or only first 2 bytes and the rest part of it is actualy a part of PlayerId, or something else, but it always come along with PlayerID as complex player id
             PlayerId = reader.ReadUInt32();
             Id = reader.ReadEntityId();
             Position = reader.ReadVector3f();

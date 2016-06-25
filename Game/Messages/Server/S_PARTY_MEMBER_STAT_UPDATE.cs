@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Tera.Game.Messages
+﻿namespace Tera.Game.Messages
 {
     public class S_PARTY_MEMBER_STAT_UPDATE : ParsedMessage
     {
@@ -15,7 +13,7 @@ namespace Tera.Game.Messages
             Level = reader.ReadInt16();
             InCombat = reader.ReadInt16();
             Vitality = reader.ReadInt16();
-            Alive = reader.ReadByte();  //not sure
+            Alive = reader.ReadByte(); //not sure
             Stamina = reader.ReadInt32();
             ReRemaining = reader.ReadInt32();
             TotalRe = reader.ReadInt32();
@@ -43,7 +41,6 @@ namespace Tera.Game.Messages
 
         public uint ServerId { get; }
         public uint PlayerId { get; }
-        public bool Slaying => TotalHp > HpRemaining * 2 && HpRemaining > 0;
-
+        public bool Slaying => TotalHp > HpRemaining*2 && HpRemaining > 0;
     }
 }

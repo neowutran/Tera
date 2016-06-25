@@ -23,7 +23,6 @@ namespace Tera.Game.Messages
             //{
             //    PrintRaw();
             //}
-
         }
 
         public byte[] Raw { get; protected set; }

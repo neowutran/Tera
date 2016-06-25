@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.IO.Packaging;
 using System.Windows.Media.Imaging;
-using System.Drawing;
 
 namespace Tera.Game
 {
     public class IconsDatabase
     {
-        private readonly Dictionary<string, BitmapImage> _images = new Dictionary<string, BitmapImage>();
         private readonly Dictionary<string, Bitmap> _bitmaps = new Dictionary<string, Bitmap>();
         private readonly Package _icons;
+        private readonly Dictionary<string, BitmapImage> _images = new Dictionary<string, BitmapImage>();
+
         public IconsDatabase(string resourceDirectory)
         {
 //            IconsDirectory = Path.Combine(resourceDirectory, "icons/");
@@ -21,12 +22,12 @@ namespace Tera.Game
         public BitmapImage GetImage(string iconName)
         {
             BitmapImage image;
-            if (_images.TryGetValue(iconName,out image)||string.IsNullOrEmpty(iconName))
+            if (_images.TryGetValue(iconName, out image) || string.IsNullOrEmpty(iconName))
             {
                 return image;
             }
             image = new BitmapImage();
-            Uri ur = new Uri("/" + iconName + ".png",UriKind.Relative);
+            var ur = new Uri("/" + iconName + ".png", UriKind.Relative);
             if (_icons.PartExists(ur))
             {
                 image.BeginInit();
@@ -39,6 +40,7 @@ namespace Tera.Game
             _images.Add(iconName, image);
             return image;
         }
+
         public Bitmap GetBitmap(string iconName)
         {
             Bitmap image;
@@ -46,9 +48,8 @@ namespace Tera.Game
             {
                 return image;
             }
-            Uri ur = new Uri("/" + iconName + ".png", UriKind.Relative);
-            if (_icons.PartExists(ur)) image = new Bitmap(_icons.GetPart(ur).GetStream());
-            else image = new Bitmap(1, 1);
+            var ur = new Uri("/" + iconName + ".png", UriKind.Relative);
+            image = _icons.PartExists(ur) ? new Bitmap(_icons.GetPart(ur).GetStream()) : new Bitmap(1, 1);
             _bitmaps.Add(iconName, image);
             return image;
         }

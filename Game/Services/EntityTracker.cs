@@ -14,12 +14,13 @@ namespace Tera.Game
     {
         private readonly Dictionary<EntityId, Entity> _dictionary = new Dictionary<EntityId, Entity>();
         private readonly NpcDatabase _npcDatabase;
-        public UserEntity MeterUser { get; private set; }
 
         public EntityTracker(NpcDatabase npcDatabase)
         {
             _npcDatabase = npcDatabase;
         }
+
+        public UserEntity MeterUser { get; private set; }
 
         public IEnumerator<Entity> GetEnumerator()
         {
@@ -47,11 +48,18 @@ namespace Tera.Game
             message.On<SpawnNpcServerMessage>(
                 m =>
                     newEntity =
-                        new NpcEntity(m.Id, m.OwnerId, GetOrPlaceholder(m.OwnerId), _npcDatabase.GetOrPlaceholder(m.NpcArea, m.NpcId),m.Position,m.Heading));
+                        new NpcEntity(m.Id, m.OwnerId, GetOrPlaceholder(m.OwnerId),
+                            _npcDatabase.GetOrPlaceholder(m.NpcArea, m.NpcId), m.Position, m.Heading));
             message.On<SpawnProjectileServerMessage>(
-                m => newEntity = new ProjectileEntity(m.Id, m.OwnerId, GetOrPlaceholder(m.OwnerId), m.Start, m.Start.GetHeading(m.Finish), m.Finish, (int)m.Speed, m.Time.Ticks));
+                m =>
+                    newEntity =
+                        new ProjectileEntity(m.Id, m.OwnerId, GetOrPlaceholder(m.OwnerId), m.Start,
+                            m.Start.GetHeading(m.Finish), m.Finish, (int) m.Speed, m.Time.Ticks));
             message.On<StartUserProjectileServerMessage>(
-                m => newEntity = new ProjectileEntity(m.Id, m.OwnerId, GetOrPlaceholder(m.OwnerId), m.Start, m.Start.GetHeading(m.Finish), m.Finish, (int)m.Speed, m.Time.Ticks));
+                m =>
+                    newEntity =
+                        new ProjectileEntity(m.Id, m.OwnerId, GetOrPlaceholder(m.OwnerId), m.Start,
+                            m.Start.GetHeading(m.Finish), m.Finish, (int) m.Speed, m.Time.Ticks));
             if (newEntity != null)
             {
                 _dictionary[newEntity.Id] = newEntity;
@@ -71,8 +79,9 @@ namespace Tera.Game
             message.On<S_CHANGE_DESTPOS_PROJECTILE>(m =>
             {
                 var entity = GetOrNull(m.Id);
-                if (entity==null) return;
-                entity.Position = entity.Position.MoveForvard(entity.Finish,entity.Speed,m.Time.Ticks-entity.StartTime);
+                if (entity == null) return;
+                entity.Position = entity.Position.MoveForvard(entity.Finish, entity.Speed,
+                    m.Time.Ticks - entity.StartTime);
                 entity.Finish = m.Finish;
                 entity.Heading = entity.Position.GetHeading(entity.Finish);
                 entity.StartTime = m.Time.Ticks;
@@ -135,7 +144,8 @@ namespace Tera.Game
             {
                 var entity = GetOrNull(m.Entity);
                 if (entity == null) return;
-                entity.Position = entity.Position.MoveForvard(entity.Finish, entity.Speed, m.Time.Ticks - entity.StartTime);
+                entity.Position = entity.Position.MoveForvard(entity.Finish, entity.Speed,
+                    m.Time.Ticks - entity.StartTime);
                 entity.Finish = entity.Position;
                 entity.Speed = 0;
                 entity.StartTime = m.Time.Ticks;
@@ -143,9 +153,12 @@ namespace Tera.Game
                 {
                     entity.Heading = entity.EndAngle;
                 }
-                else if (entity.EndTime > 0) { Debug.WriteLine("New rotate started before old ended!");}
+                else if (entity.EndTime > 0)
+                {
+                    Debug.WriteLine("New rotate started before old ended!");
+                }
                 entity.EndAngle = m.Heading;
-                entity.EndTime = entity.StartTime + (m.NeedTime == 0 ? 0 : TimeSpan.TicksPerMillisecond * m.NeedTime);
+                entity.EndTime = entity.StartTime + (m.NeedTime == 0 ? 0 : TimeSpan.TicksPerMillisecond*m.NeedTime);
                 //Debug.WriteLine($"{entity.Position} {entity.Heading} {entity.EndAngle} {m.NeedTime}");
             });
             message.On<SNpcLocation>(m =>

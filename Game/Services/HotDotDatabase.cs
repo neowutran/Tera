@@ -33,7 +33,7 @@ namespace Tera.Game
                 var type = values[1];
                 var hp = double.Parse(values[2], CultureInfo.InvariantCulture);
                 var mp = double.Parse(values[3], CultureInfo.InvariantCulture);
-                var method = (HotDot.DotType) Enum.Parse(typeof (HotDot.DotType), values[4]);
+                var method = (HotDot.DotType) Enum.Parse(typeof(HotDot.DotType), values[4]);
                 var time = int.Parse(values[5]);
                 var tick = int.Parse(values[6]);
                 var amount = double.Parse(values[7], CultureInfo.InvariantCulture);
@@ -41,10 +41,12 @@ namespace Tera.Game
                 var itemName = values[10];
                 var tooltip = values[11];
                 var iconName = values[12];
-                _hotdots[id] = new HotDot(id, type, hp, mp, amount, method, time, tick, name, itemName , tooltip, iconName);
+                _hotdots[id] = new HotDot(id, type, hp, mp, amount, method, time, tick, name, itemName, tooltip,
+                    iconName);
             }
-            _hotdots[8888888] = new HotDot(8888888, "Endurance", 0, 0, 0, 0, 0, 0, "Enrage","","","enraged");
-            _hotdots[8888889] = new HotDot(8888889, "CritPower", 0, 0, 0, 0, 0, 0, "Slaying", "", "'Slaying' crystal is working (if equipped) when player in this state.", "slaying");
+            _hotdots[8888888] = new HotDot(8888888, "Endurance", 0, 0, 0, 0, 0, 0, "Enrage", "", "", "enraged");
+            _hotdots[8888889] = new HotDot(8888889, "CritPower", 0, 0, 0, 0, 0, 0, "Slaying", "",
+                "'Slaying' crystal is working (if equipped) when player in this state.", "slaying");
         }
 
         public void Add(HotDot dot)

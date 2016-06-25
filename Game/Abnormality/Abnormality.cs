@@ -1,15 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace Tera.Game
+namespace Tera.Game.Abnormality
 {
     public class Abnormality
     {
+        private readonly AbnormalityTracker _abnormalityTracker;
         private bool _buffRegistered;
 
         private bool _enduranceDebuffRegistered;
-        private readonly AbnormalityTracker _abnormalityTracker;
-        public Abnormality(HotDot hotdot, EntityId source, EntityId target, int duration, int stack, long ticks, AbnormalityTracker abnormalityTracker)
+
+        public Abnormality(HotDot hotdot, EntityId source, EntityId target, int duration, int stack, long ticks,
+            AbnormalityTracker abnormalityTracker)
         {
             HotDot = hotdot;
             Source = source;
@@ -42,17 +43,17 @@ namespace Tera.Game
             if (_abnormalityTracker.UpdateDamageTracker != null)
             {
                 var skillResult = new SkillResult(
-                Math.Abs(amount),
-                critical,
-                isHp,
-                amount > 0,
-                HotDot,
-                Source,
-                Target,
-                new DateTime(time),
-                _abnormalityTracker.EntityTracker,
-                _abnormalityTracker.PlayerTracker
-                );
+                    Math.Abs(amount),
+                    critical,
+                    isHp,
+                    amount > 0,
+                    HotDot,
+                    Source,
+                    Target,
+                    new DateTime(time),
+                    _abnormalityTracker.EntityTracker,
+                    _abnormalityTracker.PlayerTracker
+                    );
 
                 _abnormalityTracker.UpdateDamageTracker(skillResult);
             }
@@ -95,7 +96,7 @@ namespace Tera.Game
             {
                 var userEntity = _abnormalityTracker.EntityTracker.GetOrPlaceholder(Source);
                 var user = userEntity as UserEntity;
-                if (user==null)
+                if (user == null)
                 {
                     return;
                 }
@@ -150,8 +151,8 @@ namespace Tera.Game
             {
                 return;
             }
-            var player = _abnormalityTracker.PlayerTracker.GetOrUpdate((UserEntity)userEntity);
-            _abnormalityTracker.AbnormalityStorage.AbnormalityTime(player)[HotDot].End(lastTicks); ;
+            var player = _abnormalityTracker.PlayerTracker.GetOrUpdate((UserEntity) userEntity);
+            _abnormalityTracker.AbnormalityStorage.AbnormalityTime(player)[HotDot].End(lastTicks);
         }
 
         public void Refresh(int stackCounter, int duration, long time)

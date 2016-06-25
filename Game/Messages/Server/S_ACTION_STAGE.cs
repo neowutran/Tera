@@ -1,12 +1,10 @@
-﻿using System;
-
-namespace Tera.Game.Messages
+﻿namespace Tera.Game.Messages
 {
     public class S_ACTION_STAGE : ParsedMessage
     {
         internal S_ACTION_STAGE(TeraMessageReader reader) : base(reader)
         {
-            reader.Skip(4);//Effects array count and offset
+            reader.Skip(4); //Effects array count and offset
             Entity = reader.ReadEntityId();
             Position = reader.ReadVector3f();
             Heading = reader.ReadAngle();

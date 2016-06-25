@@ -2,7 +2,7 @@
 {
     public class Server
     {
-        public Server(string name, string region, string ip, uint serverId=uint.MaxValue)
+        public Server(string name, string region, string ip, uint serverId = uint.MaxValue)
         {
             Ip = ip;
             Name = name;

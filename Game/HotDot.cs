@@ -12,6 +12,7 @@ namespace Tera.Game
             perc = 3, // each tick  HP += MaxHP*HPChange; MP += MaxMP*MPChange
             setp = 4 // ?set % stat value
         }
+
         public enum Types
         {
             Unknown = 0,
@@ -25,7 +26,8 @@ namespace Tera.Game
             Ballance = 9,
             WeakResist = 14,
             DotResist = 15,
-            StunResist = 16, //something strange, internal itemname sleep_protect, but user string is stun resist, russian user string is "control effect resist"
+            StunResist = 16,
+            //something strange, internal itemname sleep_protect, but user string is stun resist, russian user string is "control effect resist"
             AllResist = 18,
             CritPower = 19,
             Aggro = 20,
@@ -37,8 +39,8 @@ namespace Tera.Game
             CraftTime = 26,
             OutOfCombatMovSpd = 27,
             HPDrain = 28, //drain hp on attack
-                          //28 = Something comming with MovSpd debuff skills, fxp 32% MovSpd debuff from Lockdown Blow IV, give also 12% of this kind
-                          //29 = something strange when using Lethal Strike
+            //28 = Something comming with MovSpd debuff skills, fxp 32% MovSpd debuff from Lockdown Blow IV, give also 12% of this kind
+            //29 = something strange when using Lethal Strike
             Stamina = 30,
             Gathering = 31,
             HPChange = 51,
@@ -58,7 +60,7 @@ namespace Tera.Game
             HPLoss = 221, //loss hp at the and of debuff
             CastSpeed = 236,
             Range = 259, //increase melee range? method 0 value 0.1= +10%
-                         //264 = redirect abnormality, value= new abnormality, bugged due to wrong float format in xml.
+            //264 = redirect abnormality, value= new abnormality, bugged due to wrong float format in xml.
             Rage = 280, //tick - RageChange, notick (one change) - Rage 
             SuperArmor = 283,
             Charm = 65535
@@ -138,6 +140,7 @@ namespace Tera.Game
         {
             return Type.GetHashCode() ^ Id.GetHashCode();
         }
+
         public override string ToString()
         {
             return $"{Name} {Id}";

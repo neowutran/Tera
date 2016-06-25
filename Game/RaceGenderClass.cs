@@ -23,7 +23,7 @@ namespace Tera.Game
             {
                 if (value/10000 != 1)
                     throw new ArgumentException($"Unexpected raw value for RaceGenderClass {value}");
-                Race = (Race) ((value-100)/200%50);
+                Race = (Race) ((value - 100)/200%50);
                 Gender = (Gender) (value/100%2);
                 Class = (PlayerClass) (value%100);
                 Debug.Assert(Raw == value);
@@ -32,10 +32,10 @@ namespace Tera.Game
 
         private static T ParseEnum<T>(string s)
         {
-            return (T) Enum.Parse(typeof (T), s);
+            return (T) Enum.Parse(typeof(T), s);
         }
 
-        public string GameRace => Race==Race.Popori && Gender==Gender.Female ? "Elin" : Race.ToString();
+        public string GameRace => Race == Race.Popori && Gender == Gender.Female ? "Elin" : Race.ToString();
 
         public RaceGenderClass(string race, string gender, string @class)
             : this()

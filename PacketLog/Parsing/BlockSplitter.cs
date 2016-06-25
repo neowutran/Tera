@@ -8,13 +8,13 @@ namespace Tera.PacketLog
 {
     internal class BlockSplitter
     {
+        private readonly MemoryStream _buffer = new MemoryStream();
         public event Action<byte[]> BlockFinished;
-        MemoryStream buffer = new MemoryStream();
 
         protected virtual void OnBlockFinished(byte[] block)
         {
             var handler = BlockFinished;
-            if (handler != null) handler(block);
+            handler?.Invoke(block);
         }
 
         private static void RemoveFront(MemoryStream stream, int count)
@@ -39,7 +39,7 @@ namespace Tera.PacketLog
 
         public byte[] PopBlock()
         {
-            byte[] block = PopBlock(buffer);
+            var block = PopBlock(_buffer);
             if (block != null)
             {
                 OnBlockFinished(block);
@@ -56,7 +56,7 @@ namespace Tera.PacketLog
 
         public void Data(byte[] data)
         {
-            buffer.Write(data, 0, data.Length);
+            _buffer.Write(data, 0, data.Length);
         }
     }
 }

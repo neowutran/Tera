@@ -53,7 +53,7 @@ namespace Tera.Sniffing.Crypt
 
             Decryptor = new Cryptor(DecryptKey);
 
-            if(region == "KR" || region == "JP")
+            if (region == "KR" || region == "JP")
             {
                 TmpKey1 = Utils.ShiftKey(ServerKey2, 41);
             }

@@ -8,6 +8,21 @@ namespace Tera.PacketLog
     {
         private readonly Func<Stream> _openStream;
 
+        private PacketLogFile(Func<Stream> openStream)
+        {
+            _openStream = openStream;
+            using (var stream = _openStream())
+            {
+                var reader = new PacketLogReader(stream);
+                Header = reader.Header;
+            }
+        }
+
+        public PacketLogFile(string filename)
+            : this(() => new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+        {
+        }
+
         public LogHeader Header { get; private set; }
 
         public IEnumerable<Message> Messages
@@ -24,22 +39,6 @@ namespace Tera.PacketLog
                     }
                 }
             }
-        }
-
-        private PacketLogFile(Func<Stream> openStream)
-        {
-            _openStream = openStream;
-            using (var stream = _openStream())
-            {
-                var reader = new PacketLogReader(stream);
-                Header = reader.Header;
-            }
-        }
-
-        public PacketLogFile(string filename)
-            : this(() => new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-        {
-
         }
     }
 }

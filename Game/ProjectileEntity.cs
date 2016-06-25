@@ -5,7 +5,8 @@ namespace Tera.Game
 {
     public class ProjectileEntity : Entity, IHasOwner
     {
-        public ProjectileEntity(EntityId id, EntityId ownerId, Entity owner, Vector3f position, Angle heading, Vector3f finish, int speed, long time)
+        public ProjectileEntity(EntityId id, EntityId ownerId, Entity owner, Vector3f position, Angle heading,
+            Vector3f finish, int speed, long time)
             : base(id, position, heading, finish, speed, time)
         {
             OwnerId = ownerId;

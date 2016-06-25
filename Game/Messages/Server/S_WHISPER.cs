@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Tera.Game.Messages
+﻿namespace Tera.Game.Messages
 {
     public class S_WHISPER : ParsedMessage
     {
@@ -10,7 +8,6 @@ namespace Tera.Game.Messages
             Sender = reader.ReadTeraString();
             Receiver = reader.ReadTeraString();
             Text = reader.ReadTeraString();
-
         }
 
         public string Sender { get; set; }

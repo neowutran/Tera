@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Tera.Game
+namespace Tera.Game.Abnormality
 {
     public class Duration : ICloneable
     {
@@ -17,10 +17,10 @@ namespace Tera.Game
         {
             return new Duration(Begin, End);
         }
+
         public Duration Clone(long begin, long end)
         {
             return new Duration(Begin > begin ? Begin : begin, End < end ? End : end);
         }
-
     }
 }

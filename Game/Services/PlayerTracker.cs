@@ -7,11 +7,12 @@ namespace Tera.Game
 {
     public class PlayerTracker : IEnumerable<Player>
     {
-        private readonly Dictionary<Tuple<uint,uint>, Player> _playerById = new Dictionary<Tuple<uint,uint>, Player>();
+        private readonly EntityTracker _entityTracker;
+        private readonly Dictionary<Tuple<uint, uint>, Player> _playerById = new Dictionary<Tuple<uint, uint>, Player>();
         private readonly ServerDatabase _serverDatabase;
         private List<Tuple<uint, uint>> _currentParty = new List<Tuple<uint, uint>>();
-        private EntityTracker _entityTracker;
-        public PlayerTracker(EntityTracker entityTracker,ServerDatabase serverDatabase=null)
+
+        public PlayerTracker(EntityTracker entityTracker, ServerDatabase serverDatabase = null)
         {
             _serverDatabase = serverDatabase;
             _entityTracker = entityTracker;
@@ -44,7 +45,7 @@ namespace Tera.Game
             var tup = Tuple.Create(user.ServerId, user.PlayerId);
             if (!_playerById.TryGetValue(tup, out player))
             {
-                player = new Player(user,_serverDatabase);
+                player = new Player(user, _serverDatabase);
                 _playerById.Add(tup, player);
             }
             else
@@ -54,15 +55,15 @@ namespace Tera.Game
             }
         }
 
-        public Player Get(uint serverId,uint playerId)
+        public Player Get(uint serverId, uint playerId)
         {
             return _playerById[Tuple.Create(serverId, playerId)];
         }
 
-        public Player GetOrNull(uint serverId,uint playerId)
+        public Player GetOrNull(uint serverId, uint playerId)
         {
-            Player result=null;
-            _playerById.TryGetValue(Tuple.Create(serverId,playerId), out result);
+            Player result;
+            _playerById.TryGetValue(Tuple.Create(serverId, playerId), out result);
             return result;
         }
 
@@ -71,19 +72,24 @@ namespace Tera.Game
             Update(user);
             return _playerById[Tuple.Create(user.ServerId, user.PlayerId)];
         }
+
         public void UpdateParty(ParsedMessage message)
         {
             message.On<S_BAN_PARTY>(m => _currentParty = new List<Tuple<uint, uint>>());
             message.On<S_LEAVE_PARTY>(m => _currentParty = new List<Tuple<uint, uint>>());
-            message.On<S_LEAVE_PARTY_MEMBER>(m => _currentParty.Remove(Tuple.Create(m.ServerId,m.PlayerId)));
+            message.On<S_LEAVE_PARTY_MEMBER>(m => _currentParty.Remove(Tuple.Create(m.ServerId, m.PlayerId)));
             message.On<S_BAN_PARTY_MEMBER>(m => _currentParty.Remove(Tuple.Create(m.ServerId, m.PlayerId)));
-            message.On<S_PARTY_MEMBER_LIST>(m => _currentParty = m.Party.ConvertAll(x => Tuple.Create(x.ServerId, x.PlayerId)));
+            message.On<S_PARTY_MEMBER_LIST>(
+                m => _currentParty = m.Party.ConvertAll(x => Tuple.Create(x.ServerId, x.PlayerId)));
         }
+
         public bool MyParty(Player player)
         {
             if (player == null) return false;
-            return _currentParty.Contains(Tuple.Create(player.ServerId, player.PlayerId)) || player.User==_entityTracker.MeterUser ;
+            return _currentParty.Contains(Tuple.Create(player.ServerId, player.PlayerId)) ||
+                   player.User == _entityTracker.MeterUser;
         }
+
         public Player Me()
         {
             var user = _entityTracker.MeterUser;

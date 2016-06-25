@@ -7,7 +7,7 @@
             var nameoffset = reader.ReadUInt16();
             ServerId = reader.ReadUInt32();
             PlayerId = reader.ReadUInt32();
-            reader.Skip(4);//unknown ffffffff
+            reader.Skip(4); //unknown ffffffff
             Name = reader.ReadTeraString();
         }
 

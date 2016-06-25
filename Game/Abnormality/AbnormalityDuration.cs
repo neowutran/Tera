@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 
-namespace Tera.Game
+namespace Tera.Game.Abnormality
 {
     public class AbnormalityDuration : ICloneable
     {
@@ -45,6 +44,7 @@ namespace Tera.Game
             };
             return abnormalityDuration;
         }
+
         public long Duration(long begin, long end)
         {
             long totalDuration = 0;
@@ -75,13 +75,14 @@ namespace Tera.Game
 
         public void Start(long start)
         {
-            if (_listDuration.Count != 0) {
+            if (_listDuration.Count != 0)
+            {
                 if (!Ended())
                 {
                     //Debug.WriteLine("Can't restart something that has not been ended yet");
                     return;
                 }
-           }
+            }
             _listDuration.Add(new Duration(start, long.MaxValue));
         }
 
@@ -106,18 +107,20 @@ namespace Tera.Game
             return _listDuration[_listDuration.Count - 1].End;
         }
 
-        public int Count(long begin=0, long end=0)
+        public int Count(long begin = 0, long end = 0)
         {
-            return begin == 0 || end == 0 ? _listDuration.Count : _listDuration.Count(x => begin <= x.End && end >= x.Begin);
+            return begin == 0 || end == 0
+                ? _listDuration.Count
+                : _listDuration.Count(x => begin <= x.End && end >= x.Begin);
         }
 
-        public List<Duration> AllDurations(long begin=0, long end=0) //for use only on cloned storages
+        public List<Duration> AllDurations(long begin = 0, long end = 0) //for use only on cloned storages
         {
-            return begin == 0 || end == 0 ? 
-                _listDuration.ToList() :
-                _listDuration.Where(x => begin <= x.End && end >= x.Begin)
-                .Select(x => new Duration(begin > x.Begin ? begin : x.Begin, end < x.End ? end : x.End))
-                .ToList();
+            return begin == 0 || end == 0
+                ? _listDuration.ToList()
+                : _listDuration.Where(x => begin <= x.End && end >= x.Begin)
+                    .Select(x => new Duration(begin > x.Begin ? begin : x.Begin, end < x.End ? end : x.End))
+                    .ToList();
         }
 
         public bool Ended()

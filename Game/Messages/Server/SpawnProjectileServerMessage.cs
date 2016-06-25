@@ -1,7 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-
-namespace Tera.Game.Messages
+﻿namespace Tera.Game.Messages
 {
     public class SpawnProjectileServerMessage : ParsedMessage
     {
@@ -16,7 +13,7 @@ namespace Tera.Game.Messages
             unk1 = reader.ReadByte();
             Speed = reader.ReadSingle();
             OwnerId = reader.ReadEntityId();
-            unk2 = reader.ReadInt16();// ???
+            unk2 = reader.ReadInt16(); // ???
             //PrintRaw();
             //Debug.WriteLine($"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Id.Id))} {Start} - > {Finish} {Speed}");
         }
