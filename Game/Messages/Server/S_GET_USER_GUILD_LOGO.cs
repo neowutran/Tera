@@ -13,7 +13,9 @@ namespace Tera.Game.Messages
             PlayerId = reader.ReadUInt32();
             GuildId = reader.ReadUInt32();
             var logo = reader.ReadBytes(iconsize);
-            GuildLogo = new Bitmap(64, 64, PixelFormat.Format8bppIndexed);
+
+            GuildLogo = new Bitmap(64,64,PixelFormat.Format8bppIndexed);
+            if (iconsize<0x1318) return; //seems there can be some other icon format, so return to avoid exception
             var palette = GuildLogo.Palette;
             for (var i = 0; i <= 255; i++)
             {
