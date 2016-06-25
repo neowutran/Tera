@@ -19,8 +19,8 @@ namespace Tera.Game
             Source = entityRegistry.GetOrPlaceholder(message.Source);
             Target = entityRegistry.GetOrPlaceholder(message.Target);
             var userNpc = UserEntity.ForEntity(Source);
-            var npc = (NpcEntity) userNpc["npc"];
-            var sourceUser = userNpc["user"] as UserEntity; // Attribute damage dealt by owned entities to the owner
+            var npc = (NpcEntity) userNpc["source"];
+            var sourceUser = userNpc["root_source"] as UserEntity; // Attribute damage dealt by owned entities to the owner
             var targetUser = Target as UserEntity; // But don't attribute damage received by owned entities to the owner
 
             if (sourceUser != null)
@@ -75,7 +75,7 @@ namespace Tera.Game
             Source = entityRegistry.GetOrPlaceholder(source);
             Target = entityRegistry.GetOrPlaceholder(target);
             var userNpc = UserEntity.ForEntity(Source);
-            var sourceUser = userNpc["user"] as UserEntity; // Attribute damage dealt by owned entities to the owner
+            var sourceUser = userNpc["root_source"] as UserEntity; // Attribute damage dealt by owned entities to the owner
             var targetUser = Target as UserEntity; // But don't attribute damage received by owned entities to the owner
 
             var pclass = PlayerClass.Common;
@@ -126,7 +126,7 @@ namespace Tera.Game
         public Player TargetPlayer { get; private set; }
 
 
-        public static Skill GetSkill(EntityId sourceid, int skillid, bool hotdot, EntityTracker entityRegistry,
+        public static Skill GetSkill(EntityId sourceid, EntityId? petSource, int skillid, bool hotdot, EntityTracker entityRegistry,
             SkillDatabase skillDatabase, HotDotDatabase hotdotDatabase, PetSkillDatabase petSkillDatabase = null)
         {
             if (hotdot)
@@ -135,27 +135,19 @@ namespace Tera.Game
                 return new Skill(skillid, hotdotskill.Name, null, "", hotdotskill.IconName, null, true);
             }
 
-            var source = entityRegistry.GetOrPlaceholder(sourceid);
+            var source = entityRegistry.GetOrPlaceholder(petSource ?? sourceid);
             var userNpc = UserEntity.ForEntity(source);
-            var npc = (NpcEntity) userNpc["npc"];
-            var sourceUser = userNpc["user"] as UserEntity; // Attribute damage dealt by owned entities to the owner
+            var npc = (NpcEntity) userNpc["source"];
+            var sourceUser = userNpc["root_source"] as UserEntity; // Attribute damage dealt by owned entities to the owner
 
-            Skill skill = null;
-            if (sourceUser != null)
-            {
-                skill = skillDatabase.GetOrNull(sourceUser.RaceGenderClass, skillid);
-                if (skill == null && npc != null)
-                {
-                    skill = new UserSkill(skillid, sourceUser.RaceGenderClass, npc.Info.Name, null,
-                        petSkillDatabase?.Get(npc.Info.Name, skillid) ?? "",
-                        skillDatabase.GetSkillByPetName(npc.Info.Name, sourceUser.RaceGenderClass)?.IconName ?? "",
-                        npc.Info);
-                }
-                if (skill == null)
-                {
-                    skill = new UserSkill(skillid, sourceUser.RaceGenderClass, "Unknown");
-                }
-            }
+            if (sourceUser == null) return null;
+            var skill = skillDatabase.GetOrNull(sourceUser.RaceGenderClass, skillid);
+            if (skill != null)return skill;
+            if (npc == null) return new UserSkill(skillid, sourceUser.RaceGenderClass, "Unknown");
+            skill = new UserSkill(skillid, sourceUser.RaceGenderClass, npc.Info.Name, null,
+                petSkillDatabase?.Get(npc.Info.Name, skillid) ?? "",
+                skillDatabase.GetSkillByPetName(npc.Info.Name, sourceUser.RaceGenderClass)?.IconName ?? "",
+                npc.Info);
             return skill;
         }
 

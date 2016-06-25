@@ -61,15 +61,15 @@ namespace Tera.Game
             {
                 if (entity.GetType() == typeof(NpcEntity))
                 {
-                    entities.Add("npc", (NpcEntity) entity);
+                    entities.Add("source", entity);
                 }
                 entity = ownedEntity.Owner;
                 ownedEntity = entity as IHasOwner;
             }
-            entities.Add("user", entity);
-            if (!entities.ContainsKey("npc"))
+            entities.Add("root_source", entity);
+            if (!entities.ContainsKey("source"))
             {
-                entities.Add("npc", null);
+                entities.Add("source", null);
             }
             return entities;
         }
