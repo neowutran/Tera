@@ -37,10 +37,10 @@ namespace Tera.Game
 
         public override bool Equals(object obj)
         {
-            var other = obj as UserSkill;
+            var other = obj as Skill;
             if (other == null)
                 return false;
-            return (Id == other.Id) && (IsHotDot == other.IsHotDot);
+            return (Id == other.Id) && (IsHotDot == other.IsHotDot) && (NpcInfo == other.NpcInfo);
         }
 
         public static string RemoveLvl(string name)
@@ -57,7 +57,8 @@ namespace Tera.Game
 
         public override int GetHashCode()
         {
-            return Id ^ IsHotDot.GetHashCode();
+            var npcinfoHash = NpcInfo?.GetHashCode() ?? 0;
+            return Id ^ IsHotDot.GetHashCode() ^ npcinfoHash;
         }
     }
 
@@ -83,18 +84,5 @@ namespace Tera.Game
         public string Hit { get; }
         public RaceGenderClass RaceGenderClass { get; }
         public PlayerClass PlayerClass { get; }
-
-        public override bool Equals(object obj)
-        {
-            var other = obj as UserSkill;
-            if (other == null)
-                return false;
-            return (Id == other.Id) && RaceGenderClass.Equals(other.RaceGenderClass) && (IsHotDot == other.IsHotDot);
-        }
-
-        public override int GetHashCode()
-        {
-            return Id ^ RaceGenderClass.GetHashCode() ^ IsHotDot.GetHashCode();
-        }
     }
 }

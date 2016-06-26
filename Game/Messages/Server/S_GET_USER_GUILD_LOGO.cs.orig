@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 
@@ -9,21 +8,17 @@ namespace Tera.Game.Messages
     {
         internal S_GET_USER_GUILD_LOGO(TeraMessageReader reader) : base(reader)
         {
-            Offset = reader.ReadUInt16();
-            Size = reader.ReadUInt16();
+            var iconOffset = reader.ReadUInt16();
+            var iconsize = reader.ReadUInt16();
             PlayerId = reader.ReadUInt32();
             GuildId = reader.ReadUInt32();
-
-            Console.WriteLine("icon size:"+Size+";offset:"+Offset+";player:"+PlayerId);
-
-            var logo = reader.ReadBytes(Size);
-
+            var logo = reader.ReadBytes(iconsize);
+<<<<<<< HEAD
+            GuildLogo = new Bitmap(64, 64, PixelFormat.Format8bppIndexed);
+=======
             GuildLogo = new Bitmap(64,64,PixelFormat.Format8bppIndexed);
-            if (Size < 0x1318)
-            {
-                return; //seems there can be some other icon format, so return to avoid exception
-            }
-        
+            if (iconsize<0x1318) return; //seems there can be some other icon format, so return to avoid exception
+>>>>>>> ec7c63812e684bd766fb0967bdb970dc9a7795ac
             var palette = GuildLogo.Palette;
             for (var i = 0; i <= 255; i++)
             {
@@ -36,9 +31,6 @@ namespace Tera.Game.Messages
             //GuildLogo.Save($"q:\\{Time.Ticks}.bmp",ImageFormat.Bmp);
             //System.IO.File.WriteAllBytes($"q:\\{Time.Ticks}.bin", logo);
         }
-
-        public int Offset { get; }
-        public int Size { get; }
 
         public uint GuildId { get; }
         public uint PlayerId { get; }
