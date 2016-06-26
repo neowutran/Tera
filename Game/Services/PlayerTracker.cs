@@ -51,7 +51,10 @@ namespace Tera.Game
             else
             {
                 if (player.User != user)
+                {
+                    //TODO Raise event for netword || player.User.Id, user.Id
                     player.User = user;
+                }
             }
         }
 
