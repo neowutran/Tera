@@ -51,9 +51,8 @@ namespace Tera.Game.Messages
             {
                 Amount = Math.Abs(Amount);
             }
-            if (Position.X != 0)
-                Debug.WriteLine(
-                    $"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Target.Id))} {Position} {Heading}");
+            if (Position.X!=0)
+                Debug.WriteLine($"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Target.Id))} {SkillId} {Position} {Heading}");
         }
 
         //DEBUG

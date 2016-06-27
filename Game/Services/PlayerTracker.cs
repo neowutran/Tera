@@ -36,6 +36,9 @@ namespace Tera.Game
                 Update(user);
         }
 
+        public delegate void PlayerIdChangedEvent(EntityId oldId, EntityId newId);
+        public event PlayerIdChangedEvent PlayerIdChangedAction;
+
         public void Update(UserEntity user)
         {
             if (user == null)
@@ -50,11 +53,9 @@ namespace Tera.Game
             }
             else
             {
-                if (player.User != user)
-                {
-                    //TODO Raise event for netword || player.User.Id, user.Id
-                    player.User = user;
-                }
+                if (player.User == user) return;
+                OnPlayerIdChangedAction(player.User.Id, user.Id);
+                player.User = user;
             }
         }
 
@@ -98,6 +99,11 @@ namespace Tera.Game
             var user = _entityTracker.MeterUser;
             if (user != null) return Get(user.ServerId, user.PlayerId);
             return null;
+        }
+
+        protected virtual void OnPlayerIdChangedAction(EntityId oldid, EntityId newid)
+        {
+            PlayerIdChangedAction?.Invoke(oldid, newid);
         }
     }
 }

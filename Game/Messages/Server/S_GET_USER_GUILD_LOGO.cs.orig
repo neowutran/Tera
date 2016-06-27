@@ -37,7 +37,21 @@ namespace Tera.Game.Messages
             //GuildLogo.Save($"q:\\{Time.Ticks}.bmp",ImageFormat.Bmp);
             //System.IO.File.WriteAllBytes($"q:\\{Time.Ticks}.bin", logo);
         }
-            
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        static extern bool DestroyIcon(IntPtr handle);
+
+        public Icon GetIcon()
+        { // Get an Hicon for myBitmap.
+            var Hicon = GuildLogo.GetHicon();
+            var newIcon = Icon.FromHandle(Hicon);
+            DestroyIcon(newIcon.Handle);
+            return newIcon;
+        }
+
+        public int Offset { get; }
+        public int Size { get; }
+
         public uint GuildId { get; }
         public uint PlayerId { get; }
         public Bitmap GuildLogo { get; }
