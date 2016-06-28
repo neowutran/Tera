@@ -14,7 +14,7 @@ namespace Tera.Game.Messages
             var size = reader.ReadUInt16();
             PlayerId = reader.ReadUInt32();
             GuildId = reader.ReadUInt32();
-            Debug.WriteLine("icon size:"+size+";offset:"+offset+";player:"+PlayerId);
+            //Debug.WriteLine("icon size:"+size+";offset:"+offset+";player:"+PlayerId+";GuildId:"+GuildId);
 
             var logo = reader.ReadBytes(size);
 

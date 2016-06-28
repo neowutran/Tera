@@ -63,6 +63,7 @@ namespace Tera.Game
             {"S_BAN_PARTY_MEMBER", typeof(S_BAN_PARTY_MEMBER)},
             {"S_LEAVE_PARTY", typeof(S_LEAVE_PARTY)},
             {"S_BAN_PARTY", typeof(S_BAN_PARTY)},
+            {"S_GET_USER_LIST", typeof(S_GET_USER_LIST)},
             {"S_GET_USER_GUILD_LOGO", typeof(S_GET_USER_GUILD_LOGO)},
             {"S_WHISPER", typeof(S_WHISPER)}
         };

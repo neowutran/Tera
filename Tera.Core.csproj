@@ -57,6 +57,7 @@
     <Compile Include="Game\Messages\Server\S_CHANGE_DESTPOS_PROJECTILE.cs" />
     <Compile Include="Game\Messages\Server\S_CREATURE_ROTATE.cs" />
     <Compile Include="Game\Messages\Server\S_GET_USER_GUILD_LOGO.cs" />
+    <Compile Include="Game\Messages\Server\S_GET_USER_LIST.cs" />
     <Compile Include="Game\Messages\Server\S_INSTANT_MOVE.cs" />
     <Compile Include="Game\Messages\Server\S_LEAVE_PARTY.cs" />
     <Compile Include="Game\Messages\Server\S_LEAVE_PARTY_MEMBER.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Game\Messages\UnknownMessage.cs" />
     <Compile Include="Game\Services\AbnormalityTracker.cs" />
     <Compile Include="Game\Services\CharmTracker.cs" />
+    <Compile Include="Game\Services\UserLogoTracker.cs" />
     <Compile Include="Game\Services\EntityTracker.cs" />
     <Compile Include="Game\Services\Helpers.cs" />
     <Compile Include="Game\Services\HotDotDatabase.cs" />
