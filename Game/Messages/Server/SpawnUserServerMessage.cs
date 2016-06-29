@@ -5,7 +5,9 @@
         internal SpawnUserServerMessage(TeraMessageReader reader)
             : base(reader)
         {
-            reader.Skip(26);
+            reader.Skip(8);
+            var nameOffset = reader.ReadUInt16();
+            reader.Skip(16);
             ServerId = reader.ReadUInt32();
             // not sure, whether full uint32 is serverid, or only first 2 bytes and the rest part of it is actualy a part of PlayerId, or something else, but it always come along with PlayerID as complex player id
             PlayerId = reader.ReadUInt32();
@@ -16,7 +18,7 @@
             RaceGenderClass = new RaceGenderClass(reader.ReadInt32());
             reader.Skip(11);
             Dead = (reader.ReadByte() & 1) == 0;
-            reader.Skip(196);
+            reader.BaseStream.Position=nameOffset-4;
             Name = reader.ReadTeraString();
             GuildName = reader.ReadTeraString();
             //Debug.WriteLine(Name + ":" + BitConverter.ToString(BitConverter.GetBytes(Id.Id))+ ":"+ ServerId.ToString()+" "+ BitConverter.ToString(BitConverter.GetBytes(PlayerId))+" "+Dead);
