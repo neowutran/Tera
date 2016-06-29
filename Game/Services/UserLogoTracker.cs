@@ -2,7 +2,7 @@
 using System.Drawing;
 using Tera.Game.Messages;
 
-namespace Tera.Game.Services
+namespace Tera.Game
 {
     public class UserLogoTracker
     {
