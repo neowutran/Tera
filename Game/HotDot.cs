@@ -58,6 +58,7 @@ namespace Tera.Game
             CDR = 208,
             Block = 210, //frontal block ? Not sure, the ability to use block, or blocking stance
             HPLoss = 221, //loss hp at the and of debuff
+            Mark = 231, // Velik's Mark/Curse of Kaprima = increase received damage when marked
             CastSpeed = 236,
             Range = 259, //increase melee range? method 0 value 0.1= +10%
             //264 = redirect abnormality, value= new abnormality, bugged due to wrong float format in xml.
@@ -82,7 +83,7 @@ namespace Tera.Game
             ItemName = itemName;
             Tooltip = tooltip;
             IconName = iconName;
-            Debuff = Type == Types.Endurance || Type == Types.CritResist;
+            Debuff = Type == Types.Endurance || Type == Types.CritResist || Type == Types.Mark;
             HPMPChange = Type == Types.HPChange || Type == Types.MPChange;
         }
 
