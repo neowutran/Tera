@@ -29,7 +29,7 @@ namespace Tera.Sniffing.Crypt
 
         public void Init(string region)
         {
-            if (region == "KR" || region == "JP" || region == "RU")
+            if (region == "KR" || region == "JP" || region == "RU" || region == "EU" || region == "NA")
             {
                 TmpKey1 = Utils.ShiftKey(ServerKey1, 67);
             }
@@ -40,7 +40,7 @@ namespace Tera.Sniffing.Crypt
 
             TmpKey2 = Utils.XorKey(TmpKey1, ClientKey1);
 
-            if (region == "KR" || region == "JP" || region == "RU")
+            if (region == "KR" || region == "JP" || region == "RU" || region == "EU" || region == "NA")
             {
                 TmpKey1 = Utils.ShiftKey(ClientKey2, 29, false);
             }
@@ -53,7 +53,7 @@ namespace Tera.Sniffing.Crypt
 
             Decryptor = new Cryptor(DecryptKey);
 
-            if(region == "KR" || region == "JP" || region == "RU")
+            if(region == "KR" || region == "JP" || region == "RU" || region == "EU" || region == "NA")
             {
                 TmpKey1 = Utils.ShiftKey(ServerKey2, 41);
             }
