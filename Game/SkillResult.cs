@@ -126,7 +126,7 @@ namespace Tera.Game
         public Player TargetPlayer { get; private set; }
 
 
-        public static Skill GetSkill(EntityId sourceid, EntityId? petSource, int skillid, bool hotdot, EntityTracker entityRegistry,
+        public static Skill GetSkill(EntityId sourceid, NpcInfo pet, int skillid, bool hotdot, EntityTracker entityRegistry,
             SkillDatabase skillDatabase, HotDotDatabase hotdotDatabase, PetSkillDatabase petSkillDatabase = null)
         {
             if (hotdot)
@@ -135,19 +135,18 @@ namespace Tera.Game
                 return new Skill(skillid, hotdotskill.Name, null, "", hotdotskill.IconName, null, true);
             }
 
-            var source = entityRegistry.GetOrPlaceholder(petSource ?? sourceid);
+            var source = entityRegistry.GetOrPlaceholder(sourceid);
             var userNpc = UserEntity.ForEntity(source);
-            var npc = (NpcEntity) userNpc["source"];
             var sourceUser = userNpc["root_source"] as UserEntity; // Attribute damage dealt by owned entities to the owner
 
             if (sourceUser == null) return null;
             var skill = skillDatabase.GetOrNull(sourceUser.RaceGenderClass, skillid);
             if (skill != null)return skill;
-            if (npc == null) return new UserSkill(skillid, sourceUser.RaceGenderClass, "Unknown");
-            skill = new UserSkill(skillid, sourceUser.RaceGenderClass, npc.Info.Name, null,
-                petSkillDatabase?.Get(npc.Info.Name, skillid) ?? "",
-                skillDatabase.GetSkillByPetName(npc.Info.Name, sourceUser.RaceGenderClass)?.IconName ?? "",
-                npc.Info);
+            if (pet == null) return new UserSkill(skillid, sourceUser.RaceGenderClass, "Unknown");
+            skill = new UserSkill(skillid, sourceUser.RaceGenderClass, pet.Name, null,
+                petSkillDatabase?.Get(pet.Name, skillid) ?? "",
+                skillDatabase.GetSkillByPetName(pet.Name, sourceUser.RaceGenderClass)?.IconName ?? "",
+                pet);
             return skill;
         }
 
