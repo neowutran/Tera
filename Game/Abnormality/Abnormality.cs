@@ -43,7 +43,7 @@ namespace Tera.Game.Abnormality
             if (_abnormalityTracker.UpdateDamageTracker != null)
             {
                 var skillResult = new SkillResult(
-                    Math.Abs(amount),
+                    amount,
                     critical,
                     isHp,
                     amount > 0,

@@ -65,7 +65,7 @@ namespace Tera.Game
             EntityTracker entityRegistry, PlayerTracker playerTracker)
         {
             Time = time;
-            Amount = amount;
+            Amount = isHp ? Math.Abs(amount) : amount;
             IsCritical = isCritical;
             IsHp = isHp;
             IsHeal = isHeal;
