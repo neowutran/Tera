@@ -29,38 +29,38 @@ namespace Tera.Sniffing.Crypt
 
         public void Init(string region)
         {
-            if (region == "KR" || region == "JP" || region == "RU" || region == "EU" || region == "NA")
-            {
+            //if (region == "KR" || region == "JP" || region == "RU" || region == "EU" || region == "NA")
+            //{
                 TmpKey1 = Utils.ShiftKey(ServerKey1, 67);
-            }
-            else
-            {
-                TmpKey1 = Utils.ShiftKey(ServerKey1, 31);
-            }
+            //}
+            //else
+            //{
+            //    TmpKey1 = Utils.ShiftKey(ServerKey1, 31);
+            //}
 
             TmpKey2 = Utils.XorKey(TmpKey1, ClientKey1);
 
-            if (region == "KR" || region == "JP" || region == "RU" || region == "EU" || region == "NA")
-            {
+            //if (region == "KR" || region == "JP" || region == "RU" || region == "EU" || region == "NA")
+            //{
                 TmpKey1 = Utils.ShiftKey(ClientKey2, 29, false);
-            }
-            else
-            {
-                TmpKey1 = Utils.ShiftKey(ClientKey2, 17, false);
-            }
+            //}
+            //else
+            //{
+            //    TmpKey1 = Utils.ShiftKey(ClientKey2, 17, false);
+            //}
 
             DecryptKey = Utils.XorKey(TmpKey1, TmpKey2);
 
             Decryptor = new Cryptor(DecryptKey);
 
-            if(region == "KR" || region == "JP" || region == "RU" || region == "EU" || region == "NA")
-            {
+            //if(region == "KR" || region == "JP" || region == "RU" || region == "EU" || region == "NA")
+            //{
                 TmpKey1 = Utils.ShiftKey(ServerKey2, 41);
-            }
-            else
-            {
-                TmpKey1 = Utils.ShiftKey(ServerKey2, 79);
-            }
+            //}
+            //else
+            //{
+            //    TmpKey1 = Utils.ShiftKey(ServerKey2, 79);
+            //}
 
             Decryptor.ApplyCryptor(TmpKey1, 128);
             EncryptKey = new byte[128];
