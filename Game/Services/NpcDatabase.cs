@@ -11,6 +11,7 @@ namespace Tera.Game
         private readonly Dictionary<Tuple<ushort, uint>, NpcInfo> _dictionary;
         private readonly Func<Tuple<ushort, uint>, NpcInfo> _getPlaceholder;
         private readonly Dictionary<ushort, string> _zoneNames;
+        private readonly HashSet<string> _trackedBossEntities;
         public bool DetectBosses;
 
         public NpcDatabase(Dictionary<Tuple<ushort, uint>, NpcInfo> npcInfo)
@@ -29,6 +30,7 @@ namespace Tera.Game
             : this(LoadNpcInfos(directory, reg_lang))
         {
             DetectBosses = detectBosses;
+            _trackedBossEntities = new HashSet<string>();
         }
 
         private static Dictionary<Tuple<ushort, uint>, NpcInfo> LoadNpcInfos(string directory, string reg_lang)
@@ -93,8 +95,16 @@ namespace Tera.Game
         {
             var result = GetOrNull(huntingZoneId, templateId) ??
                          _getPlaceholder(Tuple.Create(huntingZoneId, templateId));
-            if (DetectBosses) result.Boss = false;
+
+            //if we're automatically detecting bosses and it hasn't been tracked yet, reset its status
+            if (DetectBosses && !_trackedBossEntities.Contains(result.Name)) result.Boss = false;
             return result;
+        }
+
+        public void AddDetectedBoss(string name)
+        {
+            if (!_trackedBossEntities.Contains(name))
+                _trackedBossEntities.Add(name);
         }
     }
 }
