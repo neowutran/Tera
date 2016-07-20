@@ -69,7 +69,7 @@ namespace Tera.Game.Abnormality
 
         private void ApplyEnduranceDebuff(long lastTicks)
         {
-            if (!HotDot.Debuff || HotDot.Amount > 1) return;
+            if (!HotDot.Debuff) return;
             if (_enduranceDebuffRegistered == false) return;
             var entity = _abnormalityTracker.EntityTracker.GetOrPlaceholder(Target);
             var game = entity as NpcEntity;
@@ -84,7 +84,7 @@ namespace Tera.Game.Abnormality
 
         private void RegisterEnduranceDebuff()
         {
-            if (!HotDot.Debuff || HotDot.Amount > 1) return;
+            if (!HotDot.Debuff) return;
             var entityGame = _abnormalityTracker.EntityTracker.GetOrPlaceholder(Target);
             var game = entityGame as NpcEntity;
             if (game == null)
