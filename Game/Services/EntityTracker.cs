@@ -192,7 +192,7 @@ namespace Tera.Game
             {
                 var entity = GetOrNull(m.EntityId) as NpcEntity;
                 if (entity == null) return;
-                _npcDatabase.AddDetectedBoss(entity.Info.Name);
+                _npcDatabase.AddDetectedBoss(entity.Info.HuntingZoneId, entity.Info.TemplateId);
                 entity.Info.Boss = true;
             });
         }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Tera.Game
 {
@@ -67,41 +69,69 @@ namespace Tera.Game
             Charm = 65535
         }
 
+        public struct Effect
+        {
+            public Types Type;
+            public DotType Method;
+            public double Amount;
+
+        }
         public HotDot(int id, string type, double hp, double mp, double amount, DotType method, int time, int tick,
             string name, string itemName, string tooltip, string iconName)
         {
             Id = id;
             Types rType;
-            Type = Enum.TryParse(type, out rType) ? rType : Types.Unknown;
+            rType = Enum.TryParse(type, out rType) ? rType : Types.Unknown;
             Hp = hp;
             Mp = mp;
-            Amount = amount;
-            Method = method;
             Time = time;
             Tick = tick;
+            Effects.Add(new Effect
+            {
+                Type = rType,
+                Amount = amount,
+                Method = method,
+            });
             Name = name;
             ItemName = itemName;
             Tooltip = tooltip;
             IconName = iconName;
-            Debuff = (Type == Types.Endurance || Type == Types.CritResist) && Amount<1 || Type == Types.Mark;
-            HPMPChange = Type == Types.HPChange || Type == Types.MPChange;
+            Debuff = (rType == Types.Endurance || rType == Types.CritResist) && amount < 1 || rType == Types.Mark;
+            HPMPChange = rType == Types.HPChange || rType == Types.MPChange;
         }
 
-        public double Amount { get; }
+        public void Update(int id, string type, double hp, double mp, double amount, DotType method, int time, int tick,
+            string name, string itemName, string tooltip, string iconName)
+        {
+            Types rType;
+            rType = Enum.TryParse(type, out rType) ? rType : Types.Unknown;
+            if (Effects.Any(x => x.Type == rType)) return; // already added - duplicate strings with the same id and type in tsv (different item names - will be deleted soon)
+            Hp = rType==Types.HPChange ? hp : Hp;
+            Mp = rType==Types.MPChange ? mp : Mp;
+            Tick = rType == Types.MPChange|| rType == Types.HPChange ? tick : Tick; //assume that hp and mp tick times should be the same for one abnormality id
+            Effects.Add(new Effect
+            {
+                Type = rType,
+                Amount = amount,
+                Method = method
+            });
+            Debuff = Debuff || (rType == Types.Endurance || rType == Types.CritResist) && amount < 1 || rType == Types.Mark;
+            HPMPChange = HPMPChange || rType == Types.HPChange || rType == Types.MPChange;
+        }
 
+
+        public List<Effect> Effects = new List<Effect>();
         public int Id { get; }
-        public Types Type { get; }
-        public double Hp { get; }
-        public double Mp { get; }
-        public DotType Method { get; }
+        public double Hp { get; private set; }
+        public double Mp { get; private set; }
         public int Time { get; }
-        public int Tick { get; }
+        public int Tick { get; private set; }
         public string Name { get; }
         public string ItemName { get; }
         public string Tooltip { get; }
         public string IconName { get; }
-        public bool Debuff { get; }
-        public bool HPMPChange { get; }
+        public bool Debuff { get; private set; }
+        public bool HPMPChange { get; private set; }
 
         public override bool Equals(object obj)
         {
@@ -113,7 +143,7 @@ namespace Tera.Game
 
         public bool Equals(HotDot other)
         {
-            return Id == other.Id && Type == other.Type;
+            return Id == other.Id;
         }
 
         public static bool operator ==(HotDot a, HotDot b)
@@ -139,7 +169,7 @@ namespace Tera.Game
 
         public override int GetHashCode()
         {
-            return Type.GetHashCode() ^ Id.GetHashCode();
+            return Id.GetHashCode();
         }
 
         public override string ToString()

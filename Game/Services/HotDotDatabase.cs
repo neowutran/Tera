@@ -41,8 +41,10 @@ namespace Tera.Game
                 var itemName = values[10];
                 var tooltip = values[11];
                 var iconName = values[12];
-                _hotdots[id] = new HotDot(id, type, hp, mp, amount, method, time, tick, name, itemName, tooltip,
-                    iconName);
+                if (_hotdots.ContainsKey(id))
+                    _hotdots[id].Update(id, type, hp, mp, amount, method, time, tick, name, itemName, tooltip, iconName);
+                else
+                    _hotdots[id] = new HotDot(id, type, hp, mp, amount, method, time, tick, name, itemName, tooltip, iconName);
             }
             _hotdots[8888888] = new HotDot(8888888, "Endurance", 0, 0, 0, 0, 0, 0, "Enrage", "", "", "enraged");
             _hotdots[8888889] = new HotDot(8888889, "CritPower", 0, 0, 0, 0, 0, 0, "Slaying", "",

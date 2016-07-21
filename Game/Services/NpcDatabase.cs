@@ -11,7 +11,7 @@ namespace Tera.Game
         private readonly Dictionary<Tuple<ushort, uint>, NpcInfo> _dictionary;
         private readonly Func<Tuple<ushort, uint>, NpcInfo> _getPlaceholder;
         private readonly Dictionary<ushort, string> _zoneNames;
-        private readonly HashSet<string> _trackedBossEntities;
+        private readonly List<Tuple<ushort, uint>> _trackedBossEntities;
         public bool DetectBosses;
 
         public NpcDatabase(Dictionary<Tuple<ushort, uint>, NpcInfo> npcInfo)
@@ -30,7 +30,7 @@ namespace Tera.Game
             : this(LoadNpcInfos(directory, reg_lang))
         {
             DetectBosses = detectBosses;
-            _trackedBossEntities = new HashSet<string>();
+            _trackedBossEntities = new List<Tuple<ushort, uint>>();
         }
 
         private static Dictionary<Tuple<ushort, uint>, NpcInfo> LoadNpcInfos(string directory, string reg_lang)
@@ -93,18 +93,20 @@ namespace Tera.Game
 
         public NpcInfo GetOrPlaceholder(ushort huntingZoneId, uint templateId)
         {
+            var lookup = Tuple.Create(huntingZoneId, templateId);
             var result = GetOrNull(huntingZoneId, templateId) ??
-                         _getPlaceholder(Tuple.Create(huntingZoneId, templateId));
+                         _getPlaceholder(lookup);
 
             //if we're automatically detecting bosses and it hasn't been tracked yet, reset its status
-            if (DetectBosses && !_trackedBossEntities.Contains(result.Name)) result.Boss = false;
+            if (DetectBosses && !_trackedBossEntities.Contains(lookup)) result.Boss = false;
             return result;
         }
 
-        public void AddDetectedBoss(string name)
+        public void AddDetectedBoss(ushort huntingZoneId, uint templateId)
         {
-            if (!_trackedBossEntities.Contains(name))
-                _trackedBossEntities.Add(name);
+            var lookup = Tuple.Create(huntingZoneId, templateId);
+            if (!_trackedBossEntities.Contains(lookup))
+                _trackedBossEntities.Add(lookup);
         }
     }
 }
