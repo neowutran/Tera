@@ -21,6 +21,7 @@ namespace Tera.Game.Messages
         {
             reader.Skip(4);
             Source = reader.ReadEntityId();
+            if (reader.Region == "KR") reader.Skip(8);
             Target = reader.ReadEntityId();
 
 

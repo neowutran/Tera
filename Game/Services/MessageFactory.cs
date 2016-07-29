@@ -69,11 +69,12 @@ namespace Tera.Game
         };
 
         private readonly OpCodeNamer _opCodeNamer;
+        private string _region;
 
-        public MessageFactory(OpCodeNamer opCodeNamer)
+        public MessageFactory(OpCodeNamer opCodeNamer, string region)
         {
             _opCodeNamer = opCodeNamer;
-
+            _region = region;
             foreach (var name in OpcodeNameToType.Keys)
             {
                 opCodeNamer.GetCode(name);
@@ -95,7 +96,7 @@ namespace Tera.Game
 
         public ParsedMessage Create(Message message)
         {
-            var reader = new TeraMessageReader(message, _opCodeNamer);
+            var reader = new TeraMessageReader(message, _opCodeNamer, _region);
             var opCodeName = _opCodeNamer.GetName(message.OpCode);
             return Instantiate(opCodeName, reader);
         }
