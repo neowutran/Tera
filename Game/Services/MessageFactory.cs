@@ -70,7 +70,7 @@ namespace Tera.Game
         };
 
         private readonly OpCodeNamer _opCodeNamer;
-        public uint Version;
+        private uint Version;
 
         public MessageFactory(OpCodeNamer opCodeNamer, uint version)
         {

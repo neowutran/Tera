@@ -96,7 +96,7 @@ namespace Tera.Game
             ItemName = itemName;
             Tooltip = tooltip;
             IconName = iconName;
-            Debuff = (rType == Types.Endurance || rType == Types.CritResist) && amount < 1 || rType == Types.Mark;
+            Debuff = (rType == Types.Endurance || rType == Types.CritResist) && amount <= 1 || rType == Types.Mark;
             HPMPChange = rType == Types.HPChange || rType == Types.MPChange;
         }
 
