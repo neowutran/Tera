@@ -12,6 +12,7 @@ namespace Tera.Game
     {
         private static readonly Dictionary<string, Type> OpcodeNameToType = new Dictionary<string, Type>
         {
+            {"C_CHECK_VERSION", typeof(C_CHECK_VERSION)},
             {"S_EACH_SKILL_RESULT", typeof(EachSkillResultServerMessage)},
             {"S_SPAWN_USER", typeof(SpawnUserServerMessage)},
             {"S_SPAWN_ME", typeof(SpawnMeServerMessage)},
@@ -69,16 +70,22 @@ namespace Tera.Game
         };
 
         private readonly OpCodeNamer _opCodeNamer;
-        private string _region;
+        public uint Version;
 
-        public MessageFactory(OpCodeNamer opCodeNamer, string region)
+        public MessageFactory(OpCodeNamer opCodeNamer, uint version)
         {
             _opCodeNamer = opCodeNamer;
-            _region = region;
+            Version = version;
             foreach (var name in OpcodeNameToType.Keys)
             {
                 opCodeNamer.GetCode(name);
             }
+        }
+
+        public MessageFactory()
+        {
+            _opCodeNamer = new OpCodeNamer(new Dictionary<ushort,string>{{19900 , "C_CHECK_VERSION" }} );
+            Version = 0;
         }
 
         private ParsedMessage Instantiate(string opCodeName, TeraMessageReader reader)
@@ -96,7 +103,7 @@ namespace Tera.Game
 
         public ParsedMessage Create(Message message)
         {
-            var reader = new TeraMessageReader(message, _opCodeNamer, _region);
+            var reader = new TeraMessageReader(message, _opCodeNamer, Version);
             var opCodeName = _opCodeNamer.GetName(message.OpCode);
             return Instantiate(opCodeName, reader);
         }

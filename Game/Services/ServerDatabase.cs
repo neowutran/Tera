@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Tera.Game.Messages;
 
 namespace Tera.Game
 {
     public class ServerDatabase
     {
         private readonly Dictionary<uint, Server> _servers;
-        private IEnumerable<Server> _serverlist;
+        private List<Server> _serverlist;
 
         public ServerDatabase(string folder)
         {
@@ -19,6 +20,7 @@ namespace Tera.Game
                         new Server(parts[3], parts[1], parts[0],
                             !string.IsNullOrEmpty(parts[2]) ? uint.Parse(parts[2]) : uint.MaxValue)).ToList();
             _servers = _serverlist.Where(x => x.ServerId != uint.MaxValue).ToDictionary(x => x.ServerId);
+            _serverlist.Add(new Server("VPN", "Unknown", "127.0.0.1"));
         }
 
         public string Region { get; set; }

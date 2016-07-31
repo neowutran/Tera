@@ -48,6 +48,7 @@
     <Compile Include="Game\Abnormality\Death.cs" />
     <Compile Include="Game\Abnormality\Duration.cs" />
     <Compile Include="Game\Abnormality\PlayerAbnormals.cs" />
+    <Compile Include="Game\Messages\Client\C_CHECK_VERSION.cs" />
     <Compile Include="Game\Messages\Client\C_PLAYER_LOCATION.cs" />
     <Compile Include="Game\Messages\Server\S_ACTION_END.cs" />
     <Compile Include="Game\Messages\Server\S_ACTION_STAGE.cs" />
