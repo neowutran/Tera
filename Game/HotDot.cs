@@ -98,6 +98,7 @@ namespace Tera.Game
             IconName = iconName;
             Debuff = (rType == Types.Endurance || rType == Types.CritResist) && amount <= 1 || rType == Types.Mark;
             HPMPChange = rType == Types.HPChange || rType == Types.MPChange;
+            Buff = rType != Types.HPChange && rType != Types.MPChange;
         }
 
         public void Update(int id, string type, double hp, double mp, double amount, DotType method, int time, int tick,
@@ -117,6 +118,7 @@ namespace Tera.Game
             });
             Debuff = Debuff || (rType == Types.Endurance || rType == Types.CritResist) && amount < 1 || rType == Types.Mark;
             HPMPChange = HPMPChange || rType == Types.HPChange || rType == Types.MPChange;
+            Buff = Buff || (rType != Types.HPChange && rType != Types.MPChange);
         }
 
 
@@ -130,6 +132,7 @@ namespace Tera.Game
         public string ItemName { get; }
         public string Tooltip { get; }
         public string IconName { get; }
+        public bool Buff { get; private set; }
         public bool Debuff { get; private set; }
         public bool HPMPChange { get; private set; }
 

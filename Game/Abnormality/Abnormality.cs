@@ -112,7 +112,7 @@ namespace Tera.Game.Abnormality
 
         private void RegisterBuff()
         {
-            if (HotDot.HPMPChange) return;
+            if (!HotDot.Buff) return;
             var userEntity = _abnormalityTracker.EntityTracker.GetOrNull(Target);
             var user = userEntity as UserEntity;
             if (user == null)
@@ -144,7 +144,7 @@ namespace Tera.Game.Abnormality
 
         private void ApplyBuff(long lastTicks)
         {
-            if (HotDot.HPMPChange) return;
+            if (!HotDot.Buff) return;
             if (_buffRegistered == false) return;
             var userEntity = _abnormalityTracker.EntityTracker.GetOrNull(Target);
             if (!(userEntity is UserEntity))
