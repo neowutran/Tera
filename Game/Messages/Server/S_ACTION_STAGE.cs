@@ -9,7 +9,7 @@
             Position = reader.ReadVector3f();
             Heading = reader.ReadAngle();
             Model = reader.ReadUInt32();
-            SkillId = reader.ReadUInt32();
+            SkillId = reader.ReadInt32() & 0x3FFFFFF;
             Stage = reader.ReadUInt32();
             Speed = reader.ReadSingle();
             Id = reader.ReadUInt32();
@@ -20,7 +20,7 @@
         public float unk { get; set; }
         public uint Id { get; set; }
         public uint Stage { get; set; }
-        public uint SkillId { get; set; }
+        public int SkillId { get; set; }
         public uint Model { get; set; }
         public EntityId Entity { get; }
         public Vector3f Position { get; private set; }

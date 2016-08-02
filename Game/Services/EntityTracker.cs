@@ -112,6 +112,7 @@ namespace Tera.Game
                 entity.Heading = m.Heading;
                 entity.Speed = 0;
                 entity.StartTime = 0;
+                entity.LastCastAngle = entity.Heading;
                 entity.EndAngle = entity.Heading;
                 entity.EndTime = 0;
                 //Debug.WriteLine($"{entity.Position} {entity.Heading}");
@@ -161,6 +162,19 @@ namespace Tera.Game
                 entity.EndAngle = m.Heading;
                 entity.EndTime = entity.StartTime + (m.NeedTime == 0 ? 0 : TimeSpan.TicksPerMillisecond*m.NeedTime);
                 //Debug.WriteLine($"{entity.Position} {entity.Heading} {entity.EndAngle} {m.NeedTime}");
+            });
+            message.On<EachSkillResultServerMessage>(m =>
+            {
+                var entity = GetOrNull(m.Target);
+                if (entity == null) return;
+                if (m.Position.X == 0 && m.Position.Y == 0 && m.Position.Z == 0) return;
+                entity.Position = m.Position;
+                entity.Finish = m.Position;
+                entity.Speed = 0;
+                entity.StartTime = 0;
+                entity.Heading = m.Heading;
+                entity.EndAngle = m.Heading;
+                entity.EndTime = 0;
             });
             message.On<SNpcLocation>(m =>
             {

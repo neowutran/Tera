@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Tera.Game.Messages;
 
 namespace Tera.Game
@@ -56,8 +57,14 @@ namespace Tera.Game
                 Target.Heading = Target.EndAngle;
                 Target.EndTime = 0;
             }
-            HitDirection = Source.Position.GetHeading(Target.Position).HitDirection(Target.Heading);
-            //Debug.WriteLine($"{Source} {Source.Position} {Target} {Target.Position} {Target.Heading} {HitDirection}");
+            if (SourcePlayer!=null && npc != null)
+                HitDirection = HitDirection.Pet;
+            else if (Source is ProjectileEntity || Source.Heading.Gradus == 0) // todo: need exception for arcane barrage Blast
+                HitDirection = userNpc["root_source"].LastCastAngle.HitDirection(Target.Heading);
+            else // todo: need exception for Ground Pounder and may be some other brawler skills that should be front
+                HitDirection = Source.Heading.HitDirection(Target.Heading);
+            // todo: we can't use only heading, cause if we are looking at mob ass, but staying in front of him - it's not back
+            //       probably some other direction like "None" for such cases, but need to check ingame
         }
 
         public SkillResult(int amount, bool isCritical, bool isHp, bool isHeal, HotDot hotdot, EntityId source,

@@ -43,6 +43,7 @@ namespace Tera.Game
         public Angle Heading { get; set; }
         public Vector3f Finish { get; set; }
         public Angle EndAngle { get; set; }
+        public Angle LastCastAngle { get; set; }
         public int Speed { get; set; }
         public long StartTime { get; set; }
         public long EndTime { get; set; }

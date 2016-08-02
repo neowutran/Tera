@@ -35,6 +35,7 @@ namespace Tera.Game
         Back,
         Side,
         Front,
-        Dot
+        Dot,
+        Pet
     }
 }

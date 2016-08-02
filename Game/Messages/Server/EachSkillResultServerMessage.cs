@@ -47,8 +47,8 @@ namespace Tera.Game.Messages
             reader.Skip(4); //unknown
             Position = reader.ReadVector3f();
             Heading = reader.ReadAngle();
-            if (Position.X!=0)
-                Debug.WriteLine($"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Target.Id))} {SkillId} {Position} {Heading}");
+            //if (Position.X!=0)
+            //    Debug.WriteLine($"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Target.Id))} {SkillId} {Position} {Heading}");
         }
 
         //DEBUG
