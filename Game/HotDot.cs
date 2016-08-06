@@ -128,9 +128,9 @@ namespace Tera.Game
         public double Mp { get; private set; }
         public int Time { get; }
         public int Tick { get; private set; }
-        public string Name { get; }
+        public string Name { get; set; }
         public string ItemName { get; }
-        public string Tooltip { get; }
+        public string Tooltip { get; set; }
         public string IconName { get; }
         public bool Buff { get; private set; }
         public bool Debuff { get; private set; }
