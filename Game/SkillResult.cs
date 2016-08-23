@@ -159,7 +159,8 @@ namespace Tera.Game
 
         public bool IsValid(DateTime? firstAttack = null)
         {
-            return (firstAttack != null || (!IsHeal && Amount > 0)) &&
+            return IsHp && //no mana
+                   (firstAttack != null || (!IsHeal && Amount > 0)) &&
                    //only record first hit is it's a damage hit (heals occurring outside of fights)
                    !(Target.Equals(Source) && !IsHeal && Amount > 0);
             //disregard damage dealt to self (gunner self destruct)
