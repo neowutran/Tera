@@ -96,7 +96,7 @@ namespace Tera.Game
             ItemName = itemName;
             Tooltip = tooltip;
             IconName = iconName;
-            Debuff = (rType == Types.Endurance || rType == Types.CritResist) && amount <= 1 || rType == Types.Mark;
+            Debuff = (rType == Types.Endurance || rType == Types.CritResist) && amount <= 1 || rType == Types.Mark || (rType == Types.DefPotion && amount > 1);
             HPMPChange = rType == Types.HPChange || rType == Types.MPChange;
             Buff = rType != Types.HPChange && rType != Types.MPChange;
         }
@@ -116,7 +116,7 @@ namespace Tera.Game
                 Amount = amount,
                 Method = method
             });
-            Debuff = Debuff || (rType == Types.Endurance || rType == Types.CritResist) && amount < 1 || rType == Types.Mark;
+            Debuff = Debuff || (rType == Types.Endurance || rType == Types.CritResist) && amount < 1 || rType == Types.Mark || (rType == Types.DefPotion && amount > 1);
             HPMPChange = HPMPChange || rType == Types.HPChange || rType == Types.MPChange;
             Buff = Buff || (rType != Types.HPChange && rType != Types.MPChange);
         }
