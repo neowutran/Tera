@@ -30,12 +30,17 @@ namespace Tera.Game
         }
     }
 
+    /*
+        *  The enum value NEED to be set manually
+        *  without that, converting the enum to int will cause massive weird bug, like:
+        *  https://github.com/neowutran/ShinraMeter/issues/184
+        * */
     public enum HitDirection
     {
-        Back,
-        Side,
-        Front,
-        Dot,
-        Pet
+        Back = 1,
+        Side = 2,
+        Front = 3,
+        Dot = 4,
+        Pet = 5
     }
 }

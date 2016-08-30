@@ -2,7 +2,7 @@
 {
     public enum MessageDirection
     {
-        ClientToServer,
-        ServerToClient
+        ClientToServer = 1,
+        ServerToClient = 2
     }
 }
