@@ -235,7 +235,7 @@ namespace Tera.Game
             }
 
             var abnormalities = _abnormalities[target];
-            abnormalities = abnormalities.OrderByDescending(o => o.TimeBeforeApply).ToList();
+            abnormalities = abnormalities.Where(x=>x.Source==EntityTracker.MeterUser.Id || x.Target==EntityTracker.MeterUser.Id).OrderByDescending(o => o.TimeBeforeApply).ToList();
 
             foreach (var abnormality in abnormalities)
             {
