@@ -196,11 +196,6 @@ namespace Tera.Game
             DeleteAbnormality(message.Npc, 8888888, message.Time.Ticks);
         }
 
-        public void DeleteAbnormality(SCreatureChangeHp message)
-        {
-            DeleteAbnormality(message.TargetId, 8888889, message.Time.Ticks);
-        }
-
         public void DeleteAbnormality(SDespawnUser message)
         {
             DeleteAbnormality(message.User, message.Time.Ticks);

@@ -4,9 +4,9 @@
     {
         internal S_CHAT(TeraMessageReader reader) : base(reader)
         {
-            //    reader.Skip(2);
-            Canal = reader.ReadBytes(6);
-            reader.Skip(13);
+            reader.Skip(4);//offsets
+            Channel = reader.ReadUInt32();
+            reader.Skip(11);
             Username = reader.ReadTeraString();
             Text = reader.ReadTeraString();
         }
@@ -15,6 +15,6 @@
 
         public string Text { get; set; }
 
-        public byte[] Canal { get; set; }
+        public uint Channel { get; set; }
     }
 }
