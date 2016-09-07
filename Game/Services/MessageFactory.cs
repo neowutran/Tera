@@ -70,9 +70,9 @@ namespace Tera.Game
         };
 
         private readonly OpCodeNamer _opCodeNamer;
-        private uint Version;
+        public string Version;
 
-        public MessageFactory(OpCodeNamer opCodeNamer, uint version)
+        public MessageFactory(OpCodeNamer opCodeNamer, string version)
         {
             _opCodeNamer = opCodeNamer;
             Version = version;
@@ -85,7 +85,7 @@ namespace Tera.Game
         public MessageFactory()
         {
             _opCodeNamer = new OpCodeNamer(new Dictionary<ushort,string>{{19900 , "C_CHECK_VERSION" }} );
-            Version = 0;
+            Version = "Unknown";
         }
 
         private ParsedMessage Instantiate(string opCodeName, TeraMessageReader reader)

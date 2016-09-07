@@ -6,7 +6,7 @@ namespace Tera.Game
     // Used by `ParsedMessage`s to parse themselves
     internal class TeraMessageReader : BinaryReader
     {
-        public TeraMessageReader(Message message, OpCodeNamer opCodeNamer, uint version)
+        public TeraMessageReader(Message message, OpCodeNamer opCodeNamer, string version)
             : base(GetStream(message), Encoding.Unicode)
         {
             Message = message;
@@ -16,7 +16,7 @@ namespace Tera.Game
 
         public Message Message { get; private set; }
         public string OpCodeName { get; private set; }
-        public uint Version { get; private set; }
+        public string Version { get; private set; }
 
         private static MemoryStream GetStream(Message message)
         {
