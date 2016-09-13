@@ -62,9 +62,11 @@
     <Compile Include="Game\Messages\Server\S_INSTANT_MOVE.cs" />
     <Compile Include="Game\Messages\Server\S_LEAVE_PARTY.cs" />
     <Compile Include="Game\Messages\Server\S_LEAVE_PARTY_MEMBER.cs" />
+    <Compile Include="Game\Messages\Server\S_OTHER_USER_APPLY_PARTY.cs" />
     <Compile Include="Game\Messages\Server\S_PARTY_MEMBER_LIST.cs" />
     <Compile Include="Game\Messages\Server\S_PARTY_MEMBER_STAT_UPDATE.cs" />
     <Compile Include="Game\Messages\Server\S_PLAYER_STAT_UPDATE.cs" />
+    <Compile Include="Game\Messages\Server\S_TRADE_BROKER_DEAL_SUGGESTED.cs" />
     <Compile Include="Game\Messages\Server\S_USER_LOCATION.cs" />
     <Compile Include="Game\Messages\Server\S_WHISPER.cs" />
     <Compile Include="Game\Messages\Server\S_CHAT.cs" />
