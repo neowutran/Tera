@@ -69,7 +69,9 @@ namespace Tera.Game
             {"S_WHISPER", typeof(S_WHISPER)},
             {"S_TRADE_BROKER_DEAL_SUGGESTED", typeof(S_TRADE_BROKER_DEAL_SUGGESTED)},
             {"S_OTHER_USER_APPLY_PARTY", typeof(S_OTHER_USER_APPLY_PARTY) },
-            {"S_PRIVATE_CHAT", typeof(S_PRIVATE_CHAT) }
+            {"S_PRIVATE_CHAT", typeof(S_PRIVATE_CHAT) },
+            {"S_FIN_INTER_PARTY_MATCH", typeof(S_FIN_INTER_PARTY_MATCH) },
+            {"S_BATTLE_FIELD_ENTRANCE_INFO", typeof(S_BATTLE_FIELD_ENTRANCE_INFO) }
         };
 
         private readonly OpCodeNamer _opCodeNamer;
