@@ -56,6 +56,7 @@
     <Compile Include="Game\Messages\Server\SBanPartyMember.cs" />
     <Compile Include="Game\Messages\Server\S_BOSS_GAGE_INFO.cs" />
     <Compile Include="Game\Messages\Server\S_CHANGE_DESTPOS_PROJECTILE.cs" />
+    <Compile Include="Game\Messages\Server\S_PRIVATE_CHAT.cs" />
     <Compile Include="Game\Messages\Server\S_CREATURE_ROTATE.cs" />
     <Compile Include="Game\Messages\Server\S_GET_USER_GUILD_LOGO.cs" />
     <Compile Include="Game\Messages\Server\S_GET_USER_LIST.cs" />
