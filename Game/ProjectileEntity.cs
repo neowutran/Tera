@@ -13,7 +13,7 @@ namespace Tera.Game
             Owner = owner;
         }
 
-        public EntityId OwnerId { get; }
-        public Entity Owner { get; }
+        public EntityId OwnerId { get; set; }
+        public Entity Owner { get; set; }
     }
 }

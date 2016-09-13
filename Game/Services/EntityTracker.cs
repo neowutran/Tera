@@ -65,6 +65,15 @@ namespace Tera.Game
                 _dictionary[newEntity.Id] = newEntity;
                 OnEntityUpdated(newEntity);
             }
+            message.On<S_MOUNT_VEHICLE_EX>(m =>
+            {
+                var entity = GetOrNull(m.Id) as IHasOwner;
+                if (entity == null) return;
+                var player = GetOrNull(m.Owner) as UserEntity;
+                if (player == null) return;
+                entity.OwnerId = player.Id;
+                entity.Owner = player;
+            });
             message.On<C_PLAYER_LOCATION>(m =>
             {
                 if (MeterUser == null) return; //Don't know how, but sometimes this happens.

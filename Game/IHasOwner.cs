@@ -2,7 +2,7 @@
 {
     internal interface IHasOwner
     {
-        EntityId OwnerId { get; }
-        Entity Owner { get; }
+        EntityId OwnerId { get; set; }
+        Entity Owner { get; set; }
     }
 }

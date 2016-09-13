@@ -17,8 +17,8 @@ namespace Tera.Game
 
         public NpcInfo Info { get; }
 
-        public EntityId OwnerId { get; }
-        public Entity Owner { get; }
+        public EntityId OwnerId { get; set; }
+        public Entity Owner { get; set; }
 
         public override string ToString()
         {
