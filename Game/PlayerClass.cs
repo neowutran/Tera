@@ -18,5 +18,5 @@ namespace Tera.Game
         Ninja = 12,
 
         Common = 255
-    }
+    }   
 }
