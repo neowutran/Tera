@@ -7,7 +7,8 @@ namespace Tera.Game.Messages
         internal S_CHAT(TeraMessageReader reader) : base(reader)
         {
             reader.Skip(4);//offsets
-            Channel = (ChannelEnum)reader.ReadUInt32();
+            var channel = reader.ReadUInt32();
+            Channel = (ChannelEnum)channel;
             reader.Skip(11);
             Username = reader.ReadTeraString();
             Text = reader.ReadTeraString();
@@ -24,7 +25,9 @@ namespace Tera.Game.Messages
             Guild = 2,
             General = 27,
             Say = 0,
+            Greetings = 9,
             Trading = 4,
+            Emotes = 26,
             Alliance = 28,
             Area = 3,
             Group = 1,
