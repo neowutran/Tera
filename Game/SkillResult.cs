@@ -133,7 +133,7 @@ namespace Tera.Game
         public Player TargetPlayer { get; private set; }
 
 
-        public static Skill GetSkill(EntityId sourceid, NpcInfo pet, int skillid, bool hotdot, EntityTracker entityRegistry,
+        public static Skill GetSkill(Entity source, NpcInfo pet, int skillid, bool hotdot, EntityTracker entityRegistry,
             SkillDatabase skillDatabase, HotDotDatabase hotdotDatabase, PetSkillDatabase petSkillDatabase = null)
         {
             if (hotdot)
@@ -142,7 +142,6 @@ namespace Tera.Game
                 return new Skill(skillid, hotdotskill.Name, null, "", hotdotskill.IconName, null, true);
             }
 
-            var source = entityRegistry.GetOrPlaceholder(sourceid);
             var userNpc = UserEntity.ForEntity(source);
             var sourceUser = userNpc["root_source"] as UserEntity; // Attribute damage dealt by owned entities to the owner
 

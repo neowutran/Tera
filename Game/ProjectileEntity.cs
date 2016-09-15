@@ -13,6 +13,45 @@ namespace Tera.Game
             Owner = owner;
         }
 
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            return obj.GetType() == GetType() && Equals((ProjectileEntity)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
+
+        public bool Equals(ProjectileEntity other)
+        {
+            return Id.Equals(other?.Id);
+        }
+
+        public static bool operator ==(ProjectileEntity a, ProjectileEntity b)
+        {
+            if (ReferenceEquals(a, b))
+            {
+                return true;
+            }
+
+            // If one is null, but not both, return false.
+            if (((object)a == null) || ((object)b == null))
+            {
+                return false;
+            }
+
+            return a.Equals(b);
+        }
+
+        public static bool operator !=(ProjectileEntity a, ProjectileEntity b)
+        {
+            return !(a == b);
+        }
+
         public EntityId OwnerId { get; set; }
         public Entity Owner { get; set; }
     }

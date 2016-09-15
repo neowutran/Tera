@@ -76,7 +76,8 @@ namespace Tera.Game
 
         public bool Equals(UserEntity other)
         {
-            return Id.Equals(other.Id);
+            return ServerId.Equals(other.ServerId) && PlayerId.Equals(other.PlayerId);
+
         }
 
         public static bool operator ==(UserEntity a, UserEntity b)
@@ -102,7 +103,7 @@ namespace Tera.Game
 
         public override int GetHashCode()
         {
-            return Id.GetHashCode();
+            return ServerId.GetHashCode() ^ PlayerId.GetHashCode();
         }
     }
 }

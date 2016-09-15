@@ -5,12 +5,12 @@ namespace Tera.Game
     // An object with an Id that can be spawned or deswpawned in the game world
     public class Entity : IEquatable<object>
     {
-        public Entity(EntityId id)
+        protected Entity(EntityId id)
         {
             Id = id;
         }
 
-        public Entity(EntityId id, Vector3f position, Angle heading, Vector3f? finish = null, int speed = 0,
+        protected Entity(EntityId id, Vector3f position, Angle heading, Vector3f? finish = null, int speed = 0,
             long time = 0)
         {
             Id = id;
