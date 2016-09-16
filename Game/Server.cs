@@ -14,5 +14,10 @@
         public string Name { get; private set; }
         public string Region { get; private set; }
         public uint ServerId { get; private set; }
+
+        public override string ToString()
+        {
+            return "IP:"+Ip+";Name:"+Name+";Region:"+Region+";ServerId:"+ServerId;
+        }
     }
 }
