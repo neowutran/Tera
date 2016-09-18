@@ -54,6 +54,7 @@
     <Compile Include="Game\Messages\Server\S_ACTION_STAGE.cs" />
     <Compile Include="Game\Messages\Server\S_BAN_PARTY.cs" />
     <Compile Include="Game\Messages\Server\SBanPartyMember.cs" />
+    <Compile Include="Game\Messages\Server\S_BEGIN_THROUGH_ARBITER_CONTRACT.cs" />
     <Compile Include="Game\Messages\Server\S_BOSS_GAGE_INFO.cs" />
     <Compile Include="Game\Messages\Server\S_CHANGE_DESTPOS_PROJECTILE.cs" />
     <Compile Include="Game\Messages\Server\S_BATTLE_FIELD_ENTRANCE_INFO.cs" />
