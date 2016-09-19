@@ -8,17 +8,30 @@ namespace Tera.Game.Messages
     {
         internal S_REQUEST_CONTRACT(TeraMessageReader reader) : base(reader)
         {
-            PrintRaw();
-            Type = reader.ReadInt16();
-            reader.Skip(20);
-            Sender = reader.ReadTeraString();
-            Receiver = reader.ReadTeraString();
-            Console.WriteLine("Sender:"+Sender+";Receiver:"+Receiver+";type:"+Type);
+            //PrintRaw();
+            reader.Skip(24);
+            short type = reader.ReadInt16();
+            Type = (RequestType)type;
+            //Console.WriteLine("type:"+type+";translated:"+Type);
         }
 
-        public short Type { get; private set; }
-        public string Sender { get; private set; }
-        public string Receiver { get; private set; }
+        public enum RequestType
+        {
+            DungeonTeleporter = 15,
+            Mailbox = 8,
+            MapTeleporter =  14,
+            TeraClubMapTeleporter = 53,
+            TeraClubTravelJournalTeleporter = 54,
+            OpenBox = 43,
+            LootBox = 52,
+            ChooseLootDialog = 20, //(aka: goldfinger + elion token + ...)
+            BankOpen = 26,
+            TeraClubDarkanFlameUse = 33, // or merge multiple item together
+            PartyInvite = 4,
+            TradeRequest = 3 
+        }
+
+        public RequestType Type { get; private set; }
     }
 }
 
