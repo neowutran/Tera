@@ -12,9 +12,16 @@ namespace Tera.Game.Messages
             reader.Skip(24);
             short type = reader.ReadInt16();
             Type = (RequestType)type;
-            //Console.WriteLine("type:"+type+";translated:"+Type);
+            reader.Skip(14);
+            //int unk3 = reader.ReadInt32();
+            //int time = reader.ReadInt32();
+            Sender = reader.ReadTeraString();
+            Recipient = reader.ReadTeraString();
+            //Console.WriteLine("type:"+type+";translated:"+Type+"; Sender:"+Sender+";Recipient"+Recipient);
         }
 
+        public string Sender { get; private set; }
+        public string Recipient { get; private set; }
         public enum RequestType
         {
             DungeonTeleporter = 15,
