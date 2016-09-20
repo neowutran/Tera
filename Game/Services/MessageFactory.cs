@@ -73,7 +73,8 @@ namespace Tera.Game
             {"S_FIN_INTER_PARTY_MATCH", typeof(S_FIN_INTER_PARTY_MATCH) },
             {"S_MOUNT_VEHICLE_EX", typeof(S_MOUNT_VEHICLE_EX) },
             {"S_BATTLE_FIELD_ENTRANCE_INFO", typeof(S_BATTLE_FIELD_ENTRANCE_INFO) },
-            {"S_BEGIN_THROUGH_ARBITER_CONTRACT", typeof(S_BEGIN_THROUGH_ARBITER_CONTRACT) }
+            {"S_BEGIN_THROUGH_ARBITER_CONTRACT", typeof(S_BEGIN_THROUGH_ARBITER_CONTRACT) },
+            {"S_CHECK_TO_READY_PARTY", typeof(S_CHECK_TO_READY_PARTY) }
         };
 
         private readonly OpCodeNamer _opCodeNamer;
