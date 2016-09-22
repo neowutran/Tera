@@ -1,5 +1,10 @@
+<<<<<<< HEAD
+﻿using System.Diagnostics;
 
+namespace Tera.Game.Messages
+=======
 ﻿namespace Tera.Game.Messages
+>>>>>>> d14d4f1ced48504773cb666138bc60c83ca7b438
 {
     public class S_BEGIN_THROUGH_ARBITER_CONTRACT : ParsedMessage
     {
@@ -8,9 +13,16 @@
         {
             reader.Skip(18);
             InviteName = reader.ReadTeraString();
+<<<<<<< HEAD
+            //reader.Skip(2);
+            PlayerName = reader.ReadTeraString();
+
+            Debug.WriteLine("InviteName:" + InviteName + " PlayerName:" + PlayerName);
+=======
             PlayerName = reader.ReadTeraString();
 
             //Debug.WriteLine("InviteName:" + InviteName + " PlayerName:" + PlayerName);
+>>>>>>> d14d4f1ced48504773cb666138bc60c83ca7b438
         }
 
         public string InviteName { get; set; }
