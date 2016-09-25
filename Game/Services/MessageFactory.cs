@@ -75,6 +75,7 @@ namespace Tera.Game
             {"S_BATTLE_FIELD_ENTRANCE_INFO", typeof(S_BATTLE_FIELD_ENTRANCE_INFO) },
             {"S_REQUEST_CONTRACT", typeof(S_REQUEST_CONTRACT) },
             {"S_BEGIN_THROUGH_ARBITER_CONTRACT", typeof(S_BEGIN_THROUGH_ARBITER_CONTRACT) },
+            {"S_CREST_INFO", typeof(S_CREST_INFO) },
             {"S_CHECK_TO_READY_PARTY", typeof(S_CHECK_TO_READY_PARTY) }
         };
 

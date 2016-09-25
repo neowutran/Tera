@@ -59,6 +59,7 @@
     <Compile Include="Game\Messages\Server\S_CHANGE_DESTPOS_PROJECTILE.cs" />
     <Compile Include="Game\Messages\Server\S_BATTLE_FIELD_ENTRANCE_INFO.cs" />
     <Compile Include="Game\Messages\Server\S_CHECK_TO_READY_PARTY.cs" />
+    <Compile Include="Game\Messages\Server\S_CREST_INFO.cs" />
     <Compile Include="Game\Messages\Server\S_FIN_INTER_PARTY_MATCH.cs" />
     <Compile Include="Game\Messages\Server\S_MOUNT_VEHICLE_EX.cs" />
     <Compile Include="Game\Messages\Server\S_PRIVATE_CHAT.cs" />
