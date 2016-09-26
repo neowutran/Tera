@@ -56,17 +56,17 @@ namespace Tera.Game.Messages
             var counter = reader.ReadUInt16();
             var offset = reader.ReadUInt16();
             var pruk = reader.ReadBytes(12);
-            Console.WriteLine(BitConverter.ToString(pruk));
+            Debug.WriteLine(BitConverter.ToString(pruk));
 
             GuildLevel = reader.ReadUInt32();
              pruk = reader.ReadBytes(16);
-            Console.WriteLine(BitConverter.ToString(pruk));
+            Debug.WriteLine(BitConverter.ToString(pruk));
 
             Gold = reader.ReadUInt64();
             NumberCharacters = reader.ReadUInt32();
             NumberAccount = reader.ReadUInt32();
             pruk = reader.ReadBytes(12);
-            Console.WriteLine(BitConverter.ToString(pruk));
+            Debug.WriteLine(BitConverter.ToString(pruk));
 
 
             NumberQuestsDone = reader.ReadUInt32();
@@ -76,10 +76,8 @@ namespace Tera.Game.Messages
             MaxNumberAccount = reader.ReadUInt16();
             var baseNumberUnknowByte = (int)(offset - reader.BaseStream.Position);
             var baseunknow = reader.ReadBytes(baseNumberUnknowByte);
-            Console.WriteLine(BitConverter.ToString(baseunknow));
-            Console.WriteLine(ToString());
-
-
+            Debug.WriteLine(BitConverter.ToString(baseunknow));
+            Debug.WriteLine(ToString());
 
             for (var i = 1; i <= counter; i++)
             {
@@ -93,11 +91,11 @@ namespace Tera.Game.Messages
                 var guildQuestType1 = (GuildQuestType) reader.ReadUInt32();
                 var unknowXXX = reader.ReadBytes(4);
 
-                Console.WriteLine(BitConverter.ToString(unknow));
-                Console.WriteLine(BitConverter.ToString(unknowXXX));
+                Debug.WriteLine(BitConverter.ToString(unknow));
+                Debug.WriteLine(BitConverter.ToString(unknowXXX));
 
                 var active = reader.ReadByte();
-                Console.WriteLine("Active:" + active);
+                Debug.WriteLine("Active:" + active);
                 var activeBool = active == 1;
 
                 var guildQuestDescriptionLabel = reader.ReadTeraString();
@@ -106,22 +104,22 @@ namespace Tera.Game.Messages
               
 
                 var uk = reader.ReadBytes(4);
-                Console.WriteLine(BitConverter.ToString(uk));
+                Debug.WriteLine(BitConverter.ToString(uk));
                 var zoneId = reader.ReadUInt32();
                 var monsterId = reader.ReadUInt32();
                 var countQuest = reader.ReadUInt16();
                 var unknowshort = reader.ReadUInt16();
-                Console.WriteLine("unknow short:" + unknowshort);
+                Debug.WriteLine("unknow short:" + unknowshort);
 
                 var totalQuest = reader.ReadUInt16();
            
 
                 uk = reader.ReadBytes(10);
-                Console.WriteLine(BitConverter.ToString(uk));
+                Debug.WriteLine(BitConverter.ToString(uk));
 
                 var questGold = reader.ReadUInt64();
                 uk = reader.ReadBytes(8);
-                Console.WriteLine(BitConverter.ToString(uk));
+                Debug.WriteLine(BitConverter.ToString(uk));
                 var questXP = reader.ReadUInt64();
 
                 var count = (int)(nextOffset - reader.BaseStream.Position);
@@ -130,7 +128,7 @@ namespace Tera.Game.Messages
                 }
 
                 unknow = reader.ReadBytes(count);
-                Console.WriteLine(BitConverter.ToString(unknow));
+                Debug.WriteLine(BitConverter.ToString(unknow));
                 offset = nextOffset;
 
 
@@ -148,7 +146,7 @@ namespace Tera.Game.Messages
                questXP
                );
                 GuildQuests.Add(quest);
-                Console.WriteLine(quest);
+                Debug.WriteLine(quest);
 
 
             }
