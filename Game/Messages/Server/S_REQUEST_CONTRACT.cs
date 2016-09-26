@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Diagnostics;
 namespace Tera.Game.Messages
 {
     public class S_REQUEST_CONTRACT : ParsedMessage
@@ -17,7 +14,7 @@ namespace Tera.Game.Messages
             //int time = reader.ReadInt32();
             Sender = reader.ReadTeraString();
             Recipient = reader.ReadTeraString();
-            //Console.WriteLine("type:"+type+";translated:"+Type+"; Sender:"+Sender+";Recipient"+Recipient);
+            Debug.WriteLine("type:"+type+";translated:"+Type+"; Sender:"+Sender+";Recipient"+Recipient);
         }
 
         public string Sender { get; private set; }
@@ -35,7 +32,9 @@ namespace Tera.Game.Messages
             BankOpen = 26,
             TeraClubDarkanFlameUse = 33, // or merge multiple item together
             PartyInvite = 4,
-            TradeRequest = 3 
+            TradeRequest = 3,
+            ShopOpen = 9,
+            Craft = 31
         }
 
         public RequestType Type { get; private set; }
