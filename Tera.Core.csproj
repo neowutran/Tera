@@ -119,6 +119,7 @@
     <Compile Include="Game\Messages\UnknownMessage.cs" />
     <Compile Include="Game\Services\AbnormalityTracker.cs" />
     <Compile Include="Game\Services\CharmTracker.cs" />
+    <Compile Include="Game\Services\QuestInfoDatabase.cs" />
     <Compile Include="Game\Services\UserLogoTracker.cs" />
     <Compile Include="Game\Services\EntityTracker.cs" />
     <Compile Include="Game\Services\Helpers.cs" />
