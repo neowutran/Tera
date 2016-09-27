@@ -9,59 +9,75 @@ namespace Tera.Game
     public class GuildQuest
     {
         public S_GUILD_QUEST_LIST.GuildQuestType GuildQuestType1 { get; private set; }
+        public S_GUILD_QUEST_LIST.GuildQuestType2 GuildQuestType2 { get; private set; }
         public string DescriptionLabel { get; private set; }
+
+        public DateTime TimeRemaining { get; private set; }
+
         public string TitleLabel { get; private set; }
         public string GuildName { get; private set; }
-        public uint ZoneId { get; private set; }
-        public ushort Total { get; private set; }
-        public ulong MonsterId { get; private set; }
         public bool Active { get; private set; }
-        public ulong Gold { get; private set; }
-        public ushort Count { get; private set; }
-        public ulong XP { get; private set; }
+        public S_GUILD_QUEST_LIST.QuestSizeType QuestSize { get; private set; }
+
+        public List<GuildQuestItem> Rewards { get; private set; }
+   
+        public List<GuildQuestTarget> Targets { get; private set; }
+
+        public static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
+        {
+            // Unix timestamp is seconds past epoch
+            DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+            return dtDateTime;
+        }
+
         public GuildQuest(
             S_GUILD_QUEST_LIST.GuildQuestType guildQuestType1,
+            S_GUILD_QUEST_LIST.GuildQuestType2 guildQuestType2,
             string descriptionLabel,
             string titleLabel,
             string guildName,
-            uint zoneId,
-            ulong monsterId,
-            ushort total,
-            ushort count,
+            List<GuildQuestTarget> targets,
             bool active,
-            ulong gold,
-            ulong xP
-
+            List<GuildQuestItem> rewards,
+            ulong timeRemaining,
+            S_GUILD_QUEST_LIST.QuestSizeType questSize
+        
             )
         {
+
             GuildQuestType1 = guildQuestType1;
             DescriptionLabel = descriptionLabel;
             TitleLabel = titleLabel;
             GuildName = guildName;
-            ZoneId = zoneId;
-            MonsterId = monsterId;
-            Total = total;
             Active = active;
-            Gold = gold;
-            Count = count;
-            XP = xP;
-        
-
+            Rewards = rewards;
+            Targets = targets;
+            TimeRemaining = UnixTimeStampToDateTime(timeRemaining);
+            QuestSize = questSize;
         }
 
         public override string ToString()
         {
-            return "GuildQuestType1: " + GuildQuestType1 + "\n" +
+            var str = "GuildQuestType1: " + GuildQuestType1 + "\n" +
+                "GuildQuestType2:" + GuildQuestType2 + "\n" +
                 "GuildQuestDescriptionLabel:" + DescriptionLabel + "\n" +
                 "GuildQuestTitleLabel:" + TitleLabel + "\n" +
                 "GuildName:" + GuildName + "\n" +
-                "ZoneId:" + ZoneId + "\n" +
-                "MonsterId:" + MonsterId + "\n" +
-                "Count:" + Count +"/"+ Total + "\n" +
                 "Active:" + Active + "\n" +
-                "Gold:" + Gold + "\n" +
-                "XP:" + XP + "\n"
-                ;
+                "Time remaining:" + TimeRemaining + "\n" +
+                "Quest size:" + QuestSize + "\n";
+
+            foreach(var target in Targets)
+            {
+                str += "-----\n"+target;
+            }
+
+            foreach(var reward in Rewards)
+            {
+                str += "-----\n"+reward;
+            }
+            return str;
                 
         }
 
