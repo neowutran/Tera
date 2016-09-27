@@ -172,13 +172,18 @@ namespace Tera.Game.Messages
                     targets.Add(new GuildQuestTarget(zoneId, targetId, countQuest, totalQuest));
                 }
 
-                reader.BaseStream.Position = offsetUnk2 - 4;
+                Debug.WriteLine("HERE:"+ offsetUnk2);
+
+                var nextUnk2Offset = offsetUnk2;
                 for (var j = 1; j <= countUnk2; j++)
                 {
+                    reader.BaseStream.Position = nextUnk2Offset - 4;
                     var currentPosition = reader.ReadUInt16();
-                    var nextUnk2Offset = reader.ReadUInt16();
-                    Debug.WriteLine("unk2:" + reader.ReadByte().ToString("X")+" ;"+j+"/"+countUnk2);
+                    nextUnk2Offset = reader.ReadUInt16();
+                    Debug.WriteLine("unk2:" + reader.ReadByte().ToString("X") + " ;" + j + "/" + countUnk2);
                 }
+
+                Debug.WriteLine("ICI");
 
                 List<GuildQuestItem> rewards = new List<GuildQuestItem>();
                 reader.BaseStream.Position = offsetRewards - 4;
@@ -191,8 +196,10 @@ namespace Tera.Game.Messages
 
                     rewards.Add(new GuildQuestItem(item, amount));
                 }
-           
-           
+
+
+                Debug.WriteLine("PASSE");
+
                 questOffset = nextOffset;
 
                 var quest = new GuildQuest(
