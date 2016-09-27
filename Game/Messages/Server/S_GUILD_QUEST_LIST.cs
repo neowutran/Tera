@@ -108,19 +108,20 @@ namespace Tera.Game.Messages
             
             for (var i = 1; i <= counter; i++)
             {
-               
                 reader.BaseStream.Position = questOffset - 4;
                 var pointer = reader.ReadUInt16();
                 Debug.Assert(pointer == questOffset);//should be the same
-
                 var nextOffset = reader.ReadUInt16();
+
                 var countTargets = reader.ReadUInt16();
                 var offsetTargets = reader.ReadUInt16();
 
                 var countUnk2 = reader.ReadUInt16();
                 var offsetUnk2 = reader.ReadUInt16();
+
                 var countRewards = reader.ReadUInt16();
                 var offsetRewards = reader.ReadUInt16();
+
                 var offsetName = reader.ReadUInt16();
                 var offsetDescription = reader.ReadUInt16();
                 var offsetGuildName = reader.ReadUInt16();
@@ -153,8 +154,8 @@ namespace Tera.Game.Messages
                 reader.BaseStream.Position = offsetTargets - 4;
                 for (var j = 1; j <= countTargets; j++)
                 {
-                    var nextTargetOffset = reader.ReadUInt16();
                     var currentPosition = reader.ReadUInt16();
+                    var nextTargetOffset = reader.ReadUInt16();
                     var zoneId = reader.ReadUInt32();
                     var targetId = reader.ReadUInt32();
                     var countQuest = reader.ReadUInt32();
@@ -165,8 +166,8 @@ namespace Tera.Game.Messages
                 reader.BaseStream.Position = offsetUnk2 - 4;
                 for (var j = 1; j <= countUnk2; j++)
                 {
-                    var nextUnk2Offset = reader.ReadUInt16();
                     var currentPosition = reader.ReadUInt16();
+                    var nextUnk2Offset = reader.ReadUInt16();
                     Debug.WriteLine("unk2:" + reader.ReadByte().ToString("X")+" ;"+j+"/"+countUnk2);
                 }
 
@@ -174,8 +175,8 @@ namespace Tera.Game.Messages
                 reader.BaseStream.Position = offsetRewards - 4;
                 for (var j = 1; j <= countRewards; j++)
                 {
-                    var nextRewardOffset = reader.ReadUInt16();
                     var currentPosition = reader.ReadUInt16();
+                    var nextRewardOffset = reader.ReadUInt16();
                     var item = reader.ReadUInt32();
                     var amount = reader.ReadUInt64();
 
