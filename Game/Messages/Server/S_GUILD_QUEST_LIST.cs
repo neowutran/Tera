@@ -142,67 +142,44 @@ namespace Tera.Game.Messages
                 var guildQuestDescriptionLabel = reader.ReadTeraString();
                 var guildQuestTitleLabel = reader.ReadTeraString();
                 var questguildname = reader.ReadTeraString();
-                var targetOffsetAgain = reader.ReadUInt16();
-
-                var unk7 = reader.ReadUInt16();
                 Debug.WriteLine(
                  ";unk3:" + unk3 +
                  ";unk4:" + unk4 +
                  ";unk5:" + unk5 +
                  ";countUnk2:" + countUnk2 +
-                 ";offsetUnk2:" + offsetUnk2 +
-                 ";unk6:" + unk6+
-                 ";unk7:"+ unk7
+                 ";offsetUnk2:" + offsetUnk2
                  );
                 List<GuildQuestTarget> targets = new List<GuildQuestTarget>();
+                reader.BaseStream.Position = offsetTargets - 4;
                 for (var j = 1; j <= countTargets; j++)
                 {
+                    var nextTargetOffset = reader.ReadUInt16();
+                    var currentPosition = reader.ReadUInt16();
                     var zoneId = reader.ReadUInt32();
                     var targetId = reader.ReadUInt32();
                     var countQuest = reader.ReadUInt32();
                     var totalQuest = reader.ReadUInt32();
                     targets.Add(new GuildQuestTarget(zoneId, targetId, countQuest, totalQuest));
-                    var currentPosition = reader.ReadUInt16();
-
-                    //If 3 targets
-                    //1rst iteration: offset of the "currentPosition" of the next iteration of this loop
-                    //2nd iteration: offset = 0 (= continue the loop normally?)
-                    //3nd iteration: offset of the "currentPosition" of reward
-                    //fuck you
-
-                    //If 1 target:
-                    //offset of the "currentPosition" of the first reward element
-                    var shitTargetOffset = reader.ReadUInt16();
                 }
 
-                for(var j = 1; j <= countUnk2; j++)
+                reader.BaseStream.Position = offsetUnk2 - 4;
+                for (var j = 1; j <= countUnk2; j++)
                 {
+                    var nextUnk2Offset = reader.ReadUInt16();
+                    var currentPosition = reader.ReadUInt16();
                     Debug.WriteLine("unk2:" + reader.ReadByte().ToString("X")+" ;"+j+"/"+countUnk2);
                 }
 
                 List<GuildQuestItem> rewards = new List<GuildQuestItem>();
-                for(var j = 1; j <= countRewards; j++)
+                reader.BaseStream.Position = offsetRewards - 4;
+                for (var j = 1; j <= countRewards; j++)
                 {
+                    var nextRewardOffset = reader.ReadUInt16();
+                    var currentPosition = reader.ReadUInt16();
                     var item = reader.ReadUInt32();
                     var amount = reader.ReadUInt64();
 
                     rewards.Add(new GuildQuestItem(item, amount));
-
-                    //IF IT S THE LAST QUEST:
-                    //1rst iteration of the loop: currentPosition
-                    //2nd iteration of the loop: = 0
-                    var currentPosition = reader.ReadUInt16();
-                 
-                    if (j == countRewards && i == counter) { break; }
-
-                    //IF IT S NOT THE LAST QUEST 
-                    //1rst iteration of the loop: offset = 0 (= continue the loop normally?)
-                    //2nd iteration of the loop: offset to the "currentPosition" of the next reward (from the next quest)
-
-                    //IF IT S THE LAST QUEST: 
-                    //1rst iteration of the loop: offset = 0 (= continue the loop normally)
-                    //2nd iteration of the loop: DOES NOT EXIST
-                    var shitRewardOffset = reader.ReadUInt16();
                 }
            
            
