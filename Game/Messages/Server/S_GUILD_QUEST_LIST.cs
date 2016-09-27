@@ -55,7 +55,7 @@ namespace Tera.Game.Messages
                 "XP for next level:"+ GuildXpNextLevel+"\n"+
                 "XP to gain for next level:"+ (GuildXpNextLevel - GuildXpCurrent)+"\n"+
                 "Guild size:"+ GuildSize+"\n"+
-                "Guild creation date:"+ EpochGuildCreationTime+"\n"
+                "Guild creation date:"+ GuildCreationTime+"\n"
                 ;
 
         }
@@ -72,13 +72,22 @@ namespace Tera.Game.Messages
         public ulong GuildXpNextLevel { get; private set; }
 
         public GuildSizeType GuildSize { get; private set; }
-        public ulong EpochGuildCreationTime { get; private set; }
+        public DateTime GuildCreationTime { get; private set; }
 
         public enum GuildSizeType
         {
             Small = 0,
             Medium = 1,
             Big = 2
+        }
+
+
+        public static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
+        {
+            // Unix timestamp is seconds past epoch
+            DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+            return dtDateTime;
         }
 
         internal S_GUILD_QUEST_LIST(TeraMessageReader reader) : base(reader)
@@ -100,7 +109,7 @@ namespace Tera.Game.Messages
             NumberCharacters = reader.ReadUInt32();
             NumberAccount = reader.ReadUInt32();
             GuildSize = (GuildSizeType)reader.ReadUInt32();
-            EpochGuildCreationTime = reader.ReadUInt64();
+            GuildCreationTime = UnixTimeStampToDateTime(reader.ReadUInt64());
             NumberQuestsDone = reader.ReadUInt32();
             NumberTotalDailyQuest = reader.ReadUInt32();
             GuildName = reader.ReadTeraString();

@@ -12,7 +12,7 @@ namespace Tera.Game
         public S_GUILD_QUEST_LIST.GuildQuestType2 GuildQuestType2 { get; private set; }
         public string DescriptionLabel { get; private set; }
 
-        public DateTime TimeRemaining { get; private set; }
+        public TimeSpan TimeRemaining { get; private set; }
 
         public string TitleLabel { get; private set; }
         public string GuildName { get; private set; }
@@ -23,13 +23,6 @@ namespace Tera.Game
    
         public List<GuildQuestTarget> Targets { get; private set; }
 
-        public static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
-        {
-            // Unix timestamp is seconds past epoch
-            DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
-            return dtDateTime;
-        }
 
         public GuildQuest(
             S_GUILD_QUEST_LIST.GuildQuestType guildQuestType1,
@@ -53,7 +46,7 @@ namespace Tera.Game
             Active = active;
             Rewards = rewards;
             Targets = targets;
-            TimeRemaining = UnixTimeStampToDateTime(timeRemaining);
+            TimeRemaining = TimeSpan.FromSeconds(timeRemaining);
             QuestSize = questSize;
         }
 
