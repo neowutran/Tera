@@ -43,7 +43,7 @@ namespace Tera.Game.Messages
 
         public override string ToString()
         {
-            return "Guild name:" + GuildName + "\n" +
+            var str =  "Guild name:" + GuildName + "\n" +
                 "Guild master:" + GuildMaster + "\n" +
                 "Guild level:" + GuildLevel + "\n" +
                 "Number accounts:" + NumberAccount + "\n" +
@@ -57,6 +57,11 @@ namespace Tera.Game.Messages
                 "Guild size:"+ GuildSize+"\n"+
                 "Guild creation date:"+ GuildCreationTime+"\n"
                 ;
+            foreach(var quest in GuildQuests)
+            {
+                str += "=====\n" + quest;
+            }
+            return str;
 
         }
 
@@ -140,22 +145,28 @@ namespace Tera.Game.Messages
                 var questSize = (QuestSizeType)reader.ReadUInt32();
                 var unk3 = reader.ReadByte();
                 var unk4 = reader.ReadUInt32();
-                var unk5 = reader.ReadUInt32();
-
+                var active = reader.ReadByte();
+                Debug.WriteLine(active.ToString("X"));
+                var activeBool = active == 1;
+                var unk7 = reader.ReadBytes(3);
+                
                 //in seconds
                 var timeRemaining = reader.ReadUInt32();
 
+
                 var guildQuestType = (GuildQuestType) reader.ReadUInt32();
+                var unk5 = reader.ReadByte();
                 var unk6 = reader.ReadInt32();
-                var active = reader.ReadByte();
-                var activeBool = active == 1;
+               
                 var guildQuestDescriptionLabel = reader.ReadTeraString();
                 var guildQuestTitleLabel = reader.ReadTeraString();
                 var questguildname = reader.ReadTeraString();
                 Debug.WriteLine(
                  ";unk3:" + unk3 +
                  ";unk4:" + unk4 +
-                 ";unk5:" + unk5 +
+                 ";unk5:" + unk5.ToString("X") +
+                 ";unk6:" + unk6 +
+                 ";unk7:" + BitConverter.ToString(unk7) +
                  ";countUnk2:" + countUnk2 +
                  ";offsetUnk2:" + offsetUnk2
                  );
@@ -172,8 +183,6 @@ namespace Tera.Game.Messages
                     targets.Add(new GuildQuestTarget(zoneId, targetId, countQuest, totalQuest));
                 }
 
-                Debug.WriteLine("HERE:"+ offsetUnk2);
-
                 var nextUnk2Offset = offsetUnk2;
                 for (var j = 1; j <= countUnk2; j++)
                 {
@@ -182,8 +191,6 @@ namespace Tera.Game.Messages
                     nextUnk2Offset = reader.ReadUInt16();
                     Debug.WriteLine("unk2:" + reader.ReadByte().ToString("X") + " ;" + j + "/" + countUnk2);
                 }
-
-                Debug.WriteLine("ICI");
 
                 List<GuildQuestItem> rewards = new List<GuildQuestItem>();
                 reader.BaseStream.Position = offsetRewards - 4;
@@ -196,9 +203,6 @@ namespace Tera.Game.Messages
 
                     rewards.Add(new GuildQuestItem(item, amount));
                 }
-
-
-                Debug.WriteLine("PASSE");
 
                 questOffset = nextOffset;
 
