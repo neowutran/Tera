@@ -12,7 +12,7 @@ namespace Tera.Game
     // Since it works with OpCodeNames not numeric OpCodes, it needs an OpCodeNamer
     public class MessageFactory
     {
-        private static readonly Dictionary<string, Type> OpcodeNameToType = new Dictionary<string, Type>();
+        private static readonly Dictionary<string, Type> OpcodeNameToType = new Dictionary<string, Type> {{"C_CHECK_VERSION", typeof(C_CHECK_VERSION)}};
         private static readonly Dictionary<string, Type> CoreServices = new Dictionary<string, Type>
         {
             {"C_CHECK_VERSION", typeof(C_CHECK_VERSION)},
