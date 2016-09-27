@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using Tera.Game.Messages;
 
 namespace Tera.Game
@@ -10,7 +12,8 @@ namespace Tera.Game
     // Since it works with OpCodeNames not numeric OpCodes, it needs an OpCodeNamer
     public class MessageFactory
     {
-        private static readonly Dictionary<string, Type> OpcodeNameToType = new Dictionary<string, Type>
+        private static readonly Dictionary<string, Type> OpcodeNameToType = new Dictionary<string, Type> {{"C_CHECK_VERSION", typeof(C_CHECK_VERSION)}};
+        private static readonly Dictionary<string, Type> CoreServices = new Dictionary<string, Type>
         {
             {"C_CHECK_VERSION", typeof(C_CHECK_VERSION)},
             {"S_EACH_SKILL_RESULT", typeof(EachSkillResultServerMessage)},
@@ -25,7 +28,6 @@ namespace Tera.Game
             {"S_BOSS_GAGE_INFO", typeof(S_BOSS_GAGE_INFO)},
             {"S_NPC_TARGET_USER", typeof(SNpcTargetUser)},
             {"S_NPC_OCCUPIER_INFO", typeof(SNpcOccupierInfo)},
-            {"S_CHAT", typeof(S_CHAT)},
             {"S_ABNORMALITY_BEGIN", typeof(SAbnormalityBegin)},
             {"S_ABNORMALITY_END", typeof(SAbnormalityEnd)},
             {"S_ABNORMALITY_REFRESH", typeof(SAbnormalityRefresh)},
@@ -66,27 +68,49 @@ namespace Tera.Game
             {"S_BAN_PARTY", typeof(S_BAN_PARTY)},
             {"S_GET_USER_LIST", typeof(S_GET_USER_LIST)},
             {"S_GET_USER_GUILD_LOGO", typeof(S_GET_USER_GUILD_LOGO)},
+            {"S_MOUNT_VEHICLE_EX", typeof(S_MOUNT_VEHICLE_EX) },
+            {"S_CREST_INFO", typeof(S_CREST_INFO) },
+        };
+
+        private static readonly Dictionary<string, Type> ChatServices = new Dictionary<string, Type>
+        {
+            {"S_CHAT", typeof(S_CHAT)},
             {"S_WHISPER", typeof(S_WHISPER)},
             {"S_TRADE_BROKER_DEAL_SUGGESTED", typeof(S_TRADE_BROKER_DEAL_SUGGESTED)},
             {"S_OTHER_USER_APPLY_PARTY", typeof(S_OTHER_USER_APPLY_PARTY) },
             {"S_PRIVATE_CHAT", typeof(S_PRIVATE_CHAT) },
             {"S_FIN_INTER_PARTY_MATCH", typeof(S_FIN_INTER_PARTY_MATCH) },
-            {"S_MOUNT_VEHICLE_EX", typeof(S_MOUNT_VEHICLE_EX) },
             {"S_BATTLE_FIELD_ENTRANCE_INFO", typeof(S_BATTLE_FIELD_ENTRANCE_INFO) },
             {"S_REQUEST_CONTRACT", typeof(S_REQUEST_CONTRACT) },
             {"S_BEGIN_THROUGH_ARBITER_CONTRACT", typeof(S_BEGIN_THROUGH_ARBITER_CONTRACT) },
-            {"S_CREST_INFO", typeof(S_CREST_INFO) },
             {"S_CHECK_TO_READY_PARTY", typeof(S_CHECK_TO_READY_PARTY) },
             {"S_GUILD_QUEST_LIST", typeof(S_GUILD_QUEST_LIST) }
         };
 
+
         private readonly OpCodeNamer _opCodeNamer;
         public string Version;
+        public bool ChatEnabled {
+            get { return _chatEnabled; }
+            set
+            {
+                _chatEnabled = value;
+                OpcodeNameToType.Clear();
+                CoreServices.ToList().ForEach(x => OpcodeNameToType[x.Key] = x.Value);
+                if (_chatEnabled) ChatServices.ToList().ForEach(x => OpcodeNameToType[x.Key] = x.Value);
+            }
+        }
 
-        public MessageFactory(OpCodeNamer opCodeNamer, string version)
+        private bool _chatEnabled;
+
+        public MessageFactory(OpCodeNamer opCodeNamer, string version, bool chatEnabled=false)
         {
+            OpcodeNameToType.Clear();
+            CoreServices.ToList().ForEach(x=>OpcodeNameToType[x.Key]=x.Value);
+            if (chatEnabled) ChatServices.ToList().ForEach(x => OpcodeNameToType[x.Key] = x.Value);
             _opCodeNamer = opCodeNamer;
             Version = version;
+            _chatEnabled = chatEnabled;
             foreach (var name in OpcodeNameToType.Keys)
             {
                 opCodeNamer.GetCode(name);
