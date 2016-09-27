@@ -40,6 +40,7 @@ namespace Tera.Game
         {
 
             GuildQuestType1 = guildQuestType1;
+            GuildQuestType2 = guildQuestType2;
             DescriptionLabel = descriptionLabel;
             TitleLabel = titleLabel;
             GuildName = guildName;
@@ -59,16 +60,16 @@ namespace Tera.Game
                 "GuildName:" + GuildName + "\n" +
                 "Active:" + Active + "\n" +
                 "Time remaining:" + TimeRemaining + "\n" +
-                "Quest size:" + QuestSize + "\n";
+                "Quest size:" + QuestSize;
 
             foreach(var target in Targets)
             {
-                str += "-----\n"+target;
+                str += "\n-----\n"+target;
             }
 
             foreach(var reward in Rewards)
             {
-                str += "-----\n"+reward;
+                str += "\n-----\n"+reward;
             }
             return str;
                 

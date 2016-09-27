@@ -18,8 +18,8 @@ namespace Tera.Game.Messages
         public enum GuildQuestType2
         {
             Hunt = 0,
-            Battleground = 2,
-            Gathering = 4
+            Gathering = 2,
+            Battleground = 4
 
         }
 
@@ -59,7 +59,7 @@ namespace Tera.Game.Messages
                 ;
             foreach(var quest in GuildQuests)
             {
-                str += "=====\n" + quest;
+                str += "\n=====\n" + quest;
             }
             return str;
 
