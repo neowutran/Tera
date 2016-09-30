@@ -40,6 +40,51 @@ namespace Tera.Game
             handler?.Invoke(entity);
         }
 
+        public void Update(LoginServerMessage message)
+        {
+            var newEntity = LoginMe(message);
+            Register(newEntity);
+        }
+
+        public void Update(SpawnUserServerMessage message)
+        {
+            var newEntity = new UserEntity(message);
+            Register(newEntity);
+        }
+
+        private void Register(Entity newEntity)
+        {
+            _dictionary[newEntity.Id] = newEntity;
+            OnEntityUpdated(newEntity);
+        }
+
+        public void Update(EachSkillResultServerMessage m)
+        {
+            var entity = GetOrNull(m.Target);
+            if (entity == null) return;
+            if (m.Position.X == 0 && m.Position.Y == 0 && m.Position.Z == 0) return;
+            entity.Position = m.Position;
+            entity.Finish = m.Position;
+            entity.Speed = 0;
+            entity.StartTime = 0;
+            entity.Heading = m.Heading;
+            entity.EndAngle = m.Heading;
+            entity.EndTime = 0;
+        }
+
+        public void Update(SCreatureLife m)
+        {
+            var entity = GetOrNull(m.User);
+            if (entity == null) return;
+            entity.Position = m.Position;
+            entity.Finish = entity.Position;
+            entity.Speed = 0;
+            entity.StartTime = 0;
+            entity.EndAngle = entity.Heading;
+            entity.EndTime = 0;
+        }
+
+
         public void Update(ParsedMessage message)
         {
             Entity newEntity = null;
@@ -62,8 +107,7 @@ namespace Tera.Game
                             m.Start.GetHeading(m.Finish), m.Finish, (int) m.Speed, m.Time.Ticks));
             if (newEntity != null)
             {
-                _dictionary[newEntity.Id] = newEntity;
-                OnEntityUpdated(newEntity);
+                Register(newEntity);
             }
             message.On<S_MOUNT_VEHICLE_EX>(m =>
             {
@@ -126,18 +170,7 @@ namespace Tera.Game
                 entity.EndTime = 0;
                 //Debug.WriteLine($"{entity.Position} {entity.Heading}");
             });
-            message.On<SCreatureLife>(m =>
-            {
-                var entity = GetOrNull(m.User);
-                if (entity == null) return;
-                entity.Position = m.Position;
-                entity.Finish = entity.Position;
-                entity.Speed = 0;
-                entity.StartTime = 0;
-                entity.EndAngle = entity.Heading;
-                entity.EndTime = 0;
-                //Debug.WriteLine($"{entity.Position} {entity.Heading}");
-            });
+            message.On<SCreatureLife>(m => Update(m));
             message.On<S_INSTANT_MOVE>(m =>
             {
                 var entity = GetOrNull(m.Entity);
@@ -172,19 +205,7 @@ namespace Tera.Game
                 entity.EndTime = entity.StartTime + (m.NeedTime == 0 ? 0 : TimeSpan.TicksPerMillisecond*m.NeedTime);
                 //Debug.WriteLine($"{entity.Position} {entity.Heading} {entity.EndAngle} {m.NeedTime}");
             });
-            message.On<EachSkillResultServerMessage>(m =>
-            {
-                var entity = GetOrNull(m.Target);
-                if (entity == null) return;
-                if (m.Position.X == 0 && m.Position.Y == 0 && m.Position.Z == 0) return;
-                entity.Position = m.Position;
-                entity.Finish = m.Position;
-                entity.Speed = 0;
-                entity.StartTime = 0;
-                entity.Heading = m.Heading;
-                entity.EndAngle = m.Heading;
-                entity.EndTime = 0;
-            });
+            message.On<EachSkillResultServerMessage>(m => Update(m));
             message.On<SNpcLocation>(m =>
             {
                 var entity = GetOrNull(m.Entity);

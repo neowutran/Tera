@@ -4,6 +4,7 @@
     {
         internal S_ACTION_END(TeraMessageReader reader) : base(reader)
         {
+            
             Entity = reader.ReadEntityId();
             Position = reader.ReadVector3f();
             Heading = reader.ReadAngle();
