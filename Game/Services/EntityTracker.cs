@@ -108,6 +108,7 @@ namespace Tera.Game
             if (newEntity != null)
             {
                 Register(newEntity);
+                return;
             }
             message.On<S_MOUNT_VEHICLE_EX>(m =>
             {
