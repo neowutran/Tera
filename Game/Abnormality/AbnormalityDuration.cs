@@ -8,10 +8,10 @@ namespace Tera.Game.Abnormality
     {
         private List<Duration> _listDuration = new List<Duration>();
 
-        public AbnormalityDuration(PlayerClass playerClass, long start)
+        public AbnormalityDuration(PlayerClass playerClass, long start, int stack)
         {
             InitialPlayerClass = playerClass;
-            Start(start);
+            Start(start, stack);
         }
 
         private AbnormalityDuration(PlayerClass playerClass)
@@ -45,16 +45,14 @@ namespace Tera.Game.Abnormality
             return abnormalityDuration;
         }
 
-        public long Duration(long begin, long end)
+        public long Duration(long begin, long end, int stack=0)
         {
             long totalDuration = 0;
-            foreach (var duration in _listDuration)
+            foreach (var duration in stack==0
+                                    ? _listDuration.Where(x => end >= x.Begin && begin <= x.End)
+                                    : _listDuration.Where(x => end >= x.Begin && begin <= x.End && stack == x.Stack)
+                                    )
             {
-                if (begin > duration.End || end < duration.Begin)
-                {
-                    continue;
-                }
-
                 var abnormalityBegin = duration.Begin;
                 var abnormalityEnd = duration.End;
 
@@ -73,17 +71,22 @@ namespace Tera.Game.Abnormality
             return totalDuration;
         }
 
-        public void Start(long start)
+        public void Start(long start,int stack)
         {
             if (_listDuration.Count != 0)
             {
                 if (!Ended())
                 {
+                    if (LastStack()==stack)
                     //Debug.WriteLine("Can't restart something that has not been ended yet");
-                    return;
+                        return;
+                    if (_listDuration[_listDuration.Count - 1].Begin == start)
+                        _listDuration.RemoveAt(_listDuration.Count - 1);//no need to store zero-time stacks
+                    else
+                        _listDuration[_listDuration.Count - 1].End = start;
                 }
             }
-            _listDuration.Add(new Duration(start, long.MaxValue));
+            _listDuration.Add(new Duration(start, long.MaxValue, stack));
         }
 
         public void End(long end)
@@ -97,6 +100,11 @@ namespace Tera.Game.Abnormality
             _listDuration[_listDuration.Count - 1].End = end;
         }
 
+        public int LastStack()
+        {
+            return _listDuration[_listDuration.Count - 1].Stack;
+        }
+
         public long LastStart()
         {
             return _listDuration[_listDuration.Count - 1].Begin;
@@ -107,11 +115,15 @@ namespace Tera.Game.Abnormality
             return _listDuration[_listDuration.Count - 1].End;
         }
 
-        public int Count(long begin = 0, long end = 0)
+        public int Count(long begin = 0, long end = 0, int stack = 0)
         {
+            if (stack==0)
+                return begin == 0 || end == 0
+                    ? _listDuration.Count
+                    : _listDuration.Count(x => begin <= x.End && end >= x.Begin);
             return begin == 0 || end == 0
-                ? _listDuration.Count
-                : _listDuration.Count(x => begin <= x.End && end >= x.Begin);
+                ? _listDuration.Count(x => x.Stack == stack)
+                : _listDuration.Count(x => x.Stack == stack && begin <= x.End && end >= x.Begin);
         }
 
         public List<Duration> AllDurations(long begin = 0, long end = 0) //for use only on cloned storages
@@ -119,7 +131,7 @@ namespace Tera.Game.Abnormality
             return begin == 0 || end == 0
                 ? _listDuration.ToList()
                 : _listDuration.Where(x => begin <= x.End && end >= x.Begin)
-                    .Select(x => new Duration(begin > x.Begin ? begin : x.Begin, end < x.End ? end : x.End))
+                    .Select(x => new Duration(begin > x.Begin ? begin : x.Begin, end < x.End ? end : x.End, x.Stack))
                     .ToList();
         }
 

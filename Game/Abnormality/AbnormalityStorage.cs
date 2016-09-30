@@ -122,7 +122,7 @@ namespace Tera.Game.Abnormality
             {
                 var j = i.Value.Where(x => !x.Value.Ended())
                     .ToDictionary(x => x.Key,
-                        x => new AbnormalityDuration(x.Value.InitialPlayerClass, x.Value.LastStart()));
+                        x => new AbnormalityDuration(x.Value.InitialPlayerClass, x.Value.LastStart(), x.Value.LastStack()));
                 if (j.Count > 0)
                     npcTimes.Add(i.Key, j);
             }
@@ -131,7 +131,7 @@ namespace Tera.Game.Abnormality
             {
                 var j = i.Value.Where(x => !x.Value.Ended())
                     .ToDictionary(x => x.Key,
-                        x => new AbnormalityDuration(x.Value.InitialPlayerClass, x.Value.LastStart()));
+                        x => new AbnormalityDuration(x.Value.InitialPlayerClass, x.Value.LastStart(), x.Value.LastStack()));
                 if (j.Count > 0)
                     playerTimes.Add(i.Key, j);
             }

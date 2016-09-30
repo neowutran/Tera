@@ -49,10 +49,10 @@ namespace Tera.Game.Abnormality
         {
             if (_death == null)
             {
-                _death = new AbnormalityDuration(PlayerClass.Common, begin);
+                _death = new AbnormalityDuration(PlayerClass.Common, begin, 0);
                 return;
             }
-            _death.Start(begin);
+            _death.Start(begin, 0);
         }
 
         public void End(long begin)
@@ -66,7 +66,7 @@ namespace Tera.Game.Abnormality
 
         public Death Clear()
         {
-            var death = _death.Ended() ? null : new AbnormalityDuration(PlayerClass.Common, _death.LastStart());
+            var death = _death.Ended() ? null : new AbnormalityDuration(PlayerClass.Common, _death.LastStart(), 0);
             return new Death(death);
         }
 
