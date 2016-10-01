@@ -13,7 +13,7 @@
             PlayerId = reader.ReadUInt32();
             reader.Skip(27);
             Level = reader.ReadInt16();
-            reader.Skip(nameOffset - 34);
+            reader.BaseStream.Position = nameOffset - 4;
             Name = reader.ReadTeraString();
 //            Debug.WriteLine(Name + ":" + BitConverter.ToString(BitConverter.GetBytes(Id.Id)) + ":" + ServerId.ToString() + " " + BitConverter.ToString(BitConverter.GetBytes(PlayerId)));
         }
