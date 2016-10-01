@@ -18,6 +18,7 @@ namespace Tera.Game
         public string Name => User.Name;
         public string FullName { get; private set; }
         public bool IsHealer => Class == PlayerClass.Priest || Class == PlayerClass.Mystic;
+        public int Level => User.Level;
         public string GuildName => User.GuildName;
 
         public RaceGenderClass RaceGenderClass => User.RaceGenderClass;

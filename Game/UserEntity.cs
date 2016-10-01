@@ -22,6 +22,7 @@ namespace Tera.Game
             RaceGenderClass = message.RaceGenderClass;
             PlayerId = message.PlayerId;
             ServerId = message.ServerId;
+            Level = message.Level;
         }
 
         internal UserEntity(LoginServerMessage message)
@@ -32,6 +33,7 @@ namespace Tera.Game
             RaceGenderClass = message.RaceGenderClass;
             PlayerId = message.PlayerId;
             ServerId = message.ServerId;
+            Level = message.Level;
         }
 
         public string Name { get; set; }
@@ -39,6 +41,7 @@ namespace Tera.Game
         public RaceGenderClass RaceGenderClass { get; set; }
         public uint ServerId { get; set; }
         public uint PlayerId { get; set; }
+        public int Level { get; set; }
 
         public override bool Equals(object obj)
         {

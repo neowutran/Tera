@@ -243,26 +243,26 @@ namespace Tera.Game
             entity.Info.Boss = true;
         }
 
-        /** Deprecated */
+        /** Easy integrate style - compatible */
         public void Update(ParsedMessage message)
         {
-            message.On<SpawnUserServerMessage>(m => Update(m));
-            message.On<LoginServerMessage>(m => Update(m));
-            message.On<SpawnNpcServerMessage>(m => Update(m));
-            message.On<SpawnProjectileServerMessage>(m => Update(m));
-            message.On<StartUserProjectileServerMessage>(m=>Update(m));  
-            message.On<S_MOUNT_VEHICLE_EX>(m =>Update(m));
-            message.On<C_PLAYER_LOCATION>(m =>Update(m));
-            message.On<S_CHANGE_DESTPOS_PROJECTILE>(m => Update(m));
-            message.On<S_ACTION_STAGE>(m =>Update(m));
-            message.On<S_ACTION_END>(m => Update(m));
-            message.On<SCreatureLife>(m => Update(m));
-            message.On<S_INSTANT_MOVE>(m => Update(m));
-            message.On<S_CREATURE_ROTATE>(m =>Update(m));
-            message.On<EachSkillResultServerMessage>(m => Update(m));
-            message.On<SNpcLocation>(m => Update(m));
-            message.On<S_USER_LOCATION>(m =>Update(m));
-            message.On<S_BOSS_GAGE_INFO>(m => Update(m));
+            message.On<SpawnUserServerMessage>(Update);
+            message.On<LoginServerMessage>(Update);
+            message.On<SpawnNpcServerMessage>(Update);
+            message.On<SpawnProjectileServerMessage>(Update);
+            message.On<StartUserProjectileServerMessage>(Update);  
+            message.On<S_MOUNT_VEHICLE_EX>(Update);
+            message.On<C_PLAYER_LOCATION>(Update);
+            message.On<S_CHANGE_DESTPOS_PROJECTILE>(Update);
+            message.On<S_ACTION_STAGE>(Update);
+            message.On<S_ACTION_END>(Update);
+            message.On<SCreatureLife>(Update);
+            message.On<S_INSTANT_MOVE>(Update);
+            message.On<S_CREATURE_ROTATE>(Update);
+            message.On<EachSkillResultServerMessage>(Update);
+            message.On<SNpcLocation>(Update);
+            message.On<S_USER_LOCATION>(Update);
+            message.On<S_BOSS_GAGE_INFO>(Update);
         }
 
         private Entity LoginMe(LoginServerMessage m)

@@ -11,79 +11,80 @@ namespace Tera.Game
     // Since it works with OpCodeNames not numeric OpCodes, it needs an OpCodeNamer
     public class MessageFactory
     {
-        private static readonly Dictionary<string, Type> OpcodeNameToType = new Dictionary<string, Type> {{"C_CHECK_VERSION", typeof(C_CHECK_VERSION)}};
-        private static readonly Dictionary<string, Type> CoreServices = new Dictionary<string, Type>
+        private static readonly Delegate UnknownMessageDelegate = Helpers.Contructor<Func<TeraMessageReader, UnknownMessage>>();
+        private static readonly Dictionary<string, Delegate> OpcodeNameToType = new Dictionary<string, Delegate> {{"C_CHECK_VERSION", Helpers.Contructor<Func<TeraMessageReader, C_CHECK_VERSION>>() } };
+        private static readonly Dictionary<string, Delegate> CoreServices = new Dictionary<string, Delegate>
         {
-            {"C_CHECK_VERSION", typeof(C_CHECK_VERSION)},
-            {"S_EACH_SKILL_RESULT", typeof(EachSkillResultServerMessage)},
-            {"S_SPAWN_USER", typeof(SpawnUserServerMessage)},
-            {"S_SPAWN_ME", typeof(SpawnMeServerMessage)},
-            {"S_SPAWN_NPC", typeof(SpawnNpcServerMessage)},
-            {"S_SPAWN_PROJECTILE", typeof(SpawnProjectileServerMessage)},
-            {"S_LOGIN", typeof(LoginServerMessage)},
-            {"S_TARGET_INFO", typeof(STargetInfo)},
-            {"S_START_USER_PROJECTILE", typeof(StartUserProjectileServerMessage)},
-            {"S_CREATURE_CHANGE_HP", typeof(SCreatureChangeHp)},
-            {"S_BOSS_GAGE_INFO", typeof(S_BOSS_GAGE_INFO)},
-            {"S_NPC_TARGET_USER", typeof(SNpcTargetUser)},
-            {"S_NPC_OCCUPIER_INFO", typeof(SNpcOccupierInfo)},
-            {"S_ABNORMALITY_BEGIN", typeof(SAbnormalityBegin)},
-            {"S_ABNORMALITY_END", typeof(SAbnormalityEnd)},
-            {"S_ABNORMALITY_REFRESH", typeof(SAbnormalityRefresh)},
-            {"S_DESPAWN_NPC", typeof(SDespawnNpc)},
-            {"S_PLAYER_CHANGE_MP", typeof(SPlayerChangeMp)},
-            {"S_PARTY_MEMBER_ABNORMAL_ADD", typeof(SPartyMemberAbnormalAdd)},
-            {"S_PARTY_MEMBER_CHANGE_MP", typeof(SPartyMemberChangeMp)},
-            {"S_PARTY_MEMBER_CHANGE_HP", typeof(SPartyMemberChangeHp)},
-            {"S_PARTY_MEMBER_ABNORMAL_CLEAR", typeof(SPartyMemberAbnormalClear)},
-            {"S_PARTY_MEMBER_ABNORMAL_DEL", typeof(SPartyMemberAbnormalDel)},
-            {"S_PARTY_MEMBER_ABNORMAL_REFRESH", typeof(SPartyMemberAbnormalRefresh)},
-            {"S_DESPAWN_USER", typeof(SDespawnUser)},
-            {"S_USER_STATUS", typeof(SUserStatus)},
-            {"S_CREATURE_LIFE", typeof(SCreatureLife)},
-            {"S_CREATURE_ROTATE", typeof(S_CREATURE_ROTATE)},
-            {"S_NPC_STATUS", typeof(SNpcStatus)},
-            {"S_NPC_LOCATION", typeof(SNpcLocation)},
-            {"S_USER_LOCATION", typeof(S_USER_LOCATION)},
-            {"C_PLAYER_LOCATION", typeof(C_PLAYER_LOCATION)},
-            {"S_INSTANT_MOVE", typeof(S_INSTANT_MOVE)},
-            {"S_ACTION_STAGE", typeof(S_ACTION_STAGE)},
-            {"S_ACTION_END", typeof(S_ACTION_END)},
-            {"S_CHANGE_DESTPOS_PROJECTILE", typeof(S_CHANGE_DESTPOS_PROJECTILE)},
-            {"S_ADD_CHARM_STATUS", typeof(SAddCharmStatus)},
-            {"S_ENABLE_CHARM_STATUS", typeof(SEnableCharmStatus)},
-            {"S_REMOVE_CHARM_STATUS", typeof(SRemoveCharmStatus)},
-            {"S_RESET_CHARM_STATUS", typeof(SResetCharmStatus)},
-            {"S_PARTY_MEMBER_CHARM_ADD", typeof(SPartyMemberCharmAdd)},
-            {"S_PARTY_MEMBER_CHARM_DEL", typeof(SPartyMemberCharmDel)},
-            {"S_PARTY_MEMBER_CHARM_ENABLE", typeof(SPartyMemberCharmEnable)},
-            {"S_PARTY_MEMBER_CHARM_RESET", typeof(SPartyMemberCharmReset)},
-            {"S_PARTY_MEMBER_STAT_UPDATE", typeof(S_PARTY_MEMBER_STAT_UPDATE)},
-            {"S_PLAYER_STAT_UPDATE", typeof(S_PLAYER_STAT_UPDATE)},
-            {"S_PARTY_MEMBER_LIST", typeof(S_PARTY_MEMBER_LIST)},
-            {"S_LEAVE_PARTY_MEMBER", typeof(S_LEAVE_PARTY_MEMBER)},
-            {"S_BAN_PARTY_MEMBER", typeof(S_BAN_PARTY_MEMBER)},
-            {"S_LEAVE_PARTY", typeof(S_LEAVE_PARTY)},
-            {"S_BAN_PARTY", typeof(S_BAN_PARTY)},
-            {"S_GET_USER_LIST", typeof(S_GET_USER_LIST)},
-            {"S_GET_USER_GUILD_LOGO", typeof(S_GET_USER_GUILD_LOGO)},
-            {"S_MOUNT_VEHICLE_EX", typeof(S_MOUNT_VEHICLE_EX) },
-            {"S_CREST_INFO", typeof(S_CREST_INFO) },
+            {"C_CHECK_VERSION", Helpers.Contructor<Func<TeraMessageReader,C_CHECK_VERSION>>()},
+            {"S_EACH_SKILL_RESULT", Helpers.Contructor<Func<TeraMessageReader,EachSkillResultServerMessage>>()},
+            {"S_SPAWN_USER", Helpers.Contructor<Func<TeraMessageReader,SpawnUserServerMessage>>()},
+            {"S_SPAWN_ME", Helpers.Contructor<Func<TeraMessageReader,SpawnMeServerMessage>>()},
+            {"S_SPAWN_NPC", Helpers.Contructor<Func<TeraMessageReader,SpawnNpcServerMessage>>()},
+            {"S_SPAWN_PROJECTILE", Helpers.Contructor<Func<TeraMessageReader,SpawnProjectileServerMessage>>()},
+            {"S_LOGIN", Helpers.Contructor<Func<TeraMessageReader,LoginServerMessage>>()},
+            {"S_TARGET_INFO", Helpers.Contructor<Func<TeraMessageReader,STargetInfo>>()},
+            {"S_START_USER_PROJECTILE", Helpers.Contructor<Func<TeraMessageReader,StartUserProjectileServerMessage>>()},
+            {"S_CREATURE_CHANGE_HP", Helpers.Contructor<Func<TeraMessageReader,SCreatureChangeHp>>()},
+            {"S_BOSS_GAGE_INFO", Helpers.Contructor<Func<TeraMessageReader,S_BOSS_GAGE_INFO>>()},
+            {"S_NPC_TARGET_USER", Helpers.Contructor<Func<TeraMessageReader,SNpcTargetUser>>()},
+            {"S_NPC_OCCUPIER_INFO", Helpers.Contructor<Func<TeraMessageReader,SNpcOccupierInfo>>()},
+            {"S_ABNORMALITY_BEGIN", Helpers.Contructor<Func<TeraMessageReader,SAbnormalityBegin>>()},
+            {"S_ABNORMALITY_END", Helpers.Contructor<Func<TeraMessageReader,SAbnormalityEnd>>()},
+            {"S_ABNORMALITY_REFRESH", Helpers.Contructor<Func<TeraMessageReader,SAbnormalityRefresh>>()},
+            {"S_DESPAWN_NPC", Helpers.Contructor<Func<TeraMessageReader,SDespawnNpc>>()},
+            {"S_PLAYER_CHANGE_MP", Helpers.Contructor<Func<TeraMessageReader,SPlayerChangeMp>>()},
+            {"S_PARTY_MEMBER_ABNORMAL_ADD", Helpers.Contructor<Func<TeraMessageReader,SPartyMemberAbnormalAdd>>()},
+            {"S_PARTY_MEMBER_CHANGE_MP", Helpers.Contructor<Func<TeraMessageReader,SPartyMemberChangeMp>>()},
+            {"S_PARTY_MEMBER_CHANGE_HP", Helpers.Contructor<Func<TeraMessageReader,SPartyMemberChangeHp>>()},
+            {"S_PARTY_MEMBER_ABNORMAL_CLEAR", Helpers.Contructor<Func<TeraMessageReader,SPartyMemberAbnormalClear>>()},
+            {"S_PARTY_MEMBER_ABNORMAL_DEL", Helpers.Contructor<Func<TeraMessageReader,SPartyMemberAbnormalDel>>()},
+            {"S_PARTY_MEMBER_ABNORMAL_REFRESH", Helpers.Contructor<Func<TeraMessageReader,SPartyMemberAbnormalRefresh>>()},
+            {"S_DESPAWN_USER", Helpers.Contructor<Func<TeraMessageReader,SDespawnUser>>()},
+            {"S_USER_STATUS", Helpers.Contructor<Func<TeraMessageReader,SUserStatus>>()},
+            {"S_CREATURE_LIFE", Helpers.Contructor<Func<TeraMessageReader,SCreatureLife>>()},
+            {"S_CREATURE_ROTATE", Helpers.Contructor<Func<TeraMessageReader,S_CREATURE_ROTATE>>()},
+            {"S_NPC_STATUS", Helpers.Contructor<Func<TeraMessageReader,SNpcStatus>>()},
+            {"S_NPC_LOCATION", Helpers.Contructor<Func<TeraMessageReader,SNpcLocation>>()},
+            {"S_USER_LOCATION", Helpers.Contructor<Func<TeraMessageReader,S_USER_LOCATION>>()},
+            {"C_PLAYER_LOCATION", Helpers.Contructor<Func<TeraMessageReader,C_PLAYER_LOCATION>>()},
+            {"S_INSTANT_MOVE", Helpers.Contructor<Func<TeraMessageReader,S_INSTANT_MOVE>>()},
+            {"S_ACTION_STAGE", Helpers.Contructor<Func<TeraMessageReader,S_ACTION_STAGE>>()},
+            {"S_ACTION_END", Helpers.Contructor<Func<TeraMessageReader,S_ACTION_END>>()},
+            {"S_CHANGE_DESTPOS_PROJECTILE", Helpers.Contructor<Func<TeraMessageReader,S_CHANGE_DESTPOS_PROJECTILE>>()},
+            {"S_ADD_CHARM_STATUS", Helpers.Contructor<Func<TeraMessageReader,SAddCharmStatus>>()},
+            {"S_ENABLE_CHARM_STATUS", Helpers.Contructor<Func<TeraMessageReader,SEnableCharmStatus>>()},
+            {"S_REMOVE_CHARM_STATUS", Helpers.Contructor<Func<TeraMessageReader,SRemoveCharmStatus>>()},
+            {"S_RESET_CHARM_STATUS", Helpers.Contructor<Func<TeraMessageReader,SResetCharmStatus>>()},
+            {"S_PARTY_MEMBER_CHARM_ADD", Helpers.Contructor<Func<TeraMessageReader,SPartyMemberCharmAdd>>()},
+            {"S_PARTY_MEMBER_CHARM_DEL", Helpers.Contructor<Func<TeraMessageReader,SPartyMemberCharmDel>>()},
+            {"S_PARTY_MEMBER_CHARM_ENABLE", Helpers.Contructor<Func<TeraMessageReader,SPartyMemberCharmEnable>>()},
+            {"S_PARTY_MEMBER_CHARM_RESET", Helpers.Contructor<Func<TeraMessageReader,SPartyMemberCharmReset>>()},
+            {"S_PARTY_MEMBER_STAT_UPDATE", Helpers.Contructor<Func<TeraMessageReader,S_PARTY_MEMBER_STAT_UPDATE>>()},
+            {"S_PLAYER_STAT_UPDATE", Helpers.Contructor<Func<TeraMessageReader,S_PLAYER_STAT_UPDATE>>()},
+            {"S_PARTY_MEMBER_LIST", Helpers.Contructor<Func<TeraMessageReader,S_PARTY_MEMBER_LIST>>()},
+            {"S_LEAVE_PARTY_MEMBER", Helpers.Contructor<Func<TeraMessageReader,S_LEAVE_PARTY_MEMBER>>()},
+            {"S_BAN_PARTY_MEMBER", Helpers.Contructor<Func<TeraMessageReader,S_BAN_PARTY_MEMBER>>()},
+            {"S_LEAVE_PARTY", Helpers.Contructor<Func<TeraMessageReader,S_LEAVE_PARTY>>()},
+            {"S_BAN_PARTY", Helpers.Contructor<Func<TeraMessageReader,S_BAN_PARTY>>()},
+            {"S_GET_USER_LIST", Helpers.Contructor<Func<TeraMessageReader,S_GET_USER_LIST>>()},
+            {"S_GET_USER_GUILD_LOGO", Helpers.Contructor<Func<TeraMessageReader,S_GET_USER_GUILD_LOGO>>()},
+            {"S_MOUNT_VEHICLE_EX", Helpers.Contructor<Func<TeraMessageReader,S_MOUNT_VEHICLE_EX>>() },
+            {"S_CREST_INFO", Helpers.Contructor<Func<TeraMessageReader,S_CREST_INFO>>() },
         };
 
-        private static readonly Dictionary<string, Type> ChatServices = new Dictionary<string, Type>
+        private static readonly Dictionary<string, Delegate> ChatServices = new Dictionary<string, Delegate>
         {
-            {"S_CHAT", typeof(S_CHAT)},
-            {"S_WHISPER", typeof(S_WHISPER)},
-            {"S_TRADE_BROKER_DEAL_SUGGESTED", typeof(S_TRADE_BROKER_DEAL_SUGGESTED)},
-            {"S_OTHER_USER_APPLY_PARTY", typeof(S_OTHER_USER_APPLY_PARTY) },
-            {"S_PRIVATE_CHAT", typeof(S_PRIVATE_CHAT) },
-            {"S_FIN_INTER_PARTY_MATCH", typeof(S_FIN_INTER_PARTY_MATCH) },
-            {"S_BATTLE_FIELD_ENTRANCE_INFO", typeof(S_BATTLE_FIELD_ENTRANCE_INFO) },
-            {"S_REQUEST_CONTRACT", typeof(S_REQUEST_CONTRACT) },
-            {"S_BEGIN_THROUGH_ARBITER_CONTRACT", typeof(S_BEGIN_THROUGH_ARBITER_CONTRACT) },
-            {"S_CHECK_TO_READY_PARTY", typeof(S_CHECK_TO_READY_PARTY) },
-            {"S_GUILD_QUEST_LIST", typeof(S_GUILD_QUEST_LIST) }
+            {"S_CHAT", Helpers.Contructor<Func<TeraMessageReader,S_CHAT>>()},
+            {"S_WHISPER", Helpers.Contructor<Func<TeraMessageReader,S_WHISPER>>()},
+            {"S_TRADE_BROKER_DEAL_SUGGESTED", Helpers.Contructor<Func<TeraMessageReader,S_TRADE_BROKER_DEAL_SUGGESTED>>()},
+            {"S_OTHER_USER_APPLY_PARTY", Helpers.Contructor<Func<TeraMessageReader,S_OTHER_USER_APPLY_PARTY>>() },
+            {"S_PRIVATE_CHAT", Helpers.Contructor<Func<TeraMessageReader,S_PRIVATE_CHAT>>() },
+            {"S_FIN_INTER_PARTY_MATCH", Helpers.Contructor<Func<TeraMessageReader,S_FIN_INTER_PARTY_MATCH>>() },
+            {"S_BATTLE_FIELD_ENTRANCE_INFO", Helpers.Contructor<Func<TeraMessageReader,S_BATTLE_FIELD_ENTRANCE_INFO>>() },
+            {"S_REQUEST_CONTRACT", Helpers.Contructor<Func<TeraMessageReader,S_REQUEST_CONTRACT>>() },
+            {"S_BEGIN_THROUGH_ARBITER_CONTRACT", Helpers.Contructor<Func<TeraMessageReader,S_BEGIN_THROUGH_ARBITER_CONTRACT>>() },
+            {"S_CHECK_TO_READY_PARTY", Helpers.Contructor<Func<TeraMessageReader,S_CHECK_TO_READY_PARTY>>() },
+            {"S_GUILD_QUEST_LIST", Helpers.Contructor<Func<TeraMessageReader,S_GUILD_QUEST_LIST>>() }
         };
 
 
@@ -124,15 +125,10 @@ namespace Tera.Game
 
         private ParsedMessage Instantiate(string opCodeName, TeraMessageReader reader)
         {
-            Type type;
+            Delegate type;
             if (!OpcodeNameToType.TryGetValue(opCodeName, out type))
-                type = typeof(UnknownMessage);
-
-            var constructor = type.GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null,
-                CallingConventions.Any, new[] {typeof(TeraMessageReader)}, null);
-            if (constructor == null)
-                throw new Exception("Constructor not found");
-            return (ParsedMessage) constructor.Invoke(new object[] {reader});
+                type = UnknownMessageDelegate;
+            return (ParsedMessage) type.DynamicInvoke(reader);
         }
 
         public ParsedMessage Create(Message message)
