@@ -77,14 +77,38 @@ namespace Tera.Game
             return _playerById[Tuple.Create(user.ServerId, user.PlayerId)];
         }
 
+        public void UpdateParty(S_BAN_PARTY message)
+        {
+            _currentParty = new List<Tuple<uint, uint>>();
+        }
+
+        public void UpdateParty(S_LEAVE_PARTY m )
+        {
+            _currentParty = new List<Tuple<uint, uint>>();
+        }
+
+        public void UpdateParty(S_LEAVE_PARTY_MEMBER m)
+        {
+            _currentParty.Remove(Tuple.Create(m.ServerId, m.PlayerId));
+        }
+
+        public void UpdateParty(S_BAN_PARTY_MEMBER m)
+        {
+            _currentParty.Remove(Tuple.Create(m.ServerId, m.PlayerId));
+        }
+
+        public void UpdateParty(S_PARTY_MEMBER_LIST m)
+        {
+            _currentParty = m.Party.ConvertAll(x => Tuple.Create(x.ServerId, x.PlayerId));
+        }
+
         public void UpdateParty(ParsedMessage message)
         {
-            message.On<S_BAN_PARTY>(m => _currentParty = new List<Tuple<uint, uint>>());
-            message.On<S_LEAVE_PARTY>(m => _currentParty = new List<Tuple<uint, uint>>());
-            message.On<S_LEAVE_PARTY_MEMBER>(m => _currentParty.Remove(Tuple.Create(m.ServerId, m.PlayerId)));
-            message.On<S_BAN_PARTY_MEMBER>(m => _currentParty.Remove(Tuple.Create(m.ServerId, m.PlayerId)));
-            message.On<S_PARTY_MEMBER_LIST>(
-                m => _currentParty = m.Party.ConvertAll(x => Tuple.Create(x.ServerId, x.PlayerId)));
+            message.On<S_BAN_PARTY>(m => UpdateParty(m));
+            message.On<S_LEAVE_PARTY>(m => UpdateParty(m));
+            message.On<S_LEAVE_PARTY_MEMBER>(m => UpdateParty(m));
+            message.On<S_BAN_PARTY_MEMBER>(m => UpdateParty(m));
+            message.On<S_PARTY_MEMBER_LIST>(m => UpdateParty(m));
         }
 
         public bool MyParty(Player player)
