@@ -362,28 +362,28 @@ namespace Tera.Game
 
         public void Update(ParsedMessage message)
         {
-            message.On<S_PLAYER_STAT_UPDATE>(Update);
-            message.On<S_PARTY_MEMBER_STAT_UPDATE>(Update);
-            message.On<SPartyMemberChangeHp>(Update);
-            message.On<SCreatureChangeHp>(Update);
-            message.On<SPlayerChangeMp>(Update);
-            message.On<SDespawnUser>(Update);
-            message.On<SRemoveCharmStatus>(Update);
-            message.On<SPartyMemberCharmReset>(Update);
-            message.On<SPartyMemberCharmEnable>(Update);
-            message.On<SPartyMemberCharmDel>(Update);
-            message.On<SEnableCharmStatus>(Update);
-            message.On<SAddCharmStatus>(Update);
-            message.On<SResetCharmStatus>(Update);
-            message.On<SPartyMemberCharmAdd>(Update);
-            message.On<SAbnormalityEnd>(Update);
-            message.On<SAbnormalityRefresh>(Update);
-            message.On<SAbnormalityBegin>(Update);
-            message.On<SpawnMeServerMessage>(Update);
-            message.On<SDespawnNpc>(Update);
-            message.On<SCreatureLife>(Update);
-            message.On<SNpcStatus>(Update);
-            message.On<SpawnUserServerMessage>(Update);
+            message.On<S_PLAYER_STAT_UPDATE>(x => Update(x));
+            message.On<S_PARTY_MEMBER_STAT_UPDATE>(x => Update(x));
+            message.On<SPartyMemberChangeHp>(x => Update(x));
+            message.On<SCreatureChangeHp>(x => Update(x));
+            message.On<SPlayerChangeMp>(x => Update(x));
+            message.On<SDespawnUser>(x => Update(x));
+            message.On<SRemoveCharmStatus>(x => Update(x));
+            message.On<SPartyMemberCharmReset>(x => Update(x));
+            message.On<SPartyMemberCharmEnable>(x => Update(x));
+            message.On<SPartyMemberCharmDel>(x => Update(x));
+            message.On<SEnableCharmStatus>(x => Update(x));
+            message.On<SAddCharmStatus>(x => Update(x));
+            message.On<SResetCharmStatus>(x => Update(x));
+            message.On<SPartyMemberCharmAdd>(x => Update(x));
+            message.On<SAbnormalityEnd>(x => Update(x));
+            message.On<SAbnormalityRefresh>(x => Update(x));
+            message.On<SAbnormalityBegin>(x => Update(x));
+            message.On<SpawnMeServerMessage>(x => Update(x));
+            message.On<SDespawnNpc>(x => Update(x));
+            message.On<SCreatureLife>(x => Update(x));
+            message.On<SNpcStatus>(x => Update(x));
+            message.On<SpawnUserServerMessage>(x => Update(x));
         }
     }
 }

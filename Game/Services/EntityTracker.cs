@@ -246,23 +246,23 @@ namespace Tera.Game
         /** Easy integrate style - compatible */
         public void Update(ParsedMessage message)
         {
-            message.On<SpawnUserServerMessage>(Update);
-            message.On<LoginServerMessage>(Update);
-            message.On<SpawnNpcServerMessage>(Update);
-            message.On<SpawnProjectileServerMessage>(Update);
-            message.On<StartUserProjectileServerMessage>(Update);  
-            message.On<S_MOUNT_VEHICLE_EX>(Update);
-            message.On<C_PLAYER_LOCATION>(Update);
-            message.On<S_CHANGE_DESTPOS_PROJECTILE>(Update);
-            message.On<S_ACTION_STAGE>(Update);
-            message.On<S_ACTION_END>(Update);
-            message.On<SCreatureLife>(Update);
-            message.On<S_INSTANT_MOVE>(Update);
-            message.On<S_CREATURE_ROTATE>(Update);
-            message.On<EachSkillResultServerMessage>(Update);
-            message.On<SNpcLocation>(Update);
-            message.On<S_USER_LOCATION>(Update);
-            message.On<S_BOSS_GAGE_INFO>(Update);
+            message.On<SpawnUserServerMessage>(x => Update(x));
+            message.On<LoginServerMessage>(x => Update(x));
+            message.On<SpawnNpcServerMessage>(x => Update(x));
+            message.On<SpawnProjectileServerMessage>(x => Update(x));
+            message.On<StartUserProjectileServerMessage>(x => Update(x));
+            message.On<S_MOUNT_VEHICLE_EX>(x => Update(x));
+            message.On<C_PLAYER_LOCATION>(x => Update(x));
+            message.On<S_CHANGE_DESTPOS_PROJECTILE>(x => Update(x));
+            message.On<S_ACTION_STAGE>(x => Update(x));
+            message.On<S_ACTION_END>(x => Update(x));
+            message.On<SCreatureLife>(x => Update(x));
+            message.On<S_INSTANT_MOVE>(x => Update(x));
+            message.On<S_CREATURE_ROTATE>(x => Update(x));
+            message.On<EachSkillResultServerMessage>(x => Update(x));
+            message.On<SNpcLocation>(x => Update(x));
+            message.On<S_USER_LOCATION>(x => Update(x));
+            message.On<S_BOSS_GAGE_INFO>(x => Update(x));
         }
 
         private Entity LoginMe(LoginServerMessage m)
