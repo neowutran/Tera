@@ -34,8 +34,9 @@ namespace Tera.Game.Abnormality
 
         public long LastApply { get; private set; }
 
-        public long FirstHit { get; }
+        public long FirstHit { get; private set; }
 
+        public long TimeBeforeEnd => DateTime.UtcNow.Ticks - FirstHit - Duration * 10000000;
         public long TimeBeforeApply => DateTime.UtcNow.Ticks - LastApply - HotDot.Tick*10000000;
 
         public void Apply(int amount, bool critical, bool isHp, long time)
@@ -158,6 +159,7 @@ namespace Tera.Game.Abnormality
         public void Refresh(int stackCounter, int duration, long ticks)
         {
             Stack = stackCounter;
+            FirstHit = ticks;
             Duration = duration/1000;
             RegisterBuff(ticks);
             RegisterEnduranceDebuff(ticks);
