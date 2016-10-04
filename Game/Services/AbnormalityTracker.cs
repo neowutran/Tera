@@ -353,7 +353,7 @@ namespace Tera.Game
             if (user == null) return;
             RegisterSlaying(user.User, message.Slaying, message.Time.Ticks);
         }
-        public void Update(Tera.Game.Messages.SPartyMemberChangeHp message)
+        public void Update(SPartyMemberChangeHp message)
         {
             var user = PlayerTracker.GetOrNull(message.ServerId, message.PlayerId);
             if (user == null) return;
