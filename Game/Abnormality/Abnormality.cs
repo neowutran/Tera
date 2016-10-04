@@ -24,6 +24,10 @@ namespace Tera.Game.Abnormality
             RegisterEnduranceDebuff(ticks);
         }
 
+        public Abnormality()  //defaultempty
+        {
+            Duration = int.MinValue;
+        }
         public HotDot HotDot { get; }
         public EntityId Source { get; }
         public int Stack { get; private set; }
@@ -36,7 +40,7 @@ namespace Tera.Game.Abnormality
 
         public long FirstHit { get; private set; }
 
-        public long TimeBeforeEnd => DateTime.UtcNow.Ticks - FirstHit - Duration * 10000000;
+        public long TimeBeforeEnd => Duration != 0 ? FirstHit - DateTime.UtcNow.Ticks + Duration*10000000 : long.MaxValue;
         public long TimeBeforeApply => DateTime.UtcNow.Ticks - LastApply - HotDot.Tick*10000000;
 
         public void Apply(int amount, bool critical, bool isHp, long time)
