@@ -118,6 +118,18 @@ namespace Tera.Game
                    player.User == _entityTracker.MeterUser;
         }
 
+        public List<UserEntity> PartyList()
+        {
+            List<UserEntity> list = new List<UserEntity>();
+            _currentParty.ForEach(x =>
+                {
+                    Player player;
+                    if (_playerById.TryGetValue(x, out player)) list.Add(player.User);
+                });
+            if (_entityTracker.MeterUser!=null)list.Add(_entityTracker.MeterUser);
+            return list;
+        }
+
         public Player Me()
         {
             var user = _entityTracker.MeterUser;

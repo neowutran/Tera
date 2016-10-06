@@ -156,6 +156,15 @@ namespace Tera.Game
             var abnormalityTarget = _abnormalities[target];
             return abnormalityTarget.Any(t => t.HotDot == dot);
         }
+        public long AbnormalityTimeLeft(EntityId target, HotDot.Types dotype)
+        {
+            if (!_abnormalities.ContainsKey(target))
+            {
+                return 0;
+            }
+            var abnormalityTarget = _abnormalities[target];
+            return abnormalityTarget.Where(t => t.HotDot.Effects.Any(x=>x.Type==dotype)).DefaultIfEmpty(new Abnormality.Abnormality()).Max(x=>x.TimeBeforeEnd);
+        }
 
         public void DeleteAbnormality(EntityId target, int abnormalityId, long ticks)
         {
@@ -353,7 +362,7 @@ namespace Tera.Game
             if (user == null) return;
             RegisterSlaying(user.User, message.Slaying, message.Time.Ticks);
         }
-        public void Update(Tera.Game.Messages.SPartyMemberChangeHp message)
+        public void Update(SPartyMemberChangeHp message)
         {
             var user = PlayerTracker.GetOrNull(message.ServerId, message.PlayerId);
             if (user == null) return;
