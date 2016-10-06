@@ -223,7 +223,7 @@ namespace Tera.Game.Messages
              
             }
 
-            Debug.WriteLine(ToString());
+           // Debug.WriteLine(ToString());
         }
 
     }
