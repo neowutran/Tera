@@ -75,10 +75,15 @@ namespace Tera.Sniffing
             _server = null;
         }
 
-        public void ClientToServer(byte[] data)
+        public void ClientToServer(byte[] data, int needToSkip=0)
         {
             if (Initialized)
             {
+                if (needToSkip > 0)
+                {
+                    var skip = new byte[needToSkip];
+                    _session.Decrypt(skip);
+                }
                 var result = data.ToArray();
                 _session.Decrypt(result);
 
@@ -91,10 +96,15 @@ namespace Tera.Sniffing
             }
         }
 
-        public void ServerToClient(byte[] data)
+        public void ServerToClient(byte[] data, int needToSkip=0)
         {
             if (Initialized)
             {
+                if (needToSkip > 0)
+                {
+                    var skip = new byte[needToSkip];
+                    _session.Encrypt(skip);
+                }
                 var result = data.ToArray();
                 _session.Encrypt(result);
                 OnServerToClientDecrypted(result);
