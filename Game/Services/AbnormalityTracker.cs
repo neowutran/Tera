@@ -163,8 +163,8 @@ namespace Tera.Game
                 return 0;
             }
             var abnormalityTarget = _abnormalities[target];
-            return abnormalityTarget.Where(t => t.HotDot.Effects.Any(x=>x.Type==dotype)).DefaultIfEmpty(new Abnormality.Abnormality()).Max(x=>x.TimeBeforeEnd);
-        }
+            return abnormalityTarget.Where(t => t.HotDot.Effects.Any(x=>x.Type==dotype)).DefaultIfEmpty(new Abnormality.Abnormality()).Max(x => x.TimeBeforeEnd);
+       }
 
         public void DeleteAbnormality(EntityId target, int abnormalityId, long ticks)
         {
