@@ -156,6 +156,14 @@ namespace Tera.Game
             var abnormalityTarget = _abnormalities[target];
             return abnormalityTarget.Any(t => t.HotDot == dot);
         }
+        public int AbnormalityCount(EntityId target)
+        {
+            if (!_abnormalities.ContainsKey(target))
+            {
+                return 0;
+            }
+            return _abnormalities[target].Count;
+        }
         public long AbnormalityTimeLeft(EntityId target, HotDot.Types dotype)
         {
             if (!_abnormalities.ContainsKey(target))
