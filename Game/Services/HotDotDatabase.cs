@@ -27,8 +27,14 @@ namespace Tera.Game
             JoyOfPartying0 = 999001018,
             Enraged = 8888888,
             Slaying = 8888889
-
         }
+
+        public HotDot Enraged { get; }
+        public HotDot Slaying { get; }
+        public readonly HotDot JoyOfPartying0;
+        public readonly HotDot JoyOfPartying20;
+        public readonly HotDot JoyOfPartying50;
+        public readonly HotDot JoyOfPartying100;
 
         private readonly Dictionary<int, HotDot> _hotdots =
             new Dictionary<int, HotDot>();
@@ -62,6 +68,12 @@ namespace Tera.Game
             _hotdots[(int)StaticallyUsedBuff.Enraged] = new HotDot((int)StaticallyUsedBuff.Enraged, "Endurance", 0, 0, 0, 0, 0, 0, "Enrage", "", "", "enraged");
             _hotdots[(int)StaticallyUsedBuff.Slaying] = new HotDot((int)StaticallyUsedBuff.Slaying, "CritPower", 0, 0, 0, 0, 0, 0, "Slaying", "",
                 "'Slaying' crystal is working (if equipped) when player in this state.", "slaying");
+            Enraged = _hotdots[(int) StaticallyUsedBuff.Enraged];
+            Slaying = _hotdots[(int) StaticallyUsedBuff.Slaying];
+            _hotdots.TryGetValue((int)StaticallyUsedBuff.JoyOfPartying0, out JoyOfPartying0);
+            _hotdots.TryGetValue((int)StaticallyUsedBuff.JoyOfPartying20, out JoyOfPartying20);
+            _hotdots.TryGetValue((int)StaticallyUsedBuff.JoyOfPartying50, out JoyOfPartying50);
+            _hotdots.TryGetValue((int)StaticallyUsedBuff.JoyOfPartying100, out JoyOfPartying100);
         }
 
         public void Add(HotDot dot)
