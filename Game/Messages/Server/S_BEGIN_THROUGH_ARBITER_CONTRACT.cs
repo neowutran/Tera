@@ -1,5 +1,7 @@
 
-﻿namespace Tera.Game.Messages
+﻿using System;
+
+namespace Tera.Game.Messages
 {
     public class S_BEGIN_THROUGH_ARBITER_CONTRACT : ParsedMessage
     {
@@ -8,7 +10,14 @@
         {
             reader.Skip(18);
             InviteName = reader.ReadTeraString();
-            PlayerName = reader.ReadTeraString();
+            try
+            {
+                PlayerName = reader.ReadTeraString();
+            }
+            catch
+            {
+                PlayerName = "Error parsing S_BEGIN_THROUGH_ARBITER_CONTRACT: " + BitConverter.ToString(Raw);
+            }
 
             //Debug.WriteLine("InviteName:" + InviteName + " PlayerName:" + PlayerName);
         }
