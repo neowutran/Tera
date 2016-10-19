@@ -21,7 +21,7 @@ namespace Tera.Game.Messages
         {
             reader.Skip(4);
             Source = reader.ReadEntityId();
-            if (reader.Version == "KR" || reader.Version == "TW" || reader.Version == "JP") reader.Skip(8);
+            if (reader.Version != "EU" && reader.Version != "NA") reader.Skip(8);
             Target = reader.ReadEntityId();
 
 
