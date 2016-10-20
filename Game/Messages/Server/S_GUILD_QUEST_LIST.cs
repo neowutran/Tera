@@ -72,7 +72,7 @@ namespace Tera.Game.Messages
 
         public List<GuildQuest> ActiveQuests()
         {
-            return GuildQuests.Where(x => x.Active == true).ToList();
+            return GuildQuests.Where(x => x.Active).ToList();
         }
 
         public List<GuildQuest> GuildQuests { get; private set; }
