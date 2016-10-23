@@ -165,15 +165,15 @@ namespace Tera.Game.Messages
                 var guildQuestDescriptionLabel = reader.ReadTeraString();
                 var guildQuestTitleLabel = reader.ReadTeraString();
                 var questguildname = reader.ReadTeraString();
-                Debug.WriteLine(
-                 ";unk3:" + unk3 +
-                 ";unk4:" + unk4 +
-                 ";unk5:" + unk5.ToString("X") +
-                 ";unk6:" + unk6 +
-                 ";unk7:" + BitConverter.ToString(unk7) +
-                 ";countUnk2:" + countUnk2 +
-                 ";offsetUnk2:" + offsetUnk2
-                 );
+                //Debug.WriteLine(
+                // ";unk3:" + unk3 +
+                // ";unk4:" + unk4 +
+                // ";unk5:" + unk5.ToString("X") +
+                // ";unk6:" + unk6 +
+                // ";unk7:" + BitConverter.ToString(unk7) +
+                // ";countUnk2:" + countUnk2 +
+                // ";offsetUnk2:" + offsetUnk2
+                // );
                 List<GuildQuestTarget> targets = new List<GuildQuestTarget>();
                 reader.BaseStream.Position = offsetTargets - 4;
                 for (var j = 1; j <= countTargets; j++)

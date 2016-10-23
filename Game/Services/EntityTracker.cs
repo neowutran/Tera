@@ -198,10 +198,10 @@ namespace Tera.Game
             {
                 entity.Heading = entity.EndAngle;
             }
-            else if (entity.EndTime > 0)
-            {
-                Debug.WriteLine("New rotate started before old ended!");
-            }
+            //else if (entity.EndTime > 0)
+            //{
+            //    Debug.WriteLine("New rotate started before old ended!");
+            //}
             entity.EndAngle = m.Heading;
             entity.EndTime = entity.StartTime + (m.NeedTime == 0 ? 0 : TimeSpan.TicksPerMillisecond * m.NeedTime);
             //Debug.WriteLine($"{entity.Position} {entity.Heading} {entity.EndAngle} {m.NeedTime}");
