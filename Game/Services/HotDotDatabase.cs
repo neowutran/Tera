@@ -26,7 +26,11 @@ namespace Tera.Game
             JoyOfPartying20 = 999001019,
             JoyOfPartying0 = 999001018,
             Enraged = 8888888,
-            Slaying = 8888889
+            Slaying = 8888889,
+            Contagion1 = 701700,
+            Contagion2 = 701701,
+            Hurricane = 60010
+
         }
 
         public HotDot Enraged { get; }
@@ -35,6 +39,11 @@ namespace Tera.Game
         public readonly HotDot JoyOfPartying20;
         public readonly HotDot JoyOfPartying50;
         public readonly HotDot JoyOfPartying100;
+        public readonly HotDot Contagion1;
+        public readonly HotDot Contagion2;
+        public readonly HotDot Enrage;
+        public readonly HotDot Hurricane;
+
 
         private readonly Dictionary<int, HotDot> _hotdots =
             new Dictionary<int, HotDot>();
@@ -74,6 +83,12 @@ namespace Tera.Game
             _hotdots.TryGetValue((int)StaticallyUsedBuff.JoyOfPartying20, out JoyOfPartying20);
             _hotdots.TryGetValue((int)StaticallyUsedBuff.JoyOfPartying50, out JoyOfPartying50);
             _hotdots.TryGetValue((int)StaticallyUsedBuff.JoyOfPartying100, out JoyOfPartying100);
+
+            _hotdots.TryGetValue((int)StaticallyUsedBuff.Enraged, out Enrage);
+            _hotdots.TryGetValue((int)StaticallyUsedBuff.Contagion1, out Contagion1);
+            _hotdots.TryGetValue((int)StaticallyUsedBuff.Contagion2, out Contagion2);
+            _hotdots.TryGetValue((int)StaticallyUsedBuff.Hurricane, out Hurricane);
+
         }
 
         public void Add(HotDot dot)

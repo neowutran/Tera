@@ -90,12 +90,10 @@
     <Compile Include="Game\Messages\Server\S_ABNORMALITY_BEGIN.cs" />
     <Compile Include="Game\Messages\Server\S_ABNORMALITY_END.cs" />
     <Compile Include="Game\Messages\Server\S_ABNORMALITY_REFRESH.cs" />
-    <Compile Include="Game\Messages\Server\S_ADD_CHARM_STATUS.cs" />
     <Compile Include="Game\Messages\Server\S_CREATURE_CHANGE_HP.cs" />
     <Compile Include="Game\Messages\Server\S_CREATURE_LIFE.cs" />
     <Compile Include="Game\Messages\Server\S_DESPAWN_NPC.cs" />
     <Compile Include="Game\Messages\Server\S_DESPAWN_USER.cs" />
-    <Compile Include="Game\Messages\Server\S_ENABLE_CHARM_STATUS.cs" />
     <Compile Include="Game\Messages\Server\S_NPC_LOCATION.cs" />
     <Compile Include="Game\Messages\Server\S_NPC_STATUS.cs" />
     <Compile Include="Game\Messages\Server\S_PARTY_MEMBER_ABNORMAL_ADD.cs" />
@@ -104,13 +102,7 @@
     <Compile Include="Game\Messages\Server\S_PARTY_MEMBER_ABNORMAL_REFRESH.cs" />
     <Compile Include="Game\Messages\Server\S_PARTY_MEMBER_CHANGE_HP.cs" />
     <Compile Include="Game\Messages\Server\S_PARTY_MEMBER_CHANGE_MP.cs" />
-    <Compile Include="Game\Messages\Server\S_PARTY_MEMBER_CHARM_ADD.cs" />
-    <Compile Include="Game\Messages\Server\S_PARTY_MEMBER_CHARM_DEL.cs" />
-    <Compile Include="Game\Messages\Server\S_PARTY_MEMBER_CHARM_ENABLE.cs" />
-    <Compile Include="Game\Messages\Server\S_PARTY_MEMBER_CHARM_RESET.cs" />
     <Compile Include="Game\Messages\Server\S_PLAYER_CHANGE_MP.cs" />
-    <Compile Include="Game\Messages\Server\S_REMOVE_CHARM_STATUS.cs" />
-    <Compile Include="Game\Messages\Server\S_RESET_CHARM_STATUS.cs" />
     <Compile Include="Game\Messages\Server\S_USER_STATUS.cs" />
     <Compile Include="Game\Messages\Server\SpawnMeServerMessage.cs" />
     <Compile Include="Game\Messages\Server\SpawnNpcServerMessage.cs" />
@@ -121,7 +113,6 @@
     <Compile Include="Game\Messages\ParsedMessage.cs" />
     <Compile Include="Game\Messages\UnknownMessage.cs" />
     <Compile Include="Game\Services\AbnormalityTracker.cs" />
-    <Compile Include="Game\Services\CharmTracker.cs" />
     <Compile Include="Game\Services\QuestInfoDatabase.cs" />
     <Compile Include="Game\Services\UserLogoTracker.cs" />
     <Compile Include="Game\Services\EntityTracker.cs" />
@@ -137,7 +128,6 @@
     <Compile Include="Game\Services\SkillDatabase.cs" />
     <Compile Include="Game\Services\TeraMessageReader.cs" />
     <Compile Include="Game\Angle.cs" />
-    <Compile Include="Game\CharmStatus.cs" />
     <Compile Include="Game\IHasOwner.cs" />
     <Compile Include="Game\HotDot.cs" />
     <Compile Include="Game\NpcInfo.cs" />

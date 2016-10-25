@@ -14,7 +14,6 @@ namespace Tera.Game
         internal EntityTracker EntityTracker;
         internal HotDotDatabase HotDotDatabase;
         internal PlayerTracker PlayerTracker;
-        internal CharmTracker CharmTracker;
         public Action<SkillResult> UpdateDamageTracker;
 
         public AbnormalityTracker(EntityTracker entityTracker, PlayerTracker playerTracker,
@@ -25,7 +24,6 @@ namespace Tera.Game
             HotDotDatabase = hotDotDatabase;
             UpdateDamageTracker = update;
             AbnormalityStorage = abnormalityStorage;
-            CharmTracker = new CharmTracker(this);
         }
 
         public void Update(SNpcStatus npcStatus)
@@ -107,6 +105,10 @@ namespace Tera.Game
             }
         }
 
+
+        public event AbnormalityAddedEvent AbnormalityAdded;
+        public delegate void AbnormalityAddedEvent(EntityId target, EntityId source, int abnormalityId);
+
         public void Update(SAbnormalityBegin message)
         {
             AddAbnormality(message.TargetId, message.SourceId, message.Duration, message.Stack, message.AbnormalityId,
@@ -127,9 +129,12 @@ namespace Tera.Game
             }
 
             if (_abnormalities[target].Count(x => x.HotDot.Id == abnormalityId) == 0)
+            {
                 //dont add existing abnormalities since we don't delete them all, that may cause many untrackable issues.
                 _abnormalities[target].Add(new Abnormality.Abnormality(hotdot, source, target, duration, stack, ticks,
                     this));
+                AbnormalityAdded?.Invoke(target, source, abnormalityId);
+            }
         }
 
         public void Update(SAbnormalityRefresh message)
@@ -292,56 +297,8 @@ namespace Tera.Game
             RegisterSlaying(user, message.Slaying, message.Time.Ticks);
         }
 
-        public void Update(SPartyMemberCharmAdd message)
-        {
-            var player = PlayerTracker.GetOrNull(message.ServerId, message.PlayerId);
-            if (player == null) return;
-            CharmTracker.CharmAdd(player.User.Id, message.CharmId, message.Status, message.Time.Ticks);
-        }
-
-        public void Update(SResetCharmStatus message)
-        {
-            CharmTracker.CharmReset(message.TargetId, message.Charms, message.Time.Ticks);
-        }
-
-        public void Update(SAddCharmStatus message)
-        {
-            CharmTracker.CharmAdd(message.TargetId, message.CharmId, message.Status, message.Time.Ticks);
-        }
-
-        public void Update(SEnableCharmStatus message)
-        {
-            CharmTracker.CharmEnable(EntityTracker.MeterUser.Id, message.CharmId, message.Time.Ticks);
-        }
-
-        public void Update(SPartyMemberCharmDel message)
-        {
-            var player = PlayerTracker.GetOrNull(message.ServerId, message.PlayerId);
-            if (player == null) return;
-            CharmTracker.CharmDel(player.User.Id, message.CharmId, message.Time.Ticks);
-        }
-
-        public void Update(SPartyMemberCharmEnable message)
-        {
-            var player = PlayerTracker.GetOrNull(message.ServerId, message.PlayerId);
-            if (player == null) return;
-            CharmTracker.CharmEnable(player.User.Id, message.CharmId, message.Time.Ticks);
-        }
-
-        public void Update(SPartyMemberCharmReset message)
-        {
-            var player = PlayerTracker.GetOrNull(message.ServerId, message.PlayerId);
-            if (player == null) return;
-            CharmTracker.CharmReset(player.User.Id, message.Charms, message.Time.Ticks);
-        }
-        public void Update(SRemoveCharmStatus message)
-        {
-            CharmTracker.CharmDel(EntityTracker.MeterUser.Id, message.CharmId, message.Time.Ticks);
-        }
-
         public void Update(SDespawnUser message)
         {
-            CharmTracker.CharmReset(message.User, new List<CharmStatus>(), message.Time.Ticks);
             DeleteAbnormality(message);
         }
         public void Update(SDespawnNpc message)
@@ -357,7 +314,6 @@ namespace Tera.Game
         {
             AbnormalityStorage.EndAll(message.Time.Ticks);
             _abnormalities = new Dictionary<EntityId, List<Abnormality.Abnormality>>();
-            CharmTracker = new CharmTracker(this);
             RegisterDead(message.Id, message.Time.Ticks, message.Dead);
         }
         public void Update(S_PLAYER_STAT_UPDATE message)
@@ -385,14 +341,6 @@ namespace Tera.Game
             message.On<SCreatureChangeHp>(x => Update(x));
             message.On<SPlayerChangeMp>(x => Update(x));
             message.On<SDespawnUser>(x => Update(x));
-            message.On<SRemoveCharmStatus>(x => Update(x));
-            message.On<SPartyMemberCharmReset>(x => Update(x));
-            message.On<SPartyMemberCharmEnable>(x => Update(x));
-            message.On<SPartyMemberCharmDel>(x => Update(x));
-            message.On<SEnableCharmStatus>(x => Update(x));
-            message.On<SAddCharmStatus>(x => Update(x));
-            message.On<SResetCharmStatus>(x => Update(x));
-            message.On<SPartyMemberCharmAdd>(x => Update(x));
             message.On<SAbnormalityEnd>(x => Update(x));
             message.On<SAbnormalityRefresh>(x => Update(x));
             message.On<SAbnormalityBegin>(x => Update(x));
