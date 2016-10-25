@@ -150,7 +150,7 @@ namespace Tera.Game.Messages
                 var unk3 = reader.ReadByte();
                 var unk4 = reader.ReadUInt32();
                 var active = reader.ReadByte();
-                Debug.WriteLine(active.ToString("X"));
+                //Debug.WriteLine(active.ToString("X"));
                 var activeBool = active == 1;
                 var unk7 = reader.ReadBytes(3);
                 
