@@ -1,4 +1,6 @@
-﻿namespace Tera.Game.Messages
+﻿using System.Diagnostics.Eventing.Reader;
+
+namespace Tera.Game.Messages
 {
     public class SpawnUserServerMessage : ParsedMessage
     {
@@ -7,7 +9,8 @@
         {
             reader.Skip(8);
             var nameOffset = reader.ReadUInt16();
-            reader.Skip(16);
+            if (reader.Version=="KR") reader.Skip(14);
+            else reader.Skip(16);
             ServerId = reader.ReadUInt32();
             // not sure, whether full uint32 is serverid, or only first 2 bytes and the rest part of it is actualy a part of PlayerId, or something else, but it always come along with PlayerID as complex player id
             PlayerId = reader.ReadUInt32();
