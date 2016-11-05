@@ -135,6 +135,15 @@ namespace Tera.Game.Abnormality
                     .ToList();
         }
 
+        public List<int> Stacks(long begin = 0, long end = 0)
+        {
+            return begin == 0 || end == 0
+                ? _listDuration.GroupBy(x=>x.Stack).Where(x=>x.Sum(y=>y.End-y.Begin)>=TimeSpan.TicksPerSecond).Select(x => x.Key).OrderBy(x=>x).ToList()
+                : _listDuration.Where(x => begin <= x.End && end >= x.Begin).GroupBy(x => x.Stack)
+                                .Where(x => x.Sum(y => y.End - y.Begin) >= TimeSpan.TicksPerSecond)
+                                .Select(x => x.Key).OrderBy(x => x).ToList();
+        }
+
         public bool Ended()
         {
             return _listDuration[_listDuration.Count - 1].End != long.MaxValue;
