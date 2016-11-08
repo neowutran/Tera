@@ -106,8 +106,10 @@ namespace Tera.Game
         }
 
 
-        public event AbnormalityAddedEvent AbnormalityAdded;
-        public delegate void AbnormalityAddedEvent(EntityId target, EntityId source, int abnormalityId);
+        public event AbnormalityEvent AbnormalityAdded;
+        public event AbnormalityEvent AbnormalityRemoved;
+
+        public delegate void AbnormalityEvent(EntityId target, int abnormalityId);
 
         public void Update(SAbnormalityBegin message)
         {
@@ -133,7 +135,7 @@ namespace Tera.Game
                 //dont add existing abnormalities since we don't delete them all, that may cause many untrackable issues.
                 _abnormalities[target].Add(new Abnormality.Abnormality(hotdot, source, target, duration, stack, ticks,
                     this));
-                AbnormalityAdded?.Invoke(target, source, abnormalityId);
+                AbnormalityAdded?.Invoke(target, abnormalityId);
             }
         }
 
@@ -173,11 +175,31 @@ namespace Tera.Game
         {
             if (!_abnormalities.ContainsKey(target))
             {
-                return 0;
+                return -1;
             }
             var abnormalityTarget = _abnormalities[target];
-            return abnormalityTarget.Where(t => t.HotDot.Effects.Any(x=>x.Type==dotype)).DefaultIfEmpty(new Abnormality.Abnormality()).Max(x => x.TimeBeforeEnd);
+            var abnormalities = abnormalityTarget.Where(t => t.HotDot.Effects.Any(x => x.Type == dotype));
+            if(abnormalities.Count() == 0)
+            {
+                return -1;
+            }
+            return abnormalities.Max(x => x.TimeBeforeEnd);
        }
+
+        public long AbnormalityTimeLeft(EntityId target, int abnormalityId)
+        {
+            if (!_abnormalities.ContainsKey(target))
+            {
+                return -1;
+            }
+            var abnormalityTarget = _abnormalities[target];
+            var abnormalities = abnormalityTarget.Where(t => t.HotDot.Id == abnormalityId);
+            if(abnormalities.Count() == 0)
+            {
+                return -1;
+            }
+            return abnormalities.Max(x => x.TimeBeforeEnd);
+        }
 
         public void DeleteAbnormality(EntityId target, int abnormalityId, long ticks)
         {
@@ -193,6 +215,7 @@ namespace Tera.Game
                 if (abnormalityUser[i].HotDot.Id != abnormalityId) continue;
                 abnormalityUser[i].ApplyBuffDebuff(ticks);
                 abnormalityUser.Remove(abnormalityUser[i]);
+                AbnormalityRemoved?.Invoke(target, abnormalityId);
                 break;
             }
 
