@@ -154,14 +154,14 @@ namespace Tera.Game
             }
         }
 
-        public bool AbnormalityExist(EntityId target, HotDot dot)
+        public bool AbnormalityExist(EntityId target, int id)
         {
             if (!_abnormalities.ContainsKey(target))
             {
                 return false;
             }
             var abnormalityTarget = _abnormalities[target];
-            return abnormalityTarget.Any(t => t.HotDot == dot);
+            return abnormalityTarget.Any(t => t.HotDot.Id == id);
         }
         public int AbnormalityCount(EntityId target)
         {
@@ -185,6 +185,16 @@ namespace Tera.Game
             }
             return abnormalities.Max(x => x.TimeBeforeEnd);
        }
+
+        public bool AbnormalityExist(EntityId target, HotDot.Types dotype)
+        {
+            if (!_abnormalities.ContainsKey(target))
+            {
+                return false;
+            }
+            var abnormalityTarget = _abnormalities[target];
+            return abnormalityTarget.Any(t => t.HotDot.Effects.Any(x => x.Type == dotype));
+        }
 
         public long AbnormalityTimeLeft(EntityId target, int abnormalityId)
         {

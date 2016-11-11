@@ -1,4 +1,6 @@
-﻿namespace Tera.Game.Messages
+﻿using System;
+
+namespace Tera.Game.Messages
 {
     public class SpawnMeServerMessage : ParsedMessage
     {
@@ -10,6 +12,7 @@
             Heading = reader.ReadAngle();
             Dead = (reader.ReadByte() & 1) == 0;
             unk1 = reader.ReadByte();
+            Console.WriteLine("SPAWN ME");
         }
 
         public byte unk1 { get; set; }
