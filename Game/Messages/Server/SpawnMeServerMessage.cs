@@ -12,7 +12,6 @@ namespace Tera.Game.Messages
             Heading = reader.ReadAngle();
             Dead = (reader.ReadByte() & 1) == 0;
             unk1 = reader.ReadByte();
-            Console.WriteLine("SPAWN ME");
         }
 
         public byte unk1 { get; set; }

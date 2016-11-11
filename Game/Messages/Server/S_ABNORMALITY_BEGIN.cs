@@ -12,11 +12,6 @@ namespace Tera.Game.Messages
             AbnormalityId = reader.ReadInt32();
             Duration = reader.ReadInt32();
             Stack = reader.ReadInt32();
-
-            if (AbnormalityId == 700600 || AbnormalityId == 700601 || AbnormalityId == 700602 || AbnormalityId == 700603 || AbnormalityId == 700700 || AbnormalityId == 700701 || AbnormalityId == 700630 || AbnormalityId == 700631 || AbnormalityId == 601 || AbnormalityId == 603 || AbnormalityId == 602)
-            {
-                Console.WriteLine("Good: " + AbnormalityId);
-            }
         }
 
         public int Duration { get; }
