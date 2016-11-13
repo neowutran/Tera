@@ -17,6 +17,6 @@
         public string Name { get; private set; }
         public string Area { get; private set; }
         public bool Boss { get; internal set; }
-        public int HP { get; private set; }
+        public int HP { get; internal set; }
     }
 }
