@@ -241,7 +241,7 @@ namespace Tera.Game
             if (entity == null) return;
             _npcDatabase.AddDetectedBoss(entity.Info.HuntingZoneId, entity.Info.TemplateId);
             entity.Info.Boss = true;
-            entity.Info.HP = (int) m.TotalHp;
+            entity.Info.HP = (long) m.TotalHp;
         }
 
         /** Easy integrate style - compatible */

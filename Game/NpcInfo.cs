@@ -2,7 +2,7 @@
 {
     public class NpcInfo
     {
-        public NpcInfo(ushort huntingZoneId, uint templateId, bool boss, int hp, string name, string area)
+        public NpcInfo(ushort huntingZoneId, uint templateId, bool boss, long hp, string name, string area)
         {
             HuntingZoneId = huntingZoneId;
             TemplateId = templateId;
@@ -17,6 +17,6 @@
         public string Name { get; private set; }
         public string Area { get; private set; }
         public bool Boss { get; internal set; }
-        public int HP { get; internal set; }
+        public long HP { get; internal set; }
     }
 }

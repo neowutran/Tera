@@ -42,7 +42,7 @@ namespace Tera.Game
                 from monsters in zones.Elements("Monster")
                 let templateid = uint.Parse(monsters.Attribute("id").Value)
                 let boss = bool.Parse(monsters.Attribute("isBoss").Value)
-                let hp = int.Parse(monsters.Attribute("hp").Value)
+                let hp = long.Parse(monsters.Attribute("hp").Value)
                 let name = monsters.Attribute("name").Value
                 select new NpcInfo(huntingzoneid, templateid, boss, hp, name, area)).ToDictionary(
                     x => Tuple.Create(x.HuntingZoneId, x.TemplateId));
@@ -61,7 +61,7 @@ namespace Tera.Game
                 {
                     NPCs[over.id] = new NpcInfo(NPCs[over.id].HuntingZoneId, NPCs[over.id].TemplateId,
                         over.boss == null ? NPCs[over.id].Boss : bool.Parse(over.boss),
-                        over.hp == null ? NPCs[over.id].HP : int.Parse(over.hp),
+                        over.hp == null ? NPCs[over.id].HP : long.Parse(over.hp),
                         over.name ?? NPCs[over.id].Name,
                         NPCs[over.id].Area);
                 }
@@ -69,7 +69,7 @@ namespace Tera.Game
                 {
                     NPCs.Add(over.id, new NpcInfo(over.id.Item1, over.id.Item2,
                         over.boss != null && bool.Parse(over.boss),
-                        over.hp == null ? 0 : int.Parse(over.hp),
+                        over.hp == null ? 0 : long.Parse(over.hp),
                         over.name ?? $"Npc {over.id.Item1} {over.id.Item2}",
                         string.Empty));
                 }
