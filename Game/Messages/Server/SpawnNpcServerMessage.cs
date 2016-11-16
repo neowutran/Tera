@@ -9,7 +9,7 @@ namespace Tera.Game.Messages
             : base(reader)
         {
             reader.Skip(6);
-            if (reader.Version=="KR") reader.Skip(4);//not sure what's there
+            if (reader.Version=="KR"|| reader.Version == "RU") reader.Skip(4);//not sure what's there
             Id = reader.ReadEntityId();
             TargetId = reader.ReadEntityId();
             Position = reader.ReadVector3f();
