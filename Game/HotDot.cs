@@ -62,6 +62,7 @@ namespace Tera.Game
             Block = 210, //frontal block ? Not sure, the ability to use block, or blocking stance
             HPLoss = 221, //loss hp at the and of debuff
             Absorb = 227, //or may be I've messed it with 281
+            Resurrect = 229,
             Mark = 231, // Velik's Mark/Curse of Kaprima = increase received damage when marked
             CastSpeed = 236,
             CrystalBind = 237,
