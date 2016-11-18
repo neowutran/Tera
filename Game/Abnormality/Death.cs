@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Tera.Game.Abnormality
 {
@@ -16,6 +18,8 @@ namespace Tera.Game.Abnormality
         }
 
         public bool Dead => !_death?.Ended() ?? false;
+
+        public bool DeadOrJustResurrected => _death!=null && _death?.AllDurations().Last().End >= DateTime.UtcNow.Ticks - 2*TimeSpan.TicksPerSecond;
 
         public Death Clone()
         {
@@ -64,7 +68,7 @@ namespace Tera.Game.Abnormality
             _death.End(begin);
         }
 
-        public Death Clear()
+        internal Death Clear() //null check needed if called for not dead players.
         {
             var death = _death.Ended() ? null : new AbnormalityDuration(PlayerClass.Common, _death.LastStart(), 0);
             return new Death(death);
