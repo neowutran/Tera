@@ -208,5 +208,11 @@ namespace Tera.Game.Abnormality
                 if (PlayerAggro[player].ContainsKey(target))
                     PlayerAggro[player][target].End(end);
         }
+
+        public bool Dead(Player player)
+        {
+            if (!PlayerDeath.ContainsKey(player))return false;
+            return PlayerDeath[player].Dead;
+        }
     }
 }
