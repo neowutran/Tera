@@ -19,7 +19,7 @@ namespace Tera.Game.Abnormality
 
         public bool Dead => !_death?.Ended() ?? false;
 
-        public bool DeadOrJustResurrected => _death!=null && _death?.AllDurations().Last().End >= DateTime.UtcNow.Ticks - 2*TimeSpan.TicksPerSecond;
+        public bool DeadOrJustResurrected => _death!=null && _death?.AllDurations().Last().End >= DateTime.UtcNow.Ticks - 4*TimeSpan.TicksPerSecond;
 
         public Death Clone()
         {
