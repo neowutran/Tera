@@ -23,6 +23,7 @@ namespace Tera.Game
             PlayerId = message.PlayerId;
             ServerId = message.ServerId;
             Level = message.Level;
+            OutOfRange = false;
         }
 
         internal UserEntity(LoginServerMessage message)
@@ -34,6 +35,7 @@ namespace Tera.Game
             PlayerId = message.PlayerId;
             ServerId = message.ServerId;
             Level = message.Level;
+            OutOfRange = false;
         }
 
         public string Name { get; set; }
@@ -42,6 +44,8 @@ namespace Tera.Game
         public uint ServerId { get; set; }
         public uint PlayerId { get; set; }
         public int Level { get; set; }
+
+        public bool OutOfRange { get; set; }
 
         public override bool Equals(object obj)
         {

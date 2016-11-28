@@ -154,23 +154,19 @@ namespace Tera.Game
             }
         }
 
-        public bool AbnormalityExist(EntityId target, int id)
+
+        public bool HaveAbnormalities(EntityId target)
         {
             if (!_abnormalities.ContainsKey(target))
             {
                 return false;
             }
-            var abnormalityTarget = _abnormalities[target];
-            return abnormalityTarget.Any(t => t.HotDot.Id == id);
+            return true;
         }
-        public int AbnormalityCount(EntityId target)
-        {
-            if (!_abnormalities.ContainsKey(target))
-            {
-                return 0;
-            }
-            return _abnormalities[target].Count;
-        }
+
+        /**
+         * Return time left for the abnormality. Or -1 if no abnormality found
+         */
         public long AbnormalityTimeLeft(EntityId target, HotDot.Types dotype)
         {
             if (!_abnormalities.ContainsKey(target))
@@ -186,16 +182,9 @@ namespace Tera.Game
             return abnormalities.Max(x => x.TimeBeforeEnd);
        }
 
-        public bool AbnormalityExist(EntityId target, HotDot.Types dotype)
-        {
-            if (!_abnormalities.ContainsKey(target))
-            {
-                return false;
-            }
-            var abnormalityTarget = _abnormalities[target];
-            return abnormalityTarget.Any(t => t.HotDot.Effects.Any(x => x.Type == dotype));
-        }
-
+        /**
+         * Return time left for the abnormality. Or -1 if no abnormality found
+         */
         public long AbnormalityTimeLeft(EntityId target, int abnormalityId)
         {
             if (!_abnormalities.ContainsKey(target))
@@ -333,6 +322,7 @@ namespace Tera.Game
         public void Update(SDespawnUser message)
         {
             DeleteAbnormality(message);
+
         }
         public void Update(SDespawnNpc message)
         {

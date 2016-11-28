@@ -40,7 +40,7 @@ namespace Tera.Game.Abnormality
 
         public long FirstHit { get; private set; }
 
-        public long TimeBeforeEnd => Duration != 0 ? FirstHit - DateTime.UtcNow.Ticks + Duration * TimeSpan.TicksPerSecond : long.MaxValue;
+        public long TimeBeforeEnd => Duration == 0 ? long.MaxValue : FirstHit - DateTime.UtcNow.Ticks + Duration * TimeSpan.TicksPerSecond;
         public long TimeBeforeApply => DateTime.UtcNow.Ticks - LastApply - HotDot.Tick * TimeSpan.TicksPerSecond;
 
         public void Apply(int amount, bool critical, bool isHp, long time)

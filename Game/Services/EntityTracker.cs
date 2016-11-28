@@ -52,6 +52,12 @@ namespace Tera.Game
             Register(newEntity);
         }
 
+        public void Update(SDespawnUser message)
+        {
+            var entity = (UserEntity)GetOrNull(message.User);
+            entity.OutOfRange = true;
+        }
+
         private void Register(Entity newEntity)
         {
             _dictionary[newEntity.Id] = newEntity;
