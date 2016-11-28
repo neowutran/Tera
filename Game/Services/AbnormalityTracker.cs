@@ -154,15 +154,7 @@ namespace Tera.Game
             }
         }
 
-
-        public bool HaveAbnormalities(EntityId target)
-        {
-            if (!_abnormalities.ContainsKey(target))
-            {
-                return false;
-            }
-            return true;
-        }
+        public bool HaveAbnormalities(EntityId target) => _abnormalities.ContainsKey(target) && _abnormalities[target].Any();
 
         /**
          * Return time left for the abnormality. Or -1 if no abnormality found
@@ -175,7 +167,7 @@ namespace Tera.Game
             }
             var abnormalityTarget = _abnormalities[target];
             var abnormalities = abnormalityTarget.Where(t => t.HotDot.Effects.Any(x => x.Type == dotype));
-            if(abnormalities.Count() == 0)
+            if(!abnormalities.Any())
             {
                 return -1;
             }
@@ -193,7 +185,7 @@ namespace Tera.Game
             }
             var abnormalityTarget = _abnormalities[target];
             var abnormalities = abnormalityTarget.Where(t => t.HotDot.Id == abnormalityId);
-            if(abnormalities.Count() == 0)
+            if(!abnormalities.Any())
             {
                 return -1;
             }

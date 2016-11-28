@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Tera.Game.Messages;
 
 namespace Tera.Game
@@ -130,12 +129,6 @@ namespace Tera.Game
         {
             var reader = new TeraMessageReader(message, _opCodeNamer, Version);
             var opCodeName = _opCodeNamer.GetName(message.OpCode);
-
-
-
-            //TODO remove
-            //Console.WriteLine(opCodeName);
-
             return Instantiate(opCodeName, reader);
         }
     }
