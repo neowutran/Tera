@@ -60,12 +60,12 @@ namespace Tera.Game
             if (SourcePlayer!=null && npc != null)
                 HitDirection = HitDirection.Pet;
             else if (Source is ProjectileEntity || Source.Heading.Gradus == 0)
-                HitDirection = Skill.Boom
-                    ? Source.Position.GetHeading(Target.Position).HitDirection(Target.Heading)
-                    : userNpc["root_source"].LastCastAngle.HitDirection(Target.Heading);
-            else
-                if ((HitDirection = Source.Heading.HitDirection(Target.Heading)) != Source.Position.GetHeading(Target.Position).HitDirection(Target.Heading)) HitDirection=HitDirection.Front;
+                if (Skill?.Boom??true) HitDirection = Source.Position.GetHeading(Target.Position).HitDirection(Target.Heading);
+                else { if ((HitDirection = userNpc["root_source"].Heading.HitDirection(Target.Heading)) != Source.Position.GetHeading(Target.Position).HitDirection(Target.Heading)) HitDirection = HitDirection.Front; }
+            else if ((HitDirection = Source.Heading.HitDirection(Target.Heading)) != Source.Position.GetHeading(Target.Position).HitDirection(Target.Heading)) HitDirection=HitDirection.Front;
             if ((SourcePlayer?.Class==PlayerClass.Archer) && (abnormalityTracker?.AbnormalityExist(sourceUser.Id, 601600) ?? false)) HitDirection=HitDirection.Back;
+            Debug.WriteLine(HitDirection);
+            HitDirection = HitDirection & ~(HitDirection.Left | HitDirection.Right);
         }
 
         public SkillResult(int amount, bool isCritical, bool isHp, bool isHeal, HotDot hotdot, EntityId source,
