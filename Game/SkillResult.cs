@@ -7,7 +7,7 @@ namespace Tera.Game
     public class SkillResult
     {
         public SkillResult(EachSkillResultServerMessage message, EntityTracker entityRegistry,
-            PlayerTracker playerTracker, SkillDatabase skillDatabase, PetSkillDatabase petSkillDatabase = null)
+            PlayerTracker playerTracker, SkillDatabase skillDatabase, PetSkillDatabase petSkillDatabase = null, AbnormalityTracker abnormalityTracker=null)
         {
             Time = message.Time;
             Amount = message.Amount;
@@ -59,12 +59,13 @@ namespace Tera.Game
             }
             if (SourcePlayer!=null && npc != null)
                 HitDirection = HitDirection.Pet;
-            else if (Source is ProjectileEntity || Source.Heading.Gradus == 0) // todo: need exception for arcane barrage Blast
-                HitDirection = userNpc["root_source"].LastCastAngle.HitDirection(Target.Heading);
-            else // todo: need exception for Ground Pounder and may be some other brawler skills that should be front
-                HitDirection = Source.Heading.HitDirection(Target.Heading);
-            // todo: we can't use only heading, cause if we are looking at mob ass, but staying in front of him - it's not back
-            //       probably some other direction like "None" for such cases, but need to check ingame
+            else if (Source is ProjectileEntity || Source.Heading.Gradus == 0)
+                HitDirection = Skill.Boom
+                    ? Source.Position.GetHeading(Target.Position).HitDirection(Target.Heading)
+                    : userNpc["root_source"].LastCastAngle.HitDirection(Target.Heading);
+            else
+                if ((HitDirection = Source.Heading.HitDirection(Target.Heading)) != Source.Position.GetHeading(Target.Position).HitDirection(Target.Heading)) HitDirection=HitDirection.Front;
+            if ((SourcePlayer?.Class==PlayerClass.Archer) && (abnormalityTracker?.AbnormalityExist(sourceUser.Id, 601600) ?? false)) HitDirection=HitDirection.Back;
         }
 
         public SkillResult(int amount, bool isCritical, bool isHp, bool isHeal, HotDot hotdot, EntityId source,

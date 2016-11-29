@@ -23,6 +23,7 @@ namespace Tera.Game
             IconName = iconName;
             NpcInfo = npcInfo;
             IsHotDot = isHotDot;
+            Boom = detail.Contains("Boom");
         }
 
         public bool IsHotDot { get; }
@@ -32,6 +33,7 @@ namespace Tera.Game
         public string Name { get; private set; }
         public string ShortName { get; private set; }
         public bool? IsChained { get; private set; }
+        public bool Boom { get; private set; }
         public string Detail { get; private set; }
         public string IconName { get; private set; }
 

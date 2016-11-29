@@ -156,6 +156,7 @@ namespace Tera.Game
 
         public bool HaveAbnormalities(EntityId target) => _abnormalities.ContainsKey(target) && _abnormalities[target].Any();
 
+        public bool AbnormalityExist(EntityId target, int abnormalityid) => _abnormalities.ContainsKey(target) && _abnormalities[target].Any(x=>x.HotDot.Id==abnormalityid);
         /**
          * Return time left for the abnormality. Or -1 if no abnormality found
          */
