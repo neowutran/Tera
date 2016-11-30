@@ -55,7 +55,7 @@ namespace Tera.Game
         public void Update(SDespawnUser message)
         {
             var entity = (UserEntity)GetOrNull(message.User);
-            entity.OutOfRange = true;
+            if (entity!=null) entity.OutOfRange = true;
         }
 
         private void Register(Entity newEntity)
