@@ -64,7 +64,7 @@ namespace Tera.Game
                 else { if ((HitDirection = userNpc["root_source"].Heading.HitDirection(Target.Heading)) != Source.Position.GetHeading(Target.Position).HitDirection(Target.Heading)) HitDirection = HitDirection.Front; }
             else if ((HitDirection = Source.Heading.HitDirection(Target.Heading)) != Source.Position.GetHeading(Target.Position).HitDirection(Target.Heading)) HitDirection=HitDirection.Front;
             if ((SourcePlayer?.Class==PlayerClass.Archer) && (abnormalityTracker?.AbnormalityExist(sourceUser.Id, 601600) ?? false)) HitDirection=HitDirection.Back;
-            Debug.WriteLine(HitDirection);
+            //Debug.WriteLine(HitDirection);
             HitDirection = HitDirection & ~(HitDirection.Left | HitDirection.Right);
         }
 

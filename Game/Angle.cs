@@ -25,8 +25,8 @@ namespace Tera.Game
             var diff = (target.Gradus - Gradus + 720)%360;
             var side = diff > 180 ? Game.HitDirection.Left : Game.HitDirection.Right;
             if (diff > 180) diff = 360 - diff;
-            if (diff <= 45) return Game.HitDirection.Back;
-            if (diff >= 135) return Game.HitDirection.Front;
+            if (diff <= 55) return Game.HitDirection.Back;
+            if (diff >= 125) return Game.HitDirection.Front;
             return Game.HitDirection.Side|side;
         }
     }
