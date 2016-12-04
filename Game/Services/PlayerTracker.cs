@@ -19,6 +19,14 @@ namespace Tera.Game
             entityTracker.EntityUpdated += Update;
         }
 
+        public void ResetOutOfRange()
+        {
+            foreach (var player in PartyList())
+            {
+                player.OutOfRange = true;
+            }
+        }
+
         public IEnumerator<Player> GetEnumerator()
         {
             return _playerById.Values.GetEnumerator();
