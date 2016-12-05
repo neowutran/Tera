@@ -109,7 +109,7 @@ namespace Tera.Game
         public event AbnormalityEvent AbnormalityAdded;
         public event AbnormalityEvent AbnormalityRemoved;
 
-        public delegate void AbnormalityEvent(EntityId target, int abnormalityId);
+        public delegate void AbnormalityEvent(EntityId target, int abnormalityId, int stack=0);
 
         public void Update(SAbnormalityBegin message)
         {
@@ -135,7 +135,7 @@ namespace Tera.Game
                 //dont add existing abnormalities since we don't delete them all, that may cause many untrackable issues.
                 _abnormalities[target].Add(new Abnormality.Abnormality(hotdot, source, target, duration, stack, ticks,
                     this));
-                AbnormalityAdded?.Invoke(target, abnormalityId);
+                AbnormalityAdded?.Invoke(target, abnormalityId, stack);
             }
         }
 
@@ -149,6 +149,7 @@ namespace Tera.Game
             foreach (var abnormality in abnormalityUser)
             {
                 if (abnormality.HotDot.Id != message.AbnormalityId) continue;
+                if (abnormality.Stack<message.StackCounter) AbnormalityAdded?.Invoke(message.TargetId, message.AbnormalityId, message.StackCounter);
                 abnormality.Refresh(message.StackCounter, message.Duration, message.Time.Ticks);
                 return;
             }
