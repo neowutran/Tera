@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.RightsManagement;
 using Tera.Game.Abnormality;
 using Tera.Game.Messages;
 
@@ -178,21 +179,39 @@ namespace Tera.Game
         /**
          * Return time left for the abnormality. Or -1 if no abnormality found
          */
-        public long AbnormalityTimeLeft(EntityId target, int abnormalityId)
+        public long AbnormalityTimeLeft(EntityId target, int abnormalityId, int stack=0)
         {
             if (!_abnormalities.ContainsKey(target))
             {
                 return -1;
             }
             var abnormalityTarget = _abnormalities[target];
-            var abnormalities = abnormalityTarget.Where(t => t.HotDot.Id == abnormalityId);
-            if(!abnormalities.Any())
+            var i = abnormalityTarget.FindIndex(t => t.HotDot.Id == abnormalityId && t.Stack>=stack);
+            if (i == -1)
             {
                 return -1;
             }
-            return abnormalities.Max(x => x.TimeBeforeEnd);
+            return abnormalityTarget[i].TimeBeforeEnd;
         }
 
+        /**
+         * Return current stack count for the abnormality. Or -1 if no abnormality found
+         */
+        public int Stack(EntityId target, int abnormalityId)
+        {
+            if (!_abnormalities.ContainsKey(target))
+            {
+                return -1;
+            }
+            var abnormalityTarget = _abnormalities[target];
+            var i = abnormalityTarget.FindIndex(t => t.HotDot.Id == abnormalityId);
+            if (i==-1)
+            {
+                return -1;
+            }
+            return abnormalityTarget[i].Stack;
+
+        }
         public void DeleteAbnormality(EntityId target, int abnormalityId, long ticks)
         {
             if (!_abnormalities.ContainsKey(target))
