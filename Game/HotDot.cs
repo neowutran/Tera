@@ -69,6 +69,7 @@ namespace Tera.Game
             CCrystalBind = 249,
             DropUp=255,
             Range = 259, //increase melee range? method 0 value 0.1= +10%
+            HPChange2 = 260, //used by instant death on Curse stacks.
             //264 = redirect abnormality, value= new abnormality, bugged due to wrong float format in xml.
             Rage = 280, //tick - RageChange, notick (one change) - Rage 
             SuperArmor = 283,
