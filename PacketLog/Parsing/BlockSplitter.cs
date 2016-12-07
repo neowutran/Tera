@@ -10,6 +10,9 @@ namespace Tera.PacketLog
     {
         private readonly MemoryStream _buffer = new MemoryStream();
         public event Action<byte[]> BlockFinished;
+        private int _last;
+        private int _prev;
+        public event Action<int> Resync;
 
         protected virtual void OnBlockFinished(byte[] block)
         {
@@ -49,6 +52,14 @@ namespace Tera.PacketLog
 
         public void PopAllBlocks()
         {
+            var size = _last + _prev;
+            if (size < 400 && _buffer.Length > size)
+            {
+                var toSkip = (int) _buffer.Length - size;
+                RemoveFront(_buffer, toSkip);
+                var handler = Resync;
+                handler?.Invoke(toSkip);
+            }
             while (PopBlock() != null)
             {
             }
@@ -56,6 +67,8 @@ namespace Tera.PacketLog
 
         public void Data(byte[] data)
         {
+            _prev = _last;
+            _last = data.Length;
             _buffer.Write(data, 0, data.Length);
         }
     }

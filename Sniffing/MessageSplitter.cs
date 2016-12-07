@@ -13,9 +13,28 @@ namespace Tera.Sniffing
         {
             _clientSplitter.BlockFinished += ClientBlockFinished;
             _serverSplitter.BlockFinished += ServerBlockFinished;
+            _clientSplitter.Resync += ClientResync;
+            _serverSplitter.Resync += ServerResync;
         }
 
         public event Action<Message> MessageReceived;
+        public event Action<MessageDirection, int> Resync;
+
+        private void ClientResync(int skipped)
+        {
+            OnResync(MessageDirection.ClientToServer, skipped);
+        }
+
+        private void ServerResync(int skipped)
+        {
+            OnResync(MessageDirection.ServerToClient, skipped);
+        }
+
+        protected void OnResync(MessageDirection direction, int skipped)
+        {
+            var handler = Resync;
+            handler?.Invoke(direction,skipped);
+        }
 
         private void ClientBlockFinished(byte[] block)
         {
