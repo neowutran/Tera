@@ -55,7 +55,7 @@ namespace Tera.PacketLog
             var size = _last + _prev;
             if (size < 400 && _buffer.Length > size)
             {
-                var toSkip = (int) _buffer.Length - size;
+                var toSkip = (int) _buffer.Length - _last;
                 RemoveFront(_buffer, toSkip);
                 var handler = Resync;
                 handler?.Invoke(toSkip);
