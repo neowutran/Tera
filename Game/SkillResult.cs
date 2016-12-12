@@ -10,7 +10,7 @@ namespace Tera.Game
             PlayerTracker playerTracker, SkillDatabase skillDatabase, PetSkillDatabase petSkillDatabase = null, AbnormalityTracker abnormalityTracker=null)
         {
             Time = message.Time;
-            Amount = message.Amount;
+            Amount = message.Amount > 0x10000000 ? 0 : message.Amount; //fix raid-30 bug with 1kkk damage after shield
             IsCritical = message.IsCritical;
             IsHp = message.IsHp;
             IsHeal = message.IsHeal;
