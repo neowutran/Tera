@@ -101,6 +101,7 @@ namespace Tera.Game
                 Method = method,
             });
             Name = name;
+            ShortName = name;
             ItemName = itemName;
             Tooltip = tooltip;
             IconName = iconName;
@@ -137,6 +138,7 @@ namespace Tera.Game
         public int Time { get; }
         public int Tick { get; private set; }
         public string Name { get; set; }
+        public string ShortName { get; set; }
         public string ItemName { get; }
         public string Tooltip { get; set; }
         public string IconName { get; }

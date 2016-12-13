@@ -77,6 +77,22 @@ namespace Tera.Game
             _hotdots[(int)StaticallyUsedBuff.Enraged] = new HotDot((int)StaticallyUsedBuff.Enraged, "Endurance", 0, 0, 0, 0, 0, 0, "Enrage", "", "", "enraged");
             _hotdots[(int)StaticallyUsedBuff.Slaying] = new HotDot((int)StaticallyUsedBuff.Slaying, "CritPower", 0, 0, 0, 0, 0, 0, "Slaying", "",
                 "'Slaying' crystal is working (if equipped) when player in this state.", "slaying");
+
+            var shortnames = Path.Combine(folder, $"hotdot\\hotdot-short-{language}.tsv");
+            if (File.Exists(shortnames))
+            {
+                reader = new StreamReader(File.OpenRead(shortnames));
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine();
+                    if (line == null) continue;
+                    var values = line.Split('\t');
+                    var id = int.Parse(values[0]);
+                    var shortname = values[1];
+                    if (_hotdots.ContainsKey(id)) _hotdots[id].ShortName = shortname;
+                }
+            }
+
             Enraged = _hotdots[(int) StaticallyUsedBuff.Enraged];
             Slaying = _hotdots[(int) StaticallyUsedBuff.Slaying];
             _hotdots.TryGetValue((int)StaticallyUsedBuff.JoyOfPartying0, out JoyOfPartying0);
