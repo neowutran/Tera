@@ -75,6 +75,23 @@ namespace Tera.Sniffing
             _server = null;
         }
 
+        public void Skip(MessageDirection direction, int needToSkip)
+        {
+            if (needToSkip > 0)
+            {
+                if (direction == MessageDirection.ServerToClient)
+                {
+                    var skip = new byte[needToSkip];
+                    _session.Encrypt(skip);
+                }
+                else
+                {
+                    var skip = new byte[needToSkip];
+                    _session.Decrypt(skip);
+                }
+            }
+        }
+
         public void ClientToServer(byte[] data, int needToSkip=0)
         {
             if (Initialized)
