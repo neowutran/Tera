@@ -10,11 +10,9 @@ namespace Tera.Game.Messages
             reader.Skip(24);
             Badges = reader.ReadInt32();
             Credits = reader.ReadInt32();
-            Debug.WriteLine(Type+" Badges:"+Badges+" Credits:"+Credits);
         }
 
         public int Badges { get; private set; }
         public int Credits { get; private set; }
-        public S_UPDATE_NPCGUILD.NpcGuildType Type = S_UPDATE_NPCGUILD.NpcGuildType.Vanguard;
     }
 }
