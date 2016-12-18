@@ -15,6 +15,6 @@ namespace Tera.Game.Messages
 
         public int Badges { get; private set; }
         public int Credits { get; private set; }
-        public static S_UPDATE_NPCGUILD.NpcGuildType Type = S_UPDATE_NPCGUILD.NpcGuildType.Vanguard;
+        public S_UPDATE_NPCGUILD.NpcGuildType Type = S_UPDATE_NPCGUILD.NpcGuildType.Vanguard;
     }
 }
