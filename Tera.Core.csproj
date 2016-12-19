@@ -55,6 +55,7 @@
     <Compile Include="Game\Messages\Client\C_PLAYER_LOCATION.cs" />
     <Compile Include="Game\Messages\Server\S_ACTION_END.cs" />
     <Compile Include="Game\Messages\Server\S_ACTION_STAGE.cs" />
+    <Compile Include="Game\Messages\Server\S_AVAILABLE_EVENT_MATCHING_LIST.cs" />
     <Compile Include="Game\Messages\Server\S_BAN_PARTY.cs" />
     <Compile Include="Game\Messages\Server\SBanPartyMember.cs" />
     <Compile Include="Game\Messages\Server\S_BEGIN_THROUGH_ARBITER_CONTRACT.cs" />
@@ -81,7 +82,9 @@
     <Compile Include="Game\Messages\Server\S_REQUEST_CONTRACT.cs" />
     <Compile Include="Game\Messages\Server\S_START_COOLTIME_SKILL.cs" />
     <Compile Include="Game\Messages\Server\S_START_GUILD_QUEST.cs" />
+    <Compile Include="Game\Messages\Server\S_SYSTEM_MESSAGE.cs" />
     <Compile Include="Game\Messages\Server\S_TRADE_BROKER_DEAL_SUGGESTED.cs" />
+    <Compile Include="Game\Messages\Server\S_UPDATE_NPCGUILD.cs" />
     <Compile Include="Game\Messages\Server\S_USER_LOCATION.cs" />
     <Compile Include="Game\Messages\Server\S_WHISPER.cs" />
     <Compile Include="Game\Messages\Server\S_CHAT.cs" />

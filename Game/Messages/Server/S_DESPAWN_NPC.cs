@@ -6,7 +6,8 @@
         {
             Npc = reader.ReadEntityId();
             Position = reader.ReadVector3f();
-            Dead = reader.ReadByte() == 5; // 1 = move out of view, 5 = death
+            var status = reader.ReadByte();
+            Dead = status == 5 || status == 3; // 1 = move out of view, 3 = retreated?, 5 = death
         }
 
         public EntityId Npc { get; }
