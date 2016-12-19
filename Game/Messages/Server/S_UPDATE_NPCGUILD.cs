@@ -5,8 +5,12 @@ namespace Tera.Game.Messages
     {
         public enum NpcGuildType
         {
-		    Vanguard=609
-        }
+            Vanguard = 609,
+            Bellicarium = 901,
+            KillingSpree = 902,
+            Bellicarium7 = 90101,
+            KillingSpree7 = 90201
+        } // todo: not sure, may be it worth adding StrSheet_NPCGuild.xml parser to use region-specific names
 
         internal S_UPDATE_NPCGUILD(TeraMessageReader reader) : base(reader)
         {
