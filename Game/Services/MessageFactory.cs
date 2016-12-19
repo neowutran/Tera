@@ -86,6 +86,7 @@ namespace Tera.Game
 
 
         private readonly OpCodeNamer _opCodeNamer;
+        private readonly OpCodeNamer _sysMsgNamer;
         public string Version;
         public bool ChatEnabled {
             get { return _chatEnabled; }
@@ -100,8 +101,9 @@ namespace Tera.Game
 
         private bool _chatEnabled;
 
-        public MessageFactory(OpCodeNamer opCodeNamer, string version, bool chatEnabled=false)
+        public MessageFactory(OpCodeNamer opCodeNamer, string version, bool chatEnabled=false, OpCodeNamer sysMsgNamer=null)
         {
+            _sysMsgNamer = sysMsgNamer;
             OpcodeNameToType.Clear();
             CoreServices.ToList().ForEach(x=>OpcodeNameToType[x.Key]=x.Value);
             if (chatEnabled) ChatServices.ToList().ForEach(x => OpcodeNameToType[x.Key] = x.Value);
@@ -130,7 +132,7 @@ namespace Tera.Game
 
         public ParsedMessage Create(Message message)
         {
-            var reader = new TeraMessageReader(message, _opCodeNamer, Version);
+            var reader = new TeraMessageReader(message, _opCodeNamer, Version, _sysMsgNamer);
             var opCodeName = _opCodeNamer.GetName(message.OpCode);
             return Instantiate(opCodeName, reader);
         }
