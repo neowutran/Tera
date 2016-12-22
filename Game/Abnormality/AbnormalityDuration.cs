@@ -45,12 +45,17 @@ namespace Tera.Game.Abnormality
             return abnormalityDuration;
         }
 
+        /* Return abnormality uptime, filtered by begin/end and stack count
+         * if stack==0 - return all stacks uptime
+         * if stack==-1 - return max stack uptime
+         */
         public long Duration(long begin, long end, int stack=0)
         {
             long totalDuration = 0;
-            foreach (var duration in stack==0
+            var check = stack != -1 ? stack : MaxStack(begin, end);
+            foreach (var duration in check==0
                                     ? _listDuration.Where(x => end >= x.Begin && begin <= x.End)
-                                    : _listDuration.Where(x => end >= x.Begin && begin <= x.End && stack == x.Stack)
+                                    : _listDuration.Where(x => end >= x.Begin && begin <= x.End && check == x.Stack)
                                     )
             {
                 var abnormalityBegin = duration.Begin;
@@ -142,6 +147,13 @@ namespace Tera.Game.Abnormality
                 : _listDuration.Where(x => begin <= x.End && end >= x.Begin).GroupBy(x => x.Stack)
                                 .Where(x => x.Sum(y => y.End - y.Begin) >= TimeSpan.TicksPerSecond)
                                 .Select(x => x.Key).OrderBy(x => x).ToList();
+        }
+
+        public int MaxStack(long begin = 0, long end = 0)
+        {
+            return begin == 0 || end == 0
+                ?_listDuration.Select(x => x.Stack).DefaultIfEmpty().Max()
+                :_listDuration.Where(x => end >= x.Begin && begin <= x.End).Select(x => x.Stack).DefaultIfEmpty().Max();
         }
 
         public bool Ended()
