@@ -12,7 +12,8 @@ namespace Tera.Game.Messages
             reader.Skip(2);//offset
 		    RawMessage = reader.ReadTeraString();
             var parts=RawMessage.Split(new[] {'\v'});
-            var id = ushort.Parse(parts[0].Replace("@", ""));
+            ushort id;
+            ushort.TryParse(parts[0].Replace("@", ""), out id);
             MsgType = reader.SysMsgNamer?.GetName(id) ?? id.ToString();
             int i = 1;
             while (i + 2 <= parts.Length)

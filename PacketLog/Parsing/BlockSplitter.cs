@@ -12,6 +12,7 @@ namespace Tera.PacketLog
         public event Action<byte[]> BlockFinished;
         private volatile int _last;
         private volatile int _prev;
+        private volatile int _pPrev;
         public event Action<int, int> Resync;
 
         protected virtual void OnBlockFinished(byte[] block)
@@ -52,10 +53,10 @@ namespace Tera.PacketLog
 
         public void PopAllBlocks()
         {
-            var size = _last + _prev;
+            var size = _last + _prev + _pPrev;
             if (size < 400 && _buffer.Length > size)
             {
-                var toSkip = (int) _buffer.Length - _last;
+                var toSkip = (int) _buffer.Length - _last - _prev;
                 var buffer = _buffer.GetBuffer();
                 var blockSize = buffer[0] | buffer[1] << 8;
                 RemoveFront(_buffer, toSkip);
@@ -69,6 +70,7 @@ namespace Tera.PacketLog
 
         public void Data(byte[] data)
         {
+            _pPrev = _prev;
             _prev = _last;
             _last = data.Length;
             _buffer.Write(data, 0, data.Length);
