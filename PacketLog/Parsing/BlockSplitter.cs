@@ -10,8 +10,8 @@ namespace Tera.PacketLog
     {
         private readonly MemoryStream _buffer = new MemoryStream();
         public event Action<byte[]> BlockFinished;
-        private int _last;
-        private int _prev;
+        private volatile int _last;
+        private volatile int _prev;
         public event Action<int> Resync;
 
         protected virtual void OnBlockFinished(byte[] block)
