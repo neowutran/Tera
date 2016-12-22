@@ -19,7 +19,7 @@ namespace Tera.Game
 
             Source = entityRegistry.GetOrPlaceholder(message.Source);
             Target = entityRegistry.GetOrPlaceholder(message.Target);
-            if (Amount > 150000000 && (Target as NpcEntity)?.Info.Boss == true) Amount = 0; //fix raid-30 bug with 1kkk damage after shield
+            if (abnormalityTracker?.AbnormalityExist(message.Target, 950187) ?? false) Amount=0; //fix raid-30 bug with 1kkk damage after shield
             var userNpc = UserEntity.ForEntity(Source);
             var npc = (NpcEntity) userNpc["source"];
             var sourceUser = userNpc["root_source"] as UserEntity; // Attribute damage dealt by owned entities to the owner
