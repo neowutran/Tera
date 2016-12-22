@@ -10,6 +10,7 @@ namespace Tera.Game
         private readonly EntityTracker _entityTracker;
         private readonly Dictionary<Tuple<uint, uint>, Player> _playerById = new Dictionary<Tuple<uint, uint>, Player>();
         private readonly ServerDatabase _serverDatabase;
+        private Player _unknownDamage;
         private List<Tuple<uint, uint>> _currentParty = new List<Tuple<uint, uint>>();
 
         public PlayerTracker(EntityTracker entityTracker, ServerDatabase serverDatabase = null)
@@ -58,6 +59,17 @@ namespace Tera.Game
                 OnPlayerIdChangedAction(player.User.Id, user.Id);
                 player.User = user;
             }
+        }
+
+        internal UserEntity GetUnknownPlayer()
+        {
+            if ((_unknownDamage?.ServerId ?? 0) != (_entityTracker?.MeterUser.ServerId ?? 0))
+            {
+                var user = new UserEntity(_entityTracker?.MeterUser.ServerId ?? 0);
+                _entityTracker?.Register(user);
+                _unknownDamage=GetOrUpdate(user);
+            }
+            return _unknownDamage?.User;
         }
 
         public Player Get(uint serverId, uint playerId)

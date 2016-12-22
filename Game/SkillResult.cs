@@ -19,6 +19,8 @@ namespace Tera.Game
 
             Source = entityRegistry.GetOrPlaceholder(message.Source);
             Target = entityRegistry.GetOrPlaceholder(message.Target);
+            if (Source is PlaceHolderEntity && (Target as NpcEntity)?.Info.Boss == true)
+                Source = playerTracker.GetUnknownPlayer() ?? Source;  //track unknown damage dealt to bosses like in raid-30
             if (abnormalityTracker?.AbnormalityExist(message.Target, 950187) ?? false) Amount=0; //fix raid-30 bug with 1kkk damage after shield
             var userNpc = UserEntity.ForEntity(Source);
             var npc = (NpcEntity) userNpc["source"];

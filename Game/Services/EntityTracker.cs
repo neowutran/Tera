@@ -58,7 +58,7 @@ namespace Tera.Game
             if (entity!=null) entity.OutOfRange = true;
         }
 
-        private void Register(Entity newEntity)
+        internal void Register(Entity newEntity)
         {
             _dictionary[newEntity.Id] = newEntity;
             OnEntityUpdated(newEntity);

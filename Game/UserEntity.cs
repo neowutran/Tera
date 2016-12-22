@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Gothos
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
 using System.Collections.Generic;
 using Tera.Game.Messages;
 
@@ -36,6 +37,18 @@ namespace Tera.Game
             ServerId = message.ServerId;
             Level = message.Level;
             OutOfRange = false;
+        }
+
+        internal UserEntity(uint serverid)
+            : this(new EntityId(ulong.MaxValue))
+        {
+            Name = "Unknown damage";
+            GuildName = "";
+            RaceGenderClass = new RaceGenderClass(Race.Common,Gender.Common, PlayerClass.Common);
+            PlayerId = UInt32.MaxValue;
+            ServerId = serverid;
+            Level = 0;
+            OutOfRange = true;
         }
 
         public string Name { get; set; }
