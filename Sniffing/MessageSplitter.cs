@@ -18,22 +18,22 @@ namespace Tera.Sniffing
         }
 
         public event Action<Message> MessageReceived;
-        public event Action<MessageDirection, int> Resync;
+        public event Action<MessageDirection, int, int> Resync;
 
-        private void ClientResync(int skipped)
+        private void ClientResync(int skipped, int size)
         {
-            OnResync(MessageDirection.ClientToServer, skipped);
+            OnResync(MessageDirection.ClientToServer, skipped, size);
         }
 
-        private void ServerResync(int skipped)
+        private void ServerResync(int skipped, int size)
         {
-            OnResync(MessageDirection.ServerToClient, skipped);
+            OnResync(MessageDirection.ServerToClient, skipped, size);
         }
 
-        protected void OnResync(MessageDirection direction, int skipped)
+        protected void OnResync(MessageDirection direction, int skipped, int size)
         {
             var handler = Resync;
-            handler?.Invoke(direction,skipped);
+            handler?.Invoke(direction,skipped,size);
         }
 
         private void ClientBlockFinished(byte[] block)
