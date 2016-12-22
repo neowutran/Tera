@@ -16,6 +16,7 @@ namespace Tera.Game
         Gunner = 10,
         Brawler = 11,
         Ninja = 12,
+        Glaiver = 13,
 
         Common = 255
     }   
