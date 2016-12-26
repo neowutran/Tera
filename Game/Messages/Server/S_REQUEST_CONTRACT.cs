@@ -21,6 +21,7 @@ namespace Tera.Game.Messages
         public string Recipient { get; private set; }
         public enum RequestType
         {
+            UnStuck=16,
             DungeonTeleporter = 15,
             Mailbox = 8,
             MapTeleporter =  14,

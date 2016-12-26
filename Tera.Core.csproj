@@ -66,6 +66,7 @@
     <Compile Include="Game\Messages\Server\S_CREST_INFO.cs" />
     <Compile Include="Game\Messages\Server\S_CREST_MESSAGE.cs" />
     <Compile Include="Game\Messages\Server\S_FIN_INTER_PARTY_MATCH.cs" />
+    <Compile Include="Game\Messages\Server\S_LOAD_TOPO.cs" />
     <Compile Include="Game\Messages\Server\S_MOUNT_VEHICLE_EX.cs" />
     <Compile Include="Game\Messages\Server\S_PRIVATE_CHAT.cs" />
     <Compile Include="Game\Messages\Server\S_CREATURE_ROTATE.cs" />
