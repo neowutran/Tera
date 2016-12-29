@@ -12,7 +12,9 @@ namespace Tera.Game
     // Tracks which entities we have seen so far and what their properties are
     public class EntityTracker : IEnumerable<Entity>
     {
-        private readonly Dictionary<EntityId, Entity> _dictionary = new Dictionary<EntityId, Entity>();
+        private readonly Dictionary<EntityId, Entity> _entities = new Dictionary<EntityId, Entity>();
+        private readonly Dictionary<EntityId, DateTime> _entitiesRegisteredDate = new Dictionary<EntityId, DateTime>();
+
         private readonly NpcDatabase _npcDatabase;
 
         public EntityTracker(NpcDatabase npcDatabase)
@@ -24,7 +26,7 @@ namespace Tera.Game
 
         public IEnumerator<Entity> GetEnumerator()
         {
-            return _dictionary.Values.GetEnumerator();
+            return _entities.Values.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -60,7 +62,8 @@ namespace Tera.Game
 
         internal void Register(Entity newEntity)
         {
-            _dictionary[newEntity.Id] = newEntity;
+            _entitiesRegisteredDate[newEntity.Id] = DateTime.Now;
+            _entities[newEntity.Id] = newEntity;
             OnEntityUpdated(newEntity);
         }
 
@@ -281,8 +284,26 @@ namespace Tera.Game
         public Entity GetOrNull(EntityId id)
         {
             Entity entity;
-            _dictionary.TryGetValue(id, out entity);
+            _entities.TryGetValue(id, out entity);
             return entity;
+        }
+
+        public NpcEntity FindLastestNpcEntityByAreaAndTemplate(int huntingZone, int templateId)
+        {
+            NpcEntity result = null;
+            foreach(var entity in _entities.Values)
+            {
+                var npc = entity as NpcEntity;
+                if (npc == null) continue;
+                if(npc.Info.HuntingZoneId == huntingZone &&
+                    npc.Info.TemplateId == templateId &&
+                    (( result != null && _entitiesRegisteredDate[npc.Id] > _entitiesRegisteredDate[result.Id] ) || result == null))
+                {
+                    result = npc;
+                }               
+            }
+
+            return result;
         }
 
         public Entity GetOrPlaceholder(EntityId id)
