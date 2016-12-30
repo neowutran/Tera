@@ -13,7 +13,6 @@ namespace Tera.Game
     public class EntityTracker : IEnumerable<Entity>
     {
         private readonly Dictionary<EntityId, Entity> _entities = new Dictionary<EntityId, Entity>();
-        private readonly Dictionary<EntityId, DateTime> _entitiesRegisteredDate = new Dictionary<EntityId, DateTime>();
 
         private readonly NpcDatabase _npcDatabase;
 
@@ -62,7 +61,6 @@ namespace Tera.Game
 
         internal void Register(Entity newEntity)
         {
-            _entitiesRegisteredDate[newEntity.Id] = DateTime.Now;
             _entities[newEntity.Id] = newEntity;
             OnEntityUpdated(newEntity);
         }
@@ -286,24 +284,6 @@ namespace Tera.Game
             Entity entity;
             _entities.TryGetValue(id, out entity);
             return entity;
-        }
-
-        public NpcEntity FindLastestNpcEntityByAreaAndTemplate(int huntingZone, int templateId)
-        {
-            NpcEntity result = null;
-            foreach(var entity in _entities.Values)
-            {
-                var npc = entity as NpcEntity;
-                if (npc == null) continue;
-                if(npc.Info.HuntingZoneId == huntingZone &&
-                    npc.Info.TemplateId == templateId &&
-                    (( result != null && _entitiesRegisteredDate[npc.Id] > _entitiesRegisteredDate[result.Id] ) || result == null))
-                {
-                    result = npc;
-                }               
-            }
-
-            return result;
         }
 
         public Entity GetOrPlaceholder(EntityId id)
