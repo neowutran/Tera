@@ -32,10 +32,8 @@ namespace Tera.Game
                 Skill = skillDatabase.Get(sourceUser, message);
                 if (Skill == null && npc != null)
                 {
-                    Skill = new UserSkill(message.SkillId, sourceUser.RaceGenderClass, npc.Info.Name, null,
-                        petSkillDatabase?.Get(npc.Info.Name, SkillId) ?? "",
-                        skillDatabase.GetSkillByPetName(npc.Info.Name, sourceUser.RaceGenderClass)?.IconName ?? "",
-                        npc.Info);
+                    Skill = petSkillDatabase?.GetOrNull(npc.Info, SkillId) ?? new UserSkill(message.SkillId, sourceUser.RaceGenderClass, npc.Info.Name, null,
+                        "", skillDatabase.GetSkillByPetName(npc.Info.Name, sourceUser.RaceGenderClass)?.IconName ?? "", npc.Info);
                 }
                 SourcePlayer = playerTracker.Get(sourceUser.ServerId, sourceUser.PlayerId);
                 if (Skill == null)
@@ -153,10 +151,9 @@ namespace Tera.Game
             var skill = skillDatabase.GetOrNull(sourceUser.RaceGenderClass, skillid);
             if (skill != null)return skill;
             if (pet == null) return new UserSkill(skillid, sourceUser.RaceGenderClass, "Unknown");
-            skill = new UserSkill(skillid, sourceUser.RaceGenderClass, pet.Name, null,
-                petSkillDatabase?.Get(pet.Name, skillid) ?? "",
-                skillDatabase.GetSkillByPetName(pet.Name, sourceUser.RaceGenderClass)?.IconName ?? "",
-                pet);
+            skill = petSkillDatabase?.GetOrNull(pet, skillid) ??
+                new UserSkill(skillid, sourceUser.RaceGenderClass, pet.Name, null,"",
+                skillDatabase.GetSkillByPetName(pet.Name, sourceUser.RaceGenderClass)?.IconName ?? "", pet);
             return skill;
         }
 
