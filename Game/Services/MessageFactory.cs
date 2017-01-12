@@ -88,7 +88,8 @@ namespace Tera.Game
 
         private readonly OpCodeNamer _opCodeNamer;
         private readonly OpCodeNamer _sysMsgNamer;
-        public string Version;
+        public string Region;
+        public uint Version;
         public bool ChatEnabled {
             get { return _chatEnabled; }
             set
@@ -102,7 +103,7 @@ namespace Tera.Game
 
         private bool _chatEnabled;
 
-        public MessageFactory(OpCodeNamer opCodeNamer, string version, bool chatEnabled=false, OpCodeNamer sysMsgNamer=null)
+        public MessageFactory(OpCodeNamer opCodeNamer, string region, uint version, bool chatEnabled=false, OpCodeNamer sysMsgNamer=null)
         {
             _opCodeNamer = opCodeNamer;
             _sysMsgNamer = sysMsgNamer;
@@ -110,13 +111,15 @@ namespace Tera.Game
             CoreServices.ToList().ForEach(x=>OpcodeNameToType[_opCodeNamer.GetCode(x.Key)]=x.Value);
             if (chatEnabled) ChatServices.ToList().ForEach(x => OpcodeNameToType[_opCodeNamer.GetCode(x.Key)] = x.Value);
             Version = version;
+            Region = region;
             _chatEnabled = chatEnabled;
         }
 
         public MessageFactory()
         {
             _opCodeNamer = new OpCodeNamer(new Dictionary<ushort,string>{{19900 , "C_CHECK_VERSION" }} );
-            Version = "Unknown";
+            Version = 0;
+            Region = "Unknown";
         }
 
         private ParsedMessage Instantiate(ushort opCode, TeraMessageReader reader)
