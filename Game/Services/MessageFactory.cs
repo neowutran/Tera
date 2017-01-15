@@ -95,6 +95,7 @@ namespace Tera.Game
             set
             {
                 _chatEnabled = value;
+                if (OpcodeNameToType.Count==1) return;
                 OpcodeNameToType.Clear();
                 CoreServices.ToList().ForEach(x => OpcodeNameToType[_opCodeNamer.GetCode(x.Key)] = x.Value);
                 if (_chatEnabled) ChatServices.ToList().ForEach(x => OpcodeNameToType[_opCodeNamer.GetCode(x.Key)] = x.Value);
