@@ -29,21 +29,18 @@ namespace Tera.Game.Messages
 
         public static int Gold(long price)
         {
-            var pricestr = price + "";
-            return int.Parse(pricestr.Substring(0, pricestr.Length - 4));
+            return (int)(price/10000);
         }
 
 
         public static int Silver(long price)
         {
-            var pricestr = price + "";
-            return int.Parse(pricestr.Substring(pricestr.Length - 4, pricestr.Length - 2));
+            return (int)(price % 10000 / 100);
         }
 
         public static int Bronze(long price)
         {
-            var pricestr = price + "";
-            return int.Parse(pricestr.Substring(pricestr.Length - 2));
+            return (int)(price % 100);
         }
     }
 }
