@@ -107,7 +107,7 @@ namespace Tera.Game
             IconName = iconName;
             Debuff = (rType == Types.Endurance || rType == Types.CritResist) && amount <= 1 || rType == Types.Mark || (rType == Types.DefPotion && amount > 1);
             HPMPChange = rType == Types.HPChange || rType == Types.MPChange;
-            Buff = rType != Types.HPChange && rType != Types.MPChange;
+            Buff = rType != Types.HPChange;// && rType != Types.MPChange;//try to show MPChange abnormals
         }
 
         public void Update(int id, string type, double hp, double mp, double amount, DotType method, int time, int tick,
@@ -127,7 +127,7 @@ namespace Tera.Game
             });
             Debuff = Debuff || (rType == Types.Endurance || rType == Types.CritResist) && amount < 1 || rType == Types.Mark || (rType == Types.DefPotion && amount > 1);
             HPMPChange = HPMPChange || rType == Types.HPChange || rType == Types.MPChange;
-            Buff = Buff || (rType != Types.HPChange && rType != Types.MPChange);
+            Buff = Buff || (rType != Types.HPChange); // && rType != Types.MPChange);//try to show MPChange abnormals
         }
 
 
