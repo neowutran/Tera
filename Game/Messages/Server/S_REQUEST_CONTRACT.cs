@@ -21,21 +21,25 @@ namespace Tera.Game.Messages
         public string Recipient { get; private set; }
         public enum RequestType
         {
-            UnStuck=16,
-            DungeonTeleporter = 15,
+            TradeRequest = 3,
+            PartyInvite = 4,
             Mailbox = 8,
-            MapTeleporter =  14,
-            TeraClubMapTeleporter = 53,
-            TeraClubTravelJournalTeleporter = 54,
-            OpenBox = 43,
-            LootBox = 52,
+            ShopOpen = 9,
+            MapTeleporter = 14,
+            DungeonTeleporter = 15,
+            UnStuck = 16,
+            VanguardShop = 17,
             ChooseLootDialog = 20, //(aka: goldfinger + elion token + ...)
             BankOpen = 26,
+            Craft = 31,
             TeraClubDarkanFlameUse = 33, // or merge multiple item together
-            PartyInvite = 4,
-            TradeRequest = 3,
-            ShopOpen = 9,
-            Craft = 31
+            Enchant = 34,
+            OpenBox = 43,
+            ContinentMapTeleporter = 48,
+            LootBox = 52,
+            TeraClubMapTeleporter = 53,
+            TeraClubTravelJournalTeleporter = 54,
+            Dressroom = 76
         }
 
         public RequestType Type { get; private set; }
