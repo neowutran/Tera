@@ -192,6 +192,20 @@ namespace Tera.Game
             //Debug.WriteLine($"{entity.Position} {entity.Heading}");
         }
 
+        public void Update(S_INSTANT_DASH m)
+        {
+            var entity = GetOrNull(m.Entity);
+            if (entity == null) return;
+            entity.Position = m.Position;
+            entity.Finish = m.Position;
+            entity.Heading = m.Heading;
+            entity.Speed = 0;
+            entity.StartTime = 0;
+            entity.EndAngle = entity.Heading;
+            entity.EndTime = 0;
+            //Debug.WriteLine($"{entity.Position} {entity.Heading}");
+        }
+
         public void Update(S_CREATURE_ROTATE m)
         {
             var entity = GetOrNull(m.Entity);
@@ -266,6 +280,7 @@ namespace Tera.Game
             message.On<S_ACTION_END>(x => Update(x));
             message.On<SCreatureLife>(x => Update(x));
             message.On<S_INSTANT_MOVE>(x => Update(x));
+            message.On<S_INSTANT_DASH>(x => Update(x));
             message.On<S_CREATURE_ROTATE>(x => Update(x));
             message.On<EachSkillResultServerMessage>(x => Update(x));
             message.On<SNpcLocation>(x => Update(x));
