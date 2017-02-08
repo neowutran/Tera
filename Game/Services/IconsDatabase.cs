@@ -16,7 +16,7 @@ namespace Tera.Game
         public IconsDatabase(string resourceDirectory)
         {
 //            IconsDirectory = Path.Combine(resourceDirectory, "icons/");
-            _icons = Package.Open(resourceDirectory + "icons.zip", FileMode.Open, FileAccess.Read);
+            _icons = Package.Open(resourceDirectory + "icons.zip", FileMode.Open, FileAccess.Read, FileShare.Read);
         }
 
         public BitmapImage GetImage(string iconName)
