@@ -9,10 +9,11 @@ namespace Tera.Game.Messages
     {
         public enum GuildQuestType
         {
+            Other = 0,
             Hunt = 1,
             Battleground = 2,
-            Gathering = 3
-
+            Gathering = 3,
+            Rally = 4
         }
 
         public enum GuildQuestType2
@@ -147,12 +148,11 @@ namespace Tera.Game.Messages
                 var id = reader.ReadUInt32();
                 var questType2 = (GuildQuestType2)reader.ReadUInt32();
                 var questSize = (QuestSizeType)reader.ReadUInt32();
-                var unk3 = reader.ReadByte();
-                var unk4 = reader.ReadUInt32();
-                var active = reader.ReadByte();
+                var unk3 = reader.ReadInt32(); //2 if rally
+                var totalTime = reader.ReadInt32();
+                var active = reader.ReadInt32(); //0=not taken, 1= in progress, 2=completed
                 //Debug.WriteLine(active.ToString("X"));
                 var activeBool = active == 1;
-                var unk7 = reader.ReadBytes(3);
                 
                 //in seconds
                 var timeRemaining = reader.ReadUInt32();
