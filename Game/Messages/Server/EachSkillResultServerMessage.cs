@@ -43,8 +43,8 @@ namespace Tera.Game.Messages
             FlagsDebug = reader.ReadInt32();
             Flags = (SkillResultFlags) FlagsDebug;
             IsCritical = (reader.ReadUInt16() & 1) != 0;
-            Knockdown = (reader.ReadByte() & 1) != 0;
-            reader.Skip(4); //unknown
+            Blocked = (reader.ReadByte() & 1) != 0;
+            reader.Skip(8); //unknown
             Position = reader.ReadVector3f();
             Heading = reader.ReadAngle();
             //if (Position.X!=0)
@@ -70,7 +70,7 @@ namespace Tera.Game.Messages
         public int SkillId { get; private set; }
         public SkillResultFlags Flags { get; }
         public bool IsCritical { get; private set; }
-        public bool Knockdown { get; private set; }
+        public bool Blocked { get; private set; }
         public Vector3f Position { get; }
         public Angle Heading { get; }
 
