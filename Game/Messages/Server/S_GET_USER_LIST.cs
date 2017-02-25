@@ -15,15 +15,20 @@ namespace Tera.Game.Messages
                 var pointer = reader.ReadUInt16();
                 Debug.Assert(pointer==offset);//should be the same
                 var nextOffset = reader.ReadUInt16();
-                reader.Skip(16);
+                reader.Skip(14);
+                var gNameOffset = reader.ReadUInt16();
                 var playerId = reader.ReadUInt32();
                 reader.Skip(286);
                 var guildId = reader.ReadUInt32();
-                PlayerGuilds.Add(playerId,guildId);
+                reader.BaseStream.Position = gNameOffset - 4;
+                var gName = reader.ReadTeraString();
+                PlayerGuilds.Add(playerId, guildId);
+                PlayerGuildNames.Add(playerId, gName);
                 offset = nextOffset;
             }
         }
 
-        public Dictionary<uint,uint> PlayerGuilds { get; } = new Dictionary<uint, uint>();
+        public Dictionary<uint, uint> PlayerGuilds { get; } = new Dictionary<uint, uint>();
+        public Dictionary<uint, string> PlayerGuildNames { get; } = new Dictionary<uint, string>();
     }
 }

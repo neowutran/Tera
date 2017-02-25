@@ -13,12 +13,13 @@ namespace Tera.Game
     public class EntityTracker : IEnumerable<Entity>
     {
         private readonly Dictionary<EntityId, Entity> _entities = new Dictionary<EntityId, Entity>();
-
+        private UserLogoTracker _userLogoTracker;
         private readonly NpcDatabase _npcDatabase;
 
-        public EntityTracker(NpcDatabase npcDatabase)
+        public EntityTracker(NpcDatabase npcDatabase, UserLogoTracker userLogoTracker=null)
         {
             _npcDatabase = npcDatabase;
+            _userLogoTracker = userLogoTracker;
         }
 
         public UserEntity MeterUser { get; private set; }
@@ -39,11 +40,6 @@ namespace Tera.Game
         {
             var handler = EntityUpdated;
             handler?.Invoke(entity);
-        }
-
-        public void Update(S_GUILD_INFO message)
-        {
-            MeterUser.GuildName = message.GuildName;
         }
 
         public void Update(LoginServerMessage message)
@@ -291,12 +287,12 @@ namespace Tera.Game
             message.On<SNpcLocation>(x => Update(x));
             message.On<S_USER_LOCATION>(x => Update(x));
             message.On<S_BOSS_GAGE_INFO>(x => Update(x));
-            message.On<S_GUILD_INFO>(x => Update(x));
         }
 
         private Entity LoginMe(LoginServerMessage m)
         {
             MeterUser = new UserEntity(m);
+            MeterUser.GuildName = _userLogoTracker?.GetGuildName(m.PlayerId)??"";
             return MeterUser;
         }
 
