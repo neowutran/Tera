@@ -41,6 +41,11 @@ namespace Tera.Game
             handler?.Invoke(entity);
         }
 
+        public void Update(S_GUILD_INFO message)
+        {
+            MeterUser.GuildName = message.GuildName;
+        }
+
         public void Update(LoginServerMessage message)
         {
             var newEntity = LoginMe(message);
@@ -286,6 +291,7 @@ namespace Tera.Game
             message.On<SNpcLocation>(x => Update(x));
             message.On<S_USER_LOCATION>(x => Update(x));
             message.On<S_BOSS_GAGE_INFO>(x => Update(x));
+            message.On<S_GUILD_INFO>(x => Update(x));
         }
 
         private Entity LoginMe(LoginServerMessage m)
