@@ -72,6 +72,8 @@ namespace Tera.Game
 
                 var skill = _userSkilldata[rgc2].FirstOrDefault(x => x.Value.Name.Contains(name)).Value;
                 if (skill == null)
+                    skill = _userSkilldata[rgc2].FirstOrDefault(x => name.Contains(x.Value.Name)).Value; //keen hb-7
+                if (skill == null)
                     continue;
                 return skill;
             }
