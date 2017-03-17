@@ -55,9 +55,11 @@
             TotalStamina = reader.ReadInt32();
             ReRemaining = reader.ReadInt32();
             TotalRe = reader.ReadInt32();
-            reader.Skip(8);
+            BonusRe = reader.ReadInt32();
+            reader.Skip(4);
             ItemLevelInventory = reader.ReadInt32();
             ItemLevel = reader.ReadInt32();
+            Edge = reader.ReadInt32();
 
             // Something else unknown later
         }
@@ -110,7 +112,9 @@
         public int TotalHp { get; }
         public int TotalMp { get; private set; }
         public int TotalRe { get; private set; }
+        public int BonusRe { get; private set; }
         public int TotalStamina { get; private set; }
         public int Vitality { get; private set; }
+        public int Edge { get; private set; }
     }
 }
