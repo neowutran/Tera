@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Diagnostics;
 
 namespace Tera.Game.Messages
 {
@@ -12,7 +12,7 @@ namespace Tera.Game.Messages
             AuthorId = reader.ReadUInt64();
             AuthorName = reader.ReadTeraString();
             Text = reader.ReadTeraString();
-            Console.WriteLine("Channel:"+Channel+";Username:"+AuthorName+";Text:"+Text+";AuthorId:"+AuthorId);
+            Debug.WriteLine("Channel:"+Channel+";Username:"+AuthorName+";Text:"+Text+";AuthorId:"+AuthorId);
         }
 
         public string AuthorName { get; set; }

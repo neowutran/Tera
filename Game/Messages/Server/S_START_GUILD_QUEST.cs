@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 namespace Tera.Game.Messages
 {
     public class S_START_GUILD_QUEST : ParsedMessage

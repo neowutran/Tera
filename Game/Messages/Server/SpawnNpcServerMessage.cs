@@ -8,8 +8,7 @@ namespace Tera.Game.Messages
         internal SpawnNpcServerMessage(TeraMessageReader reader)
             : base(reader)
         {
-            reader.Skip(6);
-            reader.Skip(4);//not sure what's there
+            reader.Skip(10);
             Id = reader.ReadEntityId();
             TargetId = reader.ReadEntityId();
             Position = reader.ReadVector3f();

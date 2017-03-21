@@ -8,16 +8,10 @@ namespace Tera.Game.Messages
         internal S_BEGIN_THROUGH_ARBITER_CONTRACT(TeraMessageReader reader)
             : base(reader)
         {
-            //reader.Skip(18);
-            reader.Skip(8);
-            var type = reader.ReadByte();
-            if(type == 0x23)
-            {
-                Console.Beep();
-                Console.WriteLine("ERROR TYPE 23:");
-                PrintRaw();
-            }
-            reader.Skip(9);
+            reader.Skip(18);
+            //reader.Skip(8);
+            //var type = reader.ReadByte();
+            //reader.Skip(9);
             InviteName = reader.ReadTeraString();
             try
             {

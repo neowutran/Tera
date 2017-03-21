@@ -11,7 +11,6 @@ namespace Tera.Game.Messages
             var nameOffset = reader.ReadUInt16();
             reader.Skip(14);
             ServerId = reader.ReadUInt32();
-            // not sure, whether full uint32 is serverid, or only first 2 bytes and the rest part of it is actualy a part of PlayerId, or something else, but it always come along with PlayerID as complex player id
             PlayerId = reader.ReadUInt32();
             Id = reader.ReadEntityId();
             Position = reader.ReadVector3f();
