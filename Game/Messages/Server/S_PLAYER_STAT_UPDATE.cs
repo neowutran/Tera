@@ -60,6 +60,8 @@
             ItemLevelInventory = reader.ReadInt32();
             ItemLevel = reader.ReadInt32();
             Edge = reader.ReadInt32();
+            reader.Skip(16);
+            FlightEnergy = reader.ReadSingle();
 
             // Something else unknown later
         }
@@ -116,5 +118,6 @@
         public int TotalStamina { get; private set; }
         public int Vitality { get; private set; }
         public int Edge { get; private set; }
+        public float FlightEnergy { get; private set; }
     }
 }
