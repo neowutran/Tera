@@ -40,6 +40,7 @@ namespace Tera.Game.Messages
             LootBox = 52,
             TeraClubMapTeleporter = 53,
             TeraClubTravelJournalTeleporter = 54,
+            TeleporterToNearestCity = 71,
             Dressroom = 76
         }
 
