@@ -16,8 +16,8 @@ namespace Tera.Game
         }
         public enum AbnormalityType
         {
-            WeakeningEffect = 1,
-            DamageOverTime = 2,
+            Debuff = 1,
+            DOT = 2,
             Stun = 3,
             Buff = 4
         }
