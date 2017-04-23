@@ -65,6 +65,7 @@ namespace Tera.Game
             Resurrect = 229,
             Mark = 231, // Velik's Mark/Curse of Kaprima = increase received damage when marked
             CastSpeed = 236,
+            SkillCastSpeed = 235, //Increases Shield Barrage speed after 8 successful hits with Combo Attack.
             CrystalBind = 237,
             CCrystalBind = 249,
             DropUp=255,
