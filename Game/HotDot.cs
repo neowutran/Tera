@@ -14,7 +14,13 @@ namespace Tera.Game
             perc = 3, // each tick  HP += MaxHP*HPChange; MP += MaxMP*MPChange
             setp = 4 // ?set % stat value
         }
-
+        public enum AbnormalityType
+        {
+            WeakeningEffect = 1,
+            DamageOverTime = 2,
+            Stun = 3,
+            Buff = 4
+        }
         public enum Types
         {
             Unknown = 0,
@@ -86,11 +92,12 @@ namespace Tera.Game
 
         }
         public HotDot(int id, string type, double hp, double mp, double amount, DotType method, int time, int tick,
-            string name, string itemName, string tooltip, string iconName)
+            string name, string itemName, string tooltip, string iconName, AbnormalityType abType)
         {
             Id = id;
             Types rType;
             rType = Enum.TryParse(type, out rType) ? rType : Types.Unknown;
+            AbType = abType;
             Hp = hp;
             Mp = mp;
             Time = time;
@@ -146,6 +153,7 @@ namespace Tera.Game
         public bool Buff { get; private set; }
         public bool Debuff { get; private set; }
         public bool HPMPChange { get; private set; }
+        public AbnormalityType AbType { get; set; }
 
         public override bool Equals(object obj)
         {
