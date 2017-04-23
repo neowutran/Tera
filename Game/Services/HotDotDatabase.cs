@@ -75,7 +75,7 @@ namespace Tera.Game
                 else
                     _hotdots[id] = new HotDot(id, type, hp, mp, amount, method, time, tick, name, itemName, tooltip, iconName, abType);
             }
-            _hotdots[(int)StaticallyUsedBuff.Enraged] = new HotDot((int)StaticallyUsedBuff.Enraged, "Endurance", 0, 0, 0, 0, 36000, 0, "Enrage", "", "", "enraged",HotDot.AbnormalityType.WeakeningEffect);
+            _hotdots[(int)StaticallyUsedBuff.Enraged] = new HotDot((int)StaticallyUsedBuff.Enraged, "Endurance", 0, 0, 0, 0, 36000, 0, "Enrage", "", "", "enraged",HotDot.AbnormalityType.Debuff);
             _hotdots[(int)StaticallyUsedBuff.Slaying] = new HotDot((int)StaticallyUsedBuff.Slaying, "CritPower", 0, 0, 0, 0, 0, 0, "Slaying", "",
                 "'Slaying' crystal is working (if equipped) when player in this state.", "slaying",HotDot.AbnormalityType.Buff);
 
