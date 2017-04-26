@@ -260,7 +260,12 @@ namespace Tera.Game
         public void Update(S_BOSS_GAGE_INFO m)
         {
             var entity = GetOrNull(m.EntityId) as NpcEntity;
-            if (entity == null) return;
+            if (entity == null)
+            {
+                entity = new NpcEntity(m.EntityId, EntityId.Empty, null,
+                    _npcDatabase.GetOrPlaceholder((ushort)m.HuntingZoneId, m.TemplateId),new Vector3f(), new Angle());
+                Register(entity);
+            }
             _npcDatabase.AddDetectedBoss(entity.Info.HuntingZoneId, entity.Info.TemplateId);
             entity.Info.Boss = true;
             entity.Info.HP = (long) m.TotalHp;

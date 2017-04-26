@@ -5,8 +5,8 @@
         internal S_BOSS_GAGE_INFO(TeraMessageReader reader) : base(reader)
         {
             EntityId = reader.ReadEntityId();
-            Type = reader.ReadInt32();
-            NpcId = reader.ReadInt32();
+            HuntingZoneId = reader.ReadUInt32();
+            TemplateId = reader.ReadUInt32();
             TargetId = reader.ReadEntityId();
             Unk1 = reader.ReadInt32();
             HpChange = reader.ReadSingle();
@@ -17,9 +17,9 @@
 
         public byte Unk2 { get; }
         public int Unk1 { get; }
-        public int NpcId { get; }
+        public uint HuntingZoneId { get; }
+        public uint TemplateId { get; }
         public float HpChange { get; }
-        public int Type { get; }
         public float HpRemaining { get; }
         public float TotalHp { get; }
         public EntityId TargetId { get; }
