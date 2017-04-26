@@ -70,14 +70,15 @@ namespace Tera.Game
                 var tooltip = values[11];
                 var iconName = values[12];
                 var abType = (HotDot.AbnormalityType) Enum.Parse(typeof(HotDot.AbnormalityType),values[13]);
+                var isBuff = bool.Parse(values[14]);
                 if (_hotdots.ContainsKey(id))
                     _hotdots[id].Update(id, type, hp, mp, amount, method, time, tick, name, itemName, tooltip, iconName);
                 else
-                    _hotdots[id] = new HotDot(id, type, hp, mp, amount, method, time, tick, name, itemName, tooltip, iconName, abType);
+                    _hotdots[id] = new HotDot(id, type, hp, mp, amount, method, time, tick, name, itemName, tooltip, iconName, abType, isBuff);
             }
-            _hotdots[(int)StaticallyUsedBuff.Enraged] = new HotDot((int)StaticallyUsedBuff.Enraged, "Endurance", 0, 0, 0, 0, 36000, 0, "Enrage", "", "", "enraged",HotDot.AbnormalityType.Debuff);
+            _hotdots[(int)StaticallyUsedBuff.Enraged] = new HotDot((int)StaticallyUsedBuff.Enraged, "Endurance", 0, 0, 0, 0, 36000, 0, "Enrage", "", "", "enraged",HotDot.AbnormalityType.Debuff, true);
             _hotdots[(int)StaticallyUsedBuff.Slaying] = new HotDot((int)StaticallyUsedBuff.Slaying, "CritPower", 0, 0, 0, 0, 0, 0, "Slaying", "",
-                "'Slaying' crystal is working (if equipped) when player in this state.", "slaying",HotDot.AbnormalityType.Buff);
+                "'Slaying' crystal is working (if equipped) when player in this state.", "slaying",HotDot.AbnormalityType.Buff, true);
 
             var shortnames = Path.Combine(folder, $"hotdot\\hotdot-short-{language}.tsv");
             if (File.Exists(shortnames))

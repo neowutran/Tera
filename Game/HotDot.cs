@@ -92,12 +92,13 @@ namespace Tera.Game
 
         }
         public HotDot(int id, string type, double hp, double mp, double amount, DotType method, int time, int tick,
-            string name, string itemName, string tooltip, string iconName, AbnormalityType abType)
+            string name, string itemName, string tooltip, string iconName, AbnormalityType abType, bool isBuff)
         {
             Id = id;
             Types rType;
             rType = Enum.TryParse(type, out rType) ? rType : Types.Unknown;
             AbType = abType;
+            IsBuff = isBuff;
             Hp = hp;
             Mp = mp;
             Time = time;
@@ -154,6 +155,7 @@ namespace Tera.Game
         public bool Debuff { get; private set; }
         public bool HPMPChange { get; private set; }
         public AbnormalityType AbType { get; set; }
+        public bool IsBuff { get; set; }//if false => purple hp bar
 
         public override bool Equals(object obj)
         {
