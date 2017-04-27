@@ -59,18 +59,18 @@ namespace Tera.Game
                 var values = line.Split('\t');
                 var id = int.Parse(values[0]);
                 var type = values[1];
-                var hp = double.Parse(values[2], CultureInfo.InvariantCulture);
-                var mp = double.Parse(values[3], CultureInfo.InvariantCulture);
+                var abType = (HotDot.AbnormalityType)Enum.Parse(typeof(HotDot.AbnormalityType), values[2]);
+                var isBuff = bool.Parse(values[3]);
                 var method = (HotDot.DotType) Enum.Parse(typeof(HotDot.DotType), values[4]);
                 var time = int.Parse(values[5]);
                 var tick = int.Parse(values[6]);
                 var amount = double.Parse(values[7], CultureInfo.InvariantCulture);
+                var hp = type == "HPChange" ? amount : 0;
+                var mp = type == "MPChange" ? amount : 0;
                 var name = values[8];
                 var itemName = values[10];
                 var tooltip = values[11];
                 var iconName = values[12];
-                var abType = (HotDot.AbnormalityType) Enum.Parse(typeof(HotDot.AbnormalityType),values[13]);
-                var isBuff = bool.Parse(values[14]);
                 if (_hotdots.ContainsKey(id))
                     _hotdots[id].Update(id, type, hp, mp, amount, method, time, tick, name, itemName, tooltip, iconName);
                 else
