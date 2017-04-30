@@ -19,6 +19,15 @@ namespace Tera.Game
         {
             InitializeSkillDatabase(Path.Combine(directory, $"skills\\skills-override-{reg_lang}.tsv"));
             InitializeSkillDatabase(Path.Combine(directory, $"skills\\skills-{reg_lang}.tsv"));
+            var gunner = new RaceGenderClass(Race.Common, Gender.Common, PlayerClass.Gunner);
+            var bf = GetOrNull(gunner, 51001);
+            if (bf == null) return;
+            for (int i = 1; i <= 5; i++)
+            {
+                var skill = new UserSkill(bf.Id + i, gunner, bf.Name, bf.IsChained, i.ToString(), bf.IconName);
+                if (!_userSkilldata[skill.RaceGenderClass].ContainsKey(skill.Id))
+                    _userSkilldata[skill.RaceGenderClass].Add(skill.Id, skill);
+            }
         }
 
         private void InitializeSkillDatabase(string filename)
