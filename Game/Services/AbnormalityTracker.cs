@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using Tera.Game.Abnormality;
 using Tera.Game.Messages;
@@ -106,10 +107,11 @@ namespace Tera.Game
         }
 
 
-        public event AbnormalityEvent AbnormalityAdded;
-        public event AbnormalityEvent AbnormalityRemoved;
+        public event AbnormalityAddEvent AbnormalityAdded;
+        public event AbnormalityRemoveEvent AbnormalityRemoved;
 
-        public delegate void AbnormalityEvent(EntityId target, int abnormalityId, int stack=0);
+        public delegate void AbnormalityAddEvent(Abnormality.Abnormality abnormality, bool newStack);
+        public delegate void AbnormalityRemoveEvent(EntityId target, int abnormalityId);
 
         public void Update(SAbnormalityBegin message)
         {
@@ -132,10 +134,10 @@ namespace Tera.Game
 
             if (_abnormalities[target].Count(x => x.HotDot.Id == abnormalityId) == 0)
             {
+                var ab = new Abnormality.Abnormality(hotdot, source, target, duration, stack, ticks, this);
                 //dont add existing abnormalities since we don't delete them all, that may cause many untrackable issues.
-                _abnormalities[target].Add(new Abnormality.Abnormality(hotdot, source, target, duration, stack, ticks,
-                    this));
-                AbnormalityAdded?.Invoke(target, abnormalityId, stack);
+                _abnormalities[target].Add(ab);
+                AbnormalityAdded?.Invoke(ab, true);
             }
         }
 
@@ -149,8 +151,8 @@ namespace Tera.Game
             foreach (var abnormality in abnormalityUser)
             {
                 if (abnormality.HotDot.Id != message.AbnormalityId) continue;
-                if (abnormality.Stack<message.StackCounter) AbnormalityAdded?.Invoke(message.TargetId, message.AbnormalityId, message.StackCounter);
                 abnormality.Refresh(message.StackCounter, message.Duration, message.Time.Ticks);
+                AbnormalityAdded?.Invoke(abnormality, abnormality.Stack >= message.StackCounter);
                 return;
             }
         }
@@ -169,11 +171,12 @@ namespace Tera.Game
             }
             var abnormalityTarget = _abnormalities[target];
             var abnormalities = abnormalityTarget.Where(t => t.HotDot.Effects.Any(x => x.Type == dotype));
-            if(!abnormalities.Any())
+            var enumerable = abnormalities as IList<Abnormality.Abnormality> ?? abnormalities.ToList();
+            if(!enumerable.Any())
             {
                 return -1;
             }
-            return abnormalities.Max(x => x.TimeBeforeEnd);
+            return enumerable.Max(x => x.TimeBeforeEnd);
        }
 
         /**
