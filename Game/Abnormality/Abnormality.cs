@@ -15,7 +15,7 @@ namespace Tera.Game.Abnormality
             HotDot = hotdot;
             Source = source;
             Target = target;
-            Duration = duration/1000;
+            Duration = duration;
             Stack = stack == 0 ? 1 : stack;
             FirstHit = ticks;
             if (HotDot.Name == "") return;
@@ -40,7 +40,7 @@ namespace Tera.Game.Abnormality
 
         public long FirstHit { get; private set; }
 
-        public long TimeBeforeEnd => Duration == 0 ? long.MaxValue : FirstHit - DateTime.UtcNow.Ticks + Duration * TimeSpan.TicksPerSecond;
+        public long TimeBeforeEnd => Duration == 0 ? long.MaxValue : FirstHit - DateTime.UtcNow.Ticks + Duration * TimeSpan.TicksPerMillisecond;
         public long TimeBeforeApply => DateTime.UtcNow.Ticks - LastApply - HotDot.Tick * TimeSpan.TicksPerSecond;
 
         public void Apply(int amount, bool critical, bool isHp, long time)
@@ -164,7 +164,7 @@ namespace Tera.Game.Abnormality
         {
             Stack = stackCounter;
             FirstHit = ticks;
-            Duration = duration/1000;
+            Duration = duration;
             RegisterBuff(ticks);
             RegisterEnduranceDebuff(ticks);
         }
