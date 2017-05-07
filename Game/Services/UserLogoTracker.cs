@@ -6,9 +6,10 @@ namespace Tera.Game
 {
     public class UserLogoTracker
     {
-        private Dictionary<uint, uint> _playerGuilds = new Dictionary<uint, uint>();
-        private Dictionary<uint, string> _playerGuildNames = new Dictionary<uint, string>();
         private readonly Dictionary<uint, Bitmap> _guildLogos = new Dictionary<uint, Bitmap>();
+        private Dictionary<uint, string> _playerGuildNames = new Dictionary<uint, string>();
+        private Dictionary<uint, uint> _playerGuilds = new Dictionary<uint, uint>();
+
         public void SetUserList(S_GET_USER_LIST message)
         {
             _playerGuilds = message.PlayerGuilds;

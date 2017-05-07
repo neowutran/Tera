@@ -9,6 +9,6 @@
             Target = reader.ReadEntityId();
         }
 
-        public EntityId Target { get; private set; }
+        public EntityId Target { get; }
     }
 }

@@ -14,10 +14,10 @@
         }
 
         public EntityId Entity { get; }
-        public Vector3f Start { get; private set; }
-        public Angle Heading { get; private set; }
-        public short Speed { get; private set; }
-        public Vector3f Finish { get; private set; }
-        public int Ltype { get; private set; }
+        public Vector3f Start { get; }
+        public Angle Heading { get; }
+        public short Speed { get; }
+        public Vector3f Finish { get; }
+        public int Ltype { get; }
     }
 }

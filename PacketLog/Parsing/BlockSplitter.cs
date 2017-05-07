@@ -9,10 +9,10 @@ namespace Tera.PacketLog
     internal class BlockSplitter
     {
         private readonly MemoryStream _buffer = new MemoryStream();
-        public event Action<byte[]> BlockFinished;
         private volatile int _last;
-        private volatile int _prev;
         private volatile int _pPrev;
+        private volatile int _prev;
+        public event Action<byte[]> BlockFinished;
         public event Action<int, int> Resync;
 
         protected virtual void OnBlockFinished(byte[] block)
@@ -32,7 +32,7 @@ namespace Tera.PacketLog
             if (stream.Length < 2)
                 return null;
             var buffer = stream.GetBuffer();
-            var blockSize = buffer[0] | buffer[1] << 8;
+            var blockSize = buffer[0] | (buffer[1] << 8);
             if (stream.Length < blockSize || blockSize < 2)
                 return null;
             var block = new byte[blockSize];
@@ -45,9 +45,7 @@ namespace Tera.PacketLog
         {
             var block = PopBlock(_buffer);
             if (block != null)
-            {
                 OnBlockFinished(block);
-            }
             return block;
         }
 
@@ -58,7 +56,7 @@ namespace Tera.PacketLog
             {
                 var toSkip = (int) _buffer.Length - _last - _prev;
                 var buffer = _buffer.GetBuffer();
-                var blockSize = buffer[0] | buffer[1] << 8;
+                var blockSize = buffer[0] | (buffer[1] << 8);
                 RemoveFront(_buffer, toSkip);
                 var handler = Resync;
                 handler?.Invoke(toSkip, blockSize);

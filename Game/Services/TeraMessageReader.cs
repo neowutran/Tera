@@ -15,10 +15,10 @@ namespace Tera.Game
             Version = version;
         }
 
-        public Message Message { get; private set; }
-        public string OpCodeName { get; private set; }
-        public uint Version { get; private set; }
-        internal OpCodeNamer SysMsgNamer { get; private set; }
+        public Message Message { get; }
+        public string OpCodeName { get; }
+        public uint Version { get; }
+        internal OpCodeNamer SysMsgNamer { get; }
 
         private static MemoryStream GetStream(Message message)
         {

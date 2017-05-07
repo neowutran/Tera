@@ -49,58 +49,49 @@ namespace Tera.Game.Abnormality
          * if stack==0 - return all stacks uptime
          * if stack==-1 - return max stack uptime
          */
-        public long Duration(long begin, long end, int stack=0)
+        public long Duration(long begin, long end, int stack = 0)
         {
             long totalDuration = 0;
             var check = stack != -1 ? stack : MaxStack(begin, end);
-            foreach (var duration in check==0
-                                    ? _listDuration.Where(x => end >= x.Begin && begin <= x.End)
-                                    : _listDuration.Where(x => end >= x.Begin && begin <= x.End && check == x.Stack)
-                                    )
+            foreach (var duration in check == 0
+                ? _listDuration.Where(x => end >= x.Begin && begin <= x.End)
+                : _listDuration.Where(x => end >= x.Begin && begin <= x.End && check == x.Stack)
+            )
             {
                 var abnormalityBegin = duration.Begin;
                 var abnormalityEnd = duration.End;
 
                 if (begin > abnormalityBegin)
-                {
                     abnormalityBegin = begin;
-                }
 
                 if (end < abnormalityEnd)
-                {
                     abnormalityEnd = end;
-                }
 
                 totalDuration += abnormalityEnd - abnormalityBegin;
             }
             return totalDuration;
         }
 
-        public void Start(long start,int stack)
+        public void Start(long start, int stack)
         {
             if (_listDuration.Count != 0)
-            {
                 if (!Ended())
                 {
-                    if (LastStack()==stack)
-                    //Debug.WriteLine("Can't restart something that has not been ended yet");
+                    if (LastStack() == stack)
+                        //Debug.WriteLine("Can't restart something that has not been ended yet");
                         return;
                     if (_listDuration[_listDuration.Count - 1].Begin == start)
-                        _listDuration.RemoveAt(_listDuration.Count - 1);//no need to store zero-time stacks
+                        _listDuration.RemoveAt(_listDuration.Count - 1); //no need to store zero-time stacks
                     else
                         _listDuration[_listDuration.Count - 1].End = start;
                 }
-            }
             _listDuration.Add(new Duration(start, long.MaxValue, stack));
         }
 
         public void End(long end)
         {
             if (Ended())
-            {
-                //Debug.WriteLine("Can't end something that has already been ended");
                 return;
-            }
 
             _listDuration[_listDuration.Count - 1].End = end;
         }
@@ -122,7 +113,7 @@ namespace Tera.Game.Abnormality
 
         public int Count(long begin = 0, long end = 0, int stack = 0)
         {
-            if (stack==0)
+            if (stack == 0)
                 return begin == 0 || end == 0
                     ? _listDuration.Count
                     : _listDuration.Count(x => begin <= x.End && end >= x.Begin);
@@ -143,17 +134,19 @@ namespace Tera.Game.Abnormality
         public List<int> Stacks(long begin = 0, long end = 0)
         {
             return begin == 0 || end == 0
-                ? _listDuration.GroupBy(x=>x.Stack).Where(x=>x.Sum(y=>y.End-y.Begin)>=TimeSpan.TicksPerSecond).Select(x => x.Key).OrderBy(x=>x).ToList()
+                ? _listDuration.GroupBy(x => x.Stack).Where(x => x.Sum(y => y.End - y.Begin) >= TimeSpan.TicksPerSecond)
+                    .Select(x => x.Key).OrderBy(x => x).ToList()
                 : _listDuration.Where(x => begin <= x.End && end >= x.Begin).GroupBy(x => x.Stack)
-                                .Where(x => x.Sum(y => y.End - y.Begin) >= TimeSpan.TicksPerSecond)
-                                .Select(x => x.Key).OrderBy(x => x).ToList();
+                    .Where(x => x.Sum(y => y.End - y.Begin) >= TimeSpan.TicksPerSecond)
+                    .Select(x => x.Key).OrderBy(x => x).ToList();
         }
 
         public int MaxStack(long begin = 0, long end = 0)
         {
             return begin == 0 || end == 0
-                ?_listDuration.Select(x => x.Stack).DefaultIfEmpty().Max()
-                :_listDuration.Where(x => end >= x.Begin && begin <= x.End).Select(x => x.Stack).DefaultIfEmpty().Max();
+                ? _listDuration.Select(x => x.Stack).DefaultIfEmpty().Max()
+                : _listDuration.Where(x => end >= x.Begin && begin <= x.End).Select(x => x.Stack).DefaultIfEmpty()
+                    .Max();
         }
 
         public bool Ended()

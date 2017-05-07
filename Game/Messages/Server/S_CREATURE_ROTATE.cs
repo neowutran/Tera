@@ -11,7 +11,7 @@
         }
 
         public EntityId Entity { get; }
-        public Angle Heading { get; private set; }
-        public int NeedTime { get; private set; }
+        public Angle Heading { get; }
+        public int NeedTime { get; }
     }
 }

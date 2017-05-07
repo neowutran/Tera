@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Tera.Game.Messages
+﻿namespace Tera.Game.Messages
 {
     public class SpawnMeServerMessage : ParsedMessage
     {
@@ -18,6 +16,6 @@ namespace Tera.Game.Messages
         public bool Dead { get; set; }
         public Angle Heading { get; set; }
         public Vector3f Position { get; set; }
-        public EntityId Id { get; private set; }
+        public EntityId Id { get; }
     }
 }

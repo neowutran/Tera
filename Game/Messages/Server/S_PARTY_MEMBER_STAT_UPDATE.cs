@@ -41,6 +41,6 @@
 
         public uint ServerId { get; }
         public uint PlayerId { get; }
-        public bool Slaying => TotalHp > HpRemaining*2 && HpRemaining > 0;
+        public bool Slaying => TotalHp > HpRemaining * 2 && HpRemaining > 0;
     }
 }

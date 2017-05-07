@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 
 namespace Tera.Game.Messages
 {
@@ -64,19 +63,19 @@ namespace Tera.Game.Messages
         public byte[] Unknow2 { get; }
 
 
-        public EntityId Source { get; private set; }
+        public EntityId Source { get; }
         public EntityId Target { get; }
         public int Amount { get; }
-        public int SkillId { get; private set; }
+        public int SkillId { get; }
         public SkillResultFlags Flags { get; }
-        public bool IsCritical { get; private set; }
-        public bool Blocked { get; private set; }
+        public bool IsCritical { get; }
+        public bool Blocked { get; }
         public Vector3f Position { get; }
         public Angle Heading { get; }
 
-        public bool IsMana => ((Flags & SkillResultFlags.Bit0) != 0) && ((Flags & SkillResultFlags.Heal) != 0);
+        public bool IsMana => (Flags & SkillResultFlags.Bit0) != 0 && (Flags & SkillResultFlags.Heal) != 0;
 
-        public bool IsHeal => ((Flags & SkillResultFlags.Bit0) == 0) && ((Flags & SkillResultFlags.Heal) != 0);
+        public bool IsHeal => (Flags & SkillResultFlags.Bit0) == 0 && (Flags & SkillResultFlags.Heal) != 0;
         public bool IsUseless => (Flags & SkillResultFlags.IsDfaResolve) != 0;
         public bool IsHp => !IsMana;
     }

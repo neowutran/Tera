@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace Tera.Game.Messages
+﻿namespace Tera.Game.Messages
 {
     public class S_START_COOLTIME_SKILL : ParsedMessage
     {
@@ -12,8 +10,8 @@ namespace Tera.Game.Messages
             //Debug.WriteLine("cooldown: SkillId = "+SkillId+"; Cooldown:"+Cooldown+"; hasResetted:"+HasResetted);
         }
 
-        public int SkillId { get; private set; }
-        public int Cooldown { get; private set; }
+        public int SkillId { get; }
+        public int Cooldown { get; }
 
         public bool HasResetted => Cooldown == 0;
     }

@@ -21,16 +21,12 @@ namespace Tera.PacketLog
             var value = (long) Math.Round((dateTime - TimeOrigin).TotalMilliseconds);
 
             var byteCount = 0;
-            while (value >> byteCount*8 != 0)
-            {
+            while (value >> (byteCount * 8) != 0)
                 byteCount++;
-            }
 
             var result = new byte[byteCount];
             for (var i = 0; i < byteCount; i++)
-            {
-                result[i] = unchecked((byte) (value >> i*8));
-            }
+                result[i] = unchecked((byte) (value >> (i * 8)));
             return result;
         }
 
@@ -38,9 +34,7 @@ namespace Tera.PacketLog
         {
             ulong value = 0;
             for (var i = 0; i < data.Length; i++)
-            {
-                value |= (ulong) data[i] << i*8;
-            }
+                value |= (ulong) data[i] << (i * 8);
             return TimeOrigin + TimeSpan.FromMilliseconds(value);
         }
     }

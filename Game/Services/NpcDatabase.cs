@@ -10,8 +10,8 @@ namespace Tera.Game
     {
         private readonly Dictionary<Tuple<ushort, uint>, NpcInfo> _dictionary;
         private readonly Func<Tuple<ushort, uint>, NpcInfo> _getPlaceholder;
-        private readonly Dictionary<ushort, string> _zoneNames;
         private readonly List<Tuple<ushort, uint>> _trackedBossEntities;
+        private readonly Dictionary<ushort, string> _zoneNames;
         public bool DetectBosses;
 
         public NpcDatabase(Dictionary<Tuple<ushort, uint>, NpcInfo> npcInfo)
@@ -45,7 +45,7 @@ namespace Tera.Game
                 let hp = long.Parse(monsters.Attribute("hp").Value)
                 let name = monsters.Attribute("name").Value
                 select new NpcInfo(huntingzoneid, templateid, boss, hp, name, area)).ToDictionary(
-                    x => Tuple.Create(x.HuntingZoneId, x.TemplateId));
+                x => Tuple.Create(x.HuntingZoneId, x.TemplateId));
             xml = XDocument.Load(Path.Combine(directory, "monsters\\monsters-override.xml"));
             var overs = from zones in xml.Root.Elements("Zone")
                 let huntingzoneid = ushort.Parse(zones.Attribute("id").Value)
@@ -56,24 +56,18 @@ namespace Tera.Game
                 let name = monsters.Attribute("name")?.Value
                 select new {id = Tuple.Create(huntingzoneid, templateid), boss, hp, name};
             foreach (var over in overs)
-            {
                 if (NPCs.ContainsKey(over.id))
-                {
                     NPCs[over.id] = new NpcInfo(NPCs[over.id].HuntingZoneId, NPCs[over.id].TemplateId,
                         over.boss == null ? NPCs[over.id].Boss : bool.Parse(over.boss),
                         over.hp == null ? NPCs[over.id].HP : long.Parse(over.hp),
                         over.name ?? NPCs[over.id].Name,
                         NPCs[over.id].Area);
-                }
                 else
-                {
                     NPCs.Add(over.id, new NpcInfo(over.id.Item1, over.id.Item2,
                         over.boss != null && bool.Parse(over.boss),
                         over.hp == null ? 0 : long.Parse(over.hp),
                         over.name ?? $"Npc {over.id.Item1} {over.id.Item2}",
                         string.Empty));
-                }
-            }
             return NPCs;
         }
 

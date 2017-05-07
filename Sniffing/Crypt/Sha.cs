@@ -94,10 +94,10 @@
             // Initialize the first 16 words in the array W
             for (t = 0; t < 16; t++)
             {
-                w[t] = (ulong) MessageBlock[t*4] << 24;
-                w[t] |= (ulong) MessageBlock[t*4 + 1] << 16;
-                w[t] |= (ulong) MessageBlock[t*4 + 2] << 8;
-                w[t] |= MessageBlock[t*4 + 3];
+                w[t] = (ulong) MessageBlock[t * 4] << 24;
+                w[t] |= (ulong) MessageBlock[t * 4 + 1] << 16;
+                w[t] |= (ulong) MessageBlock[t * 4 + 2] << 8;
+                w[t] |= MessageBlock[t * 4 + 3];
             }
 
             for (t = 16; t < 80; t++)
@@ -174,24 +174,18 @@
             {
                 MessageBlock[MessageBlockIndex++] = 0x80;
                 while (MessageBlockIndex < 64)
-                {
                     MessageBlock[MessageBlockIndex++] = 0;
-                }
 
                 ProcessMessageBlock();
 
                 while (MessageBlockIndex < 56)
-                {
                     MessageBlock[MessageBlockIndex++] = 0;
-                }
             }
             else
             {
                 MessageBlock[MessageBlockIndex++] = 0x80;
                 while (MessageBlockIndex < 56)
-                {
                     MessageBlock[MessageBlockIndex++] = 0;
-                }
             }
 
             // Store the message length as the last 8 octets

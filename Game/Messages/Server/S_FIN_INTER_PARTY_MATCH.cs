@@ -4,8 +4,6 @@
     {
         internal S_FIN_INTER_PARTY_MATCH(TeraMessageReader reader) : base(reader)
         {
-          
         }
-
     }
 }

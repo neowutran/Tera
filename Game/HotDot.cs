@@ -6,6 +6,14 @@ namespace Tera.Game
 {
     public class HotDot : IEquatable<object>
     {
+        public enum AbnormalityType
+        {
+            Debuff = 1,
+            DOT = 2,
+            Stun = 3,
+            Buff = 4
+        }
+
         public enum DotType
         {
             swch = 0, // switch on for noctineum ? other strange uses.
@@ -14,13 +22,7 @@ namespace Tera.Game
             perc = 3, // each tick  HP += MaxHP*HPChange; MP += MaxMP*MPChange
             setp = 4 // ?set % stat value
         }
-        public enum AbnormalityType
-        {
-            Debuff = 1,
-            DOT = 2,
-            Stun = 3,
-            Buff = 4
-        }
+
         public enum Types
         {
             Unknown = 0,
@@ -35,6 +37,7 @@ namespace Tera.Game
             WeakResist = 14,
             DotResist = 15,
             StunResist = 16,
+
             //something strange, internal itemname sleep_protect, but user string is stun resist, russian user string is "control effect resist"
             AllResist = 18,
             CritPower = 19,
@@ -48,6 +51,7 @@ namespace Tera.Game
             CraftTime = 26,
             OutOfCombatMovSpd = 27,
             HPDrain = 28, //drain hp on attack
+
             //28 = Something comming with MovSpd debuff skills, fxp 32% MovSpd debuff from Lockdown Blow IV, give also 12% of this kind
             //29 = something strange when using Lethal Strike
             Stamina = 30,
@@ -74,9 +78,10 @@ namespace Tera.Game
             SkillCastSpeed = 235, //Increases Shield Barrage speed after 8 successful hits with Combo Attack.
             CrystalBind = 237,
             CCrystalBind = 249,
-            DropUp=255,
+            DropUp = 255,
             Range = 259, //increase melee range? method 0 value 0.1= +10%
             HPChange2 = 260, //used by instant death on Curse stacks.
+
             //264 = redirect abnormality, value= new abnormality, bugged due to wrong float format in xml.
             Rage = 280, //tick - RageChange, notick (one change) - Rage 
             SuperArmor = 283,
@@ -84,13 +89,9 @@ namespace Tera.Game
             Charm = 65535
         }
 
-        public struct Effect
-        {
-            public Types Type;
-            public DotType Method;
-            public double Amount;
 
-        }
+        public List<Effect> Effects = new List<Effect>();
+
         public HotDot(int id, string type, double hp, double mp, double amount, DotType method, int time, int tick,
             string name, string itemName, string tooltip, string iconName, AbnormalityType abType, bool isBuff)
         {
@@ -107,40 +108,19 @@ namespace Tera.Game
             {
                 Type = rType,
                 Amount = amount,
-                Method = method,
+                Method = method
             });
             Name = name;
             ShortName = name;
             ItemName = itemName;
             Tooltip = tooltip;
             IconName = iconName;
-            Debuff = (rType == Types.Endurance || rType == Types.CritResist) && amount <= 1 || rType == Types.Mark || (rType == Types.DefPotion && amount > 1);
+            Debuff = (rType == Types.Endurance || rType == Types.CritResist) && amount <= 1 || rType == Types.Mark ||
+                     rType == Types.DefPotion && amount > 1;
             HPMPChange = rType == Types.HPChange || rType == Types.MPChange;
-            Buff = rType != Types.HPChange;// && rType != Types.MPChange;//try to show MPChange abnormals
+            Buff = rType != Types.HPChange; // && rType != Types.MPChange;//try to show MPChange abnormals
         }
 
-        public void Update(int id, string type, double hp, double mp, double amount, DotType method, int time, int tick,
-            string name, string itemName, string tooltip, string iconName)
-        {
-            Types rType;
-            rType = Enum.TryParse(type, out rType) ? rType : Types.Unknown;
-            if (Effects.Any(x => x.Type == rType)) return; // already added - duplicate strings with the same id and type in tsv (different item names - will be deleted soon)
-            Hp = rType==Types.HPChange ? hp : Hp;
-            Mp = rType==Types.MPChange ? mp : Mp;
-            Tick = rType == Types.MPChange|| rType == Types.HPChange ? tick : Tick; //assume that hp and mp tick times should be the same for one abnormality id
-            Effects.Add(new Effect
-            {
-                Type = rType,
-                Amount = amount,
-                Method = method
-            });
-            Debuff = Debuff || (rType == Types.Endurance || rType == Types.CritResist) && amount < 1 || rType == Types.Mark || (rType == Types.DefPotion && amount > 1);
-            HPMPChange = HPMPChange || rType == Types.HPChange || rType == Types.MPChange;
-            Buff = Buff || (rType != Types.HPChange); // && rType != Types.MPChange);//try to show MPChange abnormals
-        }
-
-
-        public List<Effect> Effects = new List<Effect>();
         public int Id { get; }
         public double Hp { get; private set; }
         public double Mp { get; private set; }
@@ -155,13 +135,37 @@ namespace Tera.Game
         public bool Debuff { get; private set; }
         public bool HPMPChange { get; private set; }
         public AbnormalityType AbType { get; set; }
-        public bool IsBuff { get; set; }//if false => purple hp bar
+        public bool IsBuff { get; set; } //if false => purple hp bar
 
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             return obj.GetType() == GetType() && Equals((HotDot) obj);
+        }
+
+        public void Update(int id, string type, double hp, double mp, double amount, DotType method, int time, int tick,
+            string name, string itemName, string tooltip, string iconName)
+        {
+            Types rType;
+            rType = Enum.TryParse(type, out rType) ? rType : Types.Unknown;
+            if (Effects.Any(x => x.Type == rType))
+                return; // already added - duplicate strings with the same id and type in tsv (different item names - will be deleted soon)
+            Hp = rType == Types.HPChange ? hp : Hp;
+            Mp = rType == Types.MPChange ? mp : Mp;
+            Tick = rType == Types.MPChange || rType == Types.HPChange
+                ? tick
+                : Tick; //assume that hp and mp tick times should be the same for one abnormality id
+            Effects.Add(new Effect
+            {
+                Type = rType,
+                Amount = amount,
+                Method = method
+            });
+            Debuff = Debuff || (rType == Types.Endurance || rType == Types.CritResist) && amount < 1 ||
+                     rType == Types.Mark || rType == Types.DefPotion && amount > 1;
+            HPMPChange = HPMPChange || rType == Types.HPChange || rType == Types.MPChange;
+            Buff = Buff || rType != Types.HPChange; // && rType != Types.MPChange);//try to show MPChange abnormals
         }
 
 
@@ -173,15 +177,11 @@ namespace Tera.Game
         public static bool operator ==(HotDot a, HotDot b)
         {
             if (ReferenceEquals(a, b))
-            {
                 return true;
-            }
 
             // If one is null, but not both, return false.
-            if (((object) a == null) || ((object) b == null))
-            {
+            if ((object) a == null || (object) b == null)
                 return false;
-            }
 
             return a.Equals(b);
         }
@@ -199,6 +199,13 @@ namespace Tera.Game
         public override string ToString()
         {
             return $"{Name} {Id}";
+        }
+
+        public struct Effect
+        {
+            public Types Type;
+            public DotType Method;
+            public double Amount;
         }
     }
 }

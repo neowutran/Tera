@@ -78,15 +78,11 @@ namespace Tera.Game
         public static bool operator ==(Entity a, Entity b)
         {
             if (ReferenceEquals(a, b))
-            {
                 return true;
-            }
 
             // If one is null, but not both, return false.
-            if (((object) a == null) || ((object) b == null))
-            {
+            if ((object) a == null || (object) b == null)
                 return false;
-            }
 
             return a.Equals(b);
         }

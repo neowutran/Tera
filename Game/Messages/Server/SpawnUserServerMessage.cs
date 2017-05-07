@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Eventing.Reader;
-
-namespace Tera.Game.Messages
+﻿namespace Tera.Game.Messages
 {
     public class SpawnUserServerMessage : ParsedMessage
     {
@@ -21,21 +19,21 @@ namespace Tera.Game.Messages
             Dead = (reader.ReadByte() & 1) == 0;
             reader.Skip(121);
             Level = reader.ReadInt16();
-            reader.BaseStream.Position=nameOffset-4;
+            reader.BaseStream.Position = nameOffset - 4;
             Name = reader.ReadTeraString();
             GuildName = reader.ReadTeraString();
             //Debug.WriteLine(Name + ":" + BitConverter.ToString(BitConverter.GetBytes(Id.Id))+ ":"+ ServerId.ToString()+" "+ BitConverter.ToString(BitConverter.GetBytes(PlayerId))+" "+Dead);
         }
 
-        public int Level { get; private set; }
+        public int Level { get; }
         public bool Dead { get; set; }
         public Angle Heading { get; set; }
         public Vector3f Position { get; set; }
-        public EntityId Id { get; private set; }
-        public uint ServerId { get; private set; }
-        public uint PlayerId { get; private set; }
-        public string Name { get; private set; }
-        public string GuildName { get; private set; }
+        public EntityId Id { get; }
+        public uint ServerId { get; }
+        public uint PlayerId { get; }
+        public string Name { get; }
+        public string GuildName { get; }
         public RaceGenderClass RaceGenderClass { get; }
     }
 }

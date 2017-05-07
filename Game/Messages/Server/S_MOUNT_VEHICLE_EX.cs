@@ -9,7 +9,7 @@
             Id = reader.ReadEntityId();
         }
 
-        public EntityId Id { get; private set; }
-        public EntityId Owner { get; private set; }
+        public EntityId Id { get; }
+        public EntityId Owner { get; }
     }
 }

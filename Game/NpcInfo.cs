@@ -12,10 +12,10 @@
             HP = hp;
         }
 
-        public ushort HuntingZoneId { get; private set; }
-        public uint TemplateId { get; private set; }
-        public string Name { get; private set; }
-        public string Area { get; private set; }
+        public ushort HuntingZoneId { get; }
+        public uint TemplateId { get; }
+        public string Name { get; }
+        public string Area { get; }
         public bool Boss { get; internal set; }
         public long HP { get; internal set; }
     }

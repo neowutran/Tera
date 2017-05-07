@@ -13,8 +13,10 @@
         public EntityId Npc { get; }
 
         public EntityId NPC => Npc;
+
         //different case in different projects, need refactoring
-        public Vector3f Position { get; private set; }
+        public Vector3f Position { get; }
+
         public bool Dead { get; }
     }
 }

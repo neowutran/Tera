@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Tera.Game
+﻿namespace Tera.Game
 {
     public enum PlayerClass
     {
@@ -19,5 +17,5 @@ namespace Tera.Game
         Valkyrie = 13,
 
         Common = 255
-    }   
+    }
 }

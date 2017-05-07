@@ -23,7 +23,7 @@ namespace Tera.PacketLog
         {
         }
 
-        public LogHeader Header { get; private set; }
+        public LogHeader Header { get; }
 
         public IEnumerable<Message> Messages
         {
@@ -34,9 +34,7 @@ namespace Tera.PacketLog
                     var reader = new PacketLogReader(stream);
                     Message message;
                     while ((message = reader.ReadMessage()) != null)
-                    {
                         yield return message;
-                    }
                 }
             }
         }

@@ -9,7 +9,7 @@
             reader.Skip(4);
             TotalHp = reader.ReadInt32();
             TotalMp = reader.ReadInt32();
-            return; //we don't need all other things now, but if we need - just remove return.
+            /*
             BasePower = reader.ReadInt32();
             BaseEndurance = reader.ReadInt32();
             BaseImpactFactor = reader.ReadInt32();
@@ -62,62 +62,62 @@
             Edge = reader.ReadInt32();
             reader.Skip(16);
             FlightEnergy = reader.ReadSingle();
-
+            */
             // Something else unknown later
         }
 
-        public bool Slaying => TotalHp > HpRemaining*2 && HpRemaining > 0;
-        public int BaseAttack { get; private set; }
-        public int BaseAttack2 { get; private set; }
-        public short BaseAttackSpeed { get; private set; }
-        public int BaseBalance { get; private set; }
-        public int BaseBalanceFactor { get; private set; }
-        public float BaseCritPower { get; private set; }
-        public float BaseCritRate { get; private set; }
-        public float BaseCritResist { get; private set; }
-        public int BaseDefence { get; private set; }
-        public int BaseEndurance { get; private set; }
-        public int BaseImpactFactor { get; private set; }
-        public int BaseImpcat { get; private set; }
-        public short BaseMovementSpeed { get; private set; }
-        public int BasePower { get; private set; }
-        public float BaseResistPeriodic { get; private set; }
-        public float BaseResistStun { get; private set; }
-        public float BaseResistWeakening { get; private set; }
-        public int BonusAttack { get; private set; }
-        public int BonusAttack2 { get; private set; }
-        public short BonusAttackSpeed { get; private set; }
-        public int BonusBalance { get; private set; }
-        public int BonusBalanceFactor { get; private set; }
-        public float BonusCritPower { get; private set; }
-        public float BonusCritRate { get; private set; }
-        public float BonusCritResist { get; private set; }
-        public int BonusDefence { get; private set; }
-        public int BonusEndurance { get; private set; }
-        public int BonusHp { get; private set; }
-        public int BonusImpactFactor { get; private set; }
-        public int BonusImpcat { get; private set; }
-        public short BonusMovementSpeed { get; private set; }
-        public int BonusMp { get; private set; }
-        public int BonusPower { get; private set; }
-        public float BonusResistPeriodic { get; private set; }
-        public float BonusResistStun { get; private set; }
-        public float BonusResistWeakening { get; private set; }
+        public bool Slaying => TotalHp > HpRemaining * 2 && HpRemaining > 0;
+        public int BaseAttack { get; }
+        public int BaseAttack2 { get; }
+        public short BaseAttackSpeed { get; }
+        public int BaseBalance { get; }
+        public int BaseBalanceFactor { get; }
+        public float BaseCritPower { get; }
+        public float BaseCritRate { get; }
+        public float BaseCritResist { get; }
+        public int BaseDefence { get; }
+        public int BaseEndurance { get; }
+        public int BaseImpactFactor { get; }
+        public int BaseImpcat { get; }
+        public short BaseMovementSpeed { get; }
+        public int BasePower { get; }
+        public float BaseResistPeriodic { get; }
+        public float BaseResistStun { get; }
+        public float BaseResistWeakening { get; }
+        public int BonusAttack { get; }
+        public int BonusAttack2 { get; }
+        public short BonusAttackSpeed { get; }
+        public int BonusBalance { get; }
+        public int BonusBalanceFactor { get; }
+        public float BonusCritPower { get; }
+        public float BonusCritRate { get; }
+        public float BonusCritResist { get; }
+        public int BonusDefence { get; }
+        public int BonusEndurance { get; }
+        public int BonusHp { get; }
+        public int BonusImpactFactor { get; }
+        public int BonusImpcat { get; }
+        public short BonusMovementSpeed { get; }
+        public int BonusMp { get; }
+        public int BonusPower { get; }
+        public float BonusResistPeriodic { get; }
+        public float BonusResistStun { get; }
+        public float BonusResistWeakening { get; }
         public int HpRemaining { get; }
-        public int ItemLevel { get; private set; }
-        public int ItemLevelInventory { get; private set; }
-        public int Level { get; private set; }
-        public int MpRemaining { get; private set; }
-        public int ReRemaining { get; private set; }
-        public int Stamina { get; private set; }
-        public byte Status { get; private set; }
+        public int ItemLevel { get; }
+        public int ItemLevelInventory { get; }
+        public int Level { get; }
+        public int MpRemaining { get; }
+        public int ReRemaining { get; }
+        public int Stamina { get; }
+        public byte Status { get; }
         public int TotalHp { get; }
-        public int TotalMp { get; private set; }
-        public int TotalRe { get; private set; }
-        public int BonusRe { get; private set; }
-        public int TotalStamina { get; private set; }
-        public int Vitality { get; private set; }
-        public int Edge { get; private set; }
-        public float FlightEnergy { get; private set; }
+        public int TotalMp { get; }
+        public int TotalRe { get; }
+        public int BonusRe { get; }
+        public int TotalStamina { get; }
+        public int Vitality { get; }
+        public int Edge { get; }
+        public float FlightEnergy { get; }
     }
 }

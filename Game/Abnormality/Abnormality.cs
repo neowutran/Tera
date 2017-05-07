@@ -24,10 +24,11 @@ namespace Tera.Game.Abnormality
             RegisterEnduranceDebuff(ticks);
         }
 
-        public Abnormality()  //defaultempty
+        public Abnormality() //defaultempty
         {
             Duration = int.MinValue;
         }
+
         public HotDot HotDot { get; }
         public EntityId Source { get; }
         public int Stack { get; private set; }
@@ -40,7 +41,10 @@ namespace Tera.Game.Abnormality
 
         public long FirstHit { get; private set; }
 
-        public long TimeBeforeEnd => Duration == 0 ? long.MaxValue : FirstHit - DateTime.UtcNow.Ticks + Duration * TimeSpan.TicksPerMillisecond;
+        public long TimeBeforeEnd => Duration == 0
+            ? long.MaxValue
+            : FirstHit - DateTime.UtcNow.Ticks + Duration * TimeSpan.TicksPerMillisecond;
+
         public long TimeBeforeApply => DateTime.UtcNow.Ticks - LastApply - HotDot.Tick * TimeSpan.TicksPerSecond;
 
         public void Apply(int amount, bool critical, bool isHp, long time)
@@ -58,7 +62,7 @@ namespace Tera.Game.Abnormality
                     new DateTime(time),
                     _abnormalityTracker.EntityTracker,
                     _abnormalityTracker.PlayerTracker
-                    );
+                );
 
                 _abnormalityTracker.UpdateDamageTracker(skillResult);
             }
@@ -79,9 +83,7 @@ namespace Tera.Game.Abnormality
             var entity = _abnormalityTracker.EntityTracker.GetOrPlaceholder(Target);
             var game = entity as NpcEntity;
             if (game == null)
-            {
                 return;
-            }
 
             _abnormalityTracker.AbnormalityStorage.AbnormalityTime(game)[HotDot].End(lastTicks);
         }
@@ -93,18 +95,14 @@ namespace Tera.Game.Abnormality
             var entityGame = _abnormalityTracker.EntityTracker.GetOrPlaceholder(Target);
             var game = entityGame as NpcEntity;
             if (game == null)
-            {
                 return;
-            }
 
             if (!_abnormalityTracker.AbnormalityStorage.AbnormalityTime(game).ContainsKey(HotDot))
             {
                 var userEntity = _abnormalityTracker.EntityTracker.GetOrPlaceholder(Source);
                 var user = userEntity as UserEntity;
                 if (user == null)
-                {
                     return;
-                }
                 var abnormalityInitDuration = new AbnormalityDuration(user.RaceGenderClass.Class, ticks, Stack);
                 _abnormalityTracker.AbnormalityStorage.AbnormalityTime(game).Add(HotDot, abnormalityInitDuration);
                 _enduranceDebuffRegistered = true;
@@ -121,9 +119,7 @@ namespace Tera.Game.Abnormality
             var userEntity = _abnormalityTracker.EntityTracker.GetOrNull(Target);
             var user = userEntity as UserEntity;
             if (user == null)
-            {
                 return;
-            }
             var player = _abnormalityTracker.PlayerTracker.GetOrUpdate(user);
 
             if (!_abnormalityTracker.AbnormalityStorage.AbnormalityTime(player).ContainsKey(HotDot))
@@ -131,13 +127,9 @@ namespace Tera.Game.Abnormality
                 var npcEntity = _abnormalityTracker.EntityTracker.GetOrPlaceholder(Source);
                 PlayerClass playerClass;
                 if (!(npcEntity is UserEntity))
-                {
                     playerClass = PlayerClass.Common;
-                }
                 else
-                {
                     playerClass = ((UserEntity) npcEntity).RaceGenderClass.Class;
-                }
                 var abnormalityInitDuration = new AbnormalityDuration(playerClass, ticks, Stack);
                 _abnormalityTracker.AbnormalityStorage.AbnormalityTime(player).Add(HotDot, abnormalityInitDuration);
                 _buffRegistered = true;
@@ -153,9 +145,7 @@ namespace Tera.Game.Abnormality
             if (_buffRegistered == false) return;
             var userEntity = _abnormalityTracker.EntityTracker.GetOrNull(Target);
             if (!(userEntity is UserEntity))
-            {
                 return;
-            }
             var player = _abnormalityTracker.PlayerTracker.GetOrUpdate((UserEntity) userEntity);
             _abnormalityTracker.AbnormalityStorage.AbnormalityTime(player)[HotDot].End(lastTicks);
         }

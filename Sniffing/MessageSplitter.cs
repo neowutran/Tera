@@ -33,7 +33,7 @@ namespace Tera.Sniffing
         protected void OnResync(MessageDirection direction, int skipped, int size)
         {
             var handler = Resync;
-            handler?.Invoke(direction,skipped,size);
+            handler?.Invoke(direction, skipped, size);
         }
 
         private void ClientBlockFinished(byte[] block)

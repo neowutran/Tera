@@ -7,11 +7,16 @@ namespace Tera.Game
 {
     public class PlayerTracker : IEnumerable<Player>
     {
+        public delegate void PlayerIdChangedEvent(EntityId oldId, EntityId newId);
+
         private readonly EntityTracker _entityTracker;
-        private readonly Dictionary<Tuple<uint, uint>, Player> _playerById = new Dictionary<Tuple<uint, uint>, Player>();
+
+        private readonly Dictionary<Tuple<uint, uint>, Player> _playerById = new Dictionary<Tuple<uint, uint>, Player>()
+            ;
+
         private readonly ServerDatabase _serverDatabase;
-        private Player _unknownDamage;
         private List<Tuple<uint, uint>> _currentParty = new List<Tuple<uint, uint>>();
+        private Player _unknownDamage;
 
         public PlayerTracker(EntityTracker entityTracker, ServerDatabase serverDatabase = null)
         {
@@ -38,7 +43,6 @@ namespace Tera.Game
                 Update(user);
         }
 
-        public delegate void PlayerIdChangedEvent(EntityId oldId, EntityId newId);
         public event PlayerIdChangedEvent PlayerIdChangedAction;
 
         public void Update(UserEntity user)
@@ -67,7 +71,7 @@ namespace Tera.Game
             {
                 var user = new UserEntity(_entityTracker?.MeterUser.ServerId ?? 0);
                 _entityTracker?.Register(user);
-                _unknownDamage=GetOrUpdate(user);
+                _unknownDamage = GetOrUpdate(user);
             }
             return _unknownDamage?.User;
         }
@@ -95,7 +99,7 @@ namespace Tera.Game
             _currentParty = new List<Tuple<uint, uint>>();
         }
 
-        public void UpdateParty(S_LEAVE_PARTY m )
+        public void UpdateParty(S_LEAVE_PARTY m)
         {
             _currentParty = new List<Tuple<uint, uint>>();
         }
@@ -117,11 +121,11 @@ namespace Tera.Game
 
         public void UpdateParty(ParsedMessage message)
         {
-            message.On<S_BAN_PARTY>(m => UpdateParty(m));
-            message.On<S_LEAVE_PARTY>(m => UpdateParty(m));
-            message.On<S_LEAVE_PARTY_MEMBER>(m => UpdateParty(m));
-            message.On<S_BAN_PARTY_MEMBER>(m => UpdateParty(m));
-            message.On<S_PARTY_MEMBER_LIST>(m => UpdateParty(m));
+            message.On<S_BAN_PARTY>(UpdateParty);
+            message.On<S_LEAVE_PARTY>(UpdateParty);
+            message.On<S_LEAVE_PARTY_MEMBER>(UpdateParty);
+            message.On<S_BAN_PARTY_MEMBER>(UpdateParty);
+            message.On<S_PARTY_MEMBER_LIST>(UpdateParty);
         }
 
         public bool MyParty(Player player)
@@ -133,21 +137,20 @@ namespace Tera.Game
 
         public List<UserEntity> PartyList()
         {
-            List<UserEntity> list = new List<UserEntity>();
+            var list = new List<UserEntity>();
             _currentParty.ForEach(x =>
-                {
-                    Player player;
-                    if (_playerById.TryGetValue(x, out player)) list.Add(player.User);
-                });
-            if (_entityTracker.MeterUser!=null)list.Add(_entityTracker.MeterUser);
+            {
+                Player player;
+                if (_playerById.TryGetValue(x, out player)) list.Add(player.User);
+            });
+            if (_entityTracker.MeterUser != null) list.Add(_entityTracker.MeterUser);
             return list;
         }
 
         public Player Me()
         {
             var user = _entityTracker.MeterUser;
-            if (user != null) return Get(user.ServerId, user.PlayerId);
-            return null;
+            return user != null ? Get(user.ServerId, user.PlayerId) : null;
         }
 
         protected virtual void OnPlayerIdChangedAction(EntityId oldid, EntityId newid)

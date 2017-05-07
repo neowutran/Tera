@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Gothos
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
 using System.Collections.Generic;
 using Tera.Game.Messages;
 
@@ -44,8 +43,8 @@ namespace Tera.Game
         {
             Name = "Unknown damage";
             GuildName = "";
-            RaceGenderClass = new RaceGenderClass(Race.Common,Gender.Common, PlayerClass.Common);
-            PlayerId = UInt32.MaxValue;
+            RaceGenderClass = new RaceGenderClass(Race.Common, Gender.Common, PlayerClass.Common);
+            PlayerId = uint.MaxValue;
             ServerId = serverid;
             Level = 0;
             OutOfRange = true;
@@ -80,38 +79,29 @@ namespace Tera.Game
             while (ownedEntity?.Owner != null)
             {
                 if (entity.GetType() == typeof(NpcEntity))
-                {
                     entities.Add("source", entity);
-                }
                 entity = ownedEntity.Owner;
                 ownedEntity = entity as IHasOwner;
             }
             entities.Add("root_source", entity);
             if (!entities.ContainsKey("source"))
-            {
                 entities.Add("source", null);
-            }
             return entities;
         }
 
         public bool Equals(UserEntity other)
         {
             return Id.Equals(other.Id);
-
         }
 
         public static bool operator ==(UserEntity a, UserEntity b)
         {
             if (ReferenceEquals(a, b))
-            {
                 return true;
-            }
 
             // If one is null, but not both, return false.
-            if (((object) a == null) || ((object) b == null))
-            {
+            if ((object) a == null || (object) b == null)
                 return false;
-            }
 
             return a.Equals(b);
         }

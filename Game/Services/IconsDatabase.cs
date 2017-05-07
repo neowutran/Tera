@@ -23,9 +23,7 @@ namespace Tera.Game
         {
             BitmapImage image;
             if (_images.TryGetValue(iconName, out image) || string.IsNullOrEmpty(iconName))
-            {
                 return image;
-            }
             image = new BitmapImage();
             var ur = new Uri("/" + iconName + ".png", UriKind.Relative);
             if (_icons.PartExists(ur))
@@ -45,9 +43,7 @@ namespace Tera.Game
         {
             Bitmap image;
             if (_bitmaps.TryGetValue(iconName, out image) || string.IsNullOrEmpty(iconName))
-            {
                 return image;
-            }
             var ur = new Uri("/" + iconName + ".png", UriKind.Relative);
             image = _icons.PartExists(ur) ? new Bitmap(_icons.GetPart(ur).GetStream()) : new Bitmap(1, 1);
             _bitmaps.Add(iconName, image);

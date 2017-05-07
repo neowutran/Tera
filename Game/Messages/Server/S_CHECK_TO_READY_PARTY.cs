@@ -24,7 +24,7 @@ namespace Tera.Game.Messages
             {
                 reader.BaseStream.Position = offset - 4;
                 var pointer = reader.ReadUInt16();
-                Debug.Assert(pointer == offset);//should be the same
+                Debug.Assert(pointer == offset); //should be the same
                 var nextOffset = reader.ReadUInt16();
                 var serverId = reader.ReadUInt32();
                 var playerId = reader.ReadUInt32();
@@ -39,13 +39,12 @@ namespace Tera.Game.Messages
             }
 
             Debug.WriteLine($"Count:{Count}");
-            foreach(ReadyPartyMembers menber in Party)
-            {
-                Debug.WriteLine($"ServerId:{BitConverter.ToString(BitConverter.GetBytes(menber.ServerId))}, PlayerId:{BitConverter.ToString(BitConverter.GetBytes(menber.PlayerId))}, State:{menber.Status}");
-            }
+            foreach (var menber in Party)
+                Debug.WriteLine(
+                    $"ServerId:{BitConverter.ToString(BitConverter.GetBytes(menber.ServerId))}, PlayerId:{BitConverter.ToString(BitConverter.GetBytes(menber.PlayerId))}, State:{menber.Status}");
         }
 
-        public UInt16 Count { get; set; }
+        public ushort Count { get; set; }
 
         public List<ReadyPartyMembers> Party { get; } = new List<ReadyPartyMembers>();
     }

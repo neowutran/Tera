@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.IO;
 
 namespace Tera.Game
 {
     public class QuestInfoDatabase
     {
-        private Dictionary<int,string> _lookup = new Dictionary<int, string>();
+        private readonly Dictionary<int, string> _lookup = new Dictionary<int, string>();
+
         public QuestInfoDatabase(string folder, string language)
         {
             var reader = new StreamReader(File.OpenRead(Path.Combine(folder, $"quests\\battle-{language}.tsv")));
@@ -38,5 +37,4 @@ namespace Tera.Game
             return !_lookup.ContainsKey(id) ? id.ToString() : _lookup[id];
         }
     }
-
 }

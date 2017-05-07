@@ -10,13 +10,13 @@ namespace Tera.Game
         public enum HotOrDot
         {
             Dot = 131071,
+
             Hot = 65536
             //  SystemHot = 655360, // natural regen
             //  CrystalHpHot = 196608,   Not 
             //  StuffMpHot = 262144,
             //  NaturalMpRegen = 0
         }
-
 
 
         public enum StaticallyUsedBuff
@@ -30,23 +30,20 @@ namespace Tera.Game
             Contagion1 = 701700,
             Contagion2 = 701701,
             Hurricane = 60010
-
         }
-
-        public HotDot Enraged { get; }
-        public HotDot Slaying { get; }
-        public readonly HotDot JoyOfPartying0;
-        public readonly HotDot JoyOfPartying20;
-        public readonly HotDot JoyOfPartying50;
-        public readonly HotDot JoyOfPartying100;
-        public readonly HotDot Contagion1;
-        public readonly HotDot Contagion2;
-        public readonly HotDot Enrage;
-        public readonly HotDot Hurricane;
 
 
         private readonly Dictionary<int, HotDot> _hotdots =
             new Dictionary<int, HotDot>();
+
+        public readonly HotDot Contagion1;
+        public readonly HotDot Contagion2;
+        public readonly HotDot Enrage;
+        public readonly HotDot Hurricane;
+        public readonly HotDot JoyOfPartying0;
+        public readonly HotDot JoyOfPartying100;
+        public readonly HotDot JoyOfPartying20;
+        public readonly HotDot JoyOfPartying50;
 
 
         public HotDotDatabase(string folder, string language)
@@ -59,7 +56,7 @@ namespace Tera.Game
                 var values = line.Split('\t');
                 var id = int.Parse(values[0]);
                 var type = values[1];
-                var abType = (HotDot.AbnormalityType)Enum.Parse(typeof(HotDot.AbnormalityType), values[2]);
+                var abType = (HotDot.AbnormalityType) Enum.Parse(typeof(HotDot.AbnormalityType), values[2]);
                 var isBuff = bool.Parse(values[3]);
                 var method = (HotDot.DotType) Enum.Parse(typeof(HotDot.DotType), values[4]);
                 var time = int.Parse(values[5]);
@@ -72,13 +69,18 @@ namespace Tera.Game
                 var tooltip = values[11];
                 var iconName = values[12];
                 if (_hotdots.ContainsKey(id))
-                    _hotdots[id].Update(id, type, hp, mp, amount, method, time, tick, name, itemName, tooltip, iconName);
+                    _hotdots[id].Update(id, type, hp, mp, amount, method, time, tick, name, itemName, tooltip,
+                        iconName);
                 else
-                    _hotdots[id] = new HotDot(id, type, hp, mp, amount, method, time, tick, name, itemName, tooltip, iconName, abType, isBuff);
+                    _hotdots[id] = new HotDot(id, type, hp, mp, amount, method, time, tick, name, itemName, tooltip,
+                        iconName, abType, isBuff);
             }
-            _hotdots[(int)StaticallyUsedBuff.Enraged] = new HotDot((int)StaticallyUsedBuff.Enraged, "Endurance", 0, 0, 0, 0, 36000, 0, "Enrage", "", "", "enraged",HotDot.AbnormalityType.Debuff, true);
-            _hotdots[(int)StaticallyUsedBuff.Slaying] = new HotDot((int)StaticallyUsedBuff.Slaying, "CritPower", 0, 0, 0, 0, 0, 0, "Slaying", "",
-                "'Slaying' crystal is working (if equipped) when player in this state.", "slaying",HotDot.AbnormalityType.Buff, true);
+            _hotdots[(int) StaticallyUsedBuff.Enraged] = new HotDot((int) StaticallyUsedBuff.Enraged, "Endurance", 0, 0,
+                0, 0, 36000, 0, "Enrage", "", "", "enraged", HotDot.AbnormalityType.Debuff, true);
+            _hotdots[(int) StaticallyUsedBuff.Slaying] = new HotDot((int) StaticallyUsedBuff.Slaying, "CritPower", 0, 0,
+                0, 0, 0, 0, "Slaying", "",
+                "'Slaying' crystal is working (if equipped) when player in this state.", "slaying",
+                HotDot.AbnormalityType.Buff, true);
 
             var shortnames = Path.Combine(folder, $"hotdot\\hotdot-short-{language}.tsv");
             if (File.Exists(shortnames))
@@ -97,17 +99,19 @@ namespace Tera.Game
 
             Enraged = _hotdots[(int) StaticallyUsedBuff.Enraged];
             Slaying = _hotdots[(int) StaticallyUsedBuff.Slaying];
-            _hotdots.TryGetValue((int)StaticallyUsedBuff.JoyOfPartying0, out JoyOfPartying0);
-            _hotdots.TryGetValue((int)StaticallyUsedBuff.JoyOfPartying20, out JoyOfPartying20);
-            _hotdots.TryGetValue((int)StaticallyUsedBuff.JoyOfPartying50, out JoyOfPartying50);
-            _hotdots.TryGetValue((int)StaticallyUsedBuff.JoyOfPartying100, out JoyOfPartying100);
+            _hotdots.TryGetValue((int) StaticallyUsedBuff.JoyOfPartying0, out JoyOfPartying0);
+            _hotdots.TryGetValue((int) StaticallyUsedBuff.JoyOfPartying20, out JoyOfPartying20);
+            _hotdots.TryGetValue((int) StaticallyUsedBuff.JoyOfPartying50, out JoyOfPartying50);
+            _hotdots.TryGetValue((int) StaticallyUsedBuff.JoyOfPartying100, out JoyOfPartying100);
 
-            _hotdots.TryGetValue((int)StaticallyUsedBuff.Enraged, out Enrage);
-            _hotdots.TryGetValue((int)StaticallyUsedBuff.Contagion1, out Contagion1);
-            _hotdots.TryGetValue((int)StaticallyUsedBuff.Contagion2, out Contagion2);
-            _hotdots.TryGetValue((int)StaticallyUsedBuff.Hurricane, out Hurricane);
-
+            _hotdots.TryGetValue((int) StaticallyUsedBuff.Enraged, out Enrage);
+            _hotdots.TryGetValue((int) StaticallyUsedBuff.Contagion1, out Contagion1);
+            _hotdots.TryGetValue((int) StaticallyUsedBuff.Contagion2, out Contagion2);
+            _hotdots.TryGetValue((int) StaticallyUsedBuff.Hurricane, out Hurricane);
         }
+
+        public HotDot Enraged { get; }
+        public HotDot Slaying { get; }
 
         public void Add(HotDot dot)
         {
