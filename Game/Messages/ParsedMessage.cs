@@ -12,11 +12,6 @@ namespace Tera.Game.Messages
         {
             Raw = reader.Message.Payload.Array;
             OpCodeName = reader.OpCodeName;
-
-            var regex = new Regex(@"^C_");
-            var match = regex.Match(OpCodeName);
-            if (match.Success)
-                PrintRaw();
         }
 
         public byte[] Raw { get; protected set; }
