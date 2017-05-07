@@ -11,17 +11,17 @@ namespace Tera.Game.Messages
             var offset = reader.ReadUInt16();
             for (var i = 1; i <= count; i++)
             {
-                reader.BaseStream.Position = offset - 4;
+                reader.BaseStream.Position = offset-4;
                 var pointer = reader.ReadUInt16();
-                Debug.Assert(pointer == offset); //should be the same
+                Debug.Assert(pointer==offset);//should be the same
                 var nextOffset = reader.ReadUInt16();
                 var VersionKey = reader.ReadUInt32();
                 var VersionValue = reader.ReadUInt32();
-                Versions.Add(VersionKey, VersionValue);
+                Versions.Add(VersionKey,VersionValue);
                 offset = nextOffset;
             }
         }
 
-        public Dictionary<uint, uint> Versions { get; } = new Dictionary<uint, uint>();
+        public Dictionary<uint,uint> Versions { get; } = new Dictionary<uint, uint>();
     }
 }

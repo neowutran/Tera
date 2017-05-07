@@ -8,7 +8,7 @@
             Position = reader.ReadVector3f();
         }
 
-        public int AreaId { get; }
-        public Vector3f Position { get; }
+        public int AreaId { get; private set; }
+        public Vector3f Position { get; private set; }
     }
 }

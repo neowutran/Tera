@@ -19,7 +19,7 @@
         public Vector3f Finish { get; set; }
         public Vector3f Start { get; set; }
         public uint SkillId { get; set; }
-        public EntityId Id { get; }
-        public EntityId OwnerId { get; }
+        public EntityId Id { get; private set; }
+        public EntityId OwnerId { get; private set; }
     }
 }

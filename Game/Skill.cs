@@ -30,26 +30,30 @@ namespace Tera.Game
 
 
         public int Id { get; }
-        public string Name { get; }
-        public string ShortName { get; }
-        public bool? IsChained { get; }
-        public bool Boom { get; }
-        public string Detail { get; }
-        public string IconName { get; }
+        public string Name { get; private set; }
+        public string ShortName { get; private set; }
+        public bool? IsChained { get; private set; }
+        public bool Boom { get; private set; }
+        public string Detail { get; private set; }
+        public string IconName { get; private set; }
 
         public override bool Equals(object obj)
         {
             var other = obj as Skill;
             if (other == null)
                 return false;
-            return Id == other.Id && IsHotDot == other.IsHotDot && NpcInfo == other.NpcInfo;
+            return (Id == other.Id) && (IsHotDot == other.IsHotDot) && (NpcInfo == other.NpcInfo);
         }
 
         public static string RemoveLvl(string name)
         {
             foreach (var lvl in Lvls)
+            {
                 if (name.EndsWith(lvl) || name.Contains(lvl + " "))
+                {
                     return name.Replace(lvl, string.Empty);
+                }
+            }
             return name;
         }
 

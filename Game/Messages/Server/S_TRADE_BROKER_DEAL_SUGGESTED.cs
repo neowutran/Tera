@@ -1,4 +1,9 @@
-﻿namespace Tera.Game.Messages
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Tera.Game.Messages
 {
     public class S_TRADE_BROKER_DEAL_SUGGESTED : ParsedMessage
     {
@@ -12,7 +17,7 @@
             SellerPrice = reader.ReadInt64();
             OfferedPrice = reader.ReadInt64();
             PlayerName = reader.ReadTeraString();
-
+            
             //Console.WriteLine("PlayerName:" + PlayerName + ";SellerPrice:" + SellerPrice + ";OfferedPrice:" + OfferedPrice);
         }
 
@@ -24,18 +29,18 @@
 
         public static int Gold(long price)
         {
-            return (int) (price / 10000);
+            return (int)(price/10000);
         }
 
 
         public static int Silver(long price)
         {
-            return (int) (price % 10000 / 100);
+            return (int)(price % 10000 / 100);
         }
 
         public static int Bronze(long price)
         {
-            return (int) (price % 100);
+            return (int)(price % 100);
         }
     }
 }

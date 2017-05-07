@@ -11,7 +11,7 @@
         }
 
         public EntityId Entity { get; }
-        public Vector3f Position { get; }
-        public Angle Heading { get; }
+        public Vector3f Position { get; private set; }
+        public Angle Heading { get; private set; }
     }
 }

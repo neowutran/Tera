@@ -32,7 +32,9 @@ namespace Tera.PacketLog
         public void Dispose()
         {
             if (_ownsStream)
+            {
                 _stream.Dispose();
+            }
             _stream = null;
         }
 

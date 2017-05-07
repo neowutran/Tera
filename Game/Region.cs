@@ -11,7 +11,7 @@ namespace Tera.Game
             Version = version;
         }
 
-        public string Key { get; }
-        public string Version { get; }
+        public string Key { get; private set; }
+        public string Version { get; private set; }
     }
 }

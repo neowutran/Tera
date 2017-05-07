@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Tera.Game.Messages
 {
@@ -15,9 +16,9 @@ namespace Tera.Game.Messages
                 reader.Skip(4); //offset pointer & next member offset
                 var id = reader.ReadUInt32();
                 var enabled = (reader.ReadByte() & 1) != 0;
-                Glyphs[id] = enabled;
+                Glyphs[id]=enabled;
             }
-            
+            ;
             //foreach (var Glyph in Glyphs)
             //{
             //    Debug.WriteLine($"Glyphid:{Glyph.Key} : "+ (Glyph.Value?"Enabled":"Disabled"));
@@ -26,6 +27,6 @@ namespace Tera.Game.Messages
 
         public uint PointsMax { get; }
         public uint PointsUsed { get; }
-        public Dictionary<uint, bool> Glyphs { get; } = new Dictionary<uint, bool>();
+        public Dictionary<uint,bool> Glyphs { get; } = new Dictionary<uint,bool>();
     }
 }

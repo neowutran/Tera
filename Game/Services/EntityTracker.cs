@@ -4,6 +4,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Tera.Game.Messages;
 
 namespace Tera.Game
@@ -12,10 +13,10 @@ namespace Tera.Game
     public class EntityTracker : IEnumerable<Entity>
     {
         private readonly Dictionary<EntityId, Entity> _entities = new Dictionary<EntityId, Entity>();
+        private UserLogoTracker _userLogoTracker;
         private readonly NpcDatabase _npcDatabase;
-        private readonly UserLogoTracker _userLogoTracker;
 
-        public EntityTracker(NpcDatabase npcDatabase, UserLogoTracker userLogoTracker = null)
+        public EntityTracker(NpcDatabase npcDatabase, UserLogoTracker userLogoTracker=null)
         {
             _npcDatabase = npcDatabase;
             _userLogoTracker = userLogoTracker;
@@ -55,8 +56,8 @@ namespace Tera.Game
 
         public void Update(SDespawnUser message)
         {
-            var entity = (UserEntity) GetOrNull(message.User);
-            if (entity != null) entity.OutOfRange = true;
+            var entity = (UserEntity)GetOrNull(message.User);
+            if (entity!=null) entity.OutOfRange = true;
         }
 
         internal void Register(Entity newEntity)
@@ -102,14 +103,15 @@ namespace Tera.Game
         public void Update(SpawnProjectileServerMessage m)
         {
             var newEntity = new ProjectileEntity(m.Id, m.OwnerId, GetOrPlaceholder(m.OwnerId), m.Start,
-                m.Start.GetHeading(m.Finish), m.Finish, (int) m.Speed, m.Time.Ticks);
+                            m.Start.GetHeading(m.Finish), m.Finish, (int)m.Speed, m.Time.Ticks);
             Register(newEntity);
+
         }
 
         public void Update(StartUserProjectileServerMessage m)
         {
             var newEntity = new ProjectileEntity(m.Id, m.OwnerId, GetOrPlaceholder(m.OwnerId), m.Start,
-                m.Start.GetHeading(m.Finish), m.Finish, (int) m.Speed, m.Time.Ticks);
+                            m.Start.GetHeading(m.Finish), m.Finish, (int)m.Speed, m.Time.Ticks);
             Register(newEntity);
         }
 
@@ -215,7 +217,9 @@ namespace Tera.Game
             entity.Speed = 0;
             entity.StartTime = m.Time.Ticks;
             if (entity.EndTime > 0 && entity.EndTime <= entity.StartTime)
+            {
                 entity.Heading = entity.EndAngle;
+            }
             //else if (entity.EndTime > 0)
             //{
             //    Debug.WriteLine("New rotate started before old ended!");
@@ -259,7 +263,7 @@ namespace Tera.Game
             if (entity == null)
             {
                 entity = new NpcEntity(m.EntityId, EntityId.Empty, null,
-                    _npcDatabase.GetOrPlaceholder((ushort) m.HuntingZoneId, m.TemplateId), new Vector3f(), new Angle());
+                    _npcDatabase.GetOrPlaceholder((ushort)m.HuntingZoneId, m.TemplateId),new Vector3f(), new Angle());
                 Register(entity);
             }
             _npcDatabase.AddDetectedBoss(entity.Info.HuntingZoneId, entity.Info.TemplateId);
@@ -270,29 +274,30 @@ namespace Tera.Game
         /** Easy integrate style - compatible */
         public void Update(ParsedMessage message)
         {
-            message.On<SpawnUserServerMessage>(Update);
-            message.On<LoginServerMessage>(Update);
-            message.On<SpawnNpcServerMessage>(Update);
-            message.On<SpawnProjectileServerMessage>(Update);
-            message.On<StartUserProjectileServerMessage>(Update);
-            message.On<S_MOUNT_VEHICLE_EX>(Update);
-            message.On<C_PLAYER_LOCATION>(Update);
-            message.On<S_CHANGE_DESTPOS_PROJECTILE>(Update);
-            message.On<S_ACTION_STAGE>(Update);
-            message.On<S_ACTION_END>(Update);
-            message.On<SCreatureLife>(Update);
-            message.On<S_INSTANT_MOVE>(Update);
-            message.On<S_INSTANT_DASH>(Update);
-            message.On<S_CREATURE_ROTATE>(Update);
-            message.On<EachSkillResultServerMessage>(Update);
-            message.On<SNpcLocation>(Update);
-            message.On<S_USER_LOCATION>(Update);
-            message.On<S_BOSS_GAGE_INFO>(Update);
+            message.On<SpawnUserServerMessage>(x => Update(x));
+            message.On<LoginServerMessage>(x => Update(x));
+            message.On<SpawnNpcServerMessage>(x => Update(x));
+            message.On<SpawnProjectileServerMessage>(x => Update(x));
+            message.On<StartUserProjectileServerMessage>(x => Update(x));
+            message.On<S_MOUNT_VEHICLE_EX>(x => Update(x));
+            message.On<C_PLAYER_LOCATION>(x => Update(x));
+            message.On<S_CHANGE_DESTPOS_PROJECTILE>(x => Update(x));
+            message.On<S_ACTION_STAGE>(x => Update(x));
+            message.On<S_ACTION_END>(x => Update(x));
+            message.On<SCreatureLife>(x => Update(x));
+            message.On<S_INSTANT_MOVE>(x => Update(x));
+            message.On<S_INSTANT_DASH>(x => Update(x));
+            message.On<S_CREATURE_ROTATE>(x => Update(x));
+            message.On<EachSkillResultServerMessage>(x => Update(x));
+            message.On<SNpcLocation>(x => Update(x));
+            message.On<S_USER_LOCATION>(x => Update(x));
+            message.On<S_BOSS_GAGE_INFO>(x => Update(x));
         }
 
         private Entity LoginMe(LoginServerMessage m)
         {
-            MeterUser = new UserEntity(m) {GuildName = _userLogoTracker?.GetGuildName(m.PlayerId) ?? ""};
+            MeterUser = new UserEntity(m);
+            MeterUser.GuildName = _userLogoTracker?.GetGuildName(m.PlayerId)??"";
             return MeterUser;
         }
 
@@ -308,7 +313,9 @@ namespace Tera.Game
             if (id == EntityId.Empty)
                 return null;
             var entity = GetOrNull(id);
-            return entity ?? new PlaceHolderEntity(id);
+            if (entity != null)
+                return entity;
+            return new PlaceHolderEntity(id);
         }
     }
 }

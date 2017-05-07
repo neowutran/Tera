@@ -7,13 +7,12 @@ namespace Tera.Game.Messages
         internal S_PRIVATE_CHAT(TeraMessageReader reader) : base(reader)
         {
             PrintRaw();
-            reader.Skip(4); //offsets
+            reader.Skip(4);//offsets
             Channel = reader.ReadUInt32();
             AuthorId = reader.ReadUInt64();
             AuthorName = reader.ReadTeraString();
             Text = reader.ReadTeraString();
-            Debug.WriteLine(
-                "Channel:" + Channel + ";Username:" + AuthorName + ";Text:" + Text + ";AuthorId:" + AuthorId);
+            Debug.WriteLine("Channel:"+Channel+";Username:"+AuthorName+";Text:"+Text+";AuthorId:"+AuthorId);
         }
 
         public string AuthorName { get; set; }

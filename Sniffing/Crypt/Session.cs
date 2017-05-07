@@ -31,7 +31,7 @@ namespace Tera.Sniffing.Crypt
         {
             //if (region == "KR" || region == "JP" || region == "RU" || region == "EU" || region == "NA")
             //{
-            TmpKey1 = Utils.ShiftKey(ServerKey1, 67);
+                TmpKey1 = Utils.ShiftKey(ServerKey1, 67);
             //}
             //else
             //{
@@ -42,7 +42,7 @@ namespace Tera.Sniffing.Crypt
 
             //if (region == "KR" || region == "JP" || region == "RU" || region == "EU" || region == "NA")
             //{
-            TmpKey1 = Utils.ShiftKey(ClientKey2, 29, false);
+                TmpKey1 = Utils.ShiftKey(ClientKey2, 29, false);
             //}
             //else
             //{
@@ -55,7 +55,7 @@ namespace Tera.Sniffing.Crypt
 
             //if(region == "KR" || region == "JP" || region == "RU" || region == "EU" || region == "NA")
             //{
-            TmpKey1 = Utils.ShiftKey(ServerKey2, 41);
+                TmpKey1 = Utils.ShiftKey(ServerKey2, 41);
             //}
             //else
             //{

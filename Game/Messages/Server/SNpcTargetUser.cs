@@ -8,6 +8,6 @@
             NPC = reader.ReadEntityId();
         }
 
-        public EntityId NPC { get; }
+        public EntityId NPC { get; private set; }
     }
 }

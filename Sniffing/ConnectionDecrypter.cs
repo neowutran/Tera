@@ -78,6 +78,7 @@ namespace Tera.Sniffing
         public void Skip(MessageDirection direction, int needToSkip)
         {
             if (needToSkip > 0)
+            {
                 if (direction == MessageDirection.ServerToClient)
                 {
                     var skip = new byte[needToSkip];
@@ -88,9 +89,10 @@ namespace Tera.Sniffing
                     var skip = new byte[needToSkip];
                     _session.Decrypt(skip);
                 }
+            }
         }
 
-        public void ClientToServer(byte[] data, int needToSkip = 0)
+        public void ClientToServer(byte[] data, int needToSkip=0)
         {
             if (Initialized)
             {
@@ -111,7 +113,7 @@ namespace Tera.Sniffing
             }
         }
 
-        public void ServerToClient(byte[] data, int needToSkip = 0)
+        public void ServerToClient(byte[] data, int needToSkip=0)
         {
             if (Initialized)
             {

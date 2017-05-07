@@ -22,7 +22,7 @@ namespace Tera.Game
             var gunner = new RaceGenderClass(Race.Common, Gender.Common, PlayerClass.Gunner);
             var bf = GetOrNull(gunner, 51001);
             if (bf == null) return;
-            for (var i = 1; i <= 5; i++)
+            for (int i = 1; i <= 5; i++)
             {
                 var skill = new UserSkill(bf.Id + i, gunner, bf.Name, bf.IsChained, i.ToString(), bf.IconName);
                 if (!_userSkilldata[skill.RaceGenderClass].ContainsKey(skill.Id))
@@ -79,8 +79,9 @@ namespace Tera.Game
                 if (!_userSkilldata.ContainsKey(rgc2))
                     continue;
 
-                var skill = _userSkilldata[rgc2].FirstOrDefault(x => x.Value.Name.Contains(name)).Value ??
-                            _userSkilldata[rgc2].FirstOrDefault(x => name.Contains(x.Value.Name)).Value;
+                var skill = _userSkilldata[rgc2].FirstOrDefault(x => x.Value.Name.Contains(name)).Value;
+                if (skill == null)
+                    skill = _userSkilldata[rgc2].FirstOrDefault(x => name.Contains(x.Value.Name)).Value; //keen hb-7
                 if (skill == null)
                     continue;
                 return skill;

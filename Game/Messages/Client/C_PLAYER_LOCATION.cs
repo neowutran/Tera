@@ -2,9 +2,8 @@
 {
     public class C_PLAYER_LOCATION : ParsedMessage
     {
-        internal C_PLAYER_LOCATION(TeraMessageReader reader, EntityId entity) : base(reader)
+        internal C_PLAYER_LOCATION(TeraMessageReader reader) : base(reader)
         {
-            Entity = entity;
             Position = reader.ReadVector3f();
             Heading = reader.ReadAngle();
             unk1 = reader.ReadInt16();
@@ -20,10 +19,10 @@
         public byte unk2 { get; set; }
         public short unk1 { get; set; }
         public EntityId Entity { get; }
-        public Vector3f Position { get; }
-        public Angle Heading { get; }
-        public short Speed { get; }
-        public Vector3f Finish { get; }
-        public int Ltype { get; }
+        public Vector3f Position { get; private set; }
+        public Angle Heading { get; private set; }
+        public short Speed { get; private set; }
+        public Vector3f Finish { get; private set; }
+        public int Ltype { get; private set; }
     }
 }

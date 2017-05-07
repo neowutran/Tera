@@ -18,11 +18,11 @@
 //            Debug.WriteLine(Name + ":" + BitConverter.ToString(BitConverter.GetBytes(Id.Id)) + ":" + ServerId.ToString() + " " + BitConverter.ToString(BitConverter.GetBytes(PlayerId)));
         }
 
-        public EntityId Id { get; }
-        public uint ServerId { get; }
-        public uint PlayerId { get; }
-        public int Level { get; }
-        public string Name { get; }
+        public EntityId Id { get; private set; }
+        public uint ServerId { get; private set; }
+        public uint PlayerId { get; private set; }
+        public int Level { get; private set; }
+        public string Name { get; private set; }
         public string GuildName { get; private set; }
         public RaceGenderClass RaceGenderClass { get; }
     }

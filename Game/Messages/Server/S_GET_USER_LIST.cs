@@ -11,9 +11,9 @@ namespace Tera.Game.Messages
             var offset = reader.ReadUInt16();
             for (var i = 1; i <= count; i++)
             {
-                reader.BaseStream.Position = offset - 4;
+                reader.BaseStream.Position = offset-4;
                 var pointer = reader.ReadUInt16();
-                Debug.Assert(pointer == offset); //should be the same
+                Debug.Assert(pointer==offset);//should be the same
                 var nextOffset = reader.ReadUInt16();
                 reader.Skip(14);
                 var gNameOffset = reader.ReadUInt16();

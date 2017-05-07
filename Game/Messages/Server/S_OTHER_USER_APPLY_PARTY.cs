@@ -1,4 +1,8 @@
-﻿namespace Tera.Game.Messages
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+namespace Tera.Game.Messages
 {
     public class S_OTHER_USER_APPLY_PARTY : ParsedMessage
     {

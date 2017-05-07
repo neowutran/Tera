@@ -19,12 +19,12 @@
         }
 
         public float Speed { get; set; }
-        public int unk2 { get; }
-        public byte unk1 { get; }
-        public EntityId Id { get; }
-        public int Model { get; }
-        public Vector3f Start { get; }
-        public Vector3f Finish { get; }
-        public EntityId OwnerId { get; }
+        public int unk2 { get; private set; }
+        public byte unk1 { get; private set; }
+        public EntityId Id { get; private set; }
+        public int Model { get; private set; }
+        public Vector3f Start { get; private set; }
+        public Vector3f Finish { get; private set; }
+        public EntityId OwnerId { get; private set; }
     }
 }

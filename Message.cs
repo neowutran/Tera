@@ -11,11 +11,11 @@ namespace Tera
             Data = data;
         }
 
-        public DateTime Time { get; }
-        public MessageDirection Direction { get; }
+        public DateTime Time { get; private set; }
+        public MessageDirection Direction { get; private set; }
         public ArraySegment<byte> Data { get; }
 
-        public ushort OpCode => (ushort) (Data.Array[Data.Offset] | (Data.Array[Data.Offset + 1] << 8));
+        public ushort OpCode => (ushort) (Data.Array[Data.Offset] | Data.Array[Data.Offset + 1] << 8);
         public ArraySegment<byte> Payload => new ArraySegment<byte>(Data.Array, Data.Offset + 2, Data.Count - 2);
     }
 }

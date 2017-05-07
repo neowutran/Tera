@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-
+using System.Text;
 namespace Tera.Game.Messages
 {
     public class S_GUILD_QUEST_LIST : ParsedMessage
@@ -21,7 +21,68 @@ namespace Tera.Game.Messages
             Hunt = 0,
             Gathering = 2,
             Battleground = 4
+
         }
+
+        public enum QuestSizeType {
+            Small = 0,
+            Medium = 1,
+            Big = 2
+        }
+
+
+
+        public ulong Gold { get; private set; }
+        public uint NumberCharacters { get; private set; }
+        public uint NumberAccount { get; private set; }
+        public string GuildName { get; private set; }
+        public string GuildMaster { get; private set; }
+        public uint GuildLevel { get; private set; }
+
+        public uint NumberQuestsDone { get; private set; }
+        public uint NumberTotalDailyQuest { get; private set; }
+
+        public override string ToString()
+        {
+            var str =  "Guild name:" + GuildName + "\n" +
+                "Guild master:" + GuildMaster + "\n" +
+                "Guild level:" + GuildLevel + "\n" +
+                "Number accounts:" + NumberAccount + "\n" +
+                "Number characters:" + NumberCharacters + "\n" +
+                "Gold:" + Gold + "\n"+
+                "NumberTotalDailyQuest:"+NumberTotalDailyQuest+"\n"+
+                "NumberQuestsDone:"+NumberQuestsDone+"\n"+
+                "Current XP:"+ GuildXpCurrent+"\n"+
+                "XP for next level:"+ GuildXpNextLevel+"\n"+
+                "XP to gain for next level:"+ (GuildXpNextLevel - GuildXpCurrent)+"\n"+
+                "Guild size:"+ GuildSize+"\n"+
+                "Guild creation date:"+ GuildCreationTime+"\n"
+                ;
+            foreach(var quest in GuildQuests)
+            {
+                str += "\n=====\n" + quest;
+            }
+            return str;
+
+        }
+
+        public GuildQuest ActiveQuest()
+        {
+            return GuildQuests.Where(x => x.Active == true).FirstOrDefault();
+        }
+
+        public List<GuildQuest> ActiveQuests()
+        {
+            return GuildQuests.Where(x => x.Active).ToList();
+        }
+
+        public List<GuildQuest> GuildQuests { get; private set; }
+
+        public ulong GuildXpCurrent { get; private set; }
+        public ulong GuildXpNextLevel { get; private set; }
+
+        public GuildSizeType GuildSize { get; private set; }
+        public DateTime GuildCreationTime { get; private set; }
 
         public enum GuildSizeType
         {
@@ -30,11 +91,13 @@ namespace Tera.Game.Messages
             Big = 2
         }
 
-        public enum QuestSizeType
+
+        public static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
         {
-            Small = 0,
-            Medium = 1,
-            Big = 2
+            // Unix timestamp is seconds past epoch
+            DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
+            return dtDateTime;
         }
 
         internal S_GUILD_QUEST_LIST(TeraMessageReader reader) : base(reader)
@@ -55,18 +118,18 @@ namespace Tera.Game.Messages
             Gold = reader.ReadUInt64();
             NumberCharacters = reader.ReadUInt32();
             NumberAccount = reader.ReadUInt32();
-            GuildSize = (GuildSizeType) reader.ReadUInt32();
+            GuildSize = (GuildSizeType)reader.ReadUInt32();
             GuildCreationTime = UnixTimeStampToDateTime(reader.ReadUInt64());
             NumberQuestsDone = reader.ReadUInt32();
             NumberTotalDailyQuest = reader.ReadUInt32();
             GuildName = reader.ReadTeraString();
             GuildMaster = reader.ReadTeraString();
-
+            
             for (var i = 1; i <= counter; i++)
             {
                 reader.BaseStream.Position = questOffset - 4;
                 var pointer = reader.ReadUInt16();
-                Debug.Assert(pointer == questOffset); //should be the same
+                Debug.Assert(pointer == questOffset);//should be the same
                 var nextOffset = reader.ReadUInt16();
 
                 var countTargets = reader.ReadUInt16();
@@ -83,14 +146,14 @@ namespace Tera.Game.Messages
                 var offsetGuildName = reader.ReadUInt16();
 
                 var id = reader.ReadUInt32();
-                var questType2 = (GuildQuestType2) reader.ReadUInt32();
-                var questSize = (QuestSizeType) reader.ReadUInt32();
+                var questType2 = (GuildQuestType2)reader.ReadUInt32();
+                var questSize = (QuestSizeType)reader.ReadUInt32();
                 var unk3 = reader.ReadInt32(); //2 if rally
                 var totalTime = reader.ReadInt32();
                 var active = reader.ReadInt32(); //0=not taken, 1= in progress, 2=completed
                 //Debug.WriteLine(active.ToString("X"));
                 var activeBool = active == 1;
-
+                
                 //in seconds
                 var timeRemaining = reader.ReadUInt32();
 
@@ -98,7 +161,7 @@ namespace Tera.Game.Messages
                 var guildQuestType = (GuildQuestType) reader.ReadUInt32();
                 var unk5 = reader.ReadByte();
                 var unk6 = reader.ReadInt32();
-
+               
                 var guildQuestDescriptionLabel = reader.ReadTeraString();
                 var guildQuestTitleLabel = reader.ReadTeraString();
                 var questguildname = reader.ReadTeraString();
@@ -111,7 +174,7 @@ namespace Tera.Game.Messages
                 // ";countUnk2:" + countUnk2 +
                 // ";offsetUnk2:" + offsetUnk2
                 // );
-                var targets = new List<GuildQuestTarget>();
+                List<GuildQuestTarget> targets = new List<GuildQuestTarget>();
                 reader.BaseStream.Position = offsetTargets - 4;
                 for (var j = 1; j <= countTargets; j++)
                 {
@@ -133,7 +196,7 @@ namespace Tera.Game.Messages
                     Debug.WriteLine("unk2:" + reader.ReadByte().ToString("X") + " ;" + j + "/" + countUnk2);
                 }
 
-                var rewards = new List<GuildQuestItem>();
+                List<GuildQuestItem> rewards = new List<GuildQuestItem>();
                 reader.BaseStream.Position = offsetRewards - 4;
                 for (var j = 1; j <= countRewards; j++)
                 {
@@ -148,80 +211,25 @@ namespace Tera.Game.Messages
                 questOffset = nextOffset;
 
                 var quest = new GuildQuest(
-                    guildQuestType,
-                    questType2,
-                    guildQuestDescriptionLabel,
-                    guildQuestTitleLabel,
-                    questguildname,
-                    targets,
-                    activeBool,
-                    rewards,
-                    timeRemaining,
-                    questSize
-                );
+               guildQuestType,
+               questType2,
+               guildQuestDescriptionLabel,
+               guildQuestTitleLabel,
+               questguildname,
+               targets,
+               activeBool,
+               rewards,
+               timeRemaining,
+               questSize
+
+               );
                 GuildQuests.Add(quest);
+             
             }
 
-            // Debug.WriteLine(ToString());
+           // Debug.WriteLine(ToString());
         }
 
-
-        public ulong Gold { get; }
-        public uint NumberCharacters { get; }
-        public uint NumberAccount { get; }
-        public string GuildName { get; }
-        public string GuildMaster { get; }
-        public uint GuildLevel { get; }
-
-        public uint NumberQuestsDone { get; }
-        public uint NumberTotalDailyQuest { get; }
-
-        public List<GuildQuest> GuildQuests { get; }
-
-        public ulong GuildXpCurrent { get; }
-        public ulong GuildXpNextLevel { get; }
-
-        public GuildSizeType GuildSize { get; }
-        public DateTime GuildCreationTime { get; }
-
-        public override string ToString()
-        {
-            var str = "Guild name:" + GuildName + "\n" +
-                      "Guild master:" + GuildMaster + "\n" +
-                      "Guild level:" + GuildLevel + "\n" +
-                      "Number accounts:" + NumberAccount + "\n" +
-                      "Number characters:" + NumberCharacters + "\n" +
-                      "Gold:" + Gold + "\n" +
-                      "NumberTotalDailyQuest:" + NumberTotalDailyQuest + "\n" +
-                      "NumberQuestsDone:" + NumberQuestsDone + "\n" +
-                      "Current XP:" + GuildXpCurrent + "\n" +
-                      "XP for next level:" + GuildXpNextLevel + "\n" +
-                      "XP to gain for next level:" + (GuildXpNextLevel - GuildXpCurrent) + "\n" +
-                      "Guild size:" + GuildSize + "\n" +
-                      "Guild creation date:" + GuildCreationTime + "\n"
-                ;
-            foreach (var quest in GuildQuests)
-                str += "\n=====\n" + quest;
-            return str;
-        }
-
-        public GuildQuest ActiveQuest()
-        {
-            return GuildQuests.FirstOrDefault(x => x.Active);
-        }
-
-        public List<GuildQuest> ActiveQuests()
-        {
-            return GuildQuests.Where(x => x.Active).ToList();
-        }
-
-
-        public static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
-        {
-            // Unix timestamp is seconds past epoch
-            var dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-            dtDateTime = dtDateTime.AddSeconds(unixTimeStamp).ToLocalTime();
-            return dtDateTime;
-        }
     }
 }
+

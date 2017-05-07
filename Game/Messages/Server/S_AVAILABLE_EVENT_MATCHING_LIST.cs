@@ -1,4 +1,6 @@
-﻿namespace Tera.Game.Messages
+﻿using System.Diagnostics;
+
+namespace Tera.Game.Messages
 {
     public class S_AVAILABLE_EVENT_MATCHING_LIST : ParsedMessage
 
@@ -10,7 +12,7 @@
             Credits = reader.ReadInt32();
         }
 
-        public int Badges { get; }
-        public int Credits { get; }
+        public int Badges { get; private set; }
+        public int Credits { get; private set; }
     }
 }

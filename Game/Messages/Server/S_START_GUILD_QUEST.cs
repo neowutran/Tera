@@ -1,9 +1,10 @@
 ﻿using System;
-
 namespace Tera.Game.Messages
 {
     public class S_START_GUILD_QUEST : ParsedMessage
     {
+        public uint QuestId { get; private set; }
+        public string Guildname { get; private set; }
         internal S_START_GUILD_QUEST(TeraMessageReader reader) : base(reader)
         {
             PrintRaw();
@@ -11,11 +12,7 @@ namespace Tera.Game.Messages
             var unknowByte = reader.ReadByte();
             QuestId = reader.ReadUInt32();
             Guildname = reader.ReadTeraString();
-            Console.WriteLine("id:" + QuestId + ";guildname:" + Guildname + ";unkown:" + unkown + ";unknown:" +
-                              unknowByte);
+            Console.WriteLine("id:"+ QuestId + ";guildname:"+ Guildname + ";unkown:" + unkown + ";unknown:"+ unknowByte);
         }
-
-        public uint QuestId { get; }
-        public string Guildname { get; }
     }
 }

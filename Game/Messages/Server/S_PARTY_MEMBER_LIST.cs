@@ -55,7 +55,7 @@ namespace Tera.Game.Messages
                     Name = Name
                 });
             }
-           
+            ;
             //Debug.WriteLine($"leader:{BitConverter.ToString(BitConverter.GetBytes(LeaderPlayerId))}, party:");
             //foreach (PartyMember member in Party)
             //{

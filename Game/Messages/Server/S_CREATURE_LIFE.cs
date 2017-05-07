@@ -10,7 +10,7 @@
         }
 
         public EntityId User { get; }
-        public Vector3f Position { get; }
+        public Vector3f Position { get; private set; }
         public bool Dead { get; }
     }
 }

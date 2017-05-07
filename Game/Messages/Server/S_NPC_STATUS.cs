@@ -1,4 +1,6 @@
-﻿namespace Tera.Game.Messages
+﻿using System.Diagnostics;
+
+namespace Tera.Game.Messages
 {
     public class SNpcStatus : ParsedMessage
 

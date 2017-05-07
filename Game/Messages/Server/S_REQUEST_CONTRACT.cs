@@ -1,9 +1,24 @@
 ﻿using System.Diagnostics;
-
 namespace Tera.Game.Messages
 {
     public class S_REQUEST_CONTRACT : ParsedMessage
     {
+        internal S_REQUEST_CONTRACT(TeraMessageReader reader) : base(reader)
+        {
+            //PrintRaw();
+            reader.Skip(24);
+            short type = reader.ReadInt16();
+            Type = (RequestType)type;
+            reader.Skip(14);
+            //int unk3 = reader.ReadInt32();
+            //int time = reader.ReadInt32();
+            Sender = reader.ReadTeraString();
+            Recipient = reader.ReadTeraString();
+            Debug.WriteLine("type:"+type+";translated:"+Type+"; Sender:"+Sender+";Recipient"+Recipient);
+        }
+
+        public string Sender { get; private set; }
+        public string Recipient { get; private set; }
         public enum RequestType
         {
             TradeRequest = 3,
@@ -29,23 +44,7 @@ namespace Tera.Game.Messages
             Dressroom = 76
         }
 
-        internal S_REQUEST_CONTRACT(TeraMessageReader reader) : base(reader)
-        {
-            //PrintRaw();
-            reader.Skip(24);
-            var type = reader.ReadInt16();
-            Type = (RequestType) type;
-            reader.Skip(14);
-            //int unk3 = reader.ReadInt32();
-            //int time = reader.ReadInt32();
-            Sender = reader.ReadTeraString();
-            Recipient = reader.ReadTeraString();
-            Debug.WriteLine("type:" + type + ";translated:" + Type + "; Sender:" + Sender + ";Recipient" + Recipient);
-        }
-
-        public string Sender { get; }
-        public string Recipient { get; }
-
-        public RequestType Type { get; }
+        public RequestType Type { get; private set; }
     }
 }
+

@@ -16,7 +16,7 @@ namespace Tera.Game
         public uint ServerId => User.ServerId;
 
         public string Name => User.Name;
-        public string FullName { get; }
+        public string FullName { get; private set; }
         public bool IsHealer => Class == PlayerClass.Priest || Class == PlayerClass.Mystic;
         public int Level => User.Level;
         public string GuildName => User.GuildName;
@@ -27,7 +27,7 @@ namespace Tera.Game
 
         public UserEntity User
         {
-            get => _user;
+            get { return _user; }
             set
             {
                 if (_user.ServerId != value.ServerId || _user.PlayerId != value.PlayerId)
@@ -51,11 +51,15 @@ namespace Tera.Game
         public static bool operator ==(Player a, Player b)
         {
             if (ReferenceEquals(a, b))
+            {
                 return true;
+            }
 
             // If one is null, but not both, return false.
-            if ((object) a == null || (object) b == null)
+            if (((object) a == null) || ((object) b == null))
+            {
                 return false;
+            }
 
             return a.Equals(b);
         }

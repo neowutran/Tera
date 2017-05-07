@@ -83,7 +83,7 @@ namespace Tera.Game.Abnormality
                     : PlayerAbnormalityTime[player],
                 !PlayerDeath.ContainsKey(player) ? new Death() : PlayerDeath[player],
                 !PlayerAggro.ContainsKey(player) ? new Dictionary<NpcEntity, Death>() : PlayerAggro[player]
-            );
+                );
         }
 
         public AbnormalityStorage Clone(NpcEntity boss, long begin = 0, long end = 0)
@@ -92,8 +92,7 @@ namespace Tera.Game.Abnormality
             if (boss != null)
                 npcTimes = NpcAbnormalityTime.Where(x => x.Key == boss)
                     .ToDictionary(y => y.Key, y => y.Value.ToDictionary(x => x.Key, x => x.Value.Clone(begin, end)));
-            else
-                npcTimes = NpcAbnormalityTime
+            else npcTimes = NpcAbnormalityTime
                     .ToDictionary(y => y.Key, y => y.Value.ToDictionary(x => x.Key, x => x.Value.Clone(begin, end)));
             var playerTimes = PlayerAbnormalityTime.ToDictionary(y => y.Key,
                 y => y.Value.ToDictionary(x => x.Key, x => x.Value.Clone(begin, end)));
@@ -102,8 +101,7 @@ namespace Tera.Game.Abnormality
             if (boss != null)
                 playerAggro = PlayerAggro.Where(x => x.Value.Keys.Contains(boss))
                     .ToDictionary(y => y.Key,
-                        y => y.Value.Where(x => x.Key == boss)
-                            .ToDictionary(x => x.Key, x => x.Value.Clone(begin, end)));
+                        y => y.Value.Where(x => x.Key == boss).ToDictionary(x => x.Key, x => x.Value.Clone(begin, end)));
             else
                 playerAggro = PlayerAggro
                     .ToDictionary(y => y.Key,
@@ -131,8 +129,7 @@ namespace Tera.Game.Abnormality
             {
                 var j = i.Value.Where(x => !x.Value.Ended())
                     .ToDictionary(x => x.Key,
-                        x => new AbnormalityDuration(x.Value.InitialPlayerClass, x.Value.LastStart(),
-                            x.Value.LastStack()));
+                        x => new AbnormalityDuration(x.Value.InitialPlayerClass, x.Value.LastStart(), x.Value.LastStack()));
                 if (j.Count > 0)
                     npcTimes.Add(i.Key, j);
             }
@@ -141,15 +138,16 @@ namespace Tera.Game.Abnormality
             {
                 var j = i.Value.Where(x => !x.Value.Ended())
                     .ToDictionary(x => x.Key,
-                        x => new AbnormalityDuration(x.Value.InitialPlayerClass, x.Value.LastStart(),
-                            x.Value.LastStack()));
+                        x => new AbnormalityDuration(x.Value.InitialPlayerClass, x.Value.LastStart(), x.Value.LastStack()));
                 if (j.Count > 0)
                     playerTimes.Add(i.Key, j);
             }
             var death = new Dictionary<Player, Death>();
             foreach (var i in PlayerDeath)
+            {
                 if (i.Value.Dead)
                     death.Add(i.Key, i.Value.Clear());
+            }
             var aggro = new Dictionary<Player, Dictionary<NpcEntity, Death>>();
             foreach (var i in PlayerAggro)
             {
@@ -168,16 +166,30 @@ namespace Tera.Game.Abnormality
         public void EndAll(long ticks)
         {
             foreach (var i in NpcAbnormalityTime)
-            foreach (var j in i.Value.Where(x => !x.Value.Ended()))
-                j.Value.End(ticks);
+            {
+                foreach (var j in i.Value.Where(x => !x.Value.Ended()))
+                {
+                    j.Value.End(ticks);
+                }
+            }
             foreach (var i in PlayerAbnormalityTime)
-            foreach (var j in i.Value.Where(x => !x.Value.Ended()))
-                j.Value.End(ticks);
+            {
+                foreach (var j in i.Value.Where(x => !x.Value.Ended()))
+                {
+                    j.Value.End(ticks);
+                }
+            }
             foreach (var j in PlayerDeath.Where(x => !x.Value.Dead))
+            {
                 j.Value.End(ticks);
+            }
             foreach (var i in PlayerAggro)
-            foreach (var j in i.Value.Where(x => !x.Value.Dead))
-                j.Value.End(ticks);
+            {
+                foreach (var j in i.Value.Where(x => !x.Value.Dead))
+                {
+                    j.Value.End(ticks);
+                }
+            }
             LastAggro = new Dictionary<NpcEntity, Player>();
         }
 
@@ -205,7 +217,7 @@ namespace Tera.Game.Abnormality
 
         public bool Dead(Player player)
         {
-            if (!PlayerDeath.ContainsKey(player)) return false;
+            if (!PlayerDeath.ContainsKey(player))return false;
             return PlayerDeath[player].Dead;
         }
     }

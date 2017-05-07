@@ -13,18 +13,11 @@ namespace Tera.Game
             Owner = owner;
             Info = info;
         }
-
-
-        public NpcInfo Info { get; }
-
-        public EntityId OwnerId { get; set; }
-        public Entity Owner { get; set; }
-
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == GetType() && Equals((NpcEntity) obj);
+            return obj.GetType() == GetType() && Equals((NpcEntity)obj);
         }
 
         public override int GetHashCode()
@@ -40,11 +33,15 @@ namespace Tera.Game
         public static bool operator ==(NpcEntity a, NpcEntity b)
         {
             if (ReferenceEquals(a, b))
+            {
                 return true;
+            }
 
             // If one is null, but not both, return false.
-            if ((object) a == null || (object) b == null)
+            if (((object)a == null) || ((object)b == null))
+            {
                 return false;
+            }
 
             return a.Equals(b);
         }
@@ -53,6 +50,12 @@ namespace Tera.Game
         {
             return !(a == b);
         }
+
+
+        public NpcInfo Info { get; }
+
+        public EntityId OwnerId { get; set; }
+        public Entity Owner { get; set; }
 
         public override string ToString()
         {

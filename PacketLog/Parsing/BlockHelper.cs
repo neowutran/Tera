@@ -30,7 +30,7 @@ namespace Tera.PacketLog
         {
             blockType = (BlockType) stream.ReadByte();
             var sizeBuffer = stream.ReadBytes(2);
-            var size = (ushort) (sizeBuffer[0] | (sizeBuffer[1] << 8));
+            var size = (ushort) (sizeBuffer[0] | sizeBuffer[1] << 8);
             data = stream.ReadBytes(size - 2);
         }
     }

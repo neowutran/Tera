@@ -23,8 +23,8 @@
         public int SkillId { get; set; }
         public uint Model { get; set; }
         public EntityId Entity { get; }
-        public Vector3f Position { get; }
-        public Angle Heading { get; }
-        public float Speed { get; }
+        public Vector3f Position { get; private set; }
+        public Angle Heading { get; private set; }
+        public float Speed { get; private set; }
     }
 }

@@ -4,6 +4,7 @@
     {
         internal S_ACTION_END(TeraMessageReader reader) : base(reader)
         {
+            
             Entity = reader.ReadEntityId();
             Position = reader.ReadVector3f();
             Heading = reader.ReadAngle();
@@ -19,7 +20,7 @@
         public int SkillId { get; set; }
         public uint Model { get; set; }
         public EntityId Entity { get; }
-        public Vector3f Position { get; }
-        public Angle Heading { get; }
+        public Vector3f Position { get; private set; }
+        public Angle Heading { get; private set; }
     }
 }

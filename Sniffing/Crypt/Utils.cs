@@ -22,9 +22,9 @@ namespace Tera.Sniffing.Crypt
 
             for (var i = 0; i < src.Length; i++)
                 if (direction)
-                    result[(i + n) % src.Length] = src[i];
+                    result[(i + n)%src.Length] = src[i];
                 else
-                    result[i] = src[(i + n) % src.Length];
+                    result[i] = src[(i + n)%src.Length];
 
             return result;
         }

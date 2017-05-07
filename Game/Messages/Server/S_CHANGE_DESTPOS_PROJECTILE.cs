@@ -11,6 +11,6 @@
         }
 
         public Vector3f Finish { get; set; }
-        public EntityId Id { get; }
+        public EntityId Id { get; private set; }
     }
 }

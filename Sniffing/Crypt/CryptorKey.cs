@@ -17,7 +17,7 @@ namespace Tera.Sniffing.Crypt
             Size = size;
             Pos2 = MaxPos = maxPos;
 
-            Buffer = new uint[Size * 4];
+            Buffer = new uint[Size*4];
         }
     }
 }
