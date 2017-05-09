@@ -6,14 +6,14 @@
         {
             TargetId = reader.ReadEntityId();
             AbnormalityId = reader.ReadInt32();
-            Duration = reader.ReadInt32();
+            Duration = reader.ReadUInt32();
             Unknow = reader.ReadInt32();
             StackCounter = reader.ReadInt32();
 
 //            Debug.WriteLine("Target:"+TargetId+";Abnormality:"+AbnormalityId+";Duration:"+Duration+";Uknow:"+Unknow+";Stack:"+StackCounter);
         }
 
-        public int Duration { get; }
+        public uint Duration { get; }
 
         public int Unknow { get; }
 

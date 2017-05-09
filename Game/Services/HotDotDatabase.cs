@@ -62,7 +62,7 @@ namespace Tera.Game
                 var abType = (HotDot.AbnormalityType)Enum.Parse(typeof(HotDot.AbnormalityType), values[2]);
                 var isBuff = bool.Parse(values[3]);
                 var method = (HotDot.DotType) Enum.Parse(typeof(HotDot.DotType), values[4]);
-                var time = int.Parse(values[5]);
+                var time = uint.Parse(values[5]);
                 var tick = int.Parse(values[6]);
                 var amount = double.Parse(values[7], CultureInfo.InvariantCulture);
                 var hp = type == "HPChange" ? amount : 0;

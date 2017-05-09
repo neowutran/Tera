@@ -10,11 +10,11 @@ namespace Tera.Game.Messages
             TargetId = reader.ReadEntityId();
             SourceId = reader.ReadEntityId();
             AbnormalityId = reader.ReadInt32();
-            Duration = reader.ReadInt32();
+            Duration = reader.ReadUInt32();
             Stack = reader.ReadInt32();
         }
 
-        public int Duration { get; }
+        public uint Duration { get; }
 
         public int Stack { get; }
 
