@@ -64,7 +64,7 @@ namespace Tera.Game
             Reflect = 110,
             RestoreHpOnHit = 151, //restore x% hp after successfull hit with Y skill
             AtkPotion = 162, //or glyph: + outgoing damage %
-            DamgaeAura = 163, // increase skills damage + X
+            DamageAura = 163, // increase skills damage + X
             CritChance = 167,
             PVPAtk = 168,
             ChangeBody = 192,//5=boobs,6=height,7=thighs
