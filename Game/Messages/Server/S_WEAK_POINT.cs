@@ -19,7 +19,7 @@ namespace Tera.Game.Messages
     {
         private uint type;
 
-        public ulong Target { get; private set; }
+        public EntityId Target { get; private set; }
         public uint AddedRunemarks { get; private set; }
         public uint RemovedRunemarks { get; private set; }
         public RunemarksActionType Type { get => (RunemarksActionType)type; }
@@ -27,7 +27,7 @@ namespace Tera.Game.Messages
 
         internal S_WEAK_POINT(TeraMessageReader reader) : base(reader)
         {
-            Target = reader.ReadUInt64();
+            Target = reader.ReadEntityId();
             AddedRunemarks = reader.ReadUInt32();
             RemovedRunemarks = reader.ReadUInt32();
             type = reader.ReadUInt32();
