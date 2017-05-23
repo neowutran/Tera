@@ -17,9 +17,9 @@ namespace Tera.Game
         {
             Id = id;
             Name = name;
-            ShortName = RemoveLvl(name);
+            ShortName = String.Intern(RemoveLvl(name));
             IsChained = isChained;
-            Detail = detail;
+            Detail = String.Intern(detail);
             IconName = iconName;
             NpcInfo = npcInfo;
             IsHotDot = isHotDot;

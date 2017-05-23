@@ -121,7 +121,7 @@ namespace Tera.Game
 
         }
         public HotDot(int id, string type, double hp, double mp, double amount, DotType method, uint time, int tick,
-            string name, string itemName, string tooltip, string iconName, AbnormalityType abType, bool isBuff)
+            string name, string itemName, string tooltip, string iconName, AbnormalityType abType, bool isBuff, string effectIcon)
         {
             Id = id;
             Types rType;
@@ -142,7 +142,8 @@ namespace Tera.Game
             ShortName = name;
             ItemName = itemName;
             Tooltip = tooltip;
-            IconName = iconName;
+            IconName = String.Intern(iconName);
+            EffectIcon = String.Intern(effectIcon);
             Debuff = (rType == Types.Endurance || rType == Types.CritResist) && amount <= 1 || rType == Types.Mark || (rType == Types.DefPotion && amount > 1);
             HPMPChange = rType == Types.HPChange || rType == Types.MPChange;
             Buff = rType != Types.HPChange;// && rType != Types.MPChange;//try to show MPChange abnormals
@@ -180,6 +181,7 @@ namespace Tera.Game
         public string ItemName { get; }
         public string Tooltip { get; set; }
         public string IconName { get; }
+        public string EffectIcon { get; }
         public bool Buff { get; private set; }
         public bool Debuff { get; private set; }
         public bool HPMPChange { get; private set; }
