@@ -38,7 +38,7 @@ namespace Tera.Game
             BitmapImage image;
             if (_images.TryGetValue(iconName, out image))
             {
-                return _emptyBitmap;
+                return image;
             }
             image = new BitmapImage();
             var ur = new Uri("/" + iconName + ".png", UriKind.Relative);
