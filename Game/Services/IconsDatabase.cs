@@ -34,10 +34,11 @@ namespace Tera.Game
 
         public BitmapImage GetImage(string iconName)
         {
+            if (string.IsNullOrEmpty(iconName)) return _emptyBitmap;
             BitmapImage image;
-            if (_images.TryGetValue(iconName, out image) || string.IsNullOrEmpty(iconName))
+            if (_images.TryGetValue(iconName, out image))
             {
-                return image;
+                return _emptyBitmap;
             }
             image = new BitmapImage();
             var ur = new Uri("/" + iconName + ".png", UriKind.Relative);
