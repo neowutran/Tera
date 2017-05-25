@@ -20,16 +20,16 @@ namespace Tera.Game.Messages
         private uint type;
 
         public EntityId Target { get; private set; }
-        public uint AddedRunemarks { get; private set; }
-        public uint RemovedRunemarks { get; private set; }
+        public uint RunemarksBefore { get; private set; }
+        public uint RunemarksAfter { get; private set; }
         public RunemarksActionType Type { get => (RunemarksActionType)type; }
         public uint SkillId { get; private set; }
 
         internal S_WEAK_POINT(TeraMessageReader reader) : base(reader)
         {
             Target = reader.ReadEntityId();
-            AddedRunemarks = reader.ReadUInt32();
-            RemovedRunemarks = reader.ReadUInt32();
+            RunemarksBefore = reader.ReadUInt32();
+            RunemarksAfter = reader.ReadUInt32();
             type = reader.ReadUInt32();
             SkillId = reader.ReadUInt32();
         }
