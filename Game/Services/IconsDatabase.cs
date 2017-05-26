@@ -40,10 +40,10 @@ namespace Tera.Game
             {
                 return image;
             }
-            image = new BitmapImage();
             var ur = new Uri("/" + iconName + ".png", UriKind.Relative);
             if (_icons.PartExists(ur))
             {
+                image = new BitmapImage();
                 image.BeginInit();
                 image.CacheOption = BitmapCacheOption.OnLoad;
                 image.StreamSource = _icons.GetPart(ur).GetStream();
