@@ -83,6 +83,7 @@
     <Compile Include="Game\Messages\Server\S_PLAYER_STAT_UPDATE.cs" />
     <Compile Include="Game\Messages\Server\S_GUILD_QUEST_LIST.cs" />
     <Compile Include="Game\Messages\Server\S_REQUEST_CONTRACT.cs" />
+    <Compile Include="Game\Messages\Server\S_RETURN_TO_LOBBY.cs" />
     <Compile Include="Game\Messages\Server\S_START_COOLTIME_SKILL.cs" />
     <Compile Include="Game\Messages\Server\S_START_GUILD_QUEST.cs" />
     <Compile Include="Game\Messages\Server\S_SYSTEM_MESSAGE.cs" />
