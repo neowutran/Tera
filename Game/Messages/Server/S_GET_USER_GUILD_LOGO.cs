@@ -16,7 +16,7 @@ namespace Tera.Game.Messages
             GuildId = reader.ReadUInt32();
             //Debug.WriteLine("icon size:"+size+";offset:"+offset+";player:"+PlayerId+";GuildId:"+GuildId);
 
-            if (offset==0||size < 20) {GuildLogo = new Bitmap(0, 0, PixelFormat.Format8bppIndexed);return;}
+            if (offset==0||size < 20) {GuildLogo = new Bitmap(1, 1, PixelFormat.Format8bppIndexed);return;}
             var logo = reader.ReadBytes(size);
             var width = BitConverter.ToInt32(logo, 8);
             var type = BitConverter.ToInt32(logo, 12);
