@@ -22,7 +22,7 @@ namespace Tera.Game.Messages
         public EntityId Target { get; private set; }
         public uint RunemarksBefore { get; private set; }
         public uint RunemarksAfter { get; private set; }
-        public RunemarksActionType Type { get => (RunemarksActionType)type; }
+        public RunemarksActionType Type => (RunemarksActionType) type;
         public uint SkillId { get; private set; }
 
         internal S_WEAK_POINT(TeraMessageReader reader) : base(reader)
