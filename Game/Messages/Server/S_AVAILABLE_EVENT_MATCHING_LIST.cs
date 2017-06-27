@@ -7,9 +7,9 @@ namespace Tera.Game.Messages
     {
         internal S_AVAILABLE_EVENT_MATCHING_LIST(TeraMessageReader reader) : base(reader)
         {
-            reader.Skip(24);
-            Badges = reader.ReadInt32();
-            Credits = reader.ReadInt32();
+            reader.Skip(63);
+            //Badges = reader.ReadInt32();
+            Credits = reader.ReadInt16();
         }
 
         public int Badges { get; private set; }
