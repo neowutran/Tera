@@ -69,7 +69,7 @@ namespace Tera.Game
                 var mp = type == "MPChange" ? amount : 0;
                 var name = values[8];
                 var itemName = values[10];
-                var tooltip = values[11];
+                var tooltip = values[11].Replace("$H_W_GOOD", "").Replace("H_W_GOOD", "").Replace("$COLOR_END", "").Replace("$H_W_BAD", "").Replace("$H_W_Bad", "").Replace("H_W_BAD", "").Replace("$BR", " ").Replace("<br>", " ");
                 var iconName = values[12];
                 var effectIcon = values[13];
                 if (_hotdots.ContainsKey(id))
