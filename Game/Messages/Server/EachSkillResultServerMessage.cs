@@ -40,6 +40,7 @@ namespace Tera.Game.Messages
             Unknow2 = reader.ReadBytes(12); //unknown, id, time
 
             Amount = reader.ReadInt32();
+            if (reader.Version >= 319000) reader.ReadInt32();// probably Amount is now either int64 or double, but not sure - ignoring until we get some skils doing more damage than fit to int32
             FlagsDebug = reader.ReadInt32();
             Flags = (SkillResultFlags) FlagsDebug;
             IsCritical = (reader.ReadUInt16() & 1) != 0;
