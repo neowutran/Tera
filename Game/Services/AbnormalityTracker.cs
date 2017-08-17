@@ -282,7 +282,7 @@ namespace Tera.Game
                 message.Time.Ticks);
         }
 
-        private void Update(EntityId target, EntityId source, int change, int type, bool critical, bool isHp, long time)
+        private void Update(EntityId target, EntityId source, long change, int type, bool critical, bool isHp, long time)
         {
             if (!_abnormalities.ContainsKey(target))
             {

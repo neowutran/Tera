@@ -6,12 +6,18 @@ namespace Tera.Game.Messages
     {
         internal SCreatureChangeHp(TeraMessageReader reader) : base(reader)
         {
-            HpRemaining = reader.ReadInt32();
-            if (reader.Version >= 319000) reader.ReadInt32();// probably Hp is now either int64 or double, but not sure - ignoring until it become more than fit to int32
-            TotalHp = reader.ReadInt32();
-            if (reader.Version >= 319000) reader.ReadInt32();// probably Hp is now either int64 or double, but not sure - ignoring until it become more than fit to int32
-            HpChange = reader.ReadInt32();
-            if (reader.Version >= 319000) reader.ReadInt32();// probably Hp is now either int64 or double, but not sure - ignoring until it become more than fit to int32
+            if (reader.Version <= 319000)
+            {
+                HpRemaining = reader.ReadInt32();
+                TotalHp = reader.ReadInt32();
+                HpChange = reader.ReadInt32();
+            }
+            else
+            {
+                HpRemaining = reader.ReadInt64();
+                TotalHp = reader.ReadInt64();
+                HpChange = reader.ReadInt64();
+            }
             Type = reader.ReadInt32();
             //Unknow3 = reader.ReadInt16();
             TargetId = reader.ReadEntityId();
@@ -23,14 +29,14 @@ namespace Tera.Game.Messages
         }
 
         public int Unknow3 { get; }
-        public int HpChange { get; }
+        public long HpChange { get; }
 
         public int Type { get; }
 
 
-        public int HpRemaining { get; }
+        public long HpRemaining { get; }
 
-        public int TotalHp { get; }
+        public long TotalHp { get; }
 
         public int Critical { get; }
 

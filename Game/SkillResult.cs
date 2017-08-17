@@ -75,7 +75,7 @@ namespace Tera.Game
             HitDirection = HitDirection & ~(HitDirection.Left | HitDirection.Right);
         }
 
-        public SkillResult(int amount, bool isCritical, bool isHp, bool isHeal, HotDot hotdot, EntityId source,
+        public SkillResult(long amount, bool isCritical, bool isHp, bool isHeal, HotDot hotdot, EntityId source,
             EntityId target, DateTime time,
             EntityTracker entityRegistry, PlayerTracker playerTracker)
         {
@@ -112,7 +112,7 @@ namespace Tera.Game
         public HitDirection HitDirection { get; private set; }
         public DateTime Time { get; private set; }
         public bool Abnormality { get; }
-        public int Amount { get; }
+        public long Amount { get; }
         public Entity Source { get; }
         public Entity Target { get; }
         public bool IsCritical { get; private set; }
@@ -131,10 +131,10 @@ namespace Tera.Game
 
         public bool? IsChained => Skill?.IsChained;
 
-        public int Damage => IsHeal || !IsHp ? 0 : Amount;
+        public long Damage => IsHeal || !IsHp ? 0 : Amount;
 
-        public int Heal => IsHp && IsHeal ? Amount : 0;
-        public int Mana => !IsHp ? Amount : 0;
+        public long Heal => IsHp && IsHeal ? Amount : 0;
+        public long Mana => !IsHp ? Amount : 0;
 
 
         public Player SourcePlayer { get; }

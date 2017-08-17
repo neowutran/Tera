@@ -43,7 +43,7 @@ namespace Tera.Game.Abnormality
         public long TimeBeforeEnd => Duration == 0 ? long.MaxValue : FirstHit - DateTime.UtcNow.Ticks + Duration * TimeSpan.TicksPerMillisecond;
         public long TimeBeforeApply => DateTime.UtcNow.Ticks - LastApply - HotDot.Tick * TimeSpan.TicksPerSecond;
 
-        public void Apply(int amount, bool critical, bool isHp, long time)
+        public void Apply(long amount, bool critical, bool isHp, long time)
         {
             if (_abnormalityTracker.UpdateDamageTracker != null)
             {

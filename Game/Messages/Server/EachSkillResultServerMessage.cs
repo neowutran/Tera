@@ -39,8 +39,7 @@ namespace Tera.Game.Messages
             //No fucking idea. I think I see 3 different part in that thing
             Unknow2 = reader.ReadBytes(12); //unknown, id, time
 
-            Amount = reader.ReadInt32();
-            if (reader.Version >= 319000) reader.ReadInt32();// probably Amount is now either int64 or double, but not sure - ignoring until we get some skils doing more damage than fit to int32
+            Amount = reader.Version <= 319000 ? reader.ReadInt32() : reader.ReadInt64();// KR now use 64 bit
             FlagsDebug = reader.ReadInt32();
             Flags = (SkillResultFlags) FlagsDebug;
             IsCritical = (reader.ReadUInt16() & 1) != 0;
@@ -67,7 +66,7 @@ namespace Tera.Game.Messages
 
         public EntityId Source { get; private set; }
         public EntityId Target { get; }
-        public int Amount { get; }
+        public long Amount { get; }
         public int SkillId { get; private set; }
         public SkillResultFlags Flags { get; }
         public bool IsCritical { get; private set; }
