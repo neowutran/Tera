@@ -9,10 +9,19 @@
             TemplateId = reader.ReadUInt32();
             TargetId = reader.ReadEntityId();
             Unk1 = reader.ReadInt32();
-            HpChange = reader.ReadSingle();
-            Unk2 = reader.ReadByte(); //enrage?
-            HpRemaining = reader.ReadSingle();
-            TotalHp = reader.ReadSingle();
+            if (reader.Version <= 319000)
+            {
+                HpChange = reader.ReadSingle();
+                Unk2 = reader.ReadByte(); //enrage?
+                HpRemaining = reader.ReadSingle();
+                TotalHp = reader.ReadSingle();
+            }
+            else
+            {
+                Unk2 = reader.ReadByte(); //enrage?
+                HpRemaining = reader.ReadInt64();
+                TotalHp = reader.ReadInt64();
+            }
         }
 
         public byte Unk2 { get; }
