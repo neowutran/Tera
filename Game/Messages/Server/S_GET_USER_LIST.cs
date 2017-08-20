@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 
 namespace Tera.Game.Messages
 {
@@ -18,7 +19,7 @@ namespace Tera.Game.Messages
                 reader.Skip(14);
                 var gNameOffset = reader.ReadUInt16();
                 var playerId = reader.ReadUInt32();
-                reader.Skip(286);
+                reader.Skip(reader.Version >= 319000 ? 294 : 286);
                 var guildId = reader.ReadUInt32();
                 reader.BaseStream.Position = gNameOffset - 4;
                 var gName = reader.ReadTeraString();
