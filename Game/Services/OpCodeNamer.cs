@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -45,6 +46,7 @@ namespace Tera.Game
             ushort code;
             if (_opCodeCodes.TryGetValue(name, out code))
                 return code;
+            Debug.WriteLine("Missing opcode: " + name);
             return 0;
             //throw new ArgumentException($"Unknown name '{name}'");
         }
