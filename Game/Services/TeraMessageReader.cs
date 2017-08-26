@@ -4,7 +4,7 @@ using System.Text;
 namespace Tera.Game
 {
     // Used by `ParsedMessage`s to parse themselves
-    internal class TeraMessageReader : BinaryReader
+    public class TeraMessageReader : BinaryReader
     {
         public TeraMessageReader(Message message, OpCodeNamer opCodeNamer, uint version, OpCodeNamer sysMsgNamer)
             : base(GetStream(message), Encoding.Unicode)
@@ -13,6 +13,11 @@ namespace Tera.Game
             OpCodeName = opCodeNamer.GetName(message.OpCode);
             SysMsgNamer = sysMsgNamer;
             Version = version;
+        }
+
+        public TeraMessageReader(Message message): base(GetStream(message), Encoding.Unicode)
+        {
+            Message = message;
         }
 
         public Message Message { get; private set; }
