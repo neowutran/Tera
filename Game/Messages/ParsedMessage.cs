@@ -19,8 +19,8 @@ namespace Tera.Game.Messages
 
         public void PrintRaw()
         {
-            Debug.WriteLine(OpCodeName + ": ");
-            Debug.WriteLine(BitConverter.ToString(Raw));
+            Debug.WriteLine(OpCodeName + " : " + OpCode + " : " + Direction + " : Size " + Payload.Count + " : Time " + Time);
+            Debug.WriteLine(BitConverter.ToString(Payload.Array));
         }
     }
 }
