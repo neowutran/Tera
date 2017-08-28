@@ -23,6 +23,7 @@ namespace Tera.PacketLog
 
         private static void RemoveFront(MemoryStream stream, int count)
         {
+            count += 2;
             Array.Copy(stream.GetBuffer(), count, stream.GetBuffer(), 0, stream.Length - count);
             stream.SetLength(stream.Length - count);
         }
@@ -32,11 +33,11 @@ namespace Tera.PacketLog
             if (stream.Length < 2)
                 return null;
             var buffer = stream.GetBuffer();
-            var blockSize = buffer[0] | buffer[1] << 8;
-            if (stream.Length < blockSize || blockSize < 2)
+            var blockSize = (buffer[0] | buffer[1] << 8) - 2;
+            if (stream.Length < blockSize)
                 return null;
             var block = new byte[blockSize];
-            Array.Copy(buffer, 2, block, 0, blockSize - 2);
+            Array.Copy(buffer, 2, block, 0, blockSize);
             RemoveFront(stream, blockSize);
             return block;
         }
