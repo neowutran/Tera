@@ -11,7 +11,7 @@
             Unknow3 = reader.ReadInt16();
             TargetId = reader.ReadEntityId();
             SourceId = reader.ReadEntityId();
-            Critical = reader.ReadInt16();
+//            Critical = reader.ReadInt16(); Not here anymore
 
 
             // Debug.WriteLine("target = " + TargetId + ";Source:" + SourceId + ";Critical:" + Critical + ";Mp left:" + MpRemaining + ";Max MP:" + TotalMp + ";MpLost/Gain:" + MpChange + ";Type:" + Type + ";Unknow3:" + Unknow3);
