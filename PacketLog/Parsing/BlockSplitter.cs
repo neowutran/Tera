@@ -29,7 +29,7 @@ namespace Tera.PacketLog
 
         private static byte[] PopBlock(MemoryStream stream)
         {
-            if (stream.Length < 2)
+            if (stream.Length < 4) //can't be less than size+opcode
                 return null;
             var buffer = stream.GetBuffer();
             var blockSize = buffer[0] | buffer[1] << 8;
