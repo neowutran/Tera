@@ -6,17 +6,17 @@ namespace Tera.Game.Messages
     {
         internal SCreatureChangeHp(TeraMessageReader reader) : base(reader)
         {
-            if (reader.Version < 319000 || reader.Version > 319782)
-            {
-                HpRemaining = reader.ReadInt32();
-                TotalHp = reader.ReadInt32();
-                HpChange = reader.ReadInt32();
-            }
-            else
+            if (reader.Version < 321150)
             {
                 HpRemaining = reader.ReadInt64();
                 TotalHp = reader.ReadInt64();
                 HpChange = reader.ReadInt64();
+            }
+            else
+            {
+                HpRemaining = reader.ReadInt32();
+                TotalHp = reader.ReadInt32();
+                HpChange = reader.ReadInt32();
             }
             Type = reader.ReadInt32();
             //Unknow3 = reader.ReadInt16();
