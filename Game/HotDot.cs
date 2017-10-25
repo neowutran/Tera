@@ -96,6 +96,7 @@ namespace Tera.Game
             Drunk = 244,
             Immune = 245, //or may be just status immune too...
             StunKnockDown = 246,
+            StackCounter = 248, //redirect to abnormal when some stack count reached.
             CCrystalBind = 249,
             Visibility = 254, //0 = invisible
             DropUp = 255,
