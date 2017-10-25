@@ -72,14 +72,15 @@ namespace Tera.Game
                 var tooltip = values[11].Replace("$H_W_GOOD", "").Replace("H_W_GOOD", "").Replace("$COLOR_END", "").Replace("$H_W_BAD", "").Replace("$H_W_Bad", "").Replace("H_W_BAD", "").Replace("$BR", " ").Replace("<br>", " ");
                 var iconName = values[12];
                 var effectIcon = values[13];
+                var isShow = bool.Parse(values[14]);
                 if (_hotdots.ContainsKey(id))
                     _hotdots[id].Update(id, type, hp, mp, amount, method, time, tick, name, itemName, tooltip, iconName);
                 else
-                    _hotdots[id] = new HotDot(id, type, hp, mp, amount, method, time, tick, name, itemName, tooltip, iconName, abType, isBuff, effectIcon);
+                    _hotdots[id] = new HotDot(id, type, hp, mp, amount, method, time, tick, name, itemName, tooltip, iconName, abType, isBuff, isShow, effectIcon);
             }
-            _hotdots[(int)StaticallyUsedBuff.Enraged] = new HotDot((int)StaticallyUsedBuff.Enraged, "Endurance", 0, 0, 0, 0, 36000, 0, "Enrage", "", "", "enraged", HotDot.AbnormalityType.Debuff, true, "enraged");
+            _hotdots[(int)StaticallyUsedBuff.Enraged] = new HotDot((int)StaticallyUsedBuff.Enraged, "Endurance", 0, 0, 0, 0, 36000, 0, "Enrage", "", "", "enraged", HotDot.AbnormalityType.Debuff, true, true, "enraged");
             _hotdots[(int)StaticallyUsedBuff.Slaying] = new HotDot((int)StaticallyUsedBuff.Slaying, "CritPower", 0, 0, 0, 0, 0, 0, "Slaying", "",
-                "'Slaying' crystal is working (if equipped) when player in this state.", "slaying",HotDot.AbnormalityType.Buff, true, "slaying");
+                "'Slaying' crystal is working (if equipped) when player in this state.", "slaying",HotDot.AbnormalityType.Buff, true, true, "slaying");
 
             var shortnames = Path.Combine(folder, $"hotdot\\hotdot-short-{language}.tsv");
             if (File.Exists(shortnames))
