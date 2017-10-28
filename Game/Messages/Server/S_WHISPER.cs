@@ -4,12 +4,17 @@
     {
         internal S_WHISPER(TeraMessageReader reader) : base(reader)
         {
-            reader.Skip(17);
+            SenderOffset = reader.ReadUInt16();
+            ReceiverOffset = reader.ReadUInt16();
+            TextOffset = reader.ReadUInt16();
+            reader.Skip(11);
             Sender = reader.ReadTeraString();
             Receiver = reader.ReadTeraString();
             Text = reader.ReadTeraString();
         }
-
+        public ushort SenderOffset { get; set; }
+        public ushort ReceiverOffset { get; set; }
+        public ushort TextOffset { get; set; }
         public string Sender { get; set; }
         public string Receiver { get; set; }
 

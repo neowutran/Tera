@@ -67,6 +67,8 @@ namespace Tera.Game
 
         private static readonly Dictionary<string, Delegate> ChatServices = new Dictionary<string, Delegate>
         {
+             {"C_CHAT", Helpers.Contructor<Func<TeraMessageReader,C_CHAT>>() },
+            {"C_WHISPER", Helpers.Contructor<Func<TeraMessageReader,C_WHISPER>>()},
             {"S_RETURN_TO_LOBBY", Helpers.Contructor<Func<TeraMessageReader,S_RETURN_TO_LOBBY>>() },
             {"S_LOAD_TOPO", Helpers.Contructor<Func<TeraMessageReader,S_LOAD_TOPO>>()},
             {"S_UPDATE_NPCGUILD", Helpers.Contructor<Func<TeraMessageReader,S_UPDATE_NPCGUILD>>()},

@@ -6,7 +6,8 @@ namespace Tera.Game.Messages
     {
         internal S_CHAT(TeraMessageReader reader) : base(reader)
         {
-            reader.Skip(4);//offsets
+            UsernameOffset = reader.ReadUInt16();
+            TextOffset = reader.ReadUInt16();
             var channel = reader.ReadUInt32();
             Channel = (ChannelEnum)channel;
             reader.Skip(11);
@@ -14,6 +15,8 @@ namespace Tera.Game.Messages
             Text = reader.ReadTeraString();
         }
 
+        public ushort UsernameOffset { get; set; }
+        public ushort TextOffset { get; set; }
         public string Username { get; set; }
 
         public string Text { get; set; }
