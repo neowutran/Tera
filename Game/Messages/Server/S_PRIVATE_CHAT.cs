@@ -8,7 +8,7 @@ namespace Tera.Game.Messages
         {
             AuthorNameOffset = reader.ReadUInt16();
             TextOffset = reader.ReadUInt16();
-            Channel = reader.ReadUInt32();
+            Channel = reader.ReadInt32();
             AuthorId = reader.ReadUInt64();
             AuthorName = reader.ReadTeraString();
             Text = reader.ReadTeraString();
@@ -22,6 +22,6 @@ namespace Tera.Game.Messages
 
         public string Text { get; set; }
 
-        public uint Channel { get; set; }
+        public int Channel { get; set; }
     }
 }
