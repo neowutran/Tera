@@ -8,14 +8,14 @@ namespace Tera.Game.Messages
         internal C_CHAT(TeraMessageReader reader) : base(reader)
         {
             TextOffset = reader.ReadUInt16();
-            Channel = reader.ReadUInt32();
+            Channel = reader.ReadInt32();
             Text = reader.ReadTeraString();
 
 
         }
 
         public ushort TextOffset { get; set; }
-        public uint Channel { get; set; }
+        public int Channel { get; set; }
         public string Text { get; set; }
 
     }
