@@ -29,11 +29,16 @@ namespace Tera.Game
 
         public void Update(SNpcStatus npcStatus)
         {
+
             RegisterAggro(npcStatus);
             if (npcStatus.Enraged)
+            {
                 AddAbnormality(npcStatus.Npc, npcStatus.Target, 36000, 0, 8888888, npcStatus.Time.Ticks);
+            }
             else
+            {
                 DeleteAbnormality(npcStatus);
+            }
         }
 
         public void RegisterSlaying(UserEntity user, bool slaying, long ticks)

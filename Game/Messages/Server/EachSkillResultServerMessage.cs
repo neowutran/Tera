@@ -16,6 +16,24 @@ namespace Tera.Game.Messages
             Bit18 = 0x40000
         }
 
+        public static EachSkillResultServerMessage DummySkill(ParsedMessage message, EntityId source, EntityId target) {
+            TeraMessageReader reader = new TeraMessageReader(message);
+
+            var skillMessage = new EachSkillResultServerMessage(reader, true)
+            {
+                Flags = SkillResultFlags.Bit0,
+                Source = source,
+                Target = target,
+                Amount = 1
+            };
+            return skillMessage;
+        }
+
+        internal EachSkillResultServerMessage(TeraMessageReader reader, bool dummy) : base(reader)
+        {
+            return;
+        }
+
         internal EachSkillResultServerMessage(TeraMessageReader reader)
             : base(reader)
         {
@@ -64,11 +82,11 @@ namespace Tera.Game.Messages
         public byte[] Unknow2 { get; }
 
 
-        public EntityId Source { get; private set; }
-        public EntityId Target { get; }
-        public long Amount { get; }
+        public EntityId Source { get; set; }
+        public EntityId Target { get; set; }
+        public long Amount { get; set; }
         public int SkillId { get; private set; }
-        public SkillResultFlags Flags { get; }
+        public SkillResultFlags Flags { get; set; }
         public bool IsCritical { get; private set; }
         public bool Blocked { get; private set; }
         public Vector3f Position { get; }
