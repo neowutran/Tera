@@ -4,6 +4,7 @@ using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using Tera.Game.Abnormality;
 using Tera.Game.Messages;
+using static Tera.Game.HotDotDatabase;
 
 namespace Tera.Game
 {
@@ -33,7 +34,7 @@ namespace Tera.Game
             RegisterAggro(npcStatus);
             if (npcStatus.Enraged)
             {
-                AddAbnormality(npcStatus.Npc, npcStatus.Target, 36000, 0, 8888888, npcStatus.Time.Ticks);
+                AddAbnormality(npcStatus.Npc, npcStatus.Target, 36000, 0, (int)StaticallyUsedBuff.Enraged, npcStatus.Time.Ticks);
             }
             else
             {
@@ -47,10 +48,14 @@ namespace Tera.Game
             if (slaying)
             {
                 if (!AbnormalityStorage.Death(PlayerTracker.GetOrUpdate(user)).Dead)
-                    AddAbnormality(user.Id, user.Id, 0, 0, 8888889, ticks);
+                {
+                    AddAbnormality(user.Id, user.Id, 0, 0, (int)StaticallyUsedBuff.Slaying, ticks);
+                }
             }
             else
-                DeleteAbnormality(user.Id, 8888889, ticks);
+            {
+                DeleteAbnormality(user.Id, (int)StaticallyUsedBuff.Slaying, ticks);
+            }
         }
 
         public void RegisterDead(EntityId id, long ticks, bool dead)
@@ -61,7 +66,7 @@ namespace Tera.Game
             if (dead)
             {
                 AbnormalityStorage.Death(player).Start(ticks);
-                DeleteAbnormality(user.Id, 8888889, ticks);
+                DeleteAbnormality(user.Id, (int)StaticallyUsedBuff.Slaying, ticks);
             }
             else
                 AbnormalityStorage.Death(player).End(ticks);
@@ -84,9 +89,17 @@ namespace Tera.Game
                 if (AbnormalityStorage.Last(entity) != player)
                 {
                     if (AbnormalityStorage.Last(entity) != null)
+                    {
                         AbnormalityStorage.AggroEnd(AbnormalityStorage.Last(entity), entity, time);
-                    AbnormalityStorage.AggroStart(player, entity, time);
-                    AbnormalityStorage.LastAggro[entity] = player;
+                    }
+                    else
+                    {
+                        // Add a arbitrary dummy damage to auto start fight timer on aggro 
+                        UpdateDamageTracker(new SkillResult(1, true, true, false, HotDotDatabase.Enrage, aggro.Target, aggro.Npc, aggro.Time, EntityTracker, PlayerTracker));
+
+                        AbnormalityStorage.AggroStart(player, entity, time);
+                        AbnormalityStorage.LastAggro[entity] = player;
+                    }
                 }
             }
             else
@@ -258,7 +271,7 @@ namespace Tera.Game
 
         public void DeleteAbnormality(SNpcStatus message)
         {
-            DeleteAbnormality(message.Npc, 8888888, message.Time.Ticks);
+            DeleteAbnormality(message.Npc, (int)StaticallyUsedBuff.Enraged, message.Time.Ticks);
         }
 
         public void DeleteAbnormality(SDespawnUser message)
@@ -321,7 +334,7 @@ namespace Tera.Game
                         ) continue;
                 }
 
-                if ((int) HotDotDatabase.HotOrDot.Dot != type && (int) HotDotDatabase.HotOrDot.Hot != type)
+                if ((int) HotOrDot.Dot != type && (int) HotOrDot.Hot != type)
                 {
                     continue;
                 }
