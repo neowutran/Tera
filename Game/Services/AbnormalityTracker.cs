@@ -96,10 +96,11 @@ namespace Tera.Game
                     {
                         // Add a arbitrary dummy damage to auto start fight timer on aggro 
                         UpdateDamageTracker(new SkillResult(1, true, true, false, HotDotDatabase.Enrage, aggro.Target, aggro.Npc, aggro.Time, EntityTracker, PlayerTracker));
-
-                        AbnormalityStorage.AggroStart(player, entity, time);
-                        AbnormalityStorage.LastAggro[entity] = player;
                     }
+
+                    AbnormalityStorage.AggroStart(player, entity, time);
+                    AbnormalityStorage.LastAggro[entity] = player;
+                    
                 }
             }
             else
