@@ -6,9 +6,9 @@
         {
             ServerId = reader.ReadUInt32();
             PlayerId = reader.ReadUInt32();
-            HpRemaining = reader.ReadInt32();
+            HpRemaining = reader.Version < 321150 ? reader.ReadInt64() : reader.ReadInt32();// KR now use 64 bit
             MpRemaining = reader.ReadInt32();
-            TotalHp = reader.ReadInt32();
+            TotalHp = reader.Version < 321150 ? reader.ReadInt64() : reader.ReadInt32();// KR now use 64 bit
             TotalMp = reader.ReadInt32();
             Level = reader.ReadInt16();
             InCombat = reader.ReadInt16();
@@ -24,11 +24,11 @@
 
         public int Unknow3 { get; }
 
-        public int HpRemaining { get; }
+        public long HpRemaining { get; }
         public int MpRemaining { get; }
         public int ReRemaining { get; }
 
-        public int TotalHp { get; }
+        public long TotalHp { get; }
         public int TotalMp { get; }
         public int TotalRe { get; }
 
