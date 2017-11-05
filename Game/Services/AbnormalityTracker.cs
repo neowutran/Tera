@@ -78,6 +78,26 @@ namespace Tera.Game
             RegisterDead(message.User, message.Time.Ticks, message.Dead);
         }
 
+        private List<EntityId> AggroRegistered = new List<EntityId>();
+
+        public void Update(SNpcOccupierInfo message)
+        {
+            if (message.HasReset)
+            {
+                AggroRegistered = new List<EntityId>();
+                return;
+            }
+
+            if (!AggroRegistered.Contains(message.NPC))
+            {
+                // Add a arbitrary dummy damage to auto start fight timer on aggro 
+                AggroRegistered.Add(message.NPC);
+                UpdateDamageTracker(new SkillResult(1, true, true, false, Enrage, message.Target, message.NPC, message.Time, EntityTracker, PlayerTracker));
+            }
+
+        }
+
+
         private void RegisterAggro(SNpcStatus aggro)
         {
             var time = aggro.Time.Ticks;
@@ -95,9 +115,12 @@ namespace Tera.Game
                     }
                     else
                     {
-                        Debug.WriteLine("S_NPC_STATUS: NPC = "+aggro.Npc + "; target = "+aggro.Target);
-                        // Add a arbitrary dummy damage to auto start fight timer on aggro 
-                        UpdateDamageTracker(new SkillResult(1, true, true, false, Enrage, aggro.Target, aggro.Npc, aggro.Time, EntityTracker, PlayerTracker));
+                        if (!AggroRegistered.Contains(aggro.Npc))
+                        {
+                            // Add a arbitrary dummy damage to auto start fight timer on aggro 
+                            AggroRegistered.Add(aggro.Npc);
+                            UpdateDamageTracker(new SkillResult(1, true, true, false, Enrage, aggro.Target, aggro.Npc, aggro.Time, EntityTracker, PlayerTracker));
+                        }
                     }
 
                     AbnormalityStorage.AggroStart(player, entity, time);
@@ -392,6 +415,7 @@ namespace Tera.Game
             RegisterSlaying(user.User, message.Slaying, message.Time.Ticks);
         }
 
+     
         public void Update(ParsedMessage message)
         {
             message.On<S_PLAYER_STAT_UPDATE>(x => Update(x));
@@ -408,6 +432,8 @@ namespace Tera.Game
             message.On<SCreatureLife>(x => Update(x));
             message.On<SNpcStatus>(x => Update(x));
             message.On<SpawnUserServerMessage>(x => Update(x));
+            message.On<SNpcOccupierInfo>(x => Update(x));
+
         }
     }
 }
