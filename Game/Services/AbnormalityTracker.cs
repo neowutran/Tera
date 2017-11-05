@@ -82,9 +82,8 @@ namespace Tera.Game
 
         public void Update(SNpcOccupierInfo message)
         {
-            if (message.HasReset)
-            {
-                AggroRegistered = new List<EntityId>();
+            if (message.HasReset){
+                AggroRegistered.Remove(message.NPC);
                 return;
             }
 
@@ -92,7 +91,7 @@ namespace Tera.Game
             {
                 // Add a arbitrary dummy damage to auto start fight timer on aggro 
                 AggroRegistered.Add(message.NPC);
-                UpdateDamageTracker(new SkillResult(1, true, true, false, Enrage, message.Target, message.NPC, message.Time, EntityTracker, PlayerTracker));
+                UpdateDamageTracker(new SkillResult(1, true, true, false, HotDotDatabase.Enraged, message.Target, message.NPC, message.Time, EntityTracker, PlayerTracker));
             }
 
         }
@@ -119,7 +118,7 @@ namespace Tera.Game
                         {
                             // Add a arbitrary dummy damage to auto start fight timer on aggro 
                             AggroRegistered.Add(aggro.Npc);
-                            UpdateDamageTracker(new SkillResult(1, true, true, false, Enrage, aggro.Target, aggro.Npc, aggro.Time, EntityTracker, PlayerTracker));
+                            UpdateDamageTracker(new SkillResult(1, true, true, false, HotDotDatabase.Enraged, aggro.Target, aggro.Npc, aggro.Time, EntityTracker, PlayerTracker));
                         }
                     }
 
@@ -394,6 +393,7 @@ namespace Tera.Game
         }
         public void Update(SpawnMeServerMessage message)
         {
+            AggroRegistered = new List<EntityId>();
             AbnormalityStorage.EndAll(message.Time.Ticks);
             _abnormalities = new Dictionary<EntityId, List<Abnormality.Abnormality>>();
             RegisterDead(message.Id, message.Time.Ticks, message.Dead);

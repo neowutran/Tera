@@ -35,14 +35,14 @@ namespace Tera.Game
 
         public HotDot Enraged { get; }
         public HotDot Slaying { get; }
-        public static HotDot JoyOfPartying0;
-        public static HotDot JoyOfPartying20;
-        public static HotDot JoyOfPartying50;
-        public static HotDot JoyOfPartying100;
-        public static HotDot Contagion1;
-        public static HotDot Contagion2;
-        public static HotDot Enrage;
-        public static HotDot Hurricane;
+        public readonly HotDot JoyOfPartying0;
+        public readonly HotDot JoyOfPartying20;
+        public readonly HotDot JoyOfPartying50;
+        public readonly HotDot JoyOfPartying100;
+        public readonly HotDot Contagion1;
+        public readonly HotDot Contagion2;
+        public readonly HotDot Enrage;
+        public readonly HotDot Hurricane;
 
 
         private readonly Dictionary<int, HotDot> _hotdots =
