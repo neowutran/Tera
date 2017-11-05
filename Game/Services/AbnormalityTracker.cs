@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using Tera.Game.Abnormality;
@@ -94,8 +95,9 @@ namespace Tera.Game
                     }
                     else
                     {
+                        Debug.WriteLine("S_NPC_STATUS: NPC = "+aggro.Npc + "; target = "+aggro.Target);
                         // Add a arbitrary dummy damage to auto start fight timer on aggro 
-                        UpdateDamageTracker(new SkillResult(1, true, true, false, HotDotDatabase.Enrage, aggro.Target, aggro.Npc, aggro.Time, EntityTracker, PlayerTracker));
+                        UpdateDamageTracker(new SkillResult(1, true, true, false, Enrage, aggro.Target, aggro.Npc, aggro.Time, EntityTracker, PlayerTracker));
                     }
 
                     AbnormalityStorage.AggroStart(player, entity, time);

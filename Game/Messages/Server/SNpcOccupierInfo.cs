@@ -5,14 +5,11 @@
     {
         internal SNpcOccupierInfo(TeraMessageReader reader) : base(reader)
         {
-            //  PrintRaw();
             NPC = reader.ReadEntityId();
             Engager = reader.ReadEntityId();
             Target = reader.ReadEntityId();
-
-            //  Debug.WriteLine("NPC:" + NPC + ";Target:" + Target);
         }
-
+        public bool HasReset => Target == EntityId.Empty;
         public EntityId NPC { get; }
         public EntityId Engager { get; }
         public EntityId Target { get; }
