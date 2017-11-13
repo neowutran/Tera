@@ -14,29 +14,12 @@ namespace Tera.Game
         private readonly List<Tuple<ushort, uint>> _trackedBossEntities;
         public bool DetectBosses;
 
-        public NpcDatabase(Dictionary<Tuple<ushort, uint>, NpcInfo> npcInfo)
-        {
-            _zoneNames = (from npc in npcInfo.Values.GroupBy(x => x.HuntingZoneId).Select(x => x.FirstOrDefault())
-                let huntingzoneid = npc.HuntingZoneId
-                let area = npc.Area
-                select new {huntingzoneid, area}).ToDictionary(x => x.huntingzoneid, y => y.area);
-            _dictionary = npcInfo;
-            _getPlaceholder =
-                Helpers.Memoize<Tuple<ushort, uint>, NpcInfo>(
-                    x => new NpcInfo(x.Item1, x.Item2, false, 0, $"Npc {x.Item1} {x.Item2}", GetAreaName(x.Item1)));
-        }
-
         public NpcDatabase(string directory, string reg_lang, bool detectBosses = false)
-            : this(LoadNpcInfos(directory, reg_lang))
         {
             DetectBosses = detectBosses;
             _trackedBossEntities = new List<Tuple<ushort, uint>>();
-        }
-
-        private static Dictionary<Tuple<ushort, uint>, NpcInfo> LoadNpcInfos(string directory, string reg_lang)
-        {
             var xml = XDocument.Load(Path.Combine(directory, $"monsters\\monsters-{reg_lang}.xml"));
-            var NPCs = (from zones in xml.Root.Elements("Zone")
+            _dictionary = (from zones in xml.Root.Elements("Zone")
                 let huntingzoneid = ushort.Parse(zones.Attribute("id").Value)
                 let area = zones.Attribute("name").Value
                 from monsters in zones.Elements("Monster")
@@ -46,6 +29,10 @@ namespace Tera.Game
                 let name = monsters.Attribute("name").Value
                 select new NpcInfo(huntingzoneid, templateid, boss, hp, name, area)).ToDictionary(
                     x => Tuple.Create(x.HuntingZoneId, x.TemplateId));
+            _zoneNames = (from npc in _dictionary.Values.GroupBy(x => x.HuntingZoneId).Select(x => x.FirstOrDefault())
+                let huntingzoneid = npc.HuntingZoneId
+                let area = npc.Area
+                select new { huntingzoneid, area }).ToDictionary(x => x.huntingzoneid, y => y.area);
             xml = XDocument.Load(Path.Combine(directory, "monsters\\monsters-override.xml"));
             var overs = from zones in xml.Root.Elements("Zone")
                 let huntingzoneid = ushort.Parse(zones.Attribute("id").Value)
@@ -57,24 +44,26 @@ namespace Tera.Game
                 select new {id = Tuple.Create(huntingzoneid, templateid), boss, hp, name};
             foreach (var over in overs)
             {
-                if (NPCs.ContainsKey(over.id))
+                if (_dictionary.ContainsKey(over.id))
                 {
-                    NPCs[over.id] = new NpcInfo(NPCs[over.id].HuntingZoneId, NPCs[over.id].TemplateId,
-                        over.boss == null ? NPCs[over.id].Boss : bool.Parse(over.boss),
-                        over.hp == null ? NPCs[over.id].HP : long.Parse(over.hp),
-                        over.name ?? NPCs[over.id].Name,
-                        NPCs[over.id].Area);
+                    _dictionary[over.id] = new NpcInfo(_dictionary[over.id].HuntingZoneId, _dictionary[over.id].TemplateId,
+                        over.boss == null ? _dictionary[over.id].Boss : bool.Parse(over.boss),
+                        over.hp == null ? _dictionary[over.id].HP : long.Parse(over.hp),
+                        over.name ?? _dictionary[over.id].Name,
+                        _dictionary[over.id].Area);
                 }
                 else
                 {
-                    NPCs.Add(over.id, new NpcInfo(over.id.Item1, over.id.Item2,
+                    _dictionary.Add(over.id, new NpcInfo(over.id.Item1, over.id.Item2,
                         over.boss != null && bool.Parse(over.boss),
                         over.hp == null ? 0 : long.Parse(over.hp),
                         over.name ?? $"Npc {over.id.Item1} {over.id.Item2}",
-                        string.Empty));
+                        _zoneNames.ContainsKey(over.id.Item1) ? _zoneNames[over.id.Item1] : over.id.Item1.ToString()));
                 }
             }
-            return NPCs;
+            _getPlaceholder =
+                Helpers.Memoize<Tuple<ushort, uint>, NpcInfo>(
+                    x => new NpcInfo(x.Item1, x.Item2, false, 0, $"Npc {x.Item1} {x.Item2}", GetAreaName(x.Item1)));
         }
 
         public NpcInfo GetOrNull(ushort huntingZoneId, uint templateId)
