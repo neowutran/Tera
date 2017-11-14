@@ -7,7 +7,7 @@
             ServerId = reader.ReadUInt32();
             PlayerId = reader.ReadUInt32();
             HpRemaining = reader.ReadInt32();
-            if (reader.Version < 321150) reader.Skip(4);
+            if (reader.Version < 321550 || reader.Version > 321600) reader.Skip(4);
             TotalHp = reader.ReadInt32();
             // Debug.WriteLine("target = " + TargetId + ";Hp left:" + HpRemaining + ";Max HP:" + TotalHp + ");
         }

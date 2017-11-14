@@ -9,7 +9,7 @@
             TemplateId = reader.ReadUInt32();
             TargetId = reader.ReadEntityId();
             Unk1 = reader.ReadInt32();
-            if (reader.Version < 321150)
+            if (reader.Version < 321550 || reader.Version > 321600)
             {
                 Unk2 = reader.ReadByte(); //enrage?
                 HpRemaining = reader.ReadInt64();
