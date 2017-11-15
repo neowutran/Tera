@@ -146,7 +146,7 @@ namespace Tera.Game
             Tooltip = tooltip;
             IconName = String.Intern(iconName);
             EffectIcon = String.Intern(effectIcon);
-            Debuff = (rType == Types.Endurance || rType == Types.CritResist) && amount <= 1 || rType == Types.Mark || (rType == Types.DefPotion && amount > 1);
+            Debuff = rType == Types.Endurance || rType == Types.CritResist && amount <= 1 || rType == Types.Mark || (rType == Types.DefPotion && amount > 1);
             HPMPChange = rType == Types.HPChange || rType == Types.MPChange;
             Buff = rType != Types.HPChange;// && rType != Types.MPChange;//try to show MPChange abnormals
         }
