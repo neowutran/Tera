@@ -19,8 +19,8 @@
             {
                 HpChange = reader.ReadSingle();
                 Unk2 = reader.ReadByte(); //enrage?
-                HpRemaining = reader.ReadSingle();
-                TotalHp = reader.ReadSingle();
+                HpRemaining = (long)reader.ReadSingle();
+                TotalHp = (long)reader.ReadSingle();
             }
         }
 
@@ -29,8 +29,8 @@
         public uint HuntingZoneId { get; }
         public uint TemplateId { get; }
         public float HpChange { get; }
-        public float HpRemaining { get; }
-        public float TotalHp { get; }
+        public long HpRemaining { get; }
+        public long TotalHp { get; }
         public EntityId TargetId { get; }
         public EntityId EntityId { get; }
     }
