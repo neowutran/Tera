@@ -101,11 +101,7 @@ namespace Tera.Game.Abnormality
             {
                 var userEntity = _abnormalityTracker.EntityTracker.GetOrPlaceholder(Source);
                 var user = userEntity as UserEntity;
-                if (user == null)
-                {
-                    return;
-                }
-                var abnormalityInitDuration = new AbnormalityDuration(user.RaceGenderClass.Class, ticks, Stack);
+                var abnormalityInitDuration = new AbnormalityDuration(user==null ? PlayerClass.Common : user.RaceGenderClass.Class, ticks, Stack);
                 _abnormalityTracker.AbnormalityStorage.AbnormalityTime(game).Add(HotDot, abnormalityInitDuration);
                 _enduranceDebuffRegistered = true;
                 return;
