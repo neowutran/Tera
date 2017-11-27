@@ -325,14 +325,22 @@ namespace Tera.Game
                 message.Time.Ticks);
         }
 
-        private void Update(EntityId target, EntityId source, long change, int type, bool critical, bool isHp, long time)
+        private void Update(EntityId target, EntityId source, long change, int type, bool critical, bool isHp, long time, int abnotmalId = 0)
         {
             if (!_abnormalities.ContainsKey(target))
             {
                 return;
             }
 
+            if ((int)HotOrDot.Dot != type)
+            {
+                return;
+            }
+
             var abnormalities = _abnormalities[target];
+            var ab = abnotmalId==0 ? null : abnormalities.FirstOrDefault(x => x.HotDot.Id == abnotmalId);
+            if (ab != null) { ab.Apply(change, critical, isHp, time); return; }
+
             abnormalities =
                 abnormalities.Where(
                     x => x.Source == EntityTracker.MeterUser.Id || x.Target == EntityTracker.MeterUser.Id)
@@ -359,11 +367,6 @@ namespace Tera.Game
                         ) continue;
                 }
 
-                if ((int) HotOrDot.Dot != type && (int) HotOrDot.Hot != type)
-                {
-                    continue;
-                }
-
                 abnormality.Apply(change, critical, isHp, time);
                 return;
             }
@@ -372,7 +375,7 @@ namespace Tera.Game
         public void Update(SCreatureChangeHp message)
         {
             Update(message.TargetId, message.SourceId, message.HpChange, message.Type, message.Critical == 1, true,
-                message.Time.Ticks);
+                message.Time.Ticks, message.AbnormalId);
             var user = EntityTracker.GetOrPlaceholder(message.TargetId) as UserEntity;
             RegisterSlaying(user, message.Slaying, message.Time.Ticks);
         }

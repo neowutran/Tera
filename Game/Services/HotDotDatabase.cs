@@ -9,11 +9,10 @@ namespace Tera.Game
     {
         public enum HotOrDot
         {
-            Dot = 131071,
-            Hot = 65536
-            //  SystemHot = 655360, // natural regen
-            //  CrystalHpHot = 196608,   Not 
-            //  StuffMpHot = 262144,
+            Dot = 1
+            //  SystemHot = 10 //655360, // natural regen
+            //  CrystalHpHot = 3 //196608,   Not 
+            //  StuffMpHot = 4 //262144,
             //  NaturalMpRegen = 0
         }
 

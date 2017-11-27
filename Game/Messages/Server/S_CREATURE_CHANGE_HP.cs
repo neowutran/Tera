@@ -22,10 +22,9 @@ namespace Tera.Game.Messages
             //Unknow3 = reader.ReadInt16();
             TargetId = reader.ReadEntityId();
             SourceId = reader.ReadEntityId();
-            Critical = reader.ReadInt16();
-
-
-            //Debug.WriteLine("target = " + TargetId + ";Source:" + SourceId + ";Critical:" + Critical + ";Hp left:" + HpRemaining + ";Max HP:" + TotalHp+";HpLost/Gain:"+ HpChange + ";Type:"+ Type + ";Unknow3:"+Unknow3);
+            Critical = reader.ReadByte();
+            AbnormalId = reader.ReadInt32();
+            //Debug.WriteLine("target = " + TargetId + ";Source:" + SourceId + ";Critical:" + Critical + ";Hp left:" + HpRemaining + ";Max HP:" + TotalHp+";HpLost/Gain:"+ HpChange + ";Type:"+ Type + ";dot:"+AbnormalId);
         }
 
         public int Unknow3 { get; }
@@ -40,6 +39,7 @@ namespace Tera.Game.Messages
 
         public int Critical { get; }
 
+        public int AbnormalId { get; }
 
         public EntityId TargetId { get; }
         public EntityId SourceId { get; }
