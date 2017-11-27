@@ -19,7 +19,6 @@ namespace Tera.Game.Messages
                 HpChange = reader.ReadInt32();
             }
             Type = reader.ReadInt32();
-            //Unknow3 = reader.ReadInt16();
             TargetId = reader.ReadEntityId();
             SourceId = reader.ReadEntityId();
             Critical = reader.ReadByte();

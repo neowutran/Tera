@@ -91,7 +91,7 @@ namespace Tera.Game
             {
                 // Add a arbitrary dummy damage to auto start fight timer on aggro 
                 AggroRegistered.Add(message.NPC);
-                UpdateDamageTracker(new SkillResult(1, true, true, false, HotDotDatabase.Enraged, message.Target, message.NPC, message.Time, EntityTracker, PlayerTracker));
+                UpdateDamageTracker(new SkillResult(0, true, true, false, HotDotDatabase.Enraged, message.Target, message.NPC, message.Time, EntityTracker, PlayerTracker));
             }
 
         }
@@ -118,7 +118,7 @@ namespace Tera.Game
                         {
                             // Add a arbitrary dummy damage to auto start fight timer on aggro 
                             AggroRegistered.Add(aggro.Npc);
-                            UpdateDamageTracker(new SkillResult(1, true, true, false, HotDotDatabase.Enraged, aggro.Target, aggro.Npc, aggro.Time, EntityTracker, PlayerTracker));
+                            UpdateDamageTracker(new SkillResult(0, true, true, false, HotDotDatabase.Enraged, aggro.Target, aggro.Npc, aggro.Time, EntityTracker, PlayerTracker));
                         }
                     }
 
