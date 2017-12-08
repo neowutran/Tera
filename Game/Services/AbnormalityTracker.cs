@@ -29,6 +29,12 @@ namespace Tera.Game
             AbnormalityStorage = abnormalityStorage;
         }
 
+        public List<Abnormality.Abnormality> BuffList(EntityId entity) // use only in processing thread
+        {
+            if (!_abnormalities.ContainsKey(entity))return new List<Abnormality.Abnormality>();
+            return _abnormalities[entity];
+        }
+
         public void Update(SNpcStatus npcStatus)
         {
 

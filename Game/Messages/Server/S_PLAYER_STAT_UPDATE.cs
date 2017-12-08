@@ -4,13 +4,10 @@
     {
         internal S_PLAYER_STAT_UPDATE(TeraMessageReader reader) : base(reader)
         {
-            HpRemaining = reader.ReadInt32();
-            if (reader.Version < 321550 || reader.Version > 321600) reader.Skip(4);//probably hp/mp int64, ignoring it until we get hp more than fit in int32
-            MpRemaining = reader.ReadInt32();
-            if (reader.Version < 321550 || reader.Version > 321600) reader.Skip(4);
+            HpRemaining = reader.ReadInt64();
+            MpRemaining = reader.ReadInt64();
             reader.Skip(4);
-            TotalHp = reader.ReadInt32();
-            if (reader.Version < 321550 || reader.Version > 321600) reader.Skip(4);
+            TotalHp = reader.ReadInt64();
             TotalMp = reader.ReadInt32();//strange that there is nothing here - probably they messed up and another 4 bytes will appear here later
             return; //we don't need all other things now, but if we need - just remove return.
             BasePower = reader.ReadInt32();
@@ -106,15 +103,15 @@
         public float BonusResistPeriodic { get; private set; }
         public float BonusResistStun { get; private set; }
         public float BonusResistWeakening { get; private set; }
-        public int HpRemaining { get; }
+        public long HpRemaining { get; }
         public int ItemLevel { get; private set; }
         public int ItemLevelInventory { get; private set; }
         public int Level { get; private set; }
-        public int MpRemaining { get; private set; }
+        public long MpRemaining { get; private set; }
         public int ReRemaining { get; private set; }
         public int Stamina { get; private set; }
         public byte Status { get; private set; }
-        public int TotalHp { get; }
+        public long TotalHp { get; }
         public int TotalMp { get; private set; }
         public int TotalRe { get; private set; }
         public int BonusRe { get; private set; }

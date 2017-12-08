@@ -19,7 +19,7 @@ namespace Tera.Game.Messages
                 reader.Skip(14);
                 var gNameOffset = reader.ReadUInt16();
                 var playerId = reader.ReadUInt32();
-                reader.Skip(reader.Version < 321550 || reader.Version > 321600 ? 294 : 286);
+                reader.Skip(294);
                 var guildId = reader.ReadUInt32();
                 reader.BaseStream.Position = gNameOffset - 4;
                 var gName = reader.ReadTeraString();

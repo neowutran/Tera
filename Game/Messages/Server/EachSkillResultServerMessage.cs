@@ -39,7 +39,7 @@ namespace Tera.Game.Messages
             //No fucking idea. I think I see 3 different part in that thing
             Unknow2 = reader.ReadBytes(12); //unknown, id, time
 
-            Amount = reader.Version < 321550 || reader.Version > 321600 ? reader.ReadInt64() : reader.ReadInt32();// KR now use 64 bit
+            Amount = reader.ReadInt64();// KR now use 64 bit
             FlagsDebug = reader.ReadInt32();
             Flags = (SkillResultFlags) FlagsDebug;
             IsCritical = (reader.ReadUInt16() & 1) != 0;
