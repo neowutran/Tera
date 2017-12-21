@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Tera.Game.Messages
 {
@@ -29,7 +30,10 @@ namespace Tera.Game.Messages
             reader.Skip(19);
             for (var i = 1; i <= count; i++)
             {
-                reader.Skip(4); //pointer and next member offset
+                reader.BaseStream.Position = offset - 4;
+                var pointer = reader.ReadUInt16();
+                Debug.Assert(pointer == offset);//should be the same
+                var nextOffset = reader.ReadUInt16();
                 var nameoffset = reader.ReadUInt16();
                 var ServerId = reader.ReadUInt32();
                 var PlayerId = reader.ReadUInt32();
@@ -40,7 +44,10 @@ namespace Tera.Game.Messages
                 var Order = reader.ReadUInt32();
                 var CanInvite = reader.ReadByte();
                 var unk1 = reader.ReadUInt32();
+                // var unk2 = reader.ReadUInt32(); //probably awakened status, appeared with KR awakening update
+                reader.BaseStream.Position = nameoffset - 4;
                 var Name = reader.ReadTeraString();
+                offset = nextOffset;
                 Party.Add(new PartyMember
                 {
                     ServerId = ServerId,
