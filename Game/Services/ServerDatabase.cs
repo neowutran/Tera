@@ -30,7 +30,6 @@ namespace Tera.Game
         {
             var servers = _servers.Where(x => x.ServerId == serverId).ToList();
             if (!servers.Any()) return oldServer?.Name ?? $"{serverId}";
-            if (servers.Count == 1) return servers.First().Name;
             return servers.FirstOrDefault(x=>x.Region==Language.ToString())?.Name ?? servers.First().Name;
         }
 
@@ -48,7 +47,6 @@ namespace Tera.Game
         {
             var servers = _servers.Where(x => x.ServerId == serverId).ToList();
             if (!servers.Any()) return oldServer;
-            if (servers.Count == 1) return servers.First();
             return servers.FirstOrDefault(x => x.Region == Language.ToString()) ?? servers.First();
         }
     }
