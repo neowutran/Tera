@@ -7,7 +7,7 @@ namespace Tera.Game
 {
     public class ServerDatabase
     {
-        private readonly Dictionary<uint, Server> _servers;
+        private readonly List<Server> _servers;
         private List<Server> _serverlist;
 
         public ServerDatabase(string folder)
@@ -19,15 +19,19 @@ namespace Tera.Game
                     parts =>
                         new Server(parts[3], parts[1], parts[0],
                             !string.IsNullOrEmpty(parts[2]) ? uint.Parse(parts[2]) : uint.MaxValue)).ToList();
-            _servers = _serverlist.Where(x => x.ServerId != uint.MaxValue).ToDictionary(x => x.ServerId);
+            _servers = _serverlist.Where(x => x.ServerId != uint.MaxValue).ToList();
             _serverlist.Add(new Server("VPN", "Unknown", "127.0.0.1"));
         }
 
         public string Region { get; set; }
+        public LangEnum Language { get; set; }
 
         public string GetServerName(uint serverId, Server oldServer = null)
         {
-            return _servers.ContainsKey(serverId) ? _servers[serverId].Name : oldServer?.Name ?? $"{serverId}";
+            var servers = _servers.Where(x => x.ServerId == serverId).ToList();
+            if (!servers.Any()) return oldServer?.Name ?? $"{serverId}";
+            if (servers.Count == 1) return servers.First().Name;
+            return servers.FirstOrDefault(x=>x.Region==Language.ToString())?.Name ?? servers.First().Name;
         }
 
         public Dictionary<string, Server> GetServersByIp()
@@ -42,7 +46,10 @@ namespace Tera.Game
 
         public Server GetServer(uint serverId, Server oldServer = null)
         {
-            return _servers.ContainsKey(serverId) ? _servers[serverId] : oldServer;
+            var servers = _servers.Where(x => x.ServerId == serverId).ToList();
+            if (!servers.Any()) return oldServer;
+            if (servers.Count == 1) return servers.First();
+            return servers.FirstOrDefault(x => x.Region == Language.ToString()) ?? servers.First();
         }
     }
 }

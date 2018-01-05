@@ -15,6 +15,7 @@ namespace Tera.Game
         private static readonly Dictionary<string, Delegate> CoreServices = new Dictionary<string, Delegate>
         {
             {"C_CHECK_VERSION", Helpers.Contructor<Func<TeraMessageReader,C_CHECK_VERSION>>()},
+            {"C_LOGIN_ARBITER", Helpers.Contructor<Func<TeraMessageReader,C_LOGIN_ARBITER>>()},
             {"S_EACH_SKILL_RESULT", Helpers.Contructor<Func<TeraMessageReader,EachSkillResultServerMessage>>()},
             {"S_SPAWN_USER", Helpers.Contructor<Func<TeraMessageReader,SpawnUserServerMessage>>()},
             {"S_SPAWN_ME", Helpers.Contructor<Func<TeraMessageReader,SpawnMeServerMessage>>()},

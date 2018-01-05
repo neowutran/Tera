@@ -51,6 +51,7 @@
     <Compile Include="Game\GuildQuest.cs" />
     <Compile Include="Game\GuildQuestItem.cs" />
     <Compile Include="Game\GuildQuestTarget.cs" />
+    <Compile Include="Game\Messages\Client\C_LOGIN_ARBITER.cs" />
     <Compile Include="Game\Messages\Client\C_WHISPER.cs" />
     <Compile Include="Game\Messages\Client\C_CHAT.cs" />
     <Compile Include="Game\Messages\Client\C_CHECK_VERSION.cs" />
