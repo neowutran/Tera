@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Tera.Game
 {
@@ -36,7 +37,7 @@ namespace Tera.Game
         private static IEnumerable<KeyValuePair<ushort, string>> ReadOpCodeFile(string filename)
         {
             var names = File.ReadLines(filename)
-                .Select(s => s.Split('=').Select(part => part.Trim()).ToArray())
+                .Select(s => Regex.Replace(s.Replace("=", " "), @"\s+", " ").Split(' ').ToArray())
                 .Select(parts => new KeyValuePair<ushort, string>(ushort.Parse(parts[1]), parts[0]));
             return names;
         }
