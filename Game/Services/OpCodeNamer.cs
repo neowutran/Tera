@@ -36,6 +36,13 @@ namespace Tera.Game
 
         private static IEnumerable<KeyValuePair<ushort, string>> ReadOpCodeFile(string filename)
         {
+            if (!File.Exists(filename))
+            {
+                filename = filename.Contains("smt_")
+                    ? filename.Replace("smt_", "sysmsg.").Replace(".txt", ".map")
+                    : Path.GetDirectoryName(filename)+"/protocol."+ Path.GetFileName(filename).Replace(".txt", ".map");
+            }
+
             var names = File.ReadLines(filename)
                 .Select(s => Regex.Replace(s.Replace("=", " "), @"\s+", " ").Split(' ').ToArray())
                 .Select(parts => new KeyValuePair<ushort, string>(ushort.Parse(parts[1]), parts[0]));
