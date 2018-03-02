@@ -17,7 +17,7 @@ namespace Tera.Game.Messages
             NpcId = reader.ReadUInt32();
             NpcArea = reader.ReadUInt16();
             CategoryId = reader.ReadUInt32();
-            reader.Skip(reader.Version >= 325714 && reader.Version <326430 ? 35 : 31);//KR added 4 bytes somewere inside
+            reader.Skip(reader.Version >= 328305 ? 35 : 31);//KR added 4 bytes somewere inside
             OwnerId = reader.ReadEntityId();
         }
 
