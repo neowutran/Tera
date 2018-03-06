@@ -23,8 +23,11 @@ namespace Tera.Game.Messages
         {
             reader.Skip(11);
             Language = (LangEnum)reader.ReadUInt32();
+            Version = reader.ReadInt32();
+            reader.Factory.ReleaseVersion = Version;
         }
 
         public LangEnum Language { get; set; }
+        public int Version { get; set; }
     }
 }

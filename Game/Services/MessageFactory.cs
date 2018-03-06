@@ -97,6 +97,7 @@ namespace Tera.Game
         private readonly OpCodeNamer _sysMsgNamer;
         public string Region;
         public uint Version;
+        public int ReleaseVersion;
         public bool ChatEnabled {
             get { return _chatEnabled; }
             set
@@ -141,7 +142,7 @@ namespace Tera.Game
 
         public ParsedMessage Create(Message message)
         {
-            var reader = new TeraMessageReader(message, _opCodeNamer, Version, _sysMsgNamer);
+            var reader = new TeraMessageReader(message, _opCodeNamer, this, _sysMsgNamer);
             return Instantiate(message.OpCode, reader);
         }
     }

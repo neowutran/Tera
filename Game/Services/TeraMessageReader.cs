@@ -6,13 +6,13 @@ namespace Tera.Game
     // Used by `ParsedMessage`s to parse themselves
     public class TeraMessageReader : BinaryReader
     {
-        public TeraMessageReader(Message message, OpCodeNamer opCodeNamer, uint version, OpCodeNamer sysMsgNamer)
+        public TeraMessageReader(Message message, OpCodeNamer opCodeNamer, MessageFactory factory, OpCodeNamer sysMsgNamer)
             : base(GetStream(message), Encoding.Unicode)
         {
             Message = message;
             OpCodeName = opCodeNamer.GetName(message.OpCode);
             SysMsgNamer = sysMsgNamer;
-            Version = version;
+            Factory = factory;
         }
 
         public TeraMessageReader(Message message): base(GetStream(message), Encoding.Unicode)
@@ -22,7 +22,7 @@ namespace Tera.Game
 
         public Message Message { get; private set; }
         public string OpCodeName { get; private set; }
-        public uint Version { get; private set; }
+        internal MessageFactory Factory { get; private set; }
         internal OpCodeNamer SysMsgNamer { get; private set; }
 
         private static MemoryStream GetStream(Message message)
