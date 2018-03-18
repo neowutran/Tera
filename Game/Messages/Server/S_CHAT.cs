@@ -25,17 +25,24 @@ namespace Tera.Game.Messages
 
         public enum ChannelEnum
         {
-            Guild = 2,
-            General = 27,
             Say = 0,
-            Greetings = 9,
-            Trading = 4,
-            Emotes = 26,
-            Alliance = 28,
-            Area = 3,
             Group = 1,
-            Raid = 32
-
+            Guild = 2,
+            Area = 3,
+            Trading = 4,
+            Whisper = 7,
+            Greetings = 9,
+            Bargain = 19,
+            LFG = 20,
+            TeamAlert = 22,
+            System = 24,
+            Emotes = 26,
+            General = 27,
+            Alliance = 28,
+            Echelon = 29,
+            Vanarch = 30,
+            Raid = 32,
+            RP = 212
         }
     }
 }
