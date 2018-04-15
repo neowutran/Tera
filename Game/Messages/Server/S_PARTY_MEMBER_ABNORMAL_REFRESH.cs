@@ -8,14 +8,13 @@
             ServerId = reader.ReadUInt32();
             PlayerId = reader.ReadUInt32();
             AbnormalityId = reader.ReadInt32();
-            Duration = reader.ReadInt32();
-            Unknow = reader.ReadInt32();
+            Duration = reader.ReadInt64();
             StackCounter = reader.ReadInt32();
 
             //Debug.WriteLine("Target:"+TargetId+";Abnormality:"+AbnormalityId+";Duration:"+Duration+";Uknow:"+Unknow+";Stack:"+StackCounter);
         }
 
-        public int Duration { get; }
+        public long Duration { get; }
 
         public int Unknow { get; }
 

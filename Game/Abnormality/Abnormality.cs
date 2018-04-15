@@ -9,7 +9,7 @@ namespace Tera.Game.Abnormality
 
         private bool _enduranceDebuffRegistered;
 
-        public Abnormality(HotDot hotdot, EntityId source, EntityId target, uint duration, int stack, long ticks,
+        public Abnormality(HotDot hotdot, EntityId source, EntityId target, long duration, int stack, long ticks,
             AbnormalityTracker abnormalityTracker)
         {
             HotDot = hotdot;
@@ -34,7 +34,7 @@ namespace Tera.Game.Abnormality
 
         public EntityId Target { get; }
 
-        public uint Duration { get; private set; }
+        public long Duration { get; private set; }
 
         public long LastApply { get; private set; }
 
@@ -156,7 +156,7 @@ namespace Tera.Game.Abnormality
             _abnormalityTracker.AbnormalityStorage.AbnormalityTime(player)[HotDot].End(lastTicks);
         }
 
-        public void Refresh(int stackCounter, uint duration, long ticks)
+        public void Refresh(int stackCounter, long duration, long ticks)
         {
             Stack = stackCounter;
             FirstHit = ticks;

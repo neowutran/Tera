@@ -7,7 +7,7 @@
             ServerId = reader.ReadUInt32();
             PlayerId = reader.ReadUInt32();
             AbnormalityId = reader.ReadInt32();
-            Duration = reader.ReadInt32();
+            Duration = reader.ReadInt64();
             Stack = reader.ReadInt32();
             //  Debug.WriteLine("target = " + TargetId + ";Abnormality:" + AbnormalityId + ";Duration:" + Duration +
             //                  ";Stack:" + Stack);
@@ -18,7 +18,7 @@
 
         public int AbnormalityId { get; }
 
-        public int Duration { get; }
+        public long Duration { get; }
         public int Stack { get; }
     }
 }

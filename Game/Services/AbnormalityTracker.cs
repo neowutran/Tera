@@ -168,7 +168,7 @@ namespace Tera.Game
                 message.Time.Ticks);
         }
 
-        public void AddAbnormality(EntityId target, EntityId source, uint duration, int stack, int abnormalityId,
+        public void AddAbnormality(EntityId target, EntityId source, long duration, int stack, int abnormalityId,
             long ticks)
         {
             if (!_abnormalities.ContainsKey(target))
