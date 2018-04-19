@@ -25,6 +25,7 @@ namespace Tera.Game.Messages
             Language = (LangEnum)reader.ReadUInt32();
             Version = reader.ReadInt32();
             reader.Factory.ReleaseVersion = Version;
+            reader.Factory.ReloadSysMsg();
         }
 
         public LangEnum Language { get; set; }
