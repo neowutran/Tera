@@ -44,7 +44,7 @@ namespace Tera.Game.Messages
             Flags = (SkillResultFlags) FlagsDebug;
             IsCritical = (reader.ReadUInt16() & 1) != 0;
             Blocked = (reader.ReadByte() & 1) != 0;
-            reader.Skip(8); //unknown
+            reader.Skip(12); //unknown
             Position = reader.ReadVector3f();
             Heading = reader.ReadAngle();
             //if (Position.X!=0)
