@@ -176,7 +176,7 @@ namespace Tera.Game
                 _abnormalities.Add(target, new List<Abnormality.Abnormality>());
             }
             var hotdot = HotDotDatabase.Get(abnormalityId);
-            if (hotdot == null)
+            if (hotdot == null || hotdot.IsShow == false)
             {
                 return;
             }

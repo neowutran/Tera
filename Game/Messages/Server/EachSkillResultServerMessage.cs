@@ -42,7 +42,8 @@ namespace Tera.Game.Messages
             Amount = reader.ReadInt64();// KR now use 64 bit
             FlagsDebug = reader.ReadInt32();
             Flags = (SkillResultFlags) FlagsDebug;
-            IsCritical = (reader.ReadUInt16() & 1) != 0;
+            IsCritical = (reader.ReadByte() & 1) != 0;
+            ConsumeEdge = (reader.ReadByte() & 1) != 0;
             Blocked = (reader.ReadByte() & 1) != 0;
             reader.Skip(12); //unknown
             Position = reader.ReadVector3f();
@@ -70,6 +71,7 @@ namespace Tera.Game.Messages
         public int SkillId { get; private set; }
         public SkillResultFlags Flags { get; }
         public bool IsCritical { get; private set; }
+        public bool ConsumeEdge { get; private set; }
         public bool Blocked { get; private set; }
         public Vector3f Position { get; }
         public Angle Heading { get; }
