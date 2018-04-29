@@ -150,9 +150,7 @@ namespace Tera.Game
                 return new Skill(skillid, hotdotskill.Name, null, "", hotdotskill.IconName, null, true);
             }
 
-            var userNpc = UserEntity.ForEntity(source);
-            var sourceUser = userNpc["root_source"] as UserEntity; // Attribute damage dealt by owned entities to the owner
-
+            var sourceUser = source as UserEntity;
             if (sourceUser == null) return null;
             var skill = skillDatabase.GetOrNull(sourceUser.RaceGenderClass, skillid);
             if (skill != null)return skill;
