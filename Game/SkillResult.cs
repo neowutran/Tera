@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using Tera.Game.Messages;
 
@@ -25,7 +26,8 @@ namespace Tera.Game
             if (abnormalityTracker?.AbnormalityExist(message.Target, 950187) ?? false) Amount=0; //fix raid-30 bug with 1kkk damage after shield
             var userNpc = UserEntity.ForEntity(Source);
             var npc = (NpcEntity) userNpc["source"];
-            var sourceUser = userNpc["root_source"] as UserEntity; // Attribute damage dealt by owned entities to the owner
+            var rootSource = userNpc["root_source"];
+            var sourceUser = rootSource as UserEntity; // Attribute damage dealt by owned entities to the owner
             var targetUser = Target as UserEntity; // But don't attribute damage received by owned entities to the owner
 
             if (sourceUser != null)
@@ -64,12 +66,13 @@ namespace Tera.Game
                 Target.Heading = Target.EndAngle;
                 Target.EndTime = 0;
             }
-            if (SourcePlayer!=null && npc != null)
-                HitDirection = HitDirection.Pet;
-            else if (Source is ProjectileEntity || Source.Heading.Gradus == 0)
-                if (Skill?.Boom??true) HitDirection = Source.Position.GetHeading(Target.Position).HitDirection(Target.Heading);
-                else { if ((HitDirection = userNpc["root_source"].Heading.HitDirection(Target.Heading)) != Source.Position.GetHeading(Target.Position).HitDirection(Target.Heading)) HitDirection = HitDirection.Front; }
-            else if ((HitDirection = Source.Heading.HitDirection(Target.Heading)) != Source.Position.GetHeading(Target.Position).HitDirection(Target.Heading)) HitDirection=HitDirection.Front;
+            if (SourcePlayer != null && npc != null) HitDirection = HitDirection.Pet;
+            else
+            {
+                if (Source is ProjectileEntity && (Skill?.Boom ?? true)) HitDirection = Source.Position.GetHeading(Target.Position).HitDirection(Target.Heading);
+                else { HitDirection = Angle.HitDirection(rootSource.Position, rootSource.Heading, Target.Position, Target.Heading); }
+            }
+
             if ((SourcePlayer?.Class==PlayerClass.Archer) && (abnormalityTracker?.AbnormalityExist(sourceUser.Id, 601600) ?? false)) HitDirection=HitDirection.Back;
             //Debug.WriteLine(HitDirection);
             HitDirection = HitDirection & ~(HitDirection.Left | HitDirection.Right);
