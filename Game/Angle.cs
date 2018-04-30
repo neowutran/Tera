@@ -4,9 +4,9 @@ namespace Tera.Game
 {
     public struct Angle
     {
-        private readonly short _raw;
+        private readonly int _raw;
 
-        public Angle(short raw)
+        public Angle(int raw)
             : this()
         {
             _raw = raw;
@@ -14,11 +14,11 @@ namespace Tera.Game
 
         public double Radians => _raw*(2*Math.PI/0x10000);
         public int Gradus => _raw*360/0x10000;
-        public short Raw => _raw;
+        public int Raw => _raw;
 
-        public static Angle operator + (Angle x, Angle y) { return new Angle((short) (x.Raw + y.Raw)); }
-        public static Angle operator - (Angle x, Angle y) { return new Angle((short) (x.Raw - y.Raw)); }
-        public static Angle operator - (Angle x) { return new Angle((short) -x.Raw ); }
+        public static Angle operator + (Angle x, Angle y) { return new Angle(x.Raw + y.Raw); }
+        public static Angle operator - (Angle x, Angle y) { return new Angle(x.Raw - y.Raw); }
+        public static Angle operator - (Angle x) { return new Angle(-x.Raw ); }
         public static bool operator > (Angle x, Angle y) { return x.Raw > y.Raw; }
         public static bool operator < (Angle x, Angle y) { return x.Raw < y.Raw; }
         public static bool operator ==(Angle x, Angle y) { return x.Raw == y.Raw; }
@@ -27,8 +27,8 @@ namespace Tera.Game
         public static bool operator !=(Angle x, Angle y) { return x.Raw != y.Raw; }
         public static bool operator >=(Angle x, Angle y) { return x.Raw >= y.Raw; }
         public static bool operator <=(Angle x, Angle y) { return x.Raw <= y.Raw; }
-        public static Angle operator +(Angle x, short y) { return new Angle((short)(x.Raw + y)); }
-        public static Angle operator -(Angle x, short y) { return new Angle((short)(x.Raw - y)); }
+        public static Angle operator +(Angle x, int y) { return new Angle(x.Raw + y); }
+        public static Angle operator -(Angle x, int y) { return new Angle(x.Raw - y); }
 
         public override string ToString()
         {
@@ -37,7 +37,7 @@ namespace Tera.Game
 
         public static Angle Normalize(Angle angle)
         {
-            return new Angle((short)((angle.Raw + 0x5000) % 0x10000-0x5000));
+            return new Angle((angle.Raw + 0x8000) % 0x10000 - 0x8000);
         }
 
         public static bool CheckSide(Angle posAngle, Angle attAngle)
@@ -45,19 +45,19 @@ namespace Tera.Game
             posAngle = Normalize(posAngle);
             attAngle = Normalize(attAngle);
             if (posAngle.Raw < 0) { posAngle = -posAngle; attAngle = -attAngle; }
-            if (posAngle.Raw > 0x5000) return false;
-            if ((-0x3750 >= attAngle.Raw) && (attAngle > posAngle - 0x6250)) return true;
-            if (posAngle.Raw < 0x1250 && attAngle >= Normalize(new Angle((short) (posAngle.Raw - 0x6250)))) return true;
+            if (posAngle.Raw > 0x4000) return false;
+            if ((-0x6000 >= attAngle.Raw) && (attAngle > posAngle - 0xA000)) return true;
+            if (posAngle.Raw < 0x2000 && attAngle >= Normalize(posAngle - 0xA000)) return true;
             return false;
         }
 
         public static HitDirection HitDirection(Vector3f myPos, Angle myAngle, Vector3f bossPos, Angle bossAngle)
         {
-            var posAngle = new Angle((short) (Math.Atan2(myPos.Y - bossPos.Y, myPos.X - bossPos.X) * 0x5000 / Math.PI));
+            var posAngle = myPos.GetHeading(bossPos);
             var attAngle = myAngle - bossAngle;
-            if (CheckSide(posAngle - 0x5000, attAngle - 0x5000))  return Game.HitDirection.Back;
-            if (CheckSide(posAngle - 0x2500, attAngle - 0x2500))  return Game.HitDirection.Right | Game.HitDirection.Side;
-            if (CheckSide(posAngle + 0x2500, attAngle + 0x2500))  return Game.HitDirection.Left  | Game.HitDirection.Side;
+            if (CheckSide(posAngle - 0x8000, attAngle - 0x8000))  return Game.HitDirection.Back;
+            if (CheckSide(posAngle - 0x4000, attAngle - 0x4000))  return Game.HitDirection.Right | Game.HitDirection.Side;
+            if (CheckSide(posAngle + 0x4000, attAngle + 0x4000))  return Game.HitDirection.Left  | Game.HitDirection.Side;
             return Game.HitDirection.Front;
         }
 
