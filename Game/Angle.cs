@@ -53,7 +53,7 @@ namespace Tera.Game
 
         public static HitDirection HitDirection(Vector3f myPos, Angle myAngle, Vector3f bossPos, Angle bossAngle)
         {
-            var posAngle = bossPos.GetHeading(myPos);
+            var posAngle = bossPos.GetHeading(myPos) - bossAngle;
             var attAngle = myAngle - bossAngle;
             if (CheckSide(posAngle - 0x8000, attAngle - 0x8000))  return Game.HitDirection.Back;
             if (CheckSide(posAngle - 0x4000, attAngle - 0x4000))  return Game.HitDirection.Right | Game.HitDirection.Side;
