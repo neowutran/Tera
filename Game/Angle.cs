@@ -47,7 +47,7 @@ namespace Tera.Game
             if (posAngle.Raw < 0) { posAngle = -posAngle; attAngle = -attAngle; }
             if (posAngle.Raw > 0x5000) return false;
             if ((-0x3750 >= attAngle.Raw) && (attAngle > posAngle - 0x6250)) return true;
-            if (posAngle.Raw < 0x1250 && attAngle >= Normalize(new Angle((short) (posAngle.Raw - 6250)))) return true;
+            if (posAngle.Raw < 0x1250 && attAngle >= Normalize(new Angle((short) (posAngle.Raw - 0x6250)))) return true;
             return false;
         }
 
