@@ -125,7 +125,7 @@ namespace Tera.Game
             _chatEnabled = chatEnabled;
         }
 
-        public void ReloadSysMsg() { _sysMsgNamer?.Reload(ReleaseVersion); }
+        public void ReloadSysMsg() { _sysMsgNamer?.Reload(Version, ReleaseVersion); }
 
         public MessageFactory()
         {

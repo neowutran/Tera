@@ -62,9 +62,10 @@ namespace Tera.Game
             //throw new ArgumentException($"Unknown name '{name}'");
         }
 
-        public void Reload(int releaseVersion)
+        public void Reload(uint version, int releaseVersion)
         {
-            var filename = _path + "/sysmsg." + (releaseVersion / 100) + ".map";
+            var filename = _path + "/sysmsg." + version + ".map";
+            if (!File.Exists(filename)) filename = _path + "/sysmsg." + (releaseVersion / 100) + ".map";
             if(!File.Exists(filename)) return;
             var namesArray = ReadOpCodeFile(filename).ToArray();
             _opCodeNames = namesArray.ToDictionary(parts => parts.Key, parts => parts.Value);
