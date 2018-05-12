@@ -59,13 +59,16 @@ namespace Tera.Game
         public string ReadTeraString()
         {
             var builder = new StringBuilder();
-            while (true)
+            try
             {
-                var c = ReadChar();
-                if (c == 0)
-                    return builder.ToString();
-                builder.Append(c);
+                while (true)
+                {
+                    var c = ReadChar();
+                    if (c == 0) return builder.ToString();
+                    builder.Append(c);
+                }
             }
+            catch { return builder.ToString(); } // don't crash on parsing strings from corrupted packets
         }
     }
 }
