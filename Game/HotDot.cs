@@ -129,7 +129,7 @@ namespace Tera.Game
             rType = Enum.TryParse(type, out rType) ? rType : Types.Unknown;
             AbType = abType;
             IsBuff = isBuff;
-            IsShow = isShow;
+            IsShow = isShow || id == 10152050;//BF counter
             Hp = hp;
             Mp = mp;
             Time = time;
