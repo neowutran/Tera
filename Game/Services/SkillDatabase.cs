@@ -24,7 +24,7 @@ namespace Tera.Game
             if (bf == null) return;
             for (int i = 1; i <= 5; i++)
             {
-                var skill = new UserSkill(bf.Id + i, gunner, bf.Name, bf.IsChained, i.ToString(), bf.IconName);
+                var skill = new UserSkill(bf.Id + i, gunner, i==5 ? bf.Name+"!" : bf.Name, bf.IsChained, i.ToString(), bf.IconName);
                 if (!_userSkilldata[skill.RaceGenderClass].ContainsKey(skill.Id))
                     _userSkilldata[skill.RaceGenderClass].Add(skill.Id, skill);
             }
