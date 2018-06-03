@@ -5,8 +5,8 @@
         internal S_PLAYER_STAT_UPDATE(TeraMessageReader reader) : base(reader)
         {
             HpRemaining = reader.ReadInt64();
-            MpRemaining = reader.ReadInt64();
-            reader.Skip(4);
+            MpRemaining = reader.ReadInt32();
+            reader.Skip(8);
             TotalHp = reader.ReadInt64();
             TotalMp = reader.ReadInt32();//strange that there is nothing here - probably they messed up and another 4 bytes will appear here later
             return; //we don't need all other things now, but if we need - just remove return.
@@ -107,7 +107,7 @@
         public int ItemLevel { get; private set; }
         public int ItemLevelInventory { get; private set; }
         public int Level { get; private set; }
-        public long MpRemaining { get; private set; }
+        public int MpRemaining { get; private set; }
         public int ReRemaining { get; private set; }
         public int Stamina { get; private set; }
         public byte Status { get; private set; }
