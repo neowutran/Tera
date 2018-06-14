@@ -6,7 +6,7 @@
             : base(reader)
         {
             OwnerId = reader.ReadEntityId();
-            reader.Skip(4);
+            reader.Skip(reader.Factory.ReleaseVersion>=7401?8:4);// something added
             Id = reader.ReadEntityId();
             SkillId = new SkillId(reader).Id;
             Start = reader.ReadVector3f();
