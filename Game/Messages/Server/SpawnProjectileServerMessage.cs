@@ -7,7 +7,7 @@
         {
             Id = reader.ReadEntityId();
             reader.Skip(4);
-            Model = reader.ReadInt32();
+            SkillId = new SkillId(reader).Id;
             Start = reader.ReadVector3f();
             Finish = reader.ReadVector3f();
             unk1 = reader.ReadByte();
@@ -22,7 +22,7 @@
         public int unk2 { get; private set; }
         public byte unk1 { get; private set; }
         public EntityId Id { get; private set; }
-        public int Model { get; private set; }
+        public int SkillId { get; private set; }
         public Vector3f Start { get; private set; }
         public Vector3f Finish { get; private set; }
         public EntityId OwnerId { get; private set; }
