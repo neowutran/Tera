@@ -8,7 +8,7 @@
             OwnerId = reader.ReadEntityId();
             reader.Skip(4);
             Id = reader.ReadEntityId();
-            SkillId = reader.ReadUInt32();
+            SkillId = new SkillId(reader).Id;
             Start = reader.ReadVector3f();
             Finish = reader.ReadVector3f();
             Speed = reader.ReadSingle();
@@ -18,7 +18,7 @@
         public float Speed { get; set; }
         public Vector3f Finish { get; set; }
         public Vector3f Start { get; set; }
-        public uint SkillId { get; set; }
+        public int SkillId { get; set; }
         public EntityId Id { get; private set; }
         public EntityId OwnerId { get; private set; }
     }

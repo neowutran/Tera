@@ -7,7 +7,7 @@ namespace Tera.Game.Messages
         internal S_START_COOLTIME_SKILL(TeraMessageReader reader) : base(reader)
         {
             //PrintRaw();
-            SkillId = reader.ReadInt32() & 0x3FFFFFF;
+            SkillId = new SkillId(reader).Id;
             Cooldown = reader.ReadInt32();
             //Debug.WriteLine("cooldown: SkillId = "+SkillId+"; Cooldown:"+Cooldown+"; hasResetted:"+HasResetted);
         }

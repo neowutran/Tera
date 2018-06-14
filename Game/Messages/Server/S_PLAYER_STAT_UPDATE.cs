@@ -8,7 +8,7 @@
             MpRemaining = reader.ReadInt32();
             reader.Skip(8);
             TotalHp = reader.ReadInt64();
-            TotalMp = reader.ReadInt32();//strange that there is nothing here - probably they messed up and another 4 bytes will appear here later
+            TotalMp = reader.ReadInt32();
             return; //we don't need all other things now, but if we need - just remove return.
             BasePower = reader.ReadInt32();
             BaseEndurance = reader.ReadInt32();

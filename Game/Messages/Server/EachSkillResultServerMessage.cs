@@ -30,7 +30,7 @@ namespace Tera.Game.Messages
             //When I pick up a mana mote, differente ID
             Unknow1 = reader.ReadBytes(4);
 
-            SkillId = reader.ReadInt32() & 0x3FFFFFF;
+            SkillId = new SkillId(reader).Id;
 
             //Not sure if it s a int32. or int16 or int64 or other thing 
             //When using a skill with many hit, each hit seem to have a different number (ex: 0, 1, 2, or 3)

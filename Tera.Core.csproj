@@ -157,6 +157,7 @@
     <Compile Include="Game\EntityId.cs" />
     <Compile Include="Game\NpcEntity.cs" />
     <Compile Include="Game\Race.cs" />
+    <Compile Include="Game\SkillId.cs" />
     <Compile Include="Game\SkillResult.cs" />
     <Compile Include="Game\UserEntity.cs" />
     <Compile Include="Game\Vector3f.cs" />

@@ -9,7 +9,7 @@
             Position = reader.ReadVector3f();
             Heading = reader.ReadAngle();
             Model = reader.ReadUInt32();
-            SkillId = reader.ReadInt32() & 0x3FFFFFF;
+            SkillId = new SkillId(reader).Id;
             Stage = reader.ReadUInt32();
             Speed = reader.ReadSingle();
             Id = reader.ReadUInt32();
