@@ -23,7 +23,8 @@ namespace Tera.Game.Messages
         {
             var count = reader.ReadUInt16();
             var offset = reader.ReadUInt16();
-            reader.Skip(2); //ims raid bytes
+            Ims = reader.ReadBoolean();
+            Raid = reader.ReadBoolean();
             reader.Skip(12);
             LeaderServerId = reader.ReadUInt32();
             LeaderPlayerId = reader.ReadUInt32();
@@ -73,5 +74,7 @@ namespace Tera.Game.Messages
         public uint LeaderServerId { get; }
         public uint LeaderPlayerId { get; }
         public List<PartyMember> Party { get; } = new List<PartyMember>();
+        public bool Ims;
+        public bool Raid;
     }
 }

@@ -5,22 +5,24 @@ namespace Tera.Game
     public class Player : IEquatable<object>
     {
         private UserEntity _user;
-
+        private string _server;
+        
         public Player(UserEntity user, ServerDatabase serverdatabase)
         {
             _user = user;
-            FullName = $"{serverdatabase?.GetServerName(user.ServerId) ?? user.ServerId.ToString()} : {user.Name}";
+            _server = $"{serverdatabase?.GetServerName(user.ServerId) ?? user.ServerId.ToString()}";
         }
 
         public uint PlayerId => User.PlayerId;
         public uint ServerId => User.ServerId;
 
         public string Name => User.Name;
-        public string FullName { get; private set; }
         public bool IsHealer => Class == PlayerClass.Priest || Class == PlayerClass.Mystic;
         public int Level => User.Level;
         public string GuildName => User.GuildName;
-
+        public string FullName => $"{_server} : {User.Name}";
+        public string Server => _server;
+        
         public RaceGenderClass RaceGenderClass => User.RaceGenderClass;
 
         public PlayerClass Class => RaceGenderClass.Class;

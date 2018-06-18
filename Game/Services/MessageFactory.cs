@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Tera.Game.Messages;
 
@@ -64,6 +65,9 @@ namespace Tera.Game
             {"S_GET_USER_GUILD_LOGO", Helpers.Contructor<Func<TeraMessageReader,S_GET_USER_GUILD_LOGO>>()},
             {"S_MOUNT_VEHICLE_EX", Helpers.Contructor<Func<TeraMessageReader,S_MOUNT_VEHICLE_EX>>() },
             {"S_CREST_INFO", Helpers.Contructor<Func<TeraMessageReader,S_CREST_INFO>>() },
+            {"S_VISIT_NEW_SECTION", Helpers.Contructor<Func<TeraMessageReader,S_VISIT_NEW_SECTION>>()},
+            {"S_SHOW_PARTY_MATCH_INFO", Helpers.Contructor<Func<TeraMessageReader,S_SHOW_PARTY_MATCH_INFO>>()},
+            {"C_REGISTER_PARTY_INFO", Helpers.Contructor<Func<TeraMessageReader,C_REGISTER_PARTY_INFO>>()},
         };
 
         private static readonly Dictionary<string, Delegate> ChatServices = new Dictionary<string, Delegate>
@@ -137,6 +141,9 @@ namespace Tera.Game
         private ParsedMessage Instantiate(ushort opCode, TeraMessageReader reader)
         {
             Delegate type;
+            
+            if (opCode == 25021)
+                Debug.Print("25021!");
             if (!OpcodeNameToType.TryGetValue(opCode, out type))
                 type = UnknownMessageDelegate;
             return (ParsedMessage) type.DynamicInvoke(reader);

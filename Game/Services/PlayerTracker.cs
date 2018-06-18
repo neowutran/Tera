@@ -12,11 +12,13 @@ namespace Tera.Game
         private readonly ServerDatabase _serverDatabase;
         private Player _unknownDamage;
         private List<Tuple<uint, uint>> _currentParty = new List<Tuple<uint, uint>>();
+        public bool IsRaid { get; private set; }
 
         public PlayerTracker(EntityTracker entityTracker, ServerDatabase serverDatabase = null)
         {
             _serverDatabase = serverDatabase;
             _entityTracker = entityTracker;
+            IsRaid = false;
             entityTracker.EntityUpdated += Update;
         }
 
@@ -41,6 +43,9 @@ namespace Tera.Game
         public delegate void PlayerIdChangedEvent(EntityId oldId, EntityId newId);
         public event PlayerIdChangedEvent PlayerIdChangedAction;
 
+        public delegate void PartyChange();
+        public event PartyChange PartyChangedEvent;
+        
         public void Update(UserEntity user)
         {
             if (user == null)
@@ -93,26 +98,32 @@ namespace Tera.Game
         public void UpdateParty(S_BAN_PARTY message)
         {
             _currentParty = new List<Tuple<uint, uint>>();
+            PartyChangedEvent?.Invoke();
         }
 
         public void UpdateParty(S_LEAVE_PARTY m )
         {
             _currentParty = new List<Tuple<uint, uint>>();
+            PartyChangedEvent?.Invoke();
         }
 
         public void UpdateParty(S_LEAVE_PARTY_MEMBER m)
         {
             _currentParty.Remove(Tuple.Create(m.ServerId, m.PlayerId));
+            PartyChangedEvent?.Invoke();
         }
 
         public void UpdateParty(S_BAN_PARTY_MEMBER m)
         {
             _currentParty.Remove(Tuple.Create(m.ServerId, m.PlayerId));
+            PartyChangedEvent?.Invoke();
         }
 
         public void UpdateParty(S_PARTY_MEMBER_LIST m)
         {
             _currentParty = m.Party.ConvertAll(x => Tuple.Create(x.ServerId, x.PlayerId));
+            IsRaid = m.Raid;
+            PartyChangedEvent?.Invoke();
         }
 
         public void UpdateParty(ParsedMessage message)
@@ -122,6 +133,7 @@ namespace Tera.Game
             message.On<S_LEAVE_PARTY_MEMBER>(m => UpdateParty(m));
             message.On<S_BAN_PARTY_MEMBER>(m => UpdateParty(m));
             message.On<S_PARTY_MEMBER_LIST>(m => UpdateParty(m));
+            PartyChangedEvent?.Invoke();
         }
 
         public bool MyParty(Player player)
@@ -131,6 +143,12 @@ namespace Tera.Game
                    player.User == _entityTracker.MeterUser;
         }
 
+        public bool MyParty(uint serverId, uint playerId)
+        {
+            return _currentParty.Contains(Tuple.Create(serverId, playerId)) ||
+                   (playerId == _entityTracker.MeterUser.PlayerId && serverId == _entityTracker.MeterUser.ServerId);
+        }
+        
         public List<UserEntity> PartyList()
         {
             List<UserEntity> list = new List<UserEntity>();
@@ -154,5 +172,6 @@ namespace Tera.Game
         {
             PlayerIdChangedAction?.Invoke(oldid, newid);
         }
+
     }
 }
