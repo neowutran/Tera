@@ -57,6 +57,7 @@
     <Compile Include="Game\Messages\Client\C_CHAT.cs" />
     <Compile Include="Game\Messages\Client\C_CHECK_VERSION.cs" />
     <Compile Include="Game\Messages\Client\C_PLAYER_LOCATION.cs" />
+    <Compile Include="Game\Messages\Server\S_MY_PARTY_MATCH_INFO.cs" />
     <Compile Include="Game\Messages\Server\S_ACTION_END.cs" />
     <Compile Include="Game\Messages\Server\S_ACTION_STAGE.cs" />
     <Compile Include="Game\Messages\Server\S_AVAILABLE_EVENT_MATCHING_LIST.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Game\Messages\Server\S_BOSS_GAGE_INFO.cs" />
     <Compile Include="Game\Messages\Server\S_CHANGE_DESTPOS_PROJECTILE.cs" />
     <Compile Include="Game\Messages\Server\S_BATTLE_FIELD_ENTRANCE_INFO.cs" />
+    <Compile Include="Game\Messages\Server\S_CHANGE_EVENT_MATCHING_STATE.cs" />
     <Compile Include="Game\Messages\Server\S_CHECK_TO_READY_PARTY.cs" />
     <Compile Include="Game\Messages\Server\S_CREST_INFO.cs" />
     <Compile Include="Game\Messages\Server\S_CREST_MESSAGE.cs" />
