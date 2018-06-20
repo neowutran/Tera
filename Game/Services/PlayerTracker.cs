@@ -133,7 +133,6 @@ namespace Tera.Game
             message.On<S_LEAVE_PARTY_MEMBER>(m => UpdateParty(m));
             message.On<S_BAN_PARTY_MEMBER>(m => UpdateParty(m));
             message.On<S_PARTY_MEMBER_LIST>(m => UpdateParty(m));
-            PartyChangedEvent?.Invoke();
         }
 
         public bool MyParty(Player player)
