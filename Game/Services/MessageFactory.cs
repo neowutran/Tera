@@ -69,7 +69,6 @@ namespace Tera.Game
             {"S_SHOW_PARTY_MATCH_INFO", Helpers.Contructor<Func<TeraMessageReader,S_SHOW_PARTY_MATCH_INFO>>()},
             {"C_REGISTER_PARTY_INFO", Helpers.Contructor<Func<TeraMessageReader,C_REGISTER_PARTY_INFO>>()},
             {"S_CHANGE_EVENT_MATCHING_STATE", Helpers.Contructor<Func<TeraMessageReader,S_CHANGE_EVENT_MATCHING_STATE>>()},
-            {"S_MY_PARTY_MATCH_INFO", Helpers.Contructor<Func<TeraMessageReader,S_MY_PARTY_MATCH_INFO>>()},
         };
 
         private static readonly Dictionary<string, Delegate> ChatServices = new Dictionary<string, Delegate>

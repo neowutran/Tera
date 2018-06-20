@@ -48,9 +48,11 @@
     <Compile Include="Game\Abnormality\Death.cs" />
     <Compile Include="Game\Abnormality\Duration.cs" />
     <Compile Include="Game\Abnormality\PlayerAbnormals.cs" />
+    <Compile Include="Game\Guard.cs" />
     <Compile Include="Game\GuildQuest.cs" />
     <Compile Include="Game\GuildQuestItem.cs" />
     <Compile Include="Game\GuildQuestTarget.cs" />
+    <Compile Include="Game\MapData.cs" />
     <Compile Include="Game\Messages\Client\C_LOGIN_ARBITER.cs" />
     <Compile Include="Game\Messages\Client\C_REGISTER_PARTY_INFO.cs" />
     <Compile Include="Game\Messages\Client\C_WHISPER.cs" />
@@ -130,6 +132,7 @@
     <Compile Include="Game\Messages\Server\EachSkillResultServerMessage.cs" />
     <Compile Include="Game\Messages\ParsedMessage.cs" />
     <Compile Include="Game\Messages\UnknownMessage.cs" />
+    <Compile Include="Game\Section.cs" />
     <Compile Include="Game\Services\AbnormalityTracker.cs" />
     <Compile Include="Game\Services\QuestInfoDatabase.cs" />
     <Compile Include="Game\Services\UserLogoTracker.cs" />
@@ -166,6 +169,7 @@
     <Compile Include="Game\SkillResult.cs" />
     <Compile Include="Game\UserEntity.cs" />
     <Compile Include="Game\Vector3f.cs" />
+    <Compile Include="Game\World.cs" />
     <Compile Include="PacketLog\Parsing\BlockHelper.cs" />
     <Compile Include="PacketLog\Parsing\BlockSplitter.cs" />
     <Compile Include="PacketLog\Parsing\BlockType.cs" />
