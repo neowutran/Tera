@@ -143,8 +143,6 @@ namespace Tera.Game
         {
             Delegate type;
             
-            if (opCode == 25021)
-                Debug.Print("25021!");
             if (!OpcodeNameToType.TryGetValue(opCode, out type))
                 type = UnknownMessageDelegate;
             return (ParsedMessage) type.DynamicInvoke(reader);

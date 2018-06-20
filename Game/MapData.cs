@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Windows;
-using System.Windows.Forms;
 using System.Xml.Linq;
 
 namespace Data 
@@ -13,12 +11,12 @@ namespace Data
     {
         public Dictionary<uint, World> Worlds;
         public Dictionary<uint, string> Names;
-        public MapData(BasicTeraData basicData, string region)
+        public MapData(string folder, string region)
         {
             Worlds = new Dictionary<uint, World>();
             Names = new Dictionary<uint, string>();
 
-            string path = Path.Combine(basicData.ResourceDirectory, $"data/world_map/world_map-{region}.xml");
+            string path = Path.Combine(folder, $"world_map/world_map-{region}.xml");
             var xdoc = XDocument.Load(path);
 
             foreach (var w in xdoc.Descendants().Where(x => x.Name == "World"))
@@ -59,8 +57,8 @@ namespace Data
                 }
                 Worlds.Add(world.Id, world);
             }
-            LoadNames(basicData, region);
-            LoadImages(basicData);
+            LoadNames(folder, region);
+            LoadImages(folder);
         }
 
 
@@ -71,9 +69,9 @@ namespace Data
         }
 
 
-        void LoadNames(BasicTeraData basicData, string region)
+        void LoadNames(string folder, string region)
         {
-            var f = File.OpenText(Path.Combine(basicData.ResourceDirectory, $"data/regions/regions-{region}.tsv"));
+            var f = File.OpenText(Path.Combine(folder, $"regions/regions-{region}.tsv"));
             while (true)
             {
                 var line = f.ReadLine();
@@ -89,9 +87,9 @@ namespace Data
 
         }
 
-        void LoadImages(BasicTeraData basicData)
+        void LoadImages(string folder)
         {
-            string path = Path.Combine(basicData.ResourceDirectory, "data/section_images.tsv");
+            string path = Path.Combine(folder, "section_images.tsv");
             
             var lines = File.ReadLines(path);
             var listOfParts = lines.Select(s => s.Split('\t'));

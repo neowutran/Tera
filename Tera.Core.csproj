@@ -170,6 +170,7 @@
     <Compile Include="Game\UserEntity.cs" />
     <Compile Include="Game\Vector3f.cs" />
     <Compile Include="Game\World.cs" />
+    <Compile Include="Location.cs" />
     <Compile Include="PacketLog\Parsing\BlockHelper.cs" />
     <Compile Include="PacketLog\Parsing\BlockSplitter.cs" />
     <Compile Include="PacketLog\Parsing\BlockType.cs" />
