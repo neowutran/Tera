@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Tera.Game.Messages;
 
 namespace Tera.Game
@@ -14,6 +15,8 @@ namespace Tera.Game
         private List<Tuple<uint, uint>> _currentParty = new List<Tuple<uint, uint>>();
         public bool IsRaid { get; private set; }
 
+        public int PartySize => _currentParty.Count;
+        
         public PlayerTracker(EntityTracker entityTracker, ServerDatabase serverDatabase = null)
         {
             _serverDatabase = serverDatabase;
@@ -156,7 +159,7 @@ namespace Tera.Game
                     Player player;
                     if (_playerById.TryGetValue(x, out player)) list.Add(player.User);
                 });
-            if (_entityTracker.MeterUser!=null)list.Add(_entityTracker.MeterUser);
+            if (_entityTracker.MeterUser != null && !list.Contains(_entityTracker.MeterUser))list.Add(_entityTracker.MeterUser);
             return list;
         }
 
