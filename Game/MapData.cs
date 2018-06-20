@@ -110,7 +110,10 @@ namespace Data
 
         public string GetGuardName(Location loc)
         {
-            var guard = loc == null ? null : Worlds[loc.World]?.Guards[loc.Guard];
+            Guard guard = null;
+            try { guard = loc == null ? null : Worlds[loc.World]?.Guards[loc.Guard]; }
+            catch (KeyNotFoundException) { return null; }
+
             if (guard == null) { return null; }
 
             Names.TryGetValue(guard.NameId, out var name);
@@ -119,7 +122,10 @@ namespace Data
         
         public string GetSectionName(Location loc)
         {
-            var section = loc == null ? null : Worlds[loc.World]?.Guards[loc.Guard]?.Sections[loc.Section];
+            Section section = null;
+            try { section = loc == null ? null : Worlds[loc.World]?.Guards[loc.Guard]?.Sections[loc.Section]; }
+            catch (KeyNotFoundException) { return null; }
+
             if (section == null) { return null; }
 
             Names.TryGetValue(section.NameId, out var name);
@@ -141,7 +147,8 @@ namespace Data
 
         public string GetImageName(Location loc)
         {
-            return loc == null ? null : Worlds[loc.World]?.Guards[loc.Guard]?.Sections[loc.Section]?.ImageName;
+            try { return loc == null ? null : Worlds[loc.World]?.Guards[loc.Guard]?.Sections[loc.Section]?.ImageName; }
+            catch (KeyNotFoundException) { return null; }
         }
     }
 
