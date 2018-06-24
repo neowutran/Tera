@@ -65,15 +65,11 @@ namespace Tera.Game
             {"S_GET_USER_GUILD_LOGO", Helpers.Contructor<Func<TeraMessageReader,S_GET_USER_GUILD_LOGO>>()},
             {"S_MOUNT_VEHICLE_EX", Helpers.Contructor<Func<TeraMessageReader,S_MOUNT_VEHICLE_EX>>() },
             {"S_CREST_INFO", Helpers.Contructor<Func<TeraMessageReader,S_CREST_INFO>>() },
-            {"S_VISIT_NEW_SECTION", Helpers.Contructor<Func<TeraMessageReader,S_VISIT_NEW_SECTION>>()},
-            {"S_SHOW_PARTY_MATCH_INFO", Helpers.Contructor<Func<TeraMessageReader,S_SHOW_PARTY_MATCH_INFO>>()},
-            {"C_REGISTER_PARTY_INFO", Helpers.Contructor<Func<TeraMessageReader,C_REGISTER_PARTY_INFO>>()},
-            {"S_CHANGE_EVENT_MATCHING_STATE", Helpers.Contructor<Func<TeraMessageReader,S_CHANGE_EVENT_MATCHING_STATE>>()},
         };
 
         private static readonly Dictionary<string, Delegate> ChatServices = new Dictionary<string, Delegate>
         {
-             {"C_CHAT", Helpers.Contructor<Func<TeraMessageReader,C_CHAT>>() },
+            {"C_CHAT", Helpers.Contructor<Func<TeraMessageReader,C_CHAT>>() },
             {"C_WHISPER", Helpers.Contructor<Func<TeraMessageReader,C_WHISPER>>()},
             {"S_RETURN_TO_LOBBY", Helpers.Contructor<Func<TeraMessageReader,S_RETURN_TO_LOBBY>>() },
             {"S_LOAD_TOPO", Helpers.Contructor<Func<TeraMessageReader,S_LOAD_TOPO>>()},
@@ -94,7 +90,11 @@ namespace Tera.Game
             {"S_CHECK_TO_READY_PARTY", Helpers.Contructor<Func<TeraMessageReader,S_CHECK_TO_READY_PARTY>>() },
             //{"S_GUILD_QUEST_LIST", Helpers.Contructor<Func<TeraMessageReader,S_GUILD_QUEST_LIST>>() },
             //{"S_START_GUILD_QUEST", Helpers.Contructor<Func<TeraMessageReader, S_START_GUILD_QUEST>>() },
-            {"S_WEAK_POINT", Helpers.Contructor<Func<TeraMessageReader, S_WEAK_POINT>>() }
+            {"S_WEAK_POINT", Helpers.Contructor<Func<TeraMessageReader, S_WEAK_POINT>>() },
+            {"S_VISIT_NEW_SECTION", Helpers.Contructor<Func<TeraMessageReader,S_VISIT_NEW_SECTION>>()},
+            {"S_SHOW_PARTY_MATCH_INFO", Helpers.Contructor<Func<TeraMessageReader,S_SHOW_PARTY_MATCH_INFO>>()},
+            {"C_REGISTER_PARTY_INFO", Helpers.Contructor<Func<TeraMessageReader,C_REGISTER_PARTY_INFO>>()},
+            {"S_CHANGE_EVENT_MATCHING_STATE", Helpers.Contructor<Func<TeraMessageReader,S_CHANGE_EVENT_MATCHING_STATE>>()},
         };
 
 
