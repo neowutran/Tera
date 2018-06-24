@@ -153,10 +153,9 @@ namespace Tera.Game
             List<UserEntity> list = new List<UserEntity>();
             _currentParty.ForEach(x =>
                 {
-                    Player player;
-                    if (_playerById.TryGetValue(x, out player)) list.Add(player.User);
+                    if (_playerById.TryGetValue(x, out Player player)) list.Add(player.User);
                 });
-            if (_entityTracker.MeterUser!=null)list.Add(_entityTracker.MeterUser);
+            if (_entityTracker.MeterUser != null && !list.Contains(_entityTracker.MeterUser)) { list.Add(_entityTracker.MeterUser); }
             return list;
         }
 
