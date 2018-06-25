@@ -62,7 +62,11 @@
             Edge = reader.ReadInt32();
             reader.Skip(16);
             FlightEnergy = reader.ReadSingle();
-
+            if (reader.Factory.ReleaseVersion<7500) return;//edges added in 75.00
+            reader.Skip(8); //unknown
+            FireEdge = reader.ReadInt32();
+            IceEdge = reader.ReadInt32();
+            LightningEdge = reader.ReadInt32();
             // Something else unknown later
         }
 
@@ -119,5 +123,8 @@
         public int Vitality { get; private set; }
         public int Edge { get; private set; }
         public float FlightEnergy { get; private set; }
+        public int FireEdge { get; private set; }
+        public int IceEdge { get; private set; }
+        public int LightningEdge { get; private set; }
     }
 }
