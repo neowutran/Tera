@@ -45,7 +45,8 @@ namespace Tera.Game.Messages
             IsCritical = (reader.ReadByte() & 1) != 0;
             ConsumeEdge = (reader.ReadByte() & 1) != 0;
             Blocked = (reader.ReadByte() & 1) != 0;
-            reader.Skip(reader.Factory.ReleaseVersion>=7401 ? 8 : 12); //KR removed something
+//            reader.Skip(reader.Factory.ReleaseVersion>=7401 ? 8 : 12); //KR removed something
+            reader.Skip(12); //KR added something back
             Position = reader.ReadVector3f();
             Heading = reader.ReadAngle();
             //if (Position.X!=0)
