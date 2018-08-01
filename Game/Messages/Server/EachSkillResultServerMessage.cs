@@ -23,21 +23,14 @@ namespace Tera.Game.Messages
             Source = reader.ReadEntityId();
             reader.Skip(8);
             Target = reader.ReadEntityId();
-
-
-            //I think it s some kind of source ID.
-            //When I use a skill against any monstrer, it s always the same value
-            //When I pick up a mana mote, differente ID
-            Unknow1 = reader.ReadBytes(4);
+            Unknow1 = reader.ReadBytes(4);//templateid
 
             SkillId = new SkillId(reader).Id;
 
             //Not sure if it s a int32. or int16 or int64 or other thing 
             //When using a skill with many hit, each hit seem to have a different number (ex: 0, 1, 2, or 3)
-            HitId = reader.ReadInt32();
-
-            //No fucking idea. I think I see 3 different part in that thing
-            Unknow2 = reader.ReadBytes(12); //unknown, id, time
+            HitId = reader.ReadInt32(); //stage
+            Unknow2 = reader.ReadBytes(12); //index in targeting list, index in area, id, time
 
             Amount = reader.ReadInt64();// KR now use 64 bit
             FlagsDebug = reader.ReadInt32();
