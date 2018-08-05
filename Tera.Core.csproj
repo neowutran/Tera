@@ -52,7 +52,7 @@
     <Compile Include="Game\GuildQuest.cs" />
     <Compile Include="Game\GuildQuestItem.cs" />
     <Compile Include="Game\GuildQuestTarget.cs" />
-    <Compile Include="Game\MapData.cs" />
+    <Compile Include="Game\Services\MapData.cs" />
     <Compile Include="Game\Messages\Client\C_LOGIN_ARBITER.cs" />
     <Compile Include="Game\Messages\Client\C_REGISTER_PARTY_INFO.cs" />
     <Compile Include="Game\Messages\Client\C_WHISPER.cs" />
@@ -170,7 +170,7 @@
     <Compile Include="Game\UserEntity.cs" />
     <Compile Include="Game\Vector3f.cs" />
     <Compile Include="Game\World.cs" />
-    <Compile Include="Location.cs" />
+    <Compile Include="Game\Location.cs" />
     <Compile Include="PacketLog\Parsing\BlockHelper.cs" />
     <Compile Include="PacketLog\Parsing\BlockSplitter.cs" />
     <Compile Include="PacketLog\Parsing\BlockType.cs" />

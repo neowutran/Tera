@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Data
+namespace Tera.Game
 {
     public class Location
     {
