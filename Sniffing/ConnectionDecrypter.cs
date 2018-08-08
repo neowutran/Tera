@@ -36,24 +36,11 @@ namespace Tera.Sniffing
             action?.Invoke(data);
         }
 
-        private Session CreateSession(byte[] clientKey1, byte[] clientKey2, byte[] serverKey1, byte[] serverKey2)
-        {
-            var session = Session.Instance;
-            session.ClientKey1 = clientKey1;
-            session.ClientKey2 = clientKey2;
-            session.ServerKey1 = serverKey1;
-            session.ServerKey2 = serverKey2;
-            session.Init(_region);
-
-            Debug.WriteLine("Success");
-            return session;
-        }
-
         private void TryInitialize()
         {
             if (Initialized)
                 throw new InvalidOperationException("Already initalized");
-            if (_client.Length < 256 || _server.Length < 256 + 4)
+            if (_client.Length < 256 + 4 || _server.Length < 256 + 4)
                 return;
 
             _server.Position = 0;
@@ -67,8 +54,20 @@ namespace Tera.Sniffing
             var clientKey2 = _client.ReadBytes(128);
             var serverKey1 = _server.ReadBytes(128);
             var serverKey2 = _server.ReadBytes(128);
-            _session = CreateSession(clientKey1, clientKey2, serverKey1, serverKey2);
-
+            var session = new Session(clientKey1, clientKey2, serverKey1, serverKey2);
+            var classicSession = new Session(clientKey1, clientKey2, serverKey1, serverKey2, false);
+            var checkVersion = _client.ReadBytes(4);
+            var checkNew = checkVersion.ToArray();
+            session.Decrypt(checkNew);
+            var checkClassic = checkVersion.ToArray();
+            classicSession.Decrypt(checkClassic);
+            if (checkNew[2] == 0xbc && checkNew[3] == 0x4d) {
+                _session = session;
+                OnClientToServerDecrypted(checkNew);
+            }else if (checkClassic[2] == 0xbc && checkClassic[3] == 0x4d) {
+                _session = classicSession;
+                OnClientToServerDecrypted(checkClassic);
+            }else throw new FormatException("Failed to decrypt");
             ClientToServer(_client.ReadBytes((int) (_client.Length - _client.Position)));
             ServerToClient(_server.ReadBytes((int) (_server.Length - _server.Position)));
             _client = null;

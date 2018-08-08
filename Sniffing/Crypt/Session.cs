@@ -4,8 +4,7 @@ using System;
 
 namespace Tera.Sniffing.Crypt
 {
-    public class Session
-    {
+    public class Session {
         private static Session _instance;
         public byte[] ClientKey1 = new byte[128];
         public byte[] ClientKey2 = new byte[128];
@@ -21,46 +20,22 @@ namespace Tera.Sniffing.Crypt
         public byte[] TmpKey2 = new byte[128];
 
 
-        private Session()
-        {
-        }
-
-        public static Session Instance => _instance ?? (_instance = new Session());
-
-        public void Init(string region)
-        {
-            //if (region == "KR" || region == "JP" || region == "RU" || region == "EU" || region == "NA")
-            //{
-                TmpKey1 = Utils.ShiftKey(ServerKey1, 67);
-            //}
-            //else
-            //{
-            //    TmpKey1 = Utils.ShiftKey(ServerKey1, 31);
-            //}
+        public Session(byte[] clientKey1, byte[] clientKey2, byte[] serverKey1, byte[] serverKey2, bool newshifts = true) {
+            ClientKey1 = clientKey1;
+            ClientKey2 = clientKey2;
+            ServerKey1 = serverKey1;
+            ServerKey2 = serverKey2;
+            TmpKey1 = Utils.ShiftKey(ServerKey1, newshifts ? 67 : 31);
 
             TmpKey2 = Utils.XorKey(TmpKey1, ClientKey1);
 
-            //if (region == "KR" || region == "JP" || region == "RU" || region == "EU" || region == "NA")
-            //{
-                TmpKey1 = Utils.ShiftKey(ClientKey2, 29, false);
-            //}
-            //else
-            //{
-            //    TmpKey1 = Utils.ShiftKey(ClientKey2, 17, false);
-            //}
+            TmpKey1 = Utils.ShiftKey(ClientKey2, newshifts ? 29 : 17, false);
 
             DecryptKey = Utils.XorKey(TmpKey1, TmpKey2);
 
             Decryptor = new Cryptor(DecryptKey);
 
-            //if(region == "KR" || region == "JP" || region == "RU" || region == "EU" || region == "NA")
-            //{
-                TmpKey1 = Utils.ShiftKey(ServerKey2, 41);
-            //}
-            //else
-            //{
-            //    TmpKey1 = Utils.ShiftKey(ServerKey2, 79);
-            //}
+            TmpKey1 = Utils.ShiftKey(ServerKey2, newshifts ? 41 : 79);
 
             Decryptor.ApplyCryptor(TmpKey1, 128);
             EncryptKey = new byte[128];
