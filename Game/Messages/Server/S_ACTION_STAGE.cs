@@ -16,6 +16,7 @@ namespace Tera.Game.Messages
             Speed = reader.ReadSingle();
             if (reader.Factory.ReleaseVersion>=7500)reader.Skip(4);//projectilespeed
             Id = reader.ReadUInt32();
+            if (reader.Factory.ReleaseVersion<=7100)return;//classic, not sure when following things were added
             EffectScale = reader.ReadSingle();
             Moving = reader.ReadBoolean();
             Destination = reader.ReadVector3f();

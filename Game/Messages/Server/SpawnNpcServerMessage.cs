@@ -8,7 +8,7 @@ namespace Tera.Game.Messages
         internal SpawnNpcServerMessage(TeraMessageReader reader)
             : base(reader)
         {
-            reader.Skip(10);
+            reader.Skip(reader.Factory.ReleaseVersion >= 7100 ? 10 : 6);//classic staff, not sure when additional array appeared
             Id = reader.ReadEntityId();
             TargetId = reader.ReadEntityId();
             Position = reader.ReadVector3f();
@@ -16,8 +16,7 @@ namespace Tera.Game.Messages
             reader.Skip(4);
             NpcId = reader.ReadUInt32();
             NpcArea = reader.ReadUInt16();
-            CategoryId = reader.ReadUInt32();
-            reader.Skip(35);
+            reader.Skip(reader.Factory.ReleaseVersion >= 6801 ? 39 : 35);//KR added 4 bytes somewere inside
             OwnerId = reader.ReadEntityId();
         }
 
@@ -28,6 +27,5 @@ namespace Tera.Game.Messages
         public Angle Heading { get; private set; }
         public uint NpcId { get; private set; }
         public ushort NpcArea { get; private set; }
-        public uint CategoryId { get; private set; }
     }
 }
