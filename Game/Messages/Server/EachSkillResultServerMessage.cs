@@ -32,7 +32,7 @@ namespace Tera.Game.Messages
             HitId = reader.ReadInt32(); //stage
             Unknow2 = reader.ReadBytes(12); //index in targeting list, index in area, id, time
 
-            Amount = reader.ReadInt64();// KR now use 64 bit
+            Amount = reader.Factory.ReleaseVersion < 6200 ? reader.ReadInt32() : reader.ReadInt64();// KR now use 64 bit
             FlagsDebug = reader.ReadInt32();
             Flags = (SkillResultFlags) FlagsDebug;
             IsCritical = (reader.ReadByte() & 1) != 0;

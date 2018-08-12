@@ -6,9 +6,9 @@ namespace Tera.Game.Messages
     {
         internal SCreatureChangeHp(TeraMessageReader reader) : base(reader)
         {
-            HpRemaining = reader.ReadInt64();
-            TotalHp = reader.ReadInt64();
-            HpChange = reader.ReadInt64();
+            HpRemaining = reader.Factory.ReleaseVersion < 6200 ? reader.ReadInt32() : reader.ReadInt64();
+            TotalHp = reader.Factory.ReleaseVersion < 6200 ? reader.ReadInt32() : reader.ReadInt64();
+            HpChange = reader.Factory.ReleaseVersion < 6200 ? reader.ReadInt32() : reader.ReadInt64();
             Type = reader.ReadInt32();
             TargetId = reader.ReadEntityId();
             SourceId = reader.ReadEntityId();

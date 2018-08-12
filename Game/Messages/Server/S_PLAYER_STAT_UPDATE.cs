@@ -4,10 +4,10 @@
     {
         internal S_PLAYER_STAT_UPDATE(TeraMessageReader reader) : base(reader)
         {
-            HpRemaining = reader.ReadInt64();
+            HpRemaining = reader.Factory.ReleaseVersion < 6200 ? reader.ReadInt32() : reader.ReadInt64();
             MpRemaining = reader.ReadInt32();
-            reader.Skip(8);
-            TotalHp = reader.ReadInt64();
+            reader.Skip(reader.Factory.ReleaseVersion < 6200 ? 4 : 8);
+            TotalHp = reader.Factory.ReleaseVersion < 6200 ? reader.ReadInt32() : reader.ReadInt64();
             TotalMp = reader.ReadInt32();
             return; //we don't need all other things now, but if we need - just remove return.
             BasePower = reader.ReadInt32();

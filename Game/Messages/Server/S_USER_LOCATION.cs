@@ -7,16 +7,16 @@
             Entity = reader.ReadEntityId();
             Start = reader.ReadVector3f();
             Heading = reader.ReadAngle();
-            unk1 = reader.ReadInt16();
+            HeadingLook = reader.Factory.ReleaseVersion < 6200 ? Heading : reader.ReadAngle();//not sure when it appeared
             Speed = reader.ReadInt16();
             Finish = reader.ReadVector3f();
             Ltype = reader.ReadInt32();
-            unk2 = reader.ReadByte();
+            InShuttle = reader.ReadBoolean();
 //            Debug.WriteLine($"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Entity.Id))}: {Start} {Heading} -> {Finish}, S:{Speed} ,{Ltype} {unk1} {unk2}" );
         }
 
-        public byte unk2 { get; set; }
-        public short unk1 { get; set; }
+        public bool InShuttle { get; set; }
+        public Angle HeadingLook { get; set; }
         public EntityId Entity { get; }
         public Vector3f Start { get; private set; }
         public Angle Heading { get; private set; }
