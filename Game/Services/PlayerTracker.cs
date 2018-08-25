@@ -104,6 +104,12 @@ namespace Tera.Game
             PartyChangedEvent?.Invoke();
         }
 
+        public void UpdateParty(LoginServerMessage message)
+        {
+            _currentParty = new List<Tuple<uint, uint>>();
+            PartyChangedEvent?.Invoke();
+        }
+
         public void UpdateParty(S_LEAVE_PARTY m )
         {
             _currentParty = new List<Tuple<uint, uint>>();
@@ -136,6 +142,7 @@ namespace Tera.Game
             message.On<S_LEAVE_PARTY_MEMBER>(m => UpdateParty(m));
             message.On<S_BAN_PARTY_MEMBER>(m => UpdateParty(m));
             message.On<S_PARTY_MEMBER_LIST>(m => UpdateParty(m));
+            message.On<LoginServerMessage>(m => UpdateParty(m));
         }
 
         public bool MyParty(Player player)
