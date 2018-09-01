@@ -39,7 +39,8 @@ namespace Tera.Game
                         "", skillDatabase.GetSkillByPetName(npc.Info.Name, sourceUser.RaceGenderClass)?.IconName ?? "", npc.Info);
                 }
                 SourcePlayer = playerTracker.Get(sourceUser.ServerId, sourceUser.PlayerId);
-                if (SkillId == 51001 && (abnormalityTracker?.AbnormalityExist(Source.Id, 10152050) ?? false)) {//gunner burstfire buff detection
+                if ((SkillId == 51001 || SkillId == 51011 || SkillId == 51021)
+                    && (abnormalityTracker?.AbnormalityExist(Source.Id, 10152050) ?? false)) {//gunner burstfire buff detection
                     SkillId = SkillId + abnormalityTracker.AbnormalityStorage.Get(SourcePlayer).Times.Last(x => x.Key.Id == 10152050).Value.LastStack();
                     Skill = skillDatabase.GetOrNull(sourceUser, SkillId);
                 }
