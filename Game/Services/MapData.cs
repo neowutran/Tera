@@ -95,10 +95,12 @@ namespace Tera.Game
             var listOfParts = lines.Select(s => s.Split('\t'));
             foreach (var parts in listOfParts)
             {
-                World world = Worlds[uint.Parse(parts[0])];
-                Guard guard = world.Guards[uint.Parse(parts[1])];
-                Section section = guard.Sections[uint.Parse(parts[2])];
-
+                Worlds.TryGetValue(uint.Parse(parts[0]),out World world);
+                if (world==null) continue;
+                world.Guards.TryGetValue(uint.Parse(parts[1]),out Guard guard);
+                if (guard == null) continue;
+                guard.Sections.TryGetValue(uint.Parse(parts[2]), out Section section);
+                if (section==null) continue;
                 section.ImageName = parts[3];
             }
         }
