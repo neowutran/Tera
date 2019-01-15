@@ -9,6 +9,7 @@ namespace Tera.Game.Messages
         {
             Npc = reader.ReadEntityId();
             Enraged = (reader.ReadByte() & 1) == 1;
+            RemainingEnrageTime = reader.Factory.ReleaseVersion >= 7900 ? reader.ReadInt32() : 36000;
             reader.Skip(4);
             Target = reader.ReadEntityId();
             //Debug.WriteLine("NPC:" + Npc + ";Target:" + Target + (Enraged?" Enraged":""));
@@ -17,5 +18,6 @@ namespace Tera.Game.Messages
         public EntityId Npc { get; }
         public bool Enraged { get; }
         public EntityId Target { get; }
+        public int RemainingEnrageTime { get; }
     }
 }

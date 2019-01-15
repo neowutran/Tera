@@ -41,7 +41,7 @@ namespace Tera.Game
             RegisterAggro(npcStatus);
             if (npcStatus.Enraged)
             {
-                AddAbnormality(npcStatus.Npc, npcStatus.Target, 36000, 0, (int)StaticallyUsedBuff.Enraged, npcStatus.Time.Ticks);
+                AddAbnormality(npcStatus.Npc, npcStatus.Target, npcStatus.RemainingEnrageTime, 0, (int)StaticallyUsedBuff.Enraged, npcStatus.Time.Ticks);
             }
             else
             {
