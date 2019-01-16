@@ -69,7 +69,7 @@ namespace Tera.Game
             }
         }
 
-        internal UserEntity GetUnknownPlayer()
+        public UserEntity GetUnknownPlayer()
         {
             if ((_unknownDamage?.ServerId ?? 0) != (_entityTracker?.MeterUser.ServerId ?? 0))
             {
