@@ -142,7 +142,7 @@ namespace Tera.Game
             
             if (guardName == null) return sectionName;
             
-            if (sectionName.StartsWith(guardName)) sectionName = sectionName.Substring(guardName.Length);
+            if (sectionName != null && sectionName.StartsWith(guardName)) sectionName = sectionName.Substring(guardName.Length);
 
             return sectionName == "" ? guardName : $"{guardName} - {sectionName}";
         }
