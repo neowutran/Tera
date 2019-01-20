@@ -21,7 +21,8 @@ namespace Tera.Game.Messages
         {
             reader.Skip(4);
             Source = reader.ReadEntityId();
-            reader.Skip(8);
+            var owner = reader.ReadEntityId();
+            if (owner.Id != 0) Source = owner;
             Target = reader.ReadEntityId();
             Unknow1 = reader.ReadBytes(4);//templateid
 

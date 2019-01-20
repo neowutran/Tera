@@ -73,7 +73,8 @@ namespace Tera.Game.Messages
             Upgrade = 88,
             Dismantle = 89,
             ReastyleAccessories = 90,
-            NewHairUI = 91
+            NewHairUI = 91,
+            FishShop = 92
         }
 
         public RequestType Type { get; private set; }
