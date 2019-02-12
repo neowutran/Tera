@@ -24,7 +24,7 @@ namespace Tera.Game.Messages
         {
             reader.Skip(11);
             Language = (LangEnum)reader.ReadUInt32();
-            Version = reader.Factory.Region=="EUC"? 2707 :reader.ReadInt32();//hardcoded EUC, since its version is not sent via network
+            Version = reader.Factory.Region.Contains("C")? 2707 :reader.ReadInt32();//hardcoded EUC/KRC, since its version is not sent via network
             reader.Factory.ReleaseVersion = Version;
             reader.Factory.ReloadSysMsg();
         }

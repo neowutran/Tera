@@ -19,12 +19,14 @@ namespace Tera.Game.Messages
                 reader.Skip(14);
                 var gNameOffset = reader.ReadUInt16();
                 var playerId = reader.ReadUInt32();
-                reader.Skip(reader.Factory.ReleaseVersion < 6200 ? 286 : 294);
-                if (reader.Factory.ReleaseVersion >= 6603) reader.Skip(121);//added accessory transformation
-                var guildId = reader.ReadUInt32();
+                //if (reader.Factory.ReleaseVersion >= 4000) { //no guildid on classic, will get id from userguildlogo
+                //    reader.Skip(reader.Factory.ReleaseVersion < 6200 ? 286 : 294);
+                //    if (reader.Factory.ReleaseVersion >= 6603) reader.Skip(121); //added accessory transformation
+                //    var guildId = reader.ReadUInt32();
+                //    PlayerGuilds.Add(playerId, guildId);
+                //}
                 reader.BaseStream.Position = gNameOffset - 4;
                 var gName = reader.ReadTeraString();
-                PlayerGuilds.Add(playerId, guildId);
                 PlayerGuildNames.Add(playerId, gName);
                 offset = nextOffset;
             }

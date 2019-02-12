@@ -18,6 +18,7 @@ namespace Tera.Game
         public void AddLogo(S_GET_USER_GUILD_LOGO message)
         {
             _guildLogos[message.GuildId] = message.GuildLogo;
+            _playerGuilds[message.PlayerId] = message.GuildId;
         }
 
         public Bitmap GetLogo(uint playerId)
