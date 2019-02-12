@@ -10,17 +10,17 @@
             SkillId = new SkillId(reader).Id;
             Start = reader.ReadVector3f();
             Finish = reader.ReadVector3f();
-            unk1 = reader.ReadByte();
+            Moving = reader.ReadBoolean();
             Speed = reader.ReadSingle();
             OwnerId = reader.ReadEntityId();
-            unk2 = reader.ReadInt16(); // ???
+            TemplateId = reader.ReadInt32();
             //PrintRaw();
             //Debug.WriteLine($"{Time.Ticks} {BitConverter.ToString(BitConverter.GetBytes(Id.Id))} {Start} - > {Finish} {Speed}");
         }
 
         public float Speed { get; set; }
-        public int unk2 { get; private set; }
-        public byte unk1 { get; private set; }
+        public int TemplateId { get; private set; }
+        public bool Moving { get; private set; }
         public EntityId Id { get; private set; }
         public int SkillId { get; private set; }
         public Vector3f Start { get; private set; }

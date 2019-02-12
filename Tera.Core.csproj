@@ -42,6 +42,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Game\CharmStatus.cs" />
     <Compile Include="Game\Abnormality\Abnormality.cs" />
     <Compile Include="Game\Abnormality\AbnormalityDuration.cs" />
     <Compile Include="Game\Abnormality\AbnormalityStorage.cs" />
@@ -52,6 +53,15 @@
     <Compile Include="Game\GuildQuest.cs" />
     <Compile Include="Game\GuildQuestItem.cs" />
     <Compile Include="Game\GuildQuestTarget.cs" />
+    <Compile Include="Game\Messages\Server\S_ADD_CHARM_STATUS.cs" />
+    <Compile Include="Game\Messages\Server\S_ENABLE_CHARM_STATUS.cs" />
+    <Compile Include="Game\Messages\Server\S_PARTY_MEMBER_CHARM_ADD.cs" />
+    <Compile Include="Game\Messages\Server\S_PARTY_MEMBER_CHARM_DEL.cs" />
+    <Compile Include="Game\Messages\Server\S_PARTY_MEMBER_CHARM_ENABLE.cs" />
+    <Compile Include="Game\Messages\Server\S_PARTY_MEMBER_CHARM_RESET.cs" />
+    <Compile Include="Game\Messages\Server\S_REMOVE_CHARM_STATUS.cs" />
+    <Compile Include="Game\Messages\Server\S_RESET_CHARM_STATUS.cs" />
+    <Compile Include="Game\Services\CharmTracker.cs" />
     <Compile Include="Game\Services\MapData.cs" />
     <Compile Include="Game\Messages\Client\C_LOGIN_ARBITER.cs" />
     <Compile Include="Game\Messages\Client\C_REGISTER_PARTY_INFO.cs" />

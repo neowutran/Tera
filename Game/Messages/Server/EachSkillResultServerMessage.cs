@@ -14,33 +14,38 @@ namespace Tera.Game.Messages
             IsDfaResolve = 4,
             Bit16 = 0x10000,
             Bit18 = 0x40000
-        }
+        } //0 = Hidden, 1 = Damage, 2 = Heal, 3 = MP, bit16+ = DataCenter.NocTanEffectData
 
         internal EachSkillResultServerMessage(TeraMessageReader reader)
             : base(reader)
         {
             reader.Skip(4);
             Source = reader.ReadEntityId();
-            var owner = reader.ReadEntityId();
-            if (owner.Id != 0) Source = owner;
+            if (reader.Factory.ReleaseVersion >= 7402) {
+                var owner = reader.ReadEntityId();
+                if (owner.Id != 0) Source = owner;
+            } // not sure, when it was added
+
             Target = reader.ReadEntityId();
-            Unknow1 = reader.ReadBytes(4);//templateid
+            TemplateId = reader.ReadInt32();
 
             SkillId = new SkillId(reader).Id;
 
-            //Not sure if it s a int32. or int16 or int64 or other thing 
-            //When using a skill with many hit, each hit seem to have a different number (ex: 0, 1, 2, or 3)
-            HitId = reader.ReadInt32(); //stage
-            Unknow2 = reader.ReadBytes(12); //index in targeting list, index in area, id, time
+            HitId = reader.ReadInt32(); //index in TargetingList (NOT id) - See DataCenter.SkillData
+            Unknow2 = reader.ReadBytes(12); //index in area, id, time
 
             Amount = reader.Factory.ReleaseVersion < 6200 ? reader.ReadInt32() : reader.ReadInt64();// KR now use 64 bit
             FlagsDebug = reader.ReadInt32();
             Flags = (SkillResultFlags) FlagsDebug;
             IsCritical = (reader.ReadByte() & 1) != 0;
             ConsumeEdge = (reader.ReadByte() & 1) != 0;
-            Blocked = (reader.ReadByte() & 1) != 0;
-//            reader.Skip(reader.Factory.ReleaseVersion>=7401 ? 8 : 12); //KR removed something
-            reader.Skip(12); //KR added something back
+            if (reader.Factory.ReleaseVersion >= 3707) {//brawler stuff
+                Blocked = (reader.ReadByte() & 1) != 0; ///SuperArmor
+                SuperArmorId = reader.ReadInt32();
+                HitCylinderId = reader.ReadInt32();
+                reader.Skip(4); // reaction bools: enable,push,air, airchain
+            } else reader.Skip(2); //reaction bools: enable, push
+
             Position = reader.ReadVector3f();
             Heading = reader.ReadAngle();
             //if (Position.X!=0)
@@ -54,7 +59,9 @@ namespace Tera.Game.Messages
         public int HitId { get; }
 
         //DEBUG
-        public byte[] Unknow1 { get; }
+        public int TemplateId { get; }
+        public int SuperArmorId { get; }
+        public int HitCylinderId { get; }
 
         //DEBUG
         public byte[] Unknow2 { get; }

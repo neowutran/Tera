@@ -7,19 +7,19 @@ namespace Tera.Game.Messages
         internal SpawnUserServerMessage(TeraMessageReader reader)
             : base(reader)
         {
-            reader.Skip(8);
+            reader.Skip(reader.Factory.ReleaseVersion>=4500 ? 8 : 4);//not sure when account benefits array appeared there
             var nameOffset = reader.ReadUInt16();
-            reader.Skip(14);
+            reader.Skip(reader.Factory.ReleaseVersion>=4500 ? 14 : 16); //not sure when they deleted guild title
             ServerId = reader.ReadUInt32();
             PlayerId = reader.ReadUInt32();
             Id = reader.ReadEntityId();
             Position = reader.ReadVector3f();
             Heading = reader.ReadAngle();
-            reader.Skip(4);
+            reader.Skip(4);//relation
             RaceGenderClass = new RaceGenderClass(reader.ReadInt32());
-            reader.Skip(11);
+            reader.Skip(11); // huntingZoneId, walkSpeed, runSpeed, actionMode, status, bool visible
             Dead = (reader.ReadByte() & 1) == 0;
-            reader.Skip(121);
+            reader.Skip(reader.Factory.ReleaseVersion>=4500 ? 121 : 105); // not sure when they added dye colors
             Level = reader.ReadInt16();
             reader.BaseStream.Position=nameOffset-4;
             Name = reader.ReadTeraString();

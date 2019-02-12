@@ -13,7 +13,6 @@ namespace Tera.Game.Messages
         public EntityId Id;
         public uint Order;
         public byte CanInvite;
-        public uint unk1;
         public string Name;
     }
 
@@ -44,8 +43,8 @@ namespace Tera.Game.Messages
                 var Id = reader.ReadEntityId();
                 var Order = reader.ReadUInt32();
                 var CanInvite = reader.ReadByte();
-                var unk1 = reader.ReadUInt32();
-                // var unk2 = reader.ReadUInt32(); //probably awakened status, appeared with KR awakening update
+                // var unk1 = reader.ReadUInt32(); //laurel
+                // var unk2 = reader.ReadUInt32(); //awakened status
                 reader.BaseStream.Position = nameoffset - 4;
                 var Name = reader.ReadTeraString();
                 offset = nextOffset;
@@ -59,7 +58,6 @@ namespace Tera.Game.Messages
                     Id = Id,
                     Order = Order,
                     CanInvite = CanInvite,
-                    unk1 = unk1,
                     Name = Name
                 });
             }

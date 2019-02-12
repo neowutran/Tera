@@ -13,11 +13,10 @@ namespace Tera.Game.Messages
             TargetId = reader.ReadEntityId();
             SourceId = reader.ReadEntityId();
             Critical = reader.ReadByte();
-            AbnormalId = reader.ReadInt32();
+            if (reader.Factory.ReleaseVersion>=6200) AbnormalId = reader.ReadInt32(); // not sure when it was added, wasn't there on classic
             //Debug.WriteLine("target = " + TargetId + ";Source:" + SourceId + ";Critical:" + Critical + ";Hp left:" + HpRemaining + ";Max HP:" + TotalHp+";HpLost/Gain:"+ HpChange + ";Type:"+ Type + ";dot:"+AbnormalId);
         }
 
-        public int Unknow3 { get; }
         public long HpChange { get; }
 
         public int Type { get; }
