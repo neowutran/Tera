@@ -54,7 +54,7 @@ namespace Tera.Game
             {
                 if (charm.Status == 1)
                 {
-                    _abnormalityTracker.AddAbnormality(target, new EntityId(0), 0, 0, (int) charm.CharmId, ticks);
+                    _abnormalityTracker.AddAbnormality(target, new EntityId(0), charm.Duration, 0, (int) charm.CharmId, ticks);
                     _charms[target].Add(charm.CharmId);
                     //Debug.WriteLine($"{BitConverter.ToString(BitConverter.GetBytes(target.Id))} {charm.Status == 1} : {charm.CharmId}");
                 }
