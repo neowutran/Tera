@@ -11,7 +11,6 @@ namespace Tera.Game.Messages
             SourceId = reader.ReadEntityId();
             AbnormalityId = reader.ReadInt32();
             Duration = reader.ReadInt64();
-            reader.Skip(4);// unknown
             Stack = reader.ReadInt32();
         }
 
