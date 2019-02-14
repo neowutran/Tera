@@ -23,7 +23,6 @@
         public uint PlayerId { get; private set; }
         public int Level { get; private set; }
         public string Name { get; private set; }
-        public string GuildName { get; private set; }
         public RaceGenderClass RaceGenderClass { get; }
     }
 }

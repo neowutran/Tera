@@ -271,6 +271,12 @@ namespace Tera.Game
             entity.Info.HP = (long) m.TotalHp;
         }
 
+        public void Update(S_GUILD_NAME message)
+        {
+            if (MeterUser.Id != message.UserId) return;
+            MeterUser.GuildName = message.GuildName;
+        }
+
         /** Easy integrate style - compatible */
         public void Update(ParsedMessage message)
         {
@@ -292,12 +298,12 @@ namespace Tera.Game
             message.On<SNpcLocation>(x => Update(x));
             message.On<S_USER_LOCATION>(x => Update(x));
             message.On<S_BOSS_GAGE_INFO>(x => Update(x));
+            message.On<S_GUILD_NAME>(x => Update(x));
         }
 
         private Entity LoginMe(LoginServerMessage m)
         {
             MeterUser = new UserEntity(m);
-            MeterUser.GuildName = _userLogoTracker?.GetGuildName(m.PlayerId)??"";
             return MeterUser;
         }
 

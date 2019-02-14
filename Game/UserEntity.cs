@@ -31,7 +31,7 @@ namespace Tera.Game
             : this(message.Id)
         {
             Name = message.Name;
-            GuildName = message.GuildName;
+            GuildName = "";
             RaceGenderClass = message.RaceGenderClass;
             PlayerId = message.PlayerId;
             ServerId = message.ServerId;
