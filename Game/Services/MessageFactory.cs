@@ -121,6 +121,7 @@ namespace Tera.Game
                 OpcodeNameToType.Clear();
                 CoreServices.ToList().ForEach(x => OpcodeNameToType[_opCodeNamer.GetCode(x.Key)] = x.Value);
                 if (_chatEnabled) ChatServices.ToList().ForEach(x => OpcodeNameToType[_opCodeNamer.GetCode(x.Key)] = x.Value);
+                OpcodeNameToType[0] = UnknownMessageDelegate;
             }
         }
 
