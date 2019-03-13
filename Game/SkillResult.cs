@@ -52,7 +52,7 @@ namespace Tera.Game
             {
                 TargetPlayer = playerTracker.Get(targetUser.ServerId, targetUser.PlayerId);
             }
-            if (Source is PlaceHolderEntity || Target is PlaceHolderEntity) return;//fix error on skills from or dealt to unknown entities
+            if (Source == null || Target == null || Source is PlaceHolderEntity || Target is PlaceHolderEntity) return;//fix error on skills from or dealt to unknown entities
             Source.Position = Source.Position.MoveForvard(Source.Finish, Source.Speed,
                 message.Time.Ticks - Source.StartTime);
             if (Source.EndTime > 0 && Source.EndTime <= Source.StartTime)
