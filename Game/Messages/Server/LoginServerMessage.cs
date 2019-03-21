@@ -5,6 +5,7 @@
         internal LoginServerMessage(TeraMessageReader reader)
             : base(reader)
         {
+            if (reader.Factory.ReleaseVersion > 8300) reader.Skip(4);
             int nameOffset = reader.ReadInt16();
             reader.Skip(8);
             RaceGenderClass = new RaceGenderClass(reader.ReadInt32());
