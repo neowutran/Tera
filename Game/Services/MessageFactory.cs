@@ -111,7 +111,7 @@ namespace Tera.Game
         private readonly OpCodeNamer _sysMsgNamer;
         public string Region;
         public uint Version;
-        public int ReleaseVersion;
+        public int ReleaseVersion = 9901;
         public bool ChatEnabled {
             get { return _chatEnabled; }
             set
