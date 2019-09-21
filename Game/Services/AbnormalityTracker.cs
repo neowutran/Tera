@@ -202,8 +202,9 @@ namespace Tera.Game
             foreach (var abnormality in abnormalityUser)
             {
                 if (abnormality.HotDot.Id != message.AbnormalityId) continue;
+                var newStack = abnormality.Stack < message.StackCounter;
                 abnormality.Refresh(message.StackCounter, message.Duration, message.Time.Ticks);
-                AbnormalityAdded?.Invoke(abnormality, abnormality.Stack >= message.StackCounter);
+                AbnormalityAdded?.Invoke(abnormality, newStack);
                 return;
             }
         }
