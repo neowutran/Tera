@@ -48,7 +48,7 @@ namespace Tera.Game
                 image.CacheOption = BitmapCacheOption.OnLoad;
                 image.StreamSource = _icons.GetPart(ur).GetStream();
                 image.EndInit();
-                image.Freeze();
+                //image.Freeze();
             }
             else { image = _emptyBitmap; }
             //var filename = IconsDirectory + iconName + ".png";

@@ -5,7 +5,6 @@ using System;
 namespace Tera.Sniffing.Crypt
 {
     public class Session {
-        private static Session _instance;
         public byte[] ClientKey1 = new byte[128];
         public byte[] ClientKey2 = new byte[128];
         public byte[] DecryptKey = new byte[128];
