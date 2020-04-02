@@ -14,6 +14,7 @@ namespace Tera.Game
         private readonly Package _icons;
         private readonly Dictionary<string, BitmapImage> _images = new Dictionary<string, BitmapImage>();
         private readonly BitmapImage _emptyBitmap;
+        private readonly object _lock = new object();
 
         public IconsDatabase(string resourceDirectory)
         {
@@ -41,16 +42,18 @@ namespace Tera.Game
                 return image;
             }
             var ur = new Uri("/" + iconName + ".png", UriKind.Relative);
-            if (_icons.PartExists(ur))
-            {
-                image = new BitmapImage();
-                image.BeginInit();
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.StreamSource = _icons.GetPart(ur).GetStream();
-                image.EndInit();
-                //image.Freeze();
+            lock (_lock) {
+                if (_icons.PartExists(ur)) {
+                    image = new BitmapImage();
+                    image.BeginInit();
+                    image.CacheOption = BitmapCacheOption.OnLoad;
+                    image.StreamSource = _icons.GetPart(ur).GetStream();
+                    image.EndInit();
+                    //image.Freeze();
+                }
+                else { image = _emptyBitmap; }
             }
-            else { image = _emptyBitmap; }
+
             //var filename = IconsDirectory + iconName + ".png";
             //image = new BitmapImage(new Uri(filename));
             _images.Add(iconName, image);
@@ -65,7 +68,7 @@ namespace Tera.Game
                 return image;
             }
             var ur = new Uri("/" + iconName + ".png", UriKind.Relative);
-            image = _icons.PartExists(ur) ? new Bitmap(_icons.GetPart(ur).GetStream()) : new Bitmap(1, 1);
+            lock (_lock) { image = _icons.PartExists(ur) ? new Bitmap(_icons.GetPart(ur).GetStream()) : new Bitmap(1, 1); }
             _bitmaps.Add(iconName, image);
             return image;
         }
