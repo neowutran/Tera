@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.IO.Packaging;
+using System.Net.Cache;
 using System.Windows.Media.Imaging;
 
 namespace Tera.Game
@@ -43,20 +45,23 @@ namespace Tera.Game
             }
             var ur = new Uri("/" + iconName + ".png", UriKind.Relative);
             lock (_lock) {
-                if (_icons.PartExists(ur)) {
-                    image = new BitmapImage();
-                    image.BeginInit();
-                    image.CacheOption = BitmapCacheOption.OnLoad;
-                    image.StreamSource = _icons.GetPart(ur).GetStream();
-                    image.EndInit();
-                    //image.Freeze();
-                }
+                if (_icons.PartExists(ur)) 
+                    using (var stream = _icons.GetPart(ur).GetStream()) { 
+                        MemoryStream mem=new MemoryStream();
+                        stream.CopyTo(mem);
+                        image = new BitmapImage();
+                        image.BeginInit();
+                        image.CacheOption = BitmapCacheOption.OnLoad;
+                        image.StreamSource = mem;
+                        image.EndInit();
+                        image.Freeze();
+                    }
                 else { image = _emptyBitmap; }
             }
 
             //var filename = IconsDirectory + iconName + ".png";
             //image = new BitmapImage(new Uri(filename));
-            _images.Add(iconName, image);
+            _images[iconName] = image;
             return image;
         }
 
@@ -68,8 +73,16 @@ namespace Tera.Game
                 return image;
             }
             var ur = new Uri("/" + iconName + ".png", UriKind.Relative);
-            lock (_lock) { image = _icons.PartExists(ur) ? new Bitmap(_icons.GetPart(ur).GetStream()) : new Bitmap(1, 1); }
-            _bitmaps.Add(iconName, image);
+            lock (_lock) {
+                if (_icons.PartExists(ur))
+                    using (var stream = _icons.GetPart(ur).GetStream()) {
+                        MemoryStream mem = new MemoryStream();
+                        stream.CopyTo(mem);
+                        image = new Bitmap(mem);
+                    }
+                else image = new Bitmap(1, 1);
+            }
+            _bitmaps[iconName] = image;
             return image;
         }
     }
