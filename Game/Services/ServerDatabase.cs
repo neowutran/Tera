@@ -30,9 +30,9 @@ namespace Tera.Game
             set {
                 _language = value;
                 switch (_language) {
-                    case LangEnum.EN:
-                    case LangEnum.GER:
-                    case LangEnum.FR:
+                    case LangEnum.EU_EN:
+                    case LangEnum.EU_GER:
+                    case LangEnum.EU_FR:
                         Region = "EU";break;
                     case LangEnum.THA:
                     case LangEnum.SE:
