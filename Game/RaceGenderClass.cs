@@ -13,10 +13,9 @@ namespace Tera.Game
 
         public int Raw
         {
-            get
-            {
-                if ((byte) Race >= 50 || (byte) Gender >= 2 || (byte) Class >= 100)
-                    throw new InvalidOperationException();
+            get {
+                if ((byte) Race >= 50 || (byte) Gender >= 2 || (byte) Class >= 100) return 0;
+                    //throw new InvalidOperationException();
                 return 10200 + 200*(int) Race - 100*(int) Gender + (int) Class;
             }
             private set
