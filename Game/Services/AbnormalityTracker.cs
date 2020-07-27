@@ -44,6 +44,14 @@ namespace Tera.Game
             if (npcStatus.Enraged)
             {
                 AddAbnormality(npcStatus.Npc, npcStatus.Target, npcStatus.RemainingEnrageTime, 0, (int)StaticallyUsedBuff.Enraged, npcStatus.Time.Ticks);
+                var abnormalityUser = _abnormalities[npcStatus.Target];
+                foreach (var abnormality in abnormalityUser)
+                {
+                    if (abnormality.HotDot.Id != (int)StaticallyUsedBuff.Enraged) continue;
+                    abnormality.Refresh(0, npcStatus.RemainingEnrageTime, npcStatus.Time.Ticks);
+                    AbnormalityAdded?.Invoke(abnormality, true);
+                    return;
+                }
             }
             else
             {
