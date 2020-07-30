@@ -19,7 +19,7 @@ namespace Tera.Sniffing
             _region = region;
         }
 
-        private bool Initialized => _session != null;
+        public bool Initialized => _session != null;
 
         public event Action<byte[]> ClientToServerDecrypted;
         public event Action<byte[]> ServerToClientDecrypted;
