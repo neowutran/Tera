@@ -49,7 +49,7 @@ namespace Tera.Game
                 {
                     if (abnormality.HotDot.Id != (int)StaticallyUsedBuff.Enraged) continue;
                     abnormality.Refresh(0, npcStatus.RemainingEnrageTime, npcStatus.Time.Ticks);
-                    AbnormalityAdded?.Invoke(abnormality, true);
+                    AbnormalityAdded?.Invoke(abnormality, false);
                     return;
                 }
             }
