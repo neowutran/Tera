@@ -97,6 +97,8 @@ namespace Tera.Game
         {
             var newEntity = new NpcEntity(m.Id, m.OwnerId, GetOrPlaceholder(m.OwnerId),
                 _npcDatabase.GetOrPlaceholder(m.NpcArea, m.NpcId), m.Position, m.Heading);
+            if (m.EnrageThreshold > 0) newEntity.Info.EnrageThreshold = m.EnrageThreshold;
+            if (m.MaxHP > 0) newEntity.Info.HP = m.MaxHP;
             Register(newEntity);
         }
 
