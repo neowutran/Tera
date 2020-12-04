@@ -7,10 +7,10 @@
             reader.Skip(8);
             UserId = reader.ReadEntityId();
             GuildName = reader.ReadTeraString();
-            return; //we don't need the rest now, uncomment if needed
-            GuildRank = reader.ReadTeraString();
-            GuildTitle = reader.ReadTeraString();
-            GuildLogo = reader.ReadTeraString();
+            //we don't need the rest now, uncomment if needed
+            //GuildRank = reader.ReadTeraString();
+            //GuildTitle = reader.ReadTeraString();
+            //GuildLogo = reader.ReadTeraString();
         }
 
         public EntityId UserId { get; private set; }
