@@ -106,6 +106,8 @@ namespace Tera.Game
             {"S_CHANGE_EVENT_MATCHING_STATE", Helpers.Contructor<Func<TeraMessageReader,S_CHANGE_EVENT_MATCHING_STATE>>()},
         };
 
+        public static List<string> OpcodesList => CoreServices.Keys.Where(o => !(o.Equals(nameof(C_CHECK_VERSION)) || o.Equals(nameof(C_LOGIN_ARBITER)))).Concat(ChatServices.Keys).ToList();
+
 
         private readonly OpCodeNamer _opCodeNamer;
         private readonly OpCodeNamer _sysMsgNamer;
