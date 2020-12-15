@@ -1,16 +1,18 @@
 ﻿using System;
+using System.Linq;
+
 namespace Tera.Game.Messages
 {
     public enum LangEnum : UInt32
     {
         INT = 0,
-        KR  = 1,
+        KR = 1,
         NA = 2,
         JP = 3,
         EU_GER = 4,
-        EU_FR  = 5,
-        EU_EN  = 6,
-        TW  = 7,
+        EU_FR = 5,
+        EU_EN = 6,
+        TW = 7,
         RU = 8,
         CH = 9,
         THA = 10,
@@ -24,9 +26,12 @@ namespace Tera.Game.Messages
         {
             reader.Skip(11);
             Language = (LangEnum)reader.ReadUInt32();
-            Version = reader.Factory.Region.Contains("C")? 2707 :reader.ReadInt32();//hardcoded EUC/KRC, since its version is not sent via network
-            reader.Factory.ReleaseVersion = Version;
-            reader.Factory.ReloadSysMsg();
+            Version = reader.Factory.Region.Contains("C") ? 2707 : reader.ReadInt32();//hardcoded EUC/KRC, since its version is not sent via network
+            if (!Environment.GetCommandLineArgs().Contains("--toolbox"))
+            {
+                reader.Factory.ReleaseVersion = Version;
+                reader.Factory.ReloadSysMsg();
+            }
         }
 
         public LangEnum Language { get; set; }
