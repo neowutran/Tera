@@ -23,13 +23,9 @@
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="3.1.0" />
   </ItemGroup>
   <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System.Net.Http">
-      <HintPath>C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\Microsoft.NET.Build.Extensions\net471\lib\System.Net.Http.dll</HintPath>
-    </Reference>
   </ItemGroup>
 </Project>
