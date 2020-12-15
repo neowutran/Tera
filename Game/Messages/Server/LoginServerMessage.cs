@@ -5,7 +5,7 @@
         internal LoginServerMessage(TeraMessageReader reader)
             : base(reader)
         {
-            if (reader.Factory.ReleaseVersion >= 8100 && reader.Factory.Version != 344895) reader.Skip(4); //ugly fix for both KR and EU/RU have 9901 releaseversion at the same time
+            if (reader.Factory.ReleaseVersion >= 8100) reader.Skip(4);
             int nameOffset = reader.ReadInt16();
             reader.Skip(8);
             RaceGenderClass = new RaceGenderClass(reader.ReadInt32());

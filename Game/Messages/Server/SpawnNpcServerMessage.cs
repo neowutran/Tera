@@ -11,9 +11,9 @@ namespace Tera.Game.Messages
             reader.Skip(reader.Factory.ReleaseVersion >= 7100 ? 10 : 6);//classic staff, not sure when additional array appeared
             Id = reader.ReadEntityId();
             TargetId = reader.ReadEntityId();
-            Level = reader.Factory.ReleaseVersion >= 10100 ? reader.ReadInt32() : 0;
-            MaxHP = reader.Factory.ReleaseVersion >= 10100 ? reader.ReadInt64() : 0;
-            EnrageThreshold = reader.Factory.ReleaseVersion >= 10100 ? reader.ReadInt64() : 0;
+            Level = reader.Factory.ReleaseVersion >= 10100 || reader.Factory.ReleaseVersion == 9901 ? reader.ReadInt32() : 0;
+            MaxHP = reader.Factory.ReleaseVersion >= 10100 || reader.Factory.ReleaseVersion == 9901 ? reader.ReadInt64() : 0;
+            EnrageThreshold = reader.Factory.ReleaseVersion >= 10100 || reader.Factory.ReleaseVersion==9901 ? reader.ReadInt64() : 0;
             Position = reader.ReadVector3f();
             Heading = reader.ReadAngle();
             reader.Skip(4);
