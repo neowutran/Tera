@@ -9,6 +9,6 @@
         Popori = 4, // Male=Popori, Female = Elin
         Baraka = 5,
 
-        Common = 255
+        Common = 99
     }
 }

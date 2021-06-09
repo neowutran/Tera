@@ -9,6 +9,8 @@ namespace Tera.Game.Messages
         public uint PlayerId;
         public uint Level;
         public PlayerClass PlayerClass;
+        public Race Race;
+        public Gender Gender;
         public byte Status;
         public EntityId Id;
         public uint Order;
@@ -39,6 +41,8 @@ namespace Tera.Game.Messages
                 var PlayerId = reader.ReadUInt32();
                 var Level = reader.ReadUInt32();
                 var PlayerClass = (PlayerClass) (reader.ReadInt32() + 1);
+                var Race = reader.Factory.ReleaseVersion >= 10601 || reader.Factory.ReleaseVersion == 9901 ? (Race) reader.ReadInt32() : Game.Race.Common;
+                var Gender = reader.Factory.ReleaseVersion >= 10601 || reader.Factory.ReleaseVersion == 9901 ? (Gender) reader.ReadInt32() : Game.Gender.Common;
                 var Status = reader.ReadByte();
                 var Id = reader.ReadEntityId();
                 var Order = reader.ReadUInt32();
@@ -54,6 +58,8 @@ namespace Tera.Game.Messages
                     PlayerId = PlayerId,
                     Level = Level,
                     PlayerClass = PlayerClass,
+                    Race = Race,
+                    Gender = Gender,
                     Status = Status,
                     Id = Id,
                     Order = Order,

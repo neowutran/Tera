@@ -45,7 +45,7 @@ namespace Tera.Game.Messages
                 HitCylinderId = reader.ReadInt32();
                 reader.Skip(4); // reaction bools: enable,push,air, airchain
             } else reader.Skip(2); //reaction bools: enable, push
-            if (reader.Factory.ReleaseVersion>=8600) reader.Skip(2);//more reaction bools
+            if (reader.Factory.ReleaseVersion>=8600) reader.Skip(2);//SkillDamageType
 
             Position = reader.ReadVector3f();
             Heading = reader.ReadAngle();

@@ -3,7 +3,7 @@
 namespace Tera.Game
 {
     public enum PlayerClass
-    {
+    {   //todo change it to 0 based as in official meter. (require refactoring of low level code)
         Warrior = 1,
         Lancer = 2,
         Slayer = 3,
@@ -18,6 +18,6 @@ namespace Tera.Game
         Ninja = 12,
         Valkyrie = 13,
 
-        Common = 255
+        Common = 100
     }   
 }

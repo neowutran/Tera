@@ -5,6 +5,6 @@
         Female = 0,
         Male = 1,
 
-        Common = 255 // Used in the skill database
+        Common = 99 // Used in the skill database
     }
 }
