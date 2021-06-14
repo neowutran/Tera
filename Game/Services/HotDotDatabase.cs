@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -29,8 +29,10 @@ namespace Tera.Game
             Slaying = 8888889,
             Contagion1 = 701700,
             Contagion2 = 701701,
-            Hurricane = 60010
-
+            Hurricane = 60010,
+            DefensiveStance1 = 100200,
+            DefensiveStance2 = 100201,
+            Intimidation = 401400
         }
 
         public HotDot Enraged { get; }
@@ -43,6 +45,9 @@ namespace Tera.Game
         public readonly HotDot Contagion2;
         public readonly HotDot Enrage;
         public readonly HotDot Hurricane;
+        public readonly HotDot DefensiveStance1;
+        public readonly HotDot DefensiveStance2;
+        public readonly HotDot Intimidation;
 
 
         private readonly Dictionary<int, HotDot> _hotdots =
@@ -107,6 +112,9 @@ namespace Tera.Game
             _hotdots.TryGetValue((int)StaticallyUsedBuff.Contagion1, out Contagion1);
             _hotdots.TryGetValue((int)StaticallyUsedBuff.Contagion2, out Contagion2);
             _hotdots.TryGetValue((int)StaticallyUsedBuff.Hurricane, out Hurricane);
+            _hotdots.TryGetValue((int)StaticallyUsedBuff.DefensiveStance1 , out DefensiveStance1);
+            _hotdots.TryGetValue((int)StaticallyUsedBuff.DefensiveStance2 , out DefensiveStance2);
+            _hotdots.TryGetValue((int)StaticallyUsedBuff.Intimidation , out Intimidation);
 
         }
 
