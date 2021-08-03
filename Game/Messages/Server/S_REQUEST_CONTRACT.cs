@@ -6,13 +6,17 @@ namespace Tera.Game.Messages
         internal S_REQUEST_CONTRACT(TeraMessageReader reader) : base(reader)
         {
             //PrintRaw();
-            reader.Skip(24);
+            var senderOffset = reader.ReadUInt16();
+            var recipientOffset = reader.ReadUInt16();
+            reader.Skip(20);
             short type = reader.ReadInt16();
             Type = (RequestType)type;
             reader.Skip(14);
             //int unk3 = reader.ReadInt32();
             //int time = reader.ReadInt32();
+            reader.BaseStream.Position = senderOffset - 4;
             Sender = reader.ReadTeraString();
+            reader.BaseStream.Position = recipientOffset - 4;
             Recipient = reader.ReadTeraString();
             Debug.WriteLine("type:"+type+";translated:"+Type+"; Sender:"+Sender+";Recipient"+Recipient);
         }

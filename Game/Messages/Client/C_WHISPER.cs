@@ -9,7 +9,9 @@ namespace Tera.Game.Messages
         {
             TargetOffset = reader.ReadUInt16();
             TextOffset = reader.ReadUInt16();
+            reader.BaseStream.Position = TargetOffset - 4;
             Target = reader.ReadTeraString();
+            reader.BaseStream.Position = TextOffset - 4;
             Text = reader.ReadTeraString();
 
 

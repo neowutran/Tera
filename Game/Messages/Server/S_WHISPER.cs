@@ -7,9 +7,11 @@
             SenderOffset = reader.ReadUInt16();
             ReceiverOffset = reader.ReadUInt16();
             TextOffset = reader.ReadUInt16();
-            reader.Skip(11);
+            reader.BaseStream.Position = SenderOffset - 4;
             Sender = reader.ReadTeraString();
+            reader.BaseStream.Position = ReceiverOffset - 4;
             Receiver = reader.ReadTeraString();
+            reader.BaseStream.Position = TextOffset - 4;
             Text = reader.ReadTeraString();
         }
         public ushort SenderOffset { get; set; }

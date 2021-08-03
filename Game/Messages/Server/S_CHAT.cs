@@ -10,8 +10,9 @@ namespace Tera.Game.Messages
             TextOffset = reader.ReadUInt16();
             var channel = reader.ReadInt32();
             Channel = (ChannelEnum)channel;
-            reader.Skip(11);
+            reader.BaseStream.Position = UsernameOffset - 4;
             Username = reader.ReadTeraString();
+            reader.BaseStream.Position = TextOffset - 4;
             Text = reader.ReadTeraString();
         }
 
