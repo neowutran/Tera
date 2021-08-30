@@ -356,8 +356,27 @@ namespace Tera.Game
 
             var abnormalities = _abnormalities[target];
             var ab = abnotmalId==0 ? null : abnormalities.FirstOrDefault(x => x.HotDot.Id == abnotmalId);
-            if (ab != null) { ab.Apply(change, critical, isHp, time); return; }
-
+            if (ab != null) { ab.Apply(change, critical, isHp, time); return; } //visible dots
+            if (abnotmalId != 0) { //invisible dots
+                if (UpdateDamageTracker != null)
+                {
+                    var skillResult = new SkillResult(
+                        change,
+                        critical,
+                        isHp,
+                        change > 0,
+                        HotDotDatabase.Get(abnotmalId),
+                        source,
+                        target,
+                        new DateTime(time),
+                        EntityTracker,
+                        PlayerTracker
+                    );
+                    UpdateDamageTracker(skillResult);
+                }
+                return;
+            }
+            /// backward compatibility with classic servers whithout abnormal id in hp change packet.
             abnormalities =
                 abnormalities.Where(
                     x => x.Source == EntityTracker.MeterUser.Id || x.Target == EntityTracker.MeterUser.Id)
