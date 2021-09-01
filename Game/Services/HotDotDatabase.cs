@@ -115,9 +115,11 @@ namespace Tera.Game
             _hotdots[dot.Id] = dot;
         }
 
-        public HotDot Get(int skillId)
-        {
-            return !_hotdots.ContainsKey(skillId) ? null : _hotdots[skillId];
+        public HotDot Get(int skillId) {
+            if (_hotdots.ContainsKey(skillId)) return _hotdots[skillId];
+            var newDot = new HotDot(skillId, "HPChange", -1, 0, 0, HotDot.DotType.abs, 0, 0, "Unknown DOT", "", "Unknown DOT", "", HotDot.AbnormalityType.DOT, false, true, "");
+            _hotdots[skillId] = newDot;
+            return newDot;
         }
     }
 }
