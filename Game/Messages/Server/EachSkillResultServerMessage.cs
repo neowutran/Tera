@@ -30,7 +30,7 @@ namespace Tera.Game.Messages
             TemplateId = reader.ReadInt32();
 
             SkillId = new SkillId(reader).Id;
-            if (reader.Factory.ReleaseVersion >= 11001) { //todo: override for 99.01 
+            if (reader.Factory.ReleaseVersion >= 11001 || reader.Factory.ReleaseVersion == 9901 ) {
                 var originalSkillId = new SkillId(reader).Id;
                 if (originalSkillId != 0) SkillId = originalSkillId; //not sure what is originalSkillId, but ingame meter use it in this way. todo: look at it later if they implement something new.
             }
