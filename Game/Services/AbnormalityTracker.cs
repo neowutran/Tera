@@ -18,6 +18,7 @@ namespace Tera.Game
         internal HotDotDatabase HotDotDatabase;
         internal PlayerTracker PlayerTracker;
         internal CharmTracker CharmTracker;
+        internal Dictionary<EntityId,SCreatureChangeHp>lastChangeHps=new Dictionary<EntityId, SCreatureChangeHp>();
         public Action<SkillResult> UpdateDamageTracker;
 
         public AbnormalityTracker(EntityTracker entityTracker, PlayerTracker playerTracker,
@@ -410,6 +411,12 @@ namespace Tera.Game
 
         public void Update(SCreatureChangeHp message)
         {
+            if (lastChangeHps.ContainsKey(message.TargetId)) {
+                var last = lastChangeHps[message.TargetId];
+                if (last.SourceId == message.SourceId && last.AbnormalId == message.AbnormalId && last.HpChange == message.HpChange &&
+                    last.HpRemaining == message.HpRemaining) return;//duplicate change HP received
+            }
+            lastChangeHps[message.TargetId] = message;
             Update(message.TargetId, message.SourceId, message.HpChange, message.Type, message.Critical == 1, true,
                 message.Time.Ticks, message.AbnormalId);
             var user = EntityTracker.GetOrPlaceholder(message.TargetId) as UserEntity;
@@ -485,6 +492,7 @@ namespace Tera.Game
             _abnormalities = new Dictionary<EntityId, List<Abnormality.Abnormality>>();
             RegisterDead(message.Id, message.Time.Ticks, message.Dead);
             CharmTracker = new CharmTracker(this);
+            lastChangeHps=new Dictionary<EntityId, SCreatureChangeHp>();
         }
         public void Update(S_PLAYER_STAT_UPDATE message)
         {
