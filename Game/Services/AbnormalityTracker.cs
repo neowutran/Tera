@@ -416,7 +416,7 @@ namespace Tera.Game
                 if (last.SourceId == message.SourceId && last.AbnormalId == message.AbnormalId && last.HpChange == message.HpChange &&
                     last.HpRemaining == message.HpRemaining) return;//duplicate change HP received
             }
-            lastChangeHps[message.TargetId] = message;
+            if (message.AbnormalId!=0) lastChangeHps[message.TargetId] = message;
             Update(message.TargetId, message.SourceId, message.HpChange, message.Type, message.Critical == 1, true,
                 message.Time.Ticks, message.AbnormalId);
             var user = EntityTracker.GetOrPlaceholder(message.TargetId) as UserEntity;
