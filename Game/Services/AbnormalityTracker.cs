@@ -345,19 +345,19 @@ namespace Tera.Game
 
         private void Update(EntityId target, EntityId source, long change, int type, bool critical, bool isHp, long time, int abnotmalId = 0)
         {
-            if (!_abnormalities.ContainsKey(target))
-            {
-                return;
-            }
+            //if (!_abnormalities.ContainsKey(target))
+            //{
+            //    return;
+            //}
 
             if ((int)HotOrDot.Dot != type)
             {
                 return;
             }
 
-            var abnormalities = _abnormalities[target];
-            var ab = abnotmalId==0 ? null : abnormalities.FirstOrDefault(x => x.HotDot.Id == abnotmalId);
-            if (ab != null) { ab.Apply(change, critical, isHp, time); return; } //visible dots
+            //var abnormalities = _abnormalities[target];
+            //var ab = abnotmalId==0 ? null : abnormalities.FirstOrDefault(x => x.HotDot.Id == abnotmalId);
+            //if (ab != null) { ab.Apply(change, critical, isHp, time); return; } //visible dots
             if (abnotmalId != 0) { //invisible dots
                 if (UpdateDamageTracker != null)
                 {
@@ -379,35 +379,35 @@ namespace Tera.Game
             }
             return;
             /// backward compatibility with classic servers whithout abnormal id in hp change packet, disabled untill next classic server appears.
-            abnormalities =
-                abnormalities.Where(
-                    x => x.Source == EntityTracker.MeterUser.Id || x.Target == EntityTracker.MeterUser.Id)
-                    .OrderByDescending(o => o.TimeBeforeApply)
-                    .ToList();
+            //abnormalities =
+            //    abnormalities.Where(
+            //        x => x.Source == EntityTracker.MeterUser.Id || x.Target == EntityTracker.MeterUser.Id)
+            //        .OrderByDescending(o => o.TimeBeforeApply)
+            //        .ToList();
 
-            foreach (var abnormality in abnormalities)
-            {
-                if (abnormality.Source != source && abnormality.Source != abnormality.Target)
-                {
-                    continue;
-                }
+            //foreach (var abnormality in abnormalities)
+            //{
+            //    if (abnormality.Source != source && abnormality.Source != abnormality.Target)
+            //    {
+            //        continue;
+            //    }
 
-                if (isHp)
-                {
-                    if ((!(abnormality.HotDot.Hp > 0) || change <= 0) &&
-                        (!(abnormality.HotDot.Hp < 0) || change >= 0)
-                        ) continue;
-                }
-                else
-                {
-                    if ((!(abnormality.HotDot.Mp > 0) || change <= 0) &&
-                        (!(abnormality.HotDot.Mp < 0) || change >= 0)
-                        ) continue;
-                }
+            //    if (isHp)
+            //    {
+            //        if ((!(abnormality.HotDot.Hp > 0) || change <= 0) &&
+            //            (!(abnormality.HotDot.Hp < 0) || change >= 0)
+            //            ) continue;
+            //    }
+            //    else
+            //    {
+            //        if ((!(abnormality.HotDot.Mp > 0) || change <= 0) &&
+            //            (!(abnormality.HotDot.Mp < 0) || change >= 0)
+            //            ) continue;
+            //    }
 
-                abnormality.Apply(change, critical, isHp, time);
-                return;
-            }
+            //    abnormality.Apply(change, critical, isHp, time);
+            //    return;
+            //}
         }
 
         public void Update(SCreatureChangeHp message)
